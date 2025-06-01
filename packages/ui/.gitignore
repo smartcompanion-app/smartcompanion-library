@@ -2,3 +2,4 @@ node_modules/
 dist/
 loader/
 output/
+.stencil/

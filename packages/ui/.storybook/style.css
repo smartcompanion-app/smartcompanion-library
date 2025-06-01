@@ -1,0 +1,17 @@
+:root {
+  /*
+  --ion-font-family: sans-serif;
+  --ion-color-primary: #586713;
+  --ion-color-primary-rgb: 88,103,19;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #4d5b11;
+  --ion-color-primary-tint: #69762b;
+
+  --ion-background-color: #e8e2dd;
+*/
+  --sc-station-icon-dark: #353e0b; /* https://mdigi.tools/darken-color/#586713 40% */
+  --sc-station-icon-background: #e8e2dd;
+  --sc-station-tasks-background: #b2cbf8;
+  --ion-color-success-contrast: #ffffff;
+}

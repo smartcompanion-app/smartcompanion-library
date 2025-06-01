@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "allowUnreachableCode": false,
+    "outDir": "dist",
+    "removeComments": true,
+    "target": "ES6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "esModuleInterop": true,    
+    "noImplicitAny": true,
+    "declaration": true
+  },
+  "files": ["src/index.ts"],
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules/**/*"]
+}

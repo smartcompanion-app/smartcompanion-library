@@ -1,0 +1,128 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://stefanhuber.at/smartcompanion.schema.json",
+    "title": "SmartCompanion",
+    "description": "SmartCompanion Stations, Tours and Assets",
+    "type": "object",
+    "properties": {
+        "checksum": {
+            "type": "string",
+            "title": "Checksum"
+        },
+        "languages": {
+            "title": "Languages",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "title": "Language",
+                "properties": {
+                    "title": {
+                        "title": "Language",
+                        "type": "string"
+                    },
+                    "language": {
+                        "title": "Language ID",
+                        "type": "string",
+                        "enum": ["en", "de", "it", "fr", "bg", "cz", "nl", "jp", "es", "ru", "cn"]
+                    }
+                }
+            }
+        },
+        "stations": {
+            "type": "array",
+            "title": "Stations",
+            "items": {
+                "type": "object",
+                "title": "Station",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "type": "string"
+                    },
+                    "title": {
+                        "title": "Title",
+                        "type": "string"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "type": "string"
+                    },
+                    "image": {
+                        "title": "Image",
+                        "type": "string"
+                    },
+                    "audios": {
+                        "title": "Audio",
+                        "type": "array",
+                        "items": {
+                            "title": "Audio",
+                            "type": "string"                            
+                        }
+                    },
+                    "language": {
+                        "title": "Language",
+                        "type": "string",
+                        "enum": ["en", "de", "it", "fr"]
+                    }
+                },
+                "required": ["id","language", "title", "description", "image", "audios"]
+            }
+        },
+        "assets": {
+            "type": "array",
+            "title": "Assets",
+            "items": {
+                "type": "object",
+                "title": "Asset",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "type": "string"
+                    },
+                    "title": {
+                        "title": "Title",
+                        "type": "string"
+                    },
+                    "filename": {
+                        "title": "Filename",
+                        "type": "string"
+                    },
+                    "url": {
+                        "title": "url",
+                        "type": "string"
+                    },
+                    "language": {
+                        "title": "Language",
+                        "type": "string",
+                        "enum": ["en", "de", "it", "fr"]
+                    }
+                }
+            },
+            "required": ["id", "language", "url", "filename"]
+        },
+        "texts": {
+            "type": "array",
+            "title": "Texts",
+            "items": {
+                "type": "object",
+                "title": "Text",
+                "properties": {
+                    "key": {
+                        "title": "Key",
+                        "type": "string"
+                    },
+                    "value": {
+                        "title": "Value",
+                        "type": "string"
+                    },
+                    "language": {
+                        "title": "Language",
+                        "type": "string",
+                        "enum": ["en", "de", "it", "fr"]
+                    }
+                }
+            },
+            "required": ["key", "language", "value"]
+        }
+    }   
+}

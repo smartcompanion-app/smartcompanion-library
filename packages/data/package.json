@@ -1,0 +1,39 @@
+{
+  "name": "@smartcompanion/data",
+  "version": "0.0.1",
+  "author": "SmartCompanion Team <hello@smartcompanion.app> (https://smartcompanion.app) ",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "build": "npm run clean && tsc",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testTimeout": 30000,
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testMatch": [
+      "**/test/**/*.test.ts"
+    ]
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.8.0",
+    "@types/jest": "^29.5.0",
+    "jest": "^29.5.0",    
+    "rimraf": "^6.0.0",
+    "ts-jest": "^29.3.4",
+    "tslib": "^2.8.1",
+    "typescript": "^5.8.3"
+  }
+}

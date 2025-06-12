@@ -1,11 +1,11 @@
 import { test, describe, beforeEach } from '@jest/globals';
-import { SmartCompanion } from '../src/facade';
+import { DataFacade } from '../src/facade';
 import { MemoryStorage } from '../src/storage';
 import { getAsset } from './fixtures';
 
 describe('smart companion facade', () => {
 
-  let smartCompanion: SmartCompanion;
+  let smartCompanion: DataFacade;
   let downloadDataFn: jest.Mock;
   let downloadFileFn: jest.Mock;
   let removeFn: jest.Mock;
@@ -25,7 +25,7 @@ describe('smart companion facade', () => {
     resolveUrlFn = jest.fn();
     memoryStorage = new MemoryStorage();
 
-    smartCompanion = new SmartCompanion(
+    smartCompanion = new DataFacade(
       downloadDataFn,
       downloadFileFn,
       removeFn,

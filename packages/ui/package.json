@@ -26,12 +26,13 @@
     "@ionic/core": "^8.5.8",
     "@stencil/core": "^4.32.0",
     "@stencil/sass": "^3.2.1",
-    "@stencil/storybook-plugin": "^0.0.16",
+    "@stencil/storybook-plugin": "^0.1.0",
     "@storybook/addon-essentials": "^8.6.14",
     "@storybook/addon-interactions": "^8.6.14",
     "@storybook/addon-links": "^8.6.14",
     "@types/node": "^20.8.0",
     "storybook": "^8.6.14",
-    "swiper": "^11.2.8"
+    "swiper": "^11.2.8",
+    "@smartcompanion/services": "*"
   }
 }

@@ -8,6 +8,7 @@ const config = {
   framework: {
     name: "@stencil/storybook-plugin"
   },
+  staticDirs: ["./public"],
 };
 
 export default config;

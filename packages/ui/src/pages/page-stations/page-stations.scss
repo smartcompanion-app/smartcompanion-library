@@ -1,0 +1,155 @@
+@import "~swiper/swiper-bundle.css";
+
+ion-toolbar {
+  --background: transparent;
+}
+ion-header {
+  position: absolute !important;
+}
+ion-card {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+#player-main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#player-image {
+  flex: 280px 0 0;
+  width: 100vw;
+  height: 280px;
+
+  img {
+    display: block;
+    width: 100vw;
+    height: 280px;
+    object-fit: cover;
+  }
+
+  @media (min-width: 768px) {
+    flex: 420px;
+    height: 420px;
+
+    img {
+      height: 420px;
+    }
+  }
+}
+
+#player {
+  //background: #cfc5bd;
+  margin-top: -18px;
+  padding: 0 20px;
+
+  &-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: -30px;
+  
+    &-play {
+      margin-left: 10px;
+      margin-right: 10px;
+      width:70px;
+      height: 70px;
+      margin-top: -5px;
+    }
+  }
+}
+
+#player-list {
+  border-top: 2px solid #c3b7ad;
+  background: #cfc5bd;
+  padding-top:10px;
+  flex: 50vh 1 1;
+
+  &.swiper {
+    margin-left: 0;
+    margin-right: 0;    
+  }
+
+  .swiper-slide {
+    height: auto;
+    opacity: .5;
+  }
+
+  .active {
+    opacity: 1;
+  }
+
+  .card-content {
+    display: flex;
+    height: 80px;
+    width: 100%;
+  
+    &-text {
+      flex: 100% 1 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: "station subtitle" "title title";
+      padding: 0 10px;
+    }
+  
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;      
+    }
+
+    sc-station-icon {
+      grid-area: station;
+      align-self: end;
+    }
+    
+    .subtitle {
+      margin: 0;
+      padding: 0;
+      grid-area: subtitle;
+      align-self: end;
+      justify-self: end;
+      color: #c3b7ad;
+      border: 2px solid #c3b7ad;
+      border-radius: 20px;
+      padding: 2px 7px;
+      font-size:0.9em;
+      margin-bottom: 4px;
+    }
+
+    .title {
+      margin: 0;
+      padding: 5px 0;
+      grid-area: title;
+      
+      @media (min-width: 375px) {
+        font-size: 1.3em;
+      }
+      @media (max-width: 374px) {
+        font-size: 1.1em;
+        line-height: 1.2;
+      }
+    }
+  }
+
+}
+
+.circle {
+  width:23px;
+  height: 23px;
+	display: flex;
+	border-radius: 999px;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+  background: #586713;
+  color: white;
+  font-size: .8em;
+  margin-left: 10px;
+}
+
+.title {
+  font-size: 1.1em;
+  margin: 0;
+  font-weight: bold;
+}

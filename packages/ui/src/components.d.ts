@@ -5,6 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ServiceFacade } from "@smartcompanion/services";
+export { ServiceFacade } from "@smartcompanion/services";
 export namespace Components {
     interface ScMarquee {
         /**
@@ -18,6 +20,27 @@ export namespace Components {
           * @default false
          */
         "full": boolean;
+    }
+    interface ScPageError {
+        "facade": ServiceFacade;
+    }
+    interface ScPageLanguage {
+        "facade": ServiceFacade;
+    }
+    interface ScPageLoading {
+        "facade": ServiceFacade;
+        "image": string;
+    }
+    interface ScPagePin {
+        "facade": ServiceFacade;
+        /**
+          * The number of hours the pin is valid for.
+          * @default 6
+         */
+        "validHours": number;
+    }
+    interface ScPageSelection {
+        "facade": ServiceFacade;
     }
     interface ScPlayerControls {
         /**
@@ -88,6 +111,36 @@ declare global {
         prototype: HTMLScNumpadElement;
         new (): HTMLScNumpadElement;
     };
+    interface HTMLScPageErrorElement extends Components.ScPageError, HTMLStencilElement {
+    }
+    var HTMLScPageErrorElement: {
+        prototype: HTMLScPageErrorElement;
+        new (): HTMLScPageErrorElement;
+    };
+    interface HTMLScPageLanguageElement extends Components.ScPageLanguage, HTMLStencilElement {
+    }
+    var HTMLScPageLanguageElement: {
+        prototype: HTMLScPageLanguageElement;
+        new (): HTMLScPageLanguageElement;
+    };
+    interface HTMLScPageLoadingElement extends Components.ScPageLoading, HTMLStencilElement {
+    }
+    var HTMLScPageLoadingElement: {
+        prototype: HTMLScPageLoadingElement;
+        new (): HTMLScPageLoadingElement;
+    };
+    interface HTMLScPagePinElement extends Components.ScPagePin, HTMLStencilElement {
+    }
+    var HTMLScPagePinElement: {
+        prototype: HTMLScPagePinElement;
+        new (): HTMLScPagePinElement;
+    };
+    interface HTMLScPageSelectionElement extends Components.ScPageSelection, HTMLStencilElement {
+    }
+    var HTMLScPageSelectionElement: {
+        prototype: HTMLScPageSelectionElement;
+        new (): HTMLScPageSelectionElement;
+    };
     interface HTMLScPlayerControlsElementEventMap {
         "prev": void;
         "next": void;
@@ -119,6 +172,11 @@ declare global {
     interface HTMLElementTagNameMap {
         "sc-marquee": HTMLScMarqueeElement;
         "sc-numpad": HTMLScNumpadElement;
+        "sc-page-error": HTMLScPageErrorElement;
+        "sc-page-language": HTMLScPageLanguageElement;
+        "sc-page-loading": HTMLScPageLoadingElement;
+        "sc-page-pin": HTMLScPagePinElement;
+        "sc-page-selection": HTMLScPageSelectionElement;
         "sc-player-controls": HTMLScPlayerControlsElement;
         "sc-station-icon": HTMLScStationIconElement;
     }
@@ -139,6 +197,27 @@ declare namespace LocalJSX {
         "onConfirm"?: (event: ScNumpadCustomEvent<void>) => void;
         "onDelete"?: (event: ScNumpadCustomEvent<void>) => void;
         "onNumber"?: (event: ScNumpadCustomEvent<number>) => void;
+    }
+    interface ScPageError {
+        "facade"?: ServiceFacade;
+    }
+    interface ScPageLanguage {
+        "facade"?: ServiceFacade;
+    }
+    interface ScPageLoading {
+        "facade"?: ServiceFacade;
+        "image"?: string;
+    }
+    interface ScPagePin {
+        "facade"?: ServiceFacade;
+        /**
+          * The number of hours the pin is valid for.
+          * @default 6
+         */
+        "validHours"?: number;
+    }
+    interface ScPageSelection {
+        "facade"?: ServiceFacade;
     }
     interface ScPlayerControls {
         /**
@@ -183,6 +262,11 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "sc-marquee": ScMarquee;
         "sc-numpad": ScNumpad;
+        "sc-page-error": ScPageError;
+        "sc-page-language": ScPageLanguage;
+        "sc-page-loading": ScPageLoading;
+        "sc-page-pin": ScPagePin;
+        "sc-page-selection": ScPageSelection;
         "sc-player-controls": ScPlayerControls;
         "sc-station-icon": ScStationIcon;
     }
@@ -193,6 +277,11 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "sc-marquee": LocalJSX.ScMarquee & JSXBase.HTMLAttributes<HTMLScMarqueeElement>;
             "sc-numpad": LocalJSX.ScNumpad & JSXBase.HTMLAttributes<HTMLScNumpadElement>;
+            "sc-page-error": LocalJSX.ScPageError & JSXBase.HTMLAttributes<HTMLScPageErrorElement>;
+            "sc-page-language": LocalJSX.ScPageLanguage & JSXBase.HTMLAttributes<HTMLScPageLanguageElement>;
+            "sc-page-loading": LocalJSX.ScPageLoading & JSXBase.HTMLAttributes<HTMLScPageLoadingElement>;
+            "sc-page-pin": LocalJSX.ScPagePin & JSXBase.HTMLAttributes<HTMLScPagePinElement>;
+            "sc-page-selection": LocalJSX.ScPageSelection & JSXBase.HTMLAttributes<HTMLScPageSelectionElement>;
             "sc-player-controls": LocalJSX.ScPlayerControls & JSXBase.HTMLAttributes<HTMLScPlayerControlsElement>;
             "sc-station-icon": LocalJSX.ScStationIcon & JSXBase.HTMLAttributes<HTMLScStationIconElement>;
         }

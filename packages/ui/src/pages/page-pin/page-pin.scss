@@ -1,0 +1,101 @@
+#pin {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+#pin-help {
+  font-weight: bold;
+
+  p {
+    text-align: center;
+    margin: 0 30px;
+  }
+
+  .error {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+    margin: 0 0 20px 0;
+    color: #af292f;
+  }
+}
+
+#pin-entry {
+  display: flex;
+  margin-bottom: 40px;
+
+  &>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border: 2px solid #ccc;
+    background: #ccc;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 20px;
+
+    &+div {
+      margin-left: 8px;
+    }
+  }
+
+  .active {
+    border-color: #af292f;
+  }
+
+  .filled {
+    border-color: black;
+  }
+}
+
+#pin-keys {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 10px;
+  column-gap: 10px;
+  width: 230px;
+  font-weight: bold;
+
+  ion-fab-button {
+    width: 70px;
+    height: 70px;
+    font-size: 20px;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(3em);
+  }
+
+  40% {
+    transform: translate(-3em);
+  }
+
+  60% {
+    transform: translate(3em);
+  }
+
+  80% {
+    transform: translate(-3em);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+.shake {
+  animation: shake 0.5s 1;
+}

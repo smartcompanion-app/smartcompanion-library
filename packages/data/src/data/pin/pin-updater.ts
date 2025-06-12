@@ -1,5 +1,5 @@
 import { Storage } from "../../storage";
-import { Updater } from "../updater";
+import { Updater } from "../../update";
 
 export class PinUpdater implements Updater {
 

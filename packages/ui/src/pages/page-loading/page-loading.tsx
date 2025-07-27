@@ -14,27 +14,31 @@ export class PageLoading {
   @State() progress: number = 1;
 
   async componentWillLoad() {
-    this.facade.routing().addRouteChangeListener('/', () => {
-      this.loading();
-    });
+    this.facade
+      .getRoutingService()
+      .addRouteChangeListener('/', () => {
+        this.loading();
+      });
   }
 
   async loading() {
-    this.facade.menu().disable();
+    this.facade.getMenuService().disable();
 
-    this.facade.load().setProgressListener((progress) => {
+    this.facade.getLoadService().setProgressListener((progress) => {
       this.progress = progress / 100;
     });
 
-    const result = await this.facade.load().load();
+    const result = await this.facade.getLoadService().load();
     console.log("loading result", result);
 
     if (result == 'language') {
-      this.facade.routing().pushReplaceCurrent('/language');
+      this.facade.getRoutingService().pushReplaceCurrent('/language');
     } else if (result == 'home') {
-      this.facade.routing().pushReplaceCurrent('/stations/0');
+      this.facade.getRoutingService().pushReplaceCurrent('/stations/0');
+    } else if (result == 'pin') {
+      this.facade.getRoutingService().pushReplaceCurrent('/pin');
     } else {
-      this.facade.routing().pushReplaceCurrent('/error');
+      this.facade.getRoutingService().pushReplaceCurrent('/error');
     }
   }
 

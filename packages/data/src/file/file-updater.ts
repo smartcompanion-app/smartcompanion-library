@@ -1,14 +1,39 @@
 import { FileMatcher } from "./file-matcher";
-import { Storage } from "../storage";
 import { File } from "./file";
 
 export class FileUpdater {
 
   protected fileMatcher = new FileMatcher();
+
+  /**
+   * Downloads a file from the given URL and returns its content.
+   */
   protected download: (url: string) => Promise<string>;
+
+  /**
+   * Removes a file with the given filename from file storage.
+   * In a hybrid app this would remove the file from the file system.
+   * In a web app this would remove the file from the cache.
+   */
   protected remove: (filename: string) => Promise<void>;
+
+  /**
+   * Saves the given data to a file with the given filename.
+   * In a hybrid app this would save the file to the file system.
+   * In a web app this would save the file to the cache.
+   */
   protected save: (filename: string, data: string) => Promise<void>;
+
+  /**
+   * Lists all files in the file storage.
+   * In a hybrid app this would list the files in the file system.
+   * In a web app this would list the files in the cache.
+   */
   protected list: () => Promise<string[]>;
+
+  /**
+   * Reports the progress of a file downloads.
+   */
   protected progress: (progress: number) => void;
 
   constructor(

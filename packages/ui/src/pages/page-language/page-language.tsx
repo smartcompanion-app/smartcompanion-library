@@ -11,13 +11,13 @@ export class PageLanguage {
   @Prop() facade: ServiceFacade;
 
   async componentDidLoad() {
-    this.facade.menu().disable();
+    this.facade.getMenuService().disable();
   }
 
   changeLanguage(languageCode: string) {
     // TODO, add to facade: this.facade.data().clearCollectionPercentage(languageCode);    
     this.facade.changeLanguage(languageCode);
-    this.facade.routing().pushReplaceCurrent('/');
+    this.facade.getRoutingService().pushReplaceCurrent('/');
   }
 
   render() {

@@ -18,7 +18,7 @@ export class PagePin {
   @State() error: boolean = false;
 
   async componentDidLoad() {
-    this.facade.menu().disable();
+    this.facade.getMenuService().disable();
   }
 
   isActivePinPosition(position: number): boolean {
@@ -48,8 +48,8 @@ export class PagePin {
       this.pin = `${this.pin}${position}`;
     }
     if (this.pin.length == 4) {
-      if (this.facade.repository('pins').validatePin(this.pin, this.validHours)) {
-        this.facade.routing().pushReplaceCurrent('/');
+      if (this.facade.getPinService().validatePin(this.pin, this.validHours)) {
+        this.facade.getRoutingService().pushReplaceCurrent('/');
       } else {
         this.pin = "";
         this.error = true;
@@ -67,10 +67,12 @@ export class PagePin {
           </div>
           <div id="pin-entry" class={{ "shake": this.error }}>
             {[1, 2, 3, 4].map(position =>
-              <div class={{ "active": this.isActivePinPosition(position), "filled": this.hasPinPosition(position) }}>{this.getPinPosition(position)}</div>
+              <div class={{ 
+                "active": this.isActivePinPosition(position), 
+                "filled": this.hasPinPosition(position) 
+              }}>{this.getPinPosition(position)}</div>
             )}
           </div>
-
           <sc-numpad
             onNumber={(e) => this.add(`${e.detail}`)}
             onDelete={() => this.delete()} />

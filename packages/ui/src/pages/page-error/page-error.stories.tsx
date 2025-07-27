@@ -11,11 +11,7 @@ const meta: Meta<StoryArgs> = {
   title: 'Pages/Page Error',
   tags: ['autodocs'],
   component: PageError,
-  render: args => (
-    <div style={{width: "320px", height: "500px", border: "1px solid #efefef"}}>
-      <sc-page-error facade={args.facade as ServiceFacade} />
-    </div>
-  ),
+  render: args => (<div style={{width: '100vw', height: '100vh'}}><sc-page-error facade={args.facade as ServiceFacade} /></div>),
 };
 
 export default meta;

@@ -1,5 +1,5 @@
-import { LanguageRepository, PinRepository } from "../data";
-import { BrowserStorage, Storage } from "../storage";
+import { LanguageService, PinService } from "../domain";
+import { ServiceLocator } from "../service-locator";
 import { Updater } from "../update";
 import { LoadService } from "./load-service";
 
@@ -9,23 +9,21 @@ import { LoadService } from "./load-service";
  */
 export class OnlineLoadService implements LoadService {
   
-  protected languageRepository: LanguageRepository;
-  protected pinRepository: PinRepository;
-  protected storage: Storage;
+  protected languageService: LanguageService;
+  protected pinService: PinService;
   protected dataUpdater: Updater;
   protected downloadData: () => Promise<any>;
-  protected progress: ((progress: number) => void) | undefined; 
+  protected progress: ((progress: number) => void) = (_: number) => {}; 
 
   constructor(
     downloadData: () => Promise<any>,
     dataUpdater: Updater,
-    storage: Storage = new BrowserStorage()
+    serviceLocator: ServiceLocator
   ) {
     this.downloadData = downloadData;
     this.dataUpdater = dataUpdater;
-    this.storage = storage;
-    this.languageRepository = new LanguageRepository(this.storage);
-    this.pinRepository = new PinRepository(this.storage);
+    this.languageService = serviceLocator.getLanguageService();
+    this.pinService = serviceLocator.getPinService();
   }
 
   setProgressListener(listener: (progress: number) => void) {
@@ -37,9 +35,9 @@ export class OnlineLoadService implements LoadService {
       const data = await this.downloadData();
       this.dataUpdater.update(data);
 
-      if (this.languageRepository.hasLanguage()) {
+      if (!this.languageService.hasLanguage()) {
         return 'language';
-      } else if (this.pinRepository.isPinValidationRequired() && !this.pinRepository.isValid()) {
+      } else if (this.pinService.isPinValidationRequired() && !this.pinService.isValid()) {
         return 'pin';
       } else {
         return 'home';

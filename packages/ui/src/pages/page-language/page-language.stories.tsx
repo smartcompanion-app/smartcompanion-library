@@ -12,7 +12,7 @@ const meta: Meta<StoryArgs> = {
   tags: ['autodocs'],
   component: PageLanguage,
   render: args => (
-    <div style={{width: "320px", height: "500px", border: "1px solid #efefef"}}>
+    <div style={{width: "100vw", height: "100vh"}}>
       <sc-page-language facade={args.facade as ServiceFacade} />
     </div>
   ),
@@ -25,7 +25,7 @@ type Story = StoryObj<StoryArgs>;
 export const Example: Story = {
   args: {
     facade: {      
-      menu: () => ({
+      getMenuService: () => ({
         disable: () => {
           console.log('Menu disabled');
           return Promise.resolve();

@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
 import { h } from '@stencil/core';
 import { ServiceFacade, MenuService, RoutingService } from '@smartcompanion/services';
-import { DataFacade } from '@smartcompanion/data';
 import { PageLoading } from './page-loading';
 
 type StoryArgs = {
@@ -26,7 +25,7 @@ type Story = StoryObj<StoryArgs>;
 export const Example: Story = {
   args: {
     facade: {
-      load: () => {
+      getLoadService: () => {
         let progress = 0;
         return {
           setProgressListener: (listener: (progress: number) => void) => {            
@@ -49,15 +48,15 @@ export const Example: Story = {
               }, 500); // Simulate loading
             });
           },
-        } as DataFacade;
+        };
       },
-      menu: () => ({
+      getMenuService: () => ({
         disable: () => {
           console.log('Menu disabled');
           return Promise.resolve();
         },
       }) as MenuService,
-      routing: () => ({
+      getRoutingService: () => ({
         addRouteChangeListener: (route: string, callback: () => void) => {
           console.log(`Route change listener added for ${route}`);
           setTimeout(callback, 500); // Simulate route change after 500ms

@@ -14,7 +14,9 @@ export class PageSelection {
   @State() input: string = "";
 
   async componentWillLoad() {
-    await this.facade.menu().enable();
+    await this.facade
+      .getMenuService()
+      .enable();
   }
 
   addToInput(input: string) {
@@ -32,7 +34,7 @@ export class PageSelection {
   }
 
   async checkStation() {
-    const stations = await this.facade.repository('stations').getStations();
+    const stations = await this.facade.getStationService().getStations();
     const index = stations.findIndex(station => station.number == this.input);
     this.input = "";
 
@@ -42,7 +44,9 @@ export class PageSelection {
   }  
 
   openStation(stationIndex: string) {
-    this.facade.routing().pushReplaceCurrent(`/stations/${stationIndex}`);
+    this.facade
+      .getRoutingService()
+      .push(`/stations/${stationIndex}`);
   }
 
   render() {

@@ -1,4 +1,4 @@
-@import "~swiper/swiper-bundle.css";
+@use "~swiper/swiper-bundle.css";
 
 ion-toolbar {
   --background: transparent;
@@ -19,12 +19,12 @@ ion-card {
 
 #player-image {
   flex: 280px 0 0;
-  width: 100vw;
+  width: 100%;
   height: 280px;
 
   img {
     display: block;
-    width: 100vw;
+    width: 100%;
     height: 280px;
     object-fit: cover;
   }
@@ -40,7 +40,6 @@ ion-card {
 }
 
 #player {
-  //background: #cfc5bd;
   margin-top: -18px;
   padding: 0 20px;
 
@@ -60,8 +59,8 @@ ion-card {
 }
 
 #player-list {
-  border-top: 2px solid #c3b7ad;
-  background: #cfc5bd;
+  box-shadow: 0 -4px 7px -7px grey;
+  background: var(--ion-background-color);
   padding-top:10px;
   flex: 50vh 1 1;
 
@@ -93,8 +92,9 @@ ion-card {
     }
   
     img {
-      width: 80px;
+      flex: 80px 0 0;
       height: 80px;
+      max-width: 80px;
       object-fit: cover;      
     }
 
@@ -109,8 +109,8 @@ ion-card {
       grid-area: subtitle;
       align-self: end;
       justify-self: end;
-      color: #c3b7ad;
-      border: 2px solid #c3b7ad;
+      color: var(--sc-station-list-subtitle, var(--ion-color-primary));
+      border: 2px solid var(--sc-station-list-subtitle, var(--ion-color-primary));
       border-radius: 20px;
       padding: 2px 7px;
       font-size:0.9em;
@@ -121,6 +121,7 @@ ion-card {
       margin: 0;
       padding: 5px 0;
       grid-area: title;
+      font-weight: bold;
       
       @media (min-width: 375px) {
         font-size: 1.3em;
@@ -131,25 +132,4 @@ ion-card {
       }
     }
   }
-
-}
-
-.circle {
-  width:23px;
-  height: 23px;
-	display: flex;
-	border-radius: 999px;
-	justify-content: center;
-	align-items: center;
-	align-content: center;
-  background: #586713;
-  color: white;
-  font-size: .8em;
-  margin-left: 10px;
-}
-
-.title {
-  font-size: 1.1em;
-  margin: 0;
-  font-weight: bold;
 }

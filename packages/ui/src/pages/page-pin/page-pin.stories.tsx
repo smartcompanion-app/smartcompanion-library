@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
 import { h } from '@stencil/core';
+import { PinService } from '@smartcompanion/data';
 import { ServiceFacade, MenuService, RoutingService } from '@smartcompanion/services';
 import { PagePin } from './page-pin';
-import { RepositoryMap } from '@smartcompanion/data';
 
 type StoryArgs = {
   facade: Partial<ServiceFacade>;
@@ -13,7 +13,7 @@ const meta: Meta<StoryArgs> = {
   tags: ['autodocs'],
   component: PagePin,
   render: args => (
-    <div style={{ width: "320px", height: "500px", border: "1px solid #efefef" }}>
+    <div style={{width: '100vw', height: '100vh'}}>
       <sc-page-pin facade={args.facade as ServiceFacade} />
     </div>
   ),
@@ -26,24 +26,19 @@ type Story = StoryObj<StoryArgs>;
 export const Example: Story = {
   args: {
     facade: {      
-      repository<K extends keyof RepositoryMap>(name: K): RepositoryMap[K] {
-        if (name === "pins") {
-          return {
-            validatePin: (pin: string, validHours: number): boolean => {
-              console.log(`Validating pin: ${pin} for ${validHours} hours`);
-              return pin === "1234";
-            }
-          } as RepositoryMap[K];
+      getPinService: () => ({
+        validatePin: (pin: string, validHours: number): boolean => {
+          console.log(`Validating pin: ${pin} for ${validHours} hours`);
+          return pin === "1234";
         }
-        throw new Error("Stub only supports PinRepository");
-      },
-      menu: () => ({
+      }) as PinService,
+      getMenuService: () => ({
         disable: () => {
           console.log('Menu disabled');
           return Promise.resolve();
         },
       }) as MenuService,
-      routing: () => ({
+      getRoutingService: () => ({
         pushReplaceCurrent: (route: string) => {
           console.log(`Move to route ${route}`);        
           return Promise.resolve();

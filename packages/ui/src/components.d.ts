@@ -42,6 +42,10 @@ export namespace Components {
     interface ScPageSelection {
         "facade": ServiceFacade;
     }
+    interface ScPageStations {
+        "facade": ServiceFacade;
+        "stationIndex": number;
+    }
     interface ScPlayerControls {
         /**
           * @default false
@@ -141,6 +145,12 @@ declare global {
         prototype: HTMLScPageSelectionElement;
         new (): HTMLScPageSelectionElement;
     };
+    interface HTMLScPageStationsElement extends Components.ScPageStations, HTMLStencilElement {
+    }
+    var HTMLScPageStationsElement: {
+        prototype: HTMLScPageStationsElement;
+        new (): HTMLScPageStationsElement;
+    };
     interface HTMLScPlayerControlsElementEventMap {
         "prev": void;
         "next": void;
@@ -177,6 +187,7 @@ declare global {
         "sc-page-loading": HTMLScPageLoadingElement;
         "sc-page-pin": HTMLScPagePinElement;
         "sc-page-selection": HTMLScPageSelectionElement;
+        "sc-page-stations": HTMLScPageStationsElement;
         "sc-player-controls": HTMLScPlayerControlsElement;
         "sc-station-icon": HTMLScStationIconElement;
     }
@@ -218,6 +229,10 @@ declare namespace LocalJSX {
     }
     interface ScPageSelection {
         "facade"?: ServiceFacade;
+    }
+    interface ScPageStations {
+        "facade"?: ServiceFacade;
+        "stationIndex"?: number;
     }
     interface ScPlayerControls {
         /**
@@ -267,6 +282,7 @@ declare namespace LocalJSX {
         "sc-page-loading": ScPageLoading;
         "sc-page-pin": ScPagePin;
         "sc-page-selection": ScPageSelection;
+        "sc-page-stations": ScPageStations;
         "sc-player-controls": ScPlayerControls;
         "sc-station-icon": ScStationIcon;
     }
@@ -282,6 +298,7 @@ declare module "@stencil/core" {
             "sc-page-loading": LocalJSX.ScPageLoading & JSXBase.HTMLAttributes<HTMLScPageLoadingElement>;
             "sc-page-pin": LocalJSX.ScPagePin & JSXBase.HTMLAttributes<HTMLScPagePinElement>;
             "sc-page-selection": LocalJSX.ScPageSelection & JSXBase.HTMLAttributes<HTMLScPageSelectionElement>;
+            "sc-page-stations": LocalJSX.ScPageStations & JSXBase.HTMLAttributes<HTMLScPageStationsElement>;
             "sc-player-controls": LocalJSX.ScPlayerControls & JSXBase.HTMLAttributes<HTMLScPlayerControlsElement>;
             "sc-station-icon": LocalJSX.ScStationIcon & JSXBase.HTMLAttributes<HTMLScStationIconElement>;
         }

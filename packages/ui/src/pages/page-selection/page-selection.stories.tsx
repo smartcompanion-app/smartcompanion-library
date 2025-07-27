@@ -25,7 +25,7 @@ type Story = StoryObj<StoryArgs>;
 export const Example: Story = {
   args: {
     facade: {      
-      menu: () => ({
+      getMenuService: () => ({
         enable: () => {
           console.log('Menu enabled');
           return Promise.resolve();

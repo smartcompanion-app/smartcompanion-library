@@ -25,7 +25,7 @@ export class PageStations {
   async componentWillLoad() {    
     this.stations = await this
       .facade
-      .repository('stations')
+      .getStationService()
       .getStations();
   }
 
@@ -37,10 +37,12 @@ export class PageStations {
     });
     this.playerList.slideTo(this.stationIndex);
 
-    await this.facade.audio().start(this.stations);
-    await this.facade.audio().setSpeaker();
+    await this.facade.getAudioPlayerService().start(this.stations);
+    await this.facade.getAudioPlayerService().setSpeaker();
 
-    this.facade.audio().registerUpdateListener(async (update) => {
+    this.facade.getAudioPlayerService().registerUpdateListener(async (update) => {
+      console.log('Audio player update', update);
+
       if (update.state == 'skip') {
         this.playing = false;
         this.stationIndex = update.index;
@@ -55,7 +57,7 @@ export class PageStations {
       } else if (update.state == "collected") {
         const station = await this
           .facade
-          .repository('stations')
+          .getStationService()
           .updateCollectedPercentage(
             this.stations[this.stationIndex].id,
             update.id,
@@ -66,19 +68,21 @@ export class PageStations {
           station,
           ...this.stations.slice(this.stationIndex + 1)  
         ];
+      } else if (update.state == "completed") {
+        this.next();
       }
     });
     
     if (this.stationIndex > 0) { // set index to player
-      await this.facade.audio().select(this.stationIndex);
+      await this.facade.getAudioPlayerService().select(this.stationIndex);
     }
 
     await this.initPlayer();
   }
 
   async disconnectedCallback() {
-    await this.facade.audio().stop();
-    this.facade.audio().unregisterUpdateListener();
+    await this.facade.getAudioPlayerService().stop();
+    this.facade.getAudioPlayerService().unregisterUpdateListener();
   }
 
   async initPlayer() {
@@ -86,7 +90,7 @@ export class PageStations {
     this.position = 0;
     this.duration = await this
       .facade
-      .audio()
+      .getAudioPlayerService()
       .getDuration();
   }
 
@@ -96,11 +100,11 @@ export class PageStations {
   }
 
   async next() {
-    await this.facade.audio().next();
+    await this.facade.getAudioPlayerService().next();
   }
 
   async prev() {
-    await this.facade.audio().prev();
+    await this.facade.getAudioPlayerService().prev();
   }
 
   async playPause() {
@@ -112,20 +116,20 @@ export class PageStations {
   }
 
   async play() {
-    await this.facade.audio().play();
+    await this.facade.getAudioPlayerService().play();
   }
 
   async pause() {
-    await this.facade.audio().pause();
+    await this.facade.getAudioPlayerService().pause();
   }
 
   async select(index: number) {
-    await this.facade.audio().select(index);
+    await this.facade.getAudioPlayerService().select(index);
   }
 
   async updatePosition() {
-    this.position = await this.facade.audio().getPosition();
-    this.duration = await this.facade.audio().getDuration();
+    this.position = await this.facade.getAudioPlayerService().getPosition();
+    this.duration = await this.facade.getAudioPlayerService().getDuration();
 
     if (this.duration > 0 && this.position >= (this.duration - 1)) {
       setTimeout(() => this.next(), 1000);
@@ -139,27 +143,27 @@ export class PageStations {
   }
 
   openMenu() {
-    this.facade.menu().open();
+    this.facade.getMenuService().open();
   }
 
   toggleOutput() {
     if (this.earpiece) {
-      this.facade.audio().setSpeaker();
+      this.facade.getAudioPlayerService().setSpeaker();
       this.earpiece = false;
     } else {
-      this.facade.audio().setEarpiece();
+      this.facade.getAudioPlayerService().setEarpiece();
       this.earpiece = true;
     }
   }
 
   async startPositionChange() {
-    await this.facade.audio().pause();
+    await this.facade.getAudioPlayerService().pause();
   }
 
   async changePosition(position: number) {
     this.position = position;
-    await this.facade.audio().seek(position);
-    await this.facade.audio().play();
+    await this.facade.getAudioPlayerService().seek(position);
+    await this.facade.getAudioPlayerService().play();
   }
 
   render() {
@@ -170,15 +174,7 @@ export class PageStations {
             <ion-fab-button color="light" size="small" onClick={() => this.openMenu()}>
               <ion-icon color="primary" name="menu-outline"></ion-icon>
             </ion-fab-button>
-          </ion-buttons>
-          <ion-buttons slot="end">
-            <ion-fab-button color="light" size="small" onClick={() => this.toggleOutput()}>
-              {this.earpiece ?
-                <ion-icon color="primary" name="volume-medium-outline"></ion-icon> :
-                <ion-icon src="../../assets/icon/earpiece.svg"></ion-icon>
-              }
-            </ion-fab-button>
-          </ion-buttons>
+          </ion-buttons>          
         </ion-toolbar>
       </ion-header>,
       <ion-content id="home" fullscreen={true}>

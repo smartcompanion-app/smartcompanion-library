@@ -4,36 +4,39 @@ import { ServiceFacade } from '@smartcompanion/services';
 @Component({
   tag: 'sc-page-error',
   styleUrl: 'page-error.scss',
-  shadow: true,
+  shadow: true,  
 })
 export class PageError {
 
   @Prop() facade: ServiceFacade;
 
-  tryAgain() { }
+  tryAgain() {
+    this
+      .facade
+      .getRoutingService()
+      .pushReplaceCurrent('/');
+  }
 
   render() {
-    if (this.facade) {
-      return (
-        <ion-content>
-          <div id="error-page">
-            <div id="error-page-icon">
-              <ion-icon name="radio-outline"></ion-icon>
-            </div>
-            <div>
-              <ion-text>
-                <h4>{this.facade.__('no-internet')}</h4>
-              </ion-text>
-            </div>
-            <div>
-              <ion-button onClick={() => this.tryAgain()}>
-                <ion-icon slot="start" name="refresh-circle"></ion-icon>
-                {this.facade.__('try-again')}
-              </ion-button>
-            </div>
+    return (
+      <ion-content>
+        <div id="error-page">
+          <div id="error-page-icon">
+            <ion-icon name="radio-outline"></ion-icon>
           </div>
-        </ion-content>
-      );
-    }
+          <div>
+            <ion-text>
+              <h4>{this.facade.__('no-internet')}</h4>
+            </ion-text>
+          </div>
+          <div>
+            <ion-button onClick={() => this.tryAgain()}>
+              <ion-icon slot="start" name="refresh-circle"></ion-icon>
+              {this.facade.__('try-again')}
+            </ion-button>
+          </div>
+        </div>
+      </ion-content>
+    );
   }
 }

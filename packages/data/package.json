@@ -27,6 +27,7 @@
       "**/test/**/*.test.ts"
     ]
   },
+  "license": "BSD-2-Clause",
   "devDependencies": {
     "@faker-js/faker": "^9.8.0",
     "@types/jest": "^29.5.0",

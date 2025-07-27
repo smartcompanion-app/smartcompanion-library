@@ -1,0 +1,14 @@
+#error-page {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+#error-page-icon ion-icon {
+  width:150px;
+  height:150px;
+  margin-bottom:45px;
+}

@@ -10,8 +10,12 @@
 
   --ion-background-color: #e8e2dd;
 */
+  --ion-background-color: #f0f5fe;
+    
   --sc-station-icon-dark: #353e0b; /* https://mdigi.tools/darken-color/#586713 40% */
   --sc-station-icon-background: #e8e2dd;
+  --sc-station-list-subtitle: #afcafa; /* https://mdigi.tools/darken-color/#f0f5fe 14% */
+
   --sc-station-tasks-background: #b2cbf8;
   --ion-color-success-contrast: #ffffff;
 }

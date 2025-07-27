@@ -1,0 +1,27 @@
+#loading {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#loading-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 50% 0 0;
+
+  img {
+    max-width: 320px;
+    width: 100%;
+    margin: 20px;
+  }
+}
+
+#loading-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 50% 0 1;
+  margin: 20px;
+}

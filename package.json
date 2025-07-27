@@ -1,10 +1,13 @@
 {
   "name": "smartcompanion",
+  "author": "SmartCompanion Team <hello@smartcompanion.app> (https://smartcompanion.app) ",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
     "test": "npm run test --workspaces --if-present",
     "build": "npm run build --workspaces --if-present"
-  }
+  },
+  "license": "BSD-2-Clause"
 }

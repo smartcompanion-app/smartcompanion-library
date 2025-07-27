@@ -1,52 +1,74 @@
 import { FileMatcher } from "./file-matcher";
-import { Storage } from "../storage";
 import { File } from "./file";
 
 export class FileUpdater {
 
-    protected fileMatcher = new FileMatcher();
-    protected download: (url:string) => Promise<string>;
-    protected remove: (filename:string) => Promise<void>;
-    protected save: (filename:string, data:string) => Promise<void>;
-    protected list: () => Promise<string[]>;
-    protected progress: (progress: number) => void;
-    protected storage: Storage;
+  protected fileMatcher = new FileMatcher();
 
-    constructor(
-        download: (url:string) => Promise<string>,
-        remove: (filename:string) => Promise<void>,
-        save: (filename:string, data:string) => Promise<void>,
-        list: () => Promise<string[]>,
-        progress: (progress: number) => void,
-        storage: Storage
-    ) {
-        this.download = download;
-        this.remove = remove;
-        this.save = save;
-        this.list = list;
-        this.progress = progress;
-        this.storage = storage;
-    }
+  /**
+   * Downloads a file from the given URL and returns its content.
+   */
+  protected download: (url: string) => Promise<string>;
 
-    async update(newFiles: File[]) {
-        const oldFiles = await this.list();
-        const matching = this.fileMatcher.match(oldFiles, newFiles.map(file => file.filename));
-        const filesToDownload = newFiles.filter(file => matching.download.indexOf(file.filename) >= 0);        
-        await this.removeFiles(matching.remove);
-        await this.downloadFiles(filesToDownload);              
-    }
+  /**
+   * Removes a file with the given filename from file storage.
+   * In a hybrid app this would remove the file from the file system.
+   * In a web app this would remove the file from the cache.
+   */
+  protected remove: (filename: string) => Promise<void>;
 
-    async removeFiles(filesToRemove:string[]) {
-        for (let fileToRemove of filesToRemove) {
-            await this.remove(fileToRemove);
-        }
-    }
+  /**
+   * Saves the given data to a file with the given filename.
+   * In a hybrid app this would save the file to the file system.
+   * In a web app this would save the file to the cache.
+   */
+  protected save: (filename: string, data: string) => Promise<void>;
 
-    async downloadFiles(files:File[]) {     
-        for (let f = 0; f < files.length; f++) {
-            const content = await this.download(files[f].externalUrl);
-            await this.save(files[f].filename, content);
-            this.progress(Math.trunc(( (f+1) / files.length ) * 100));
-        }        
+  /**
+   * Lists all files in the file storage.
+   * In a hybrid app this would list the files in the file system.
+   * In a web app this would list the files in the cache.
+   */
+  protected list: () => Promise<string[]>;
+
+  /**
+   * Reports the progress of a file downloads.
+   */
+  protected progress: (progress: number) => void;
+
+  constructor(
+    download: (url: string) => Promise<string>,
+    remove: (filename: string) => Promise<void>,
+    save: (filename: string, data: string) => Promise<void>,
+    list: () => Promise<string[]>,
+    progress: (progress: number) => void
+  ) {
+    this.download = download;
+    this.remove = remove;
+    this.save = save;
+    this.list = list;
+    this.progress = progress;
+  }
+
+  async update(newFiles: File[]) {
+    const oldFiles = await this.list();
+    const matching = this.fileMatcher.match(oldFiles, newFiles.map(file => file.filename));
+    const filesToDownload = newFiles.filter(file => matching.download.indexOf(file.filename) >= 0);
+    await this.removeFiles(matching.remove);
+    await this.downloadFiles(filesToDownload);
+  }
+
+  async removeFiles(filesToRemove: string[]) {
+    for (let fileToRemove of filesToRemove) {
+      await this.remove(fileToRemove);
     }
+  }
+
+  async downloadFiles(files: File[]) {
+    for (let f = 0; f < files.length; f++) {
+      const content = await this.download(files[f].externalUrl);
+      await this.save(files[f].filename, content);
+      this.progress(Math.trunc(((f + 1) / files.length) * 100));
+    }
+  }
 }

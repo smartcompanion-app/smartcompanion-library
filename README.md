@@ -1,6 +1,6 @@
 # SmartCompanion Library
 
-[![CI](https://github.com/smartcompanion-app/smartcompanion-library/actions/workflows/ci.yml/badge.svg)](https://github.com/smartcompanion-app/smartcompanion-library/actions/workflows/ci.yml)
+[![Build](https://github.com/smartcompanion-app/smartcompanion-library/actions/workflows/ci.yml/badge.svg)](https://github.com/smartcompanion-app/smartcompanion-library/actions/workflows/ci.yml)
 ![License](https://img.shields.io/github/license/smartcompanion-app/smartcompanion-library)
 
 ## Table of Contents

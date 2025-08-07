@@ -46,9 +46,9 @@ export const Example: Story = {
       }) as RoutingService,
       __: (key: string) => {
         switch (key) {
-          case 'enter_pin':
+          case 'enter-pin':
             return 'Enter PIN';
-          case 'pin_error':
+          case 'pin-error':
             return 'PIN was incorrect, please try again';
           default:
             return key;

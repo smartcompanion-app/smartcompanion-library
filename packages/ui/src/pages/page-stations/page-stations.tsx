@@ -1,5 +1,5 @@
 import { Component, h, State, Prop } from '@stencil/core';
-import Swiper from 'swiper';
+import { Swiper } from 'swiper';
 import { Asset, Station } from '@smartcompanion/data';
 import { ServiceFacade } from '@smartcompanion/services';
 

@@ -62,8 +62,8 @@ export class PagePin {
       <ion-content>
         <div id="pin">
           <div id="pin-help">
-            <p>{this.facade.__('enter_pin')}</p>
-            <p class="error">{this.error ? this.facade.__('pin_error') : ''}</p>
+            <p>{this.facade.__('enter-pin')}</p>
+            <p class="error">{this.error ? this.facade.__('pin-error') : ''}</p>
           </div>
           <div id="pin-entry" class={{ "shake": this.error }}>
             {[1, 2, 3, 4].map(position =>

@@ -12,7 +12,7 @@ const meta: Meta<StoryArgs> = {
   tags: ['autodocs'],
   component: PageSelection,
   render: args => (
-    <div style={{width: "320px", height: "500px", border: "1px solid #efefef"}}>
+    <div style={{width: "100vw", height: "100vh"}}>
       <sc-page-selection facade={args.facade as ServiceFacade} />
     </div>
   ),

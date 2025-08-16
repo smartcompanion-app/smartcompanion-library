@@ -42,6 +42,20 @@ export namespace Components {
     interface ScPageSelection {
         "facade": ServiceFacade;
     }
+    interface ScPageStation {
+        /**
+          * This prop displays a button for switching audio output between speaker and earpiece. This feature is only available on hybrid apps
+          * @default false
+         */
+        "enableSwitchAudioOutput": boolean;
+        "facade": ServiceFacade;
+        "stationId": string;
+        "tourId": string;
+    }
+    interface ScPageStationList {
+        "facade": ServiceFacade;
+        "tourId": string;
+    }
     interface ScPageStations {
         "facade": ServiceFacade;
         "stationIndex": number;
@@ -145,6 +159,18 @@ declare global {
         prototype: HTMLScPageSelectionElement;
         new (): HTMLScPageSelectionElement;
     };
+    interface HTMLScPageStationElement extends Components.ScPageStation, HTMLStencilElement {
+    }
+    var HTMLScPageStationElement: {
+        prototype: HTMLScPageStationElement;
+        new (): HTMLScPageStationElement;
+    };
+    interface HTMLScPageStationListElement extends Components.ScPageStationList, HTMLStencilElement {
+    }
+    var HTMLScPageStationListElement: {
+        prototype: HTMLScPageStationListElement;
+        new (): HTMLScPageStationListElement;
+    };
     interface HTMLScPageStationsElement extends Components.ScPageStations, HTMLStencilElement {
     }
     var HTMLScPageStationsElement: {
@@ -187,6 +213,8 @@ declare global {
         "sc-page-loading": HTMLScPageLoadingElement;
         "sc-page-pin": HTMLScPagePinElement;
         "sc-page-selection": HTMLScPageSelectionElement;
+        "sc-page-station": HTMLScPageStationElement;
+        "sc-page-station-list": HTMLScPageStationListElement;
         "sc-page-stations": HTMLScPageStationsElement;
         "sc-player-controls": HTMLScPlayerControlsElement;
         "sc-station-icon": HTMLScStationIconElement;
@@ -229,6 +257,20 @@ declare namespace LocalJSX {
     }
     interface ScPageSelection {
         "facade"?: ServiceFacade;
+    }
+    interface ScPageStation {
+        /**
+          * This prop displays a button for switching audio output between speaker and earpiece. This feature is only available on hybrid apps
+          * @default false
+         */
+        "enableSwitchAudioOutput"?: boolean;
+        "facade"?: ServiceFacade;
+        "stationId"?: string;
+        "tourId"?: string;
+    }
+    interface ScPageStationList {
+        "facade"?: ServiceFacade;
+        "tourId"?: string;
     }
     interface ScPageStations {
         "facade"?: ServiceFacade;
@@ -282,6 +324,8 @@ declare namespace LocalJSX {
         "sc-page-loading": ScPageLoading;
         "sc-page-pin": ScPagePin;
         "sc-page-selection": ScPageSelection;
+        "sc-page-station": ScPageStation;
+        "sc-page-station-list": ScPageStationList;
         "sc-page-stations": ScPageStations;
         "sc-player-controls": ScPlayerControls;
         "sc-station-icon": ScStationIcon;
@@ -298,6 +342,8 @@ declare module "@stencil/core" {
             "sc-page-loading": LocalJSX.ScPageLoading & JSXBase.HTMLAttributes<HTMLScPageLoadingElement>;
             "sc-page-pin": LocalJSX.ScPagePin & JSXBase.HTMLAttributes<HTMLScPagePinElement>;
             "sc-page-selection": LocalJSX.ScPageSelection & JSXBase.HTMLAttributes<HTMLScPageSelectionElement>;
+            "sc-page-station": LocalJSX.ScPageStation & JSXBase.HTMLAttributes<HTMLScPageStationElement>;
+            "sc-page-station-list": LocalJSX.ScPageStationList & JSXBase.HTMLAttributes<HTMLScPageStationListElement>;
             "sc-page-stations": LocalJSX.ScPageStations & JSXBase.HTMLAttributes<HTMLScPageStationsElement>;
             "sc-player-controls": LocalJSX.ScPlayerControls & JSXBase.HTMLAttributes<HTMLScPlayerControlsElement>;
             "sc-station-icon": LocalJSX.ScStationIcon & JSXBase.HTMLAttributes<HTMLScStationIconElement>;

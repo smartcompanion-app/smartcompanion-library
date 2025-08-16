@@ -10,9 +10,7 @@ import { ServiceFacade } from '@smartcompanion/services';
 export class PageStations {
 
   protected playerList: Swiper;
-  protected restartPlaying = false;
-
-  @Prop() facade: ServiceFacade;
+  protected restartPlaying = false;  
 
   @State() stations: Station[] = [];
   @State() duration: number = 0; // seconds
@@ -20,6 +18,7 @@ export class PageStations {
   @State() playing: boolean = false;
   @State() earpiece: boolean = false;
 
+  @Prop() facade: ServiceFacade;
   @Prop({mutable: true, reflect: true}) stationIndex: number;
 
   async componentWillLoad() {    

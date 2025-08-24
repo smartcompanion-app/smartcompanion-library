@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
 import { h } from '@stencil/core';
 import { AudioPlayerService, ServiceFacade } from '@smartcompanion/services';
-import { PageStation } from './page-station';
 import { TourService, StationService } from '@smartcompanion/data';
-import { stations, MockAudioPlayer } from '../../utils/test-utils';
+import { stations } from '../../utils/test-utils';
+import { PageStation } from './page-station';
 
 type StoryArgs = {
   enableSwitchAudioOutput: boolean;
@@ -28,13 +28,13 @@ export default meta;
 
 type Story = StoryObj<StoryArgs>;
 
-const mockAudioPlayer: Partial<AudioPlayerService> = new MockAudioPlayer();
+const audioPlayerService: AudioPlayerService = new AudioPlayerService("");
 
 export const Example: Story = {
   args: {
     enableSwitchAudioOutput: false,
     facade: {
-      getAudioPlayerService: () => mockAudioPlayer as AudioPlayerService,
+      getAudioPlayerService: () => audioPlayerService,
       getTourService: () => ({
         getStations: (_: string) => {
           return Promise.resolve(stations);

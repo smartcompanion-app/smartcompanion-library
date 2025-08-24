@@ -13,7 +13,9 @@ const meta: Meta<StoryArgs> = {
   title: 'Components/Player Controls',
   tags: ['autodocs'],
   component: PlayerControls,
-  render: args => <sc-player-controls {...args} />,
+  render: args => <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}>
+    <sc-player-controls {...args} />
+  </div>,
 };
 
 export default meta;

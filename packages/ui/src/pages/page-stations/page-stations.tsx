@@ -40,8 +40,6 @@ export class PageStations {
     await this.facade.getAudioPlayerService().setSpeaker();
 
     this.facade.getAudioPlayerService().registerUpdateListener(async (update) => {
-      console.log('Audio player update', update);
-
       if (update.state == 'skip') {
         this.playing = false;
         this.stationIndex = update.index;

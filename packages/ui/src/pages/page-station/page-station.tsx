@@ -59,6 +59,8 @@ export class PageStation {
         this.playing = false;
         this.position = 0;
         this.duration = await this.facade.getAudioPlayerService().getDuration();
+      } else if (update.state == "completed") {
+        await this.completed();
       }
     });
 
@@ -78,6 +80,12 @@ export class PageStation {
     await this.facade.getAudioPlayerService().prev();
   }
 
+  async completed() {
+    await this.facade.getAudioPlayerService().pause();
+    await this.facade.getAudioPlayerService().seek(0);
+    this.position = 0;
+  }
+
   async startPositionChange() {
     await this.facade.getAudioPlayerService().pause();
   }
@@ -93,9 +101,7 @@ export class PageStation {
     this.duration = await this.facade.getAudioPlayerService().getDuration();
 
     if (this.duration > 0 && this.position >= (this.duration - 1)) {
-      this.facade.getAudioPlayerService().pause();
-      this.facade.getAudioPlayerService().seek(0);
-      this.position = 0;
+      await this.completed();
     } else {
       setTimeout(() => {
         if (this.playing) {

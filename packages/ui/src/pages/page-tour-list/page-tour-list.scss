@@ -1,0 +1,62 @@
+.tour-card {
+  position: relative;
+  width: 100%;
+  height: 270px;
+  background-size: cover;
+  background-position: center center;
+
+  .tour-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .tour-description {
+    line-height: 1.3;
+  }
+
+  .tour-card-transparency {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9));
+  }
+
+  .tour-details {
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+    right: 30px;
+
+    .info {
+      display: flex;
+      align-items: center;
+      height: 100%;
+
+      strong {
+        padding-top: 3px;
+      }
+    }
+  }
+
+  .tour-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    .button-inner {
+      font-weight: 500 !important;
+    }
+
+    .info {
+      ion-icon {
+        margin-right: 5px;
+      }
+    }
+
+    .right {
+      flex: 0 0 125px;
+    }
+  }
+}

@@ -60,6 +60,9 @@ export namespace Components {
         "facade": ServiceFacade;
         "stationIndex": number;
     }
+    interface ScPageTourList {
+        "facade": ServiceFacade;
+    }
     interface ScPlayerControls {
         /**
           * @default false
@@ -177,6 +180,12 @@ declare global {
         prototype: HTMLScPageStationsElement;
         new (): HTMLScPageStationsElement;
     };
+    interface HTMLScPageTourListElement extends Components.ScPageTourList, HTMLStencilElement {
+    }
+    var HTMLScPageTourListElement: {
+        prototype: HTMLScPageTourListElement;
+        new (): HTMLScPageTourListElement;
+    };
     interface HTMLScPlayerControlsElementEventMap {
         "prev": void;
         "next": void;
@@ -216,6 +225,7 @@ declare global {
         "sc-page-station": HTMLScPageStationElement;
         "sc-page-station-list": HTMLScPageStationListElement;
         "sc-page-stations": HTMLScPageStationsElement;
+        "sc-page-tour-list": HTMLScPageTourListElement;
         "sc-player-controls": HTMLScPlayerControlsElement;
         "sc-station-icon": HTMLScStationIconElement;
     }
@@ -276,6 +286,9 @@ declare namespace LocalJSX {
         "facade"?: ServiceFacade;
         "stationIndex"?: number;
     }
+    interface ScPageTourList {
+        "facade"?: ServiceFacade;
+    }
     interface ScPlayerControls {
         /**
           * @default false
@@ -327,6 +340,7 @@ declare namespace LocalJSX {
         "sc-page-station": ScPageStation;
         "sc-page-station-list": ScPageStationList;
         "sc-page-stations": ScPageStations;
+        "sc-page-tour-list": ScPageTourList;
         "sc-player-controls": ScPlayerControls;
         "sc-station-icon": ScStationIcon;
     }
@@ -345,6 +359,7 @@ declare module "@stencil/core" {
             "sc-page-station": LocalJSX.ScPageStation & JSXBase.HTMLAttributes<HTMLScPageStationElement>;
             "sc-page-station-list": LocalJSX.ScPageStationList & JSXBase.HTMLAttributes<HTMLScPageStationListElement>;
             "sc-page-stations": LocalJSX.ScPageStations & JSXBase.HTMLAttributes<HTMLScPageStationsElement>;
+            "sc-page-tour-list": LocalJSX.ScPageTourList & JSXBase.HTMLAttributes<HTMLScPageTourListElement>;
             "sc-player-controls": LocalJSX.ScPlayerControls & JSXBase.HTMLAttributes<HTMLScPlayerControlsElement>;
             "sc-station-icon": LocalJSX.ScStationIcon & JSXBase.HTMLAttributes<HTMLScStationIconElement>;
         }

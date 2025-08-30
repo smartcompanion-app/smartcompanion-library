@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@stencil/storybook-plugin';
 import { h } from '@stencil/core';
 import { ServiceFacade, MenuService } from '@smartcompanion/services';
 import { PageSelection } from './page-selection';
+import { StationService } from '@smartcompanion/data';
 
 type StoryArgs = {
   facade: Partial<ServiceFacade>;
@@ -31,6 +32,11 @@ export const Example: Story = {
           return Promise.resolve();
         },
       }) as MenuService,
+      getStationService: () => ({
+        getStations: () => {
+          return Promise.resolve([]);
+        },
+      }) as StationService,
       __: (key: string) => {
         switch (key) {
           case 'menu-selection':

@@ -24,6 +24,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "leaflet": "^1.9.4",
     "swiper": "^11.2.8"
   },
   "devDependencies": {
@@ -31,8 +32,8 @@
     "@smartcompanion/services": "*",
     "@stencil/core": "^4.36.2",
     "@stencil/sass": "^3.2.1",
-    "@types/node": "^20.8.0",
     "@stencil/storybook-plugin": "^0.4.2",
+    "@types/node": "^20.8.0",
     "storybook": "^9.1.3"
   }
 }

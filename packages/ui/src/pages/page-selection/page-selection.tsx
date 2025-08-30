@@ -1,5 +1,7 @@
 import { Component, State, Prop, h } from '@stencil/core';
 import { ServiceFacade } from '@smartcompanion/services';
+import { Station } from '@smartcompanion/data';
+import { openStation, getStations } from '../../utils';
 
 @Component({
   tag: 'sc-page-selection',
@@ -7,16 +9,26 @@ import { ServiceFacade } from '@smartcompanion/services';
 })
 export class PageSelection {
 
-  protected maxLength = 2;
-
-  @Prop() facade: ServiceFacade;
-
   @State() input: string = "";
 
+  @State() stations: Station[] = [];
+
+  /**
+   * If tour id is given, stations only for the tour are queried.
+   * Tour id 'default' is a placeholder for the default tour id.
+   */
+  @Prop() tourId: string = null;
+
+  /**
+   * Maximum length of the input field, default to 2
+   */
+  @Prop() maxLength = 2;
+
+  @Prop() facade: ServiceFacade;  
+
   async componentWillLoad() {
-    await this.facade
-      .getMenuService()
-      .enable();
+    await this.facade.getMenuService().enable();
+    this.stations = await getStations(this.facade, this.tourId);
   }
 
   addToInput(input: string) {
@@ -34,19 +46,16 @@ export class PageSelection {
   }
 
   async checkStation() {
-    const stations = await this.facade.getStationService().getStations();
-    const index = stations.findIndex(station => station.number == this.input);
+    const station = this.stations.find(station => station.number == this.input);
     this.input = "";
 
-    if (index >= 0) {
-      this.openStation(`${index}`);
+    if (station) {
+      this.openStation(station.id);
     }
   }  
 
-  openStation(stationIndex: string) {
-    this.facade
-      .getRoutingService()
-      .push(`/stations/${stationIndex}`);
+  openStation(stationId: string) {
+    openStation(this.facade, stationId, this.tourId);
   }
 
   render() {
@@ -54,7 +63,7 @@ export class PageSelection {
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
+            <ion-menu-button />
           </ion-buttons>
           <ion-title>{this.facade.__("menu-selection")}</ion-title>
         </ion-toolbar>

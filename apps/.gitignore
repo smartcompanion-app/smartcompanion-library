@@ -1,0 +1,6 @@
+*
+
+!audioguide-app/
+!audioguide-app/**
+
+!.gitignore

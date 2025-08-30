@@ -2,6 +2,7 @@ import { Component, State, Prop, Host, h } from '@stencil/core';
 import { AudioPlayerUpdate } from '@smartcompanion/services';
 import { Station } from '@smartcompanion/data';
 import { ServiceFacade } from '@smartcompanion/services';
+import { getMenuButton, getStations } from '../../utils';
 
 @Component({
   tag: 'sc-page-station',
@@ -17,26 +18,39 @@ export class PageStation {
   @State() activeIndex = 0;
   @State() earpiece = false;
 
-  @Prop() facade: ServiceFacade;
-  @Prop() tourId: string;
+  /**
+   * Enable Back Button instead of Menu Button
+   */
+  @Prop() enableBackButton: boolean = false;
+
+  /**
+   * Define default back button href, only used if enableBackButton is true
+   */
+  @Prop() defaultBackButtonHref: string = null;
+
+  /**
+   * If tour id is given, stations are retrieved from specific tour.
+   * Tour id 'default' is a placeholder for the default tour id.
+   */
+  @Prop() tourId: string = null;
+
+  /**
+   * The ID of the active station to display
+   */
   @Prop() stationId: string;
+
+  @Prop() facade: ServiceFacade;
 
   /**
    * This prop displays a button for switching audio output between speaker and earpiece.
    * This feature is only available on hybrid apps
    */
   @Prop() enableSwitchAudioOutput: boolean = false;
-
+ 
   async componentWillLoad() {
-    //await this.facade.getMenuService().enable();      
+    await this.facade.getMenuService().enable();
+    this.stations = await getStations(this.facade, this.tourId);
     
-    // if a tourId is given from URL, then use TourService otherwise all stations from StationService
-    if (this.tourId) {
-      this.stations = await this.facade.getTourService().getStations(this.tourId);
-    } else {
-      this.stations = await this.facade.getStationService().getStations();
-    }
-
     // if a stationId is given from URL, then search corresponding activeIndex
     if (this.stationId) {
       this.activeIndex = this.facade.getAudioPlayerService().getIndex(this.stationId, this.stations);
@@ -44,7 +58,6 @@ export class PageStation {
   }
 
   async componentDidLoad() {
-    console.log(this.stations);
     await this.facade.getAudioPlayerService().start(this.stations);
     await this.facade.getAudioPlayerService().setSpeaker();
 
@@ -126,7 +139,7 @@ export class PageStation {
         <ion-header class="ion-no-border">
           <ion-toolbar>
             <ion-buttons slot="start">
-              <ion-back-button text="" color="secondary" defaultHref="/tours/default"></ion-back-button>
+              {getMenuButton(this.enableBackButton, this.defaultBackButtonHref, {"color": "secondary"})}
             </ion-buttons>
             <ion-buttons slot="end">
               {this.enableSwitchAudioOutput && (

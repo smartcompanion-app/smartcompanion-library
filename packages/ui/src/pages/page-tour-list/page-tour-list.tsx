@@ -34,7 +34,7 @@ export class PageTourList {
           <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
-          <ion-title>{this.facade.__('tour-list')}</ion-title>
+          <ion-title>{this.facade.__('menu-overview')}</ion-title>
         </ion-toolbar>
       </ion-header>,
       <ion-content>

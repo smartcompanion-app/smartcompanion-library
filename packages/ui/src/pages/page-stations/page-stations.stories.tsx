@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
 import { h } from '@stencil/core';
-import { AudioPlayerService, ServiceFacade, CollectibleAudioPlayerService } from '@smartcompanion/services';
+import { AudioPlayerService, ServiceFacade, MenuService, CollectibleAudioPlayerService } from '@smartcompanion/services';
 import { StationService } from '@smartcompanion/data';
 import { stations } from '../../utils/test-utils';
 import { PageStations } from './page-stations';
@@ -16,7 +16,7 @@ const meta: Meta<StoryArgs> = {
   component: PageStations,
   render: args => (
     <div style={{width: "100vw", height: "100vh"}}>
-      <sc-page-stations stationIndex={0} facade={args.facade as ServiceFacade} />
+      <sc-page-stations stationId={"default"} facade={args.facade as ServiceFacade} />
     </div>
   ),
 };
@@ -42,6 +42,9 @@ export const Example: Story = {
           return Promise.resolve(stations);
         },
       }) as StationService,      
+      getMenuService: () => ({
+        enable: () => Promise.resolve(),
+      }) as MenuService
     },
   },
 };

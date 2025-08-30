@@ -1,6 +1,7 @@
 import { Component, Prop, State, h } from '@stencil/core';
 import { ServiceFacade } from '@smartcompanion/services';
 import { Station } from '@smartcompanion/data';
+import { getMenuButton, getStations, openStation } from '../../utils';
 
 @Component({
   tag: 'sc-page-station-list',
@@ -10,26 +11,20 @@ export class PageStationList {
 
   @State() stations: Station[] = [];
 
-  @Prop() facade: ServiceFacade;
-  @Prop() tourId: string;
+  /**
+   * The ID of the tour to display stations for, or null if all stations should be displayed
+   */
+  @Prop() tourId: string = null;
+
+  @Prop() facade: ServiceFacade;  
 
   async componentWillLoad() {
     await this.facade.getMenuService().enable();
-
-    if (this.tourId) {
-      if (this.tourId == "default") {
-        const tour = await this.facade.getTourService().getDefaultTour();
-        this.stations = await this.facade.getTourService().getStations(tour.id);
-      } else {
-        this.stations = await this.facade.getTourService().getStations(this.tourId);
-      }
-    } else {
-      this.stations = await this.facade.getStationService().getStations();
-    }
+    this.stations = await getStations(this.facade, this.tourId);
   }
 
   openStation(stationId: string) {
-    this.facade.getRoutingService().push(`/tours/${this.tourId}/stations/${stationId}`);
+    openStation(this.facade, stationId, this.tourId);
   }
 
   render() {
@@ -37,7 +32,7 @@ export class PageStationList {
       <ion-header>
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
-            <ion-back-button text="" default-href="/tours"></ion-back-button>
+            {getMenuButton(!!this.tourId, "/tours")}
           </ion-buttons>
           <ion-title>{this.facade.__("station-list")}</ion-title>
         </ion-toolbar>

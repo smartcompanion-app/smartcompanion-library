@@ -7,11 +7,19 @@ import { ServiceFacade } from '@smartcompanion/services';
 })
 export class PageLoading {
 
-  @Prop() facade: ServiceFacade;
-
-  @Prop() image: string;
-
   @State() progress: number = 1;
+ 
+  /**
+   * The image to display while loading
+   */
+  @Prop() image: string;
+  
+  /**
+   * The default or home route, when loading is successfully completed
+   */
+  @Prop() homeRoute: string = "/stations/default";
+
+  @Prop() facade: ServiceFacade;
 
   async componentWillLoad() {
     this.facade
@@ -34,7 +42,7 @@ export class PageLoading {
     if (result == 'language') {
       this.facade.getRoutingService().pushReplaceCurrent('/language');
     } else if (result == 'home') {
-      this.facade.getRoutingService().pushReplaceCurrent('/stations/0');
+      this.facade.getRoutingService().pushReplaceCurrent(this.homeRoute);
     } else if (result == 'pin') {
       this.facade.getRoutingService().pushReplaceCurrent('/pin');
     } else {

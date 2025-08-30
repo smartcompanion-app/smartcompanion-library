@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@stencil/storybook-plugin';
 import { h } from '@stencil/core';
 import { ServiceFacade, MenuService } from '@smartcompanion/services';
 import { PageSelection } from './page-selection';
+import { StationService } from '@smartcompanion/data';
 
 type StoryArgs = {
   facade: Partial<ServiceFacade>;
@@ -12,7 +13,7 @@ const meta: Meta<StoryArgs> = {
   tags: ['autodocs'],
   component: PageSelection,
   render: args => (
-    <div style={{width: "320px", height: "500px", border: "1px solid #efefef"}}>
+    <div style={{width: "100vw", height: "100vh"}}>
       <sc-page-selection facade={args.facade as ServiceFacade} />
     </div>
   ),
@@ -31,6 +32,11 @@ export const Example: Story = {
           return Promise.resolve();
         },
       }) as MenuService,
+      getStationService: () => ({
+        getStations: () => {
+          return Promise.resolve([]);
+        },
+      }) as StationService,
       __: (key: string) => {
         switch (key) {
           case 'menu-selection':

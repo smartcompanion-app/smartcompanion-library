@@ -10,23 +10,38 @@ import { ServiceFacade } from '@smartcompanion/services';
 export class PageStations {
 
   protected playerList: Swiper;
-  protected restartPlaying = false;
-
-  @Prop() facade: ServiceFacade;
+  protected restartPlaying = false;  
 
   @State() stations: Station[] = [];
+  @State() stationIndex: number = 0;
   @State() duration: number = 0; // seconds
   @State() position: number = 0; // seconds
   @State() playing: boolean = false;
   @State() earpiece: boolean = false;
 
-  @Prop({mutable: true, reflect: true}) stationIndex: number;
+  /**
+   * The ID of the initial active station to display, if set to null, the first station will be displayed
+   */
+  @Prop() stationId: string = null;
 
+  @Prop() facade: ServiceFacade;
+  
   async componentWillLoad() {    
+    this.facade.getMenuService().enable();
+  
     this.stations = await this
       .facade
       .getStationService()
       .getStations();
+
+    if (this.stationId == "default") {
+      this.stationIndex = 0;
+    } else if (this.stationId) {
+      const index = this.stations.findIndex(station => station.id === this.stationId);
+      if (index >= 0) {
+        this.stationIndex = index;
+      }
+    }
   }
 
   async componentDidLoad() {    
@@ -41,8 +56,6 @@ export class PageStations {
     await this.facade.getAudioPlayerService().setSpeaker();
 
     this.facade.getAudioPlayerService().registerUpdateListener(async (update) => {
-      console.log('Audio player update', update);
-
       if (update.state == 'skip') {
         this.playing = false;
         this.stationIndex = update.index;

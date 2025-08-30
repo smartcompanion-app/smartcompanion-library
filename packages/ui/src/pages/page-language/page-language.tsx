@@ -15,7 +15,6 @@ export class PageLanguage {
   }
 
   changeLanguage(languageCode: string) {
-    // TODO, add to facade: this.facade.data().clearCollectionPercentage(languageCode);    
     this.facade.changeLanguage(languageCode);
     this.facade.getRoutingService().pushReplaceCurrent('/');
   }

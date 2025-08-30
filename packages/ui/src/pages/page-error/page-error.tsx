@@ -10,6 +10,10 @@ export class PageError {
 
   @Prop() facade: ServiceFacade;
 
+  async componentDidLoad() {
+    this.facade.getMenuService().disable();
+  }
+
   tryAgain() {
     this
       .facade

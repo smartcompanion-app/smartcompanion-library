@@ -29,7 +29,43 @@ export namespace Components {
     }
     interface ScPageLoading {
         "facade": ServiceFacade;
+        /**
+          * The default or home route, when loading is successfully completed
+          * @default "/stations/default"
+         */
+        "homeRoute": string;
+        /**
+          * The image to display while loading
+         */
         "image": string;
+    }
+    interface ScPageMap {
+        /**
+          * Define default back button href, only used if enableBackButton is true
+          * @default null
+         */
+        "defaultBackButtonHref": string;
+        /**
+          * Enable Back Button instead of Menu Button
+          * @default false
+         */
+        "enableBackButton": boolean;
+        "facade": ServiceFacade;
+        /**
+          * Map tiles attribution for the leaflet map
+          * @default ''
+         */
+        "mapAttribution": string;
+        /**
+          * Map bounds for the leaflet map in top left Lat/Lng, bottom right Lat/Lng
+         */
+        "mapBounds": Array<number>;
+        "tileUrlTemplate": string;
+        /**
+          * If tour id is given, stations only for the tour are shown. Tour id 'default' is a placeholder for the default tour id.
+          * @default null
+         */
+        "tourId": string;
     }
     interface ScPagePin {
         "facade": ServiceFacade;
@@ -41,10 +77,62 @@ export namespace Components {
     }
     interface ScPageSelection {
         "facade": ServiceFacade;
+        /**
+          * Maximum length of the input field, default to 2
+          * @default 2
+         */
+        "maxLength": number;
+        /**
+          * If tour id is given, stations only for the tour are queried. Tour id 'default' is a placeholder for the default tour id.
+          * @default null
+         */
+        "tourId": string;
+    }
+    interface ScPageStation {
+        /**
+          * Define default back button href, only used if enableBackButton is true
+          * @default null
+         */
+        "defaultBackButtonHref": string;
+        /**
+          * Enable Back Button instead of Menu Button
+          * @default false
+         */
+        "enableBackButton": boolean;
+        /**
+          * This prop displays a button for switching audio output between speaker and earpiece. This feature is only available on hybrid apps
+          * @default false
+         */
+        "enableSwitchAudioOutput": boolean;
+        "facade": ServiceFacade;
+        /**
+          * The ID of the active station to display
+         */
+        "stationId": string;
+        /**
+          * If tour id is given, stations are retrieved from specific tour. Tour id 'default' is a placeholder for the default tour id.
+          * @default null
+         */
+        "tourId": string;
+    }
+    interface ScPageStationList {
+        "facade": ServiceFacade;
+        /**
+          * The ID of the tour to display stations for, or null if all stations should be displayed
+          * @default null
+         */
+        "tourId": string;
     }
     interface ScPageStations {
         "facade": ServiceFacade;
-        "stationIndex": number;
+        /**
+          * The ID of the initial active station to display, if set to null, the first station will be displayed
+          * @default null
+         */
+        "stationId": string;
+    }
+    interface ScPageTourList {
+        "facade": ServiceFacade;
     }
     interface ScPlayerControls {
         /**
@@ -133,6 +221,12 @@ declare global {
         prototype: HTMLScPageLoadingElement;
         new (): HTMLScPageLoadingElement;
     };
+    interface HTMLScPageMapElement extends Components.ScPageMap, HTMLStencilElement {
+    }
+    var HTMLScPageMapElement: {
+        prototype: HTMLScPageMapElement;
+        new (): HTMLScPageMapElement;
+    };
     interface HTMLScPagePinElement extends Components.ScPagePin, HTMLStencilElement {
     }
     var HTMLScPagePinElement: {
@@ -145,11 +239,29 @@ declare global {
         prototype: HTMLScPageSelectionElement;
         new (): HTMLScPageSelectionElement;
     };
+    interface HTMLScPageStationElement extends Components.ScPageStation, HTMLStencilElement {
+    }
+    var HTMLScPageStationElement: {
+        prototype: HTMLScPageStationElement;
+        new (): HTMLScPageStationElement;
+    };
+    interface HTMLScPageStationListElement extends Components.ScPageStationList, HTMLStencilElement {
+    }
+    var HTMLScPageStationListElement: {
+        prototype: HTMLScPageStationListElement;
+        new (): HTMLScPageStationListElement;
+    };
     interface HTMLScPageStationsElement extends Components.ScPageStations, HTMLStencilElement {
     }
     var HTMLScPageStationsElement: {
         prototype: HTMLScPageStationsElement;
         new (): HTMLScPageStationsElement;
+    };
+    interface HTMLScPageTourListElement extends Components.ScPageTourList, HTMLStencilElement {
+    }
+    var HTMLScPageTourListElement: {
+        prototype: HTMLScPageTourListElement;
+        new (): HTMLScPageTourListElement;
     };
     interface HTMLScPlayerControlsElementEventMap {
         "prev": void;
@@ -185,9 +297,13 @@ declare global {
         "sc-page-error": HTMLScPageErrorElement;
         "sc-page-language": HTMLScPageLanguageElement;
         "sc-page-loading": HTMLScPageLoadingElement;
+        "sc-page-map": HTMLScPageMapElement;
         "sc-page-pin": HTMLScPagePinElement;
         "sc-page-selection": HTMLScPageSelectionElement;
+        "sc-page-station": HTMLScPageStationElement;
+        "sc-page-station-list": HTMLScPageStationListElement;
         "sc-page-stations": HTMLScPageStationsElement;
+        "sc-page-tour-list": HTMLScPageTourListElement;
         "sc-player-controls": HTMLScPlayerControlsElement;
         "sc-station-icon": HTMLScStationIconElement;
     }
@@ -217,7 +333,43 @@ declare namespace LocalJSX {
     }
     interface ScPageLoading {
         "facade"?: ServiceFacade;
+        /**
+          * The default or home route, when loading is successfully completed
+          * @default "/stations/default"
+         */
+        "homeRoute"?: string;
+        /**
+          * The image to display while loading
+         */
         "image"?: string;
+    }
+    interface ScPageMap {
+        /**
+          * Define default back button href, only used if enableBackButton is true
+          * @default null
+         */
+        "defaultBackButtonHref"?: string;
+        /**
+          * Enable Back Button instead of Menu Button
+          * @default false
+         */
+        "enableBackButton"?: boolean;
+        "facade"?: ServiceFacade;
+        /**
+          * Map tiles attribution for the leaflet map
+          * @default ''
+         */
+        "mapAttribution"?: string;
+        /**
+          * Map bounds for the leaflet map in top left Lat/Lng, bottom right Lat/Lng
+         */
+        "mapBounds"?: Array<number>;
+        "tileUrlTemplate"?: string;
+        /**
+          * If tour id is given, stations only for the tour are shown. Tour id 'default' is a placeholder for the default tour id.
+          * @default null
+         */
+        "tourId"?: string;
     }
     interface ScPagePin {
         "facade"?: ServiceFacade;
@@ -229,10 +381,62 @@ declare namespace LocalJSX {
     }
     interface ScPageSelection {
         "facade"?: ServiceFacade;
+        /**
+          * Maximum length of the input field, default to 2
+          * @default 2
+         */
+        "maxLength"?: number;
+        /**
+          * If tour id is given, stations only for the tour are queried. Tour id 'default' is a placeholder for the default tour id.
+          * @default null
+         */
+        "tourId"?: string;
+    }
+    interface ScPageStation {
+        /**
+          * Define default back button href, only used if enableBackButton is true
+          * @default null
+         */
+        "defaultBackButtonHref"?: string;
+        /**
+          * Enable Back Button instead of Menu Button
+          * @default false
+         */
+        "enableBackButton"?: boolean;
+        /**
+          * This prop displays a button for switching audio output between speaker and earpiece. This feature is only available on hybrid apps
+          * @default false
+         */
+        "enableSwitchAudioOutput"?: boolean;
+        "facade"?: ServiceFacade;
+        /**
+          * The ID of the active station to display
+         */
+        "stationId"?: string;
+        /**
+          * If tour id is given, stations are retrieved from specific tour. Tour id 'default' is a placeholder for the default tour id.
+          * @default null
+         */
+        "tourId"?: string;
+    }
+    interface ScPageStationList {
+        "facade"?: ServiceFacade;
+        /**
+          * The ID of the tour to display stations for, or null if all stations should be displayed
+          * @default null
+         */
+        "tourId"?: string;
     }
     interface ScPageStations {
         "facade"?: ServiceFacade;
-        "stationIndex"?: number;
+        /**
+          * The ID of the initial active station to display, if set to null, the first station will be displayed
+          * @default null
+         */
+        "stationId"?: string;
+    }
+    interface ScPageTourList {
+        "facade"?: ServiceFacade;
     }
     interface ScPlayerControls {
         /**
@@ -280,9 +484,13 @@ declare namespace LocalJSX {
         "sc-page-error": ScPageError;
         "sc-page-language": ScPageLanguage;
         "sc-page-loading": ScPageLoading;
+        "sc-page-map": ScPageMap;
         "sc-page-pin": ScPagePin;
         "sc-page-selection": ScPageSelection;
+        "sc-page-station": ScPageStation;
+        "sc-page-station-list": ScPageStationList;
         "sc-page-stations": ScPageStations;
+        "sc-page-tour-list": ScPageTourList;
         "sc-player-controls": ScPlayerControls;
         "sc-station-icon": ScStationIcon;
     }
@@ -296,9 +504,13 @@ declare module "@stencil/core" {
             "sc-page-error": LocalJSX.ScPageError & JSXBase.HTMLAttributes<HTMLScPageErrorElement>;
             "sc-page-language": LocalJSX.ScPageLanguage & JSXBase.HTMLAttributes<HTMLScPageLanguageElement>;
             "sc-page-loading": LocalJSX.ScPageLoading & JSXBase.HTMLAttributes<HTMLScPageLoadingElement>;
+            "sc-page-map": LocalJSX.ScPageMap & JSXBase.HTMLAttributes<HTMLScPageMapElement>;
             "sc-page-pin": LocalJSX.ScPagePin & JSXBase.HTMLAttributes<HTMLScPagePinElement>;
             "sc-page-selection": LocalJSX.ScPageSelection & JSXBase.HTMLAttributes<HTMLScPageSelectionElement>;
+            "sc-page-station": LocalJSX.ScPageStation & JSXBase.HTMLAttributes<HTMLScPageStationElement>;
+            "sc-page-station-list": LocalJSX.ScPageStationList & JSXBase.HTMLAttributes<HTMLScPageStationListElement>;
             "sc-page-stations": LocalJSX.ScPageStations & JSXBase.HTMLAttributes<HTMLScPageStationsElement>;
+            "sc-page-tour-list": LocalJSX.ScPageTourList & JSXBase.HTMLAttributes<HTMLScPageTourListElement>;
             "sc-player-controls": LocalJSX.ScPlayerControls & JSXBase.HTMLAttributes<HTMLScPlayerControlsElement>;
             "sc-station-icon": LocalJSX.ScStationIcon & JSXBase.HTMLAttributes<HTMLScStationIconElement>;
         }

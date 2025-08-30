@@ -10,7 +10,9 @@ const meta: Meta<StoryArgs> = {
   title: 'Components/Numpad',
   tags: ['autodocs'],
   component: Numpad,
-  render: args => <sc-numpad {...args} />,
+  render: args => <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}>
+    <sc-numpad {...args} />
+  </div>,
 };
 
 export default meta;

@@ -12,9 +12,11 @@ const meta: Meta<StoryArgs> = {
   title: 'Components/Station Icon',
   tags: ['autodocs'],
   component: StationIcon,
-  render: args => <sc-station-icon 
-    collected={args.collected} 
-    collected-percent={args.collectedPercent}>{args.number}</sc-station-icon>
+  render: args => <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}>
+    <sc-station-icon 
+      collected={args.collected} 
+      collected-percent={args.collectedPercent}>{args.number}</sc-station-icon>
+  </div>
 };
 
 export default meta;

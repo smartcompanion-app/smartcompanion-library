@@ -82,7 +82,7 @@ export class AudioPlayerService {
     return result.value;
   }
 
-  getIndex(id: String | string, items: Item[] = this.items): number {
+  getIndex(id: String | string, items: Array<{id: string}> = this.items): number {
     for (let i = 0; i < items.length; i++) {
       if (items[i].id == id) {
         return i;
@@ -98,7 +98,7 @@ export class AudioPlayerService {
     return "";
   }
 
-  getPlayerItems(stations: Station[]): any[] {
+  getPlayerItems(stations: Station[]): Item[] {
     return stations
       .map(station => (station.audios as Asset[])
         .map(audio => ({

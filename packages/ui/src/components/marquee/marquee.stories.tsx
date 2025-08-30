@@ -11,7 +11,7 @@ const meta: Meta<StoryArgs> = {
   title: 'Components/Marquee',
   tags: ['autodocs'],
   component: Marquee,
-  render: args => <div style={{ width: '300px' }}>
+  render: args => <div style={{ width: "100vw" }}>
     <sc-marquee active={args.active}>{args.text}</sc-marquee>
   </div>,
 };

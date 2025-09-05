@@ -30,18 +30,23 @@ export class PlayerControls {
     return (
       <Host id="player">
         <div id="player-controls">
-          <ion-fab-button onClick={() => this.prev.emit()}>
+          <ion-fab-button data-testid="player-prev-button" onClick={() => this.prev.emit()}>
             <ion-icon name="play-skip-back"></ion-icon>
           </ion-fab-button>
-          <ion-fab-button id="player-controls-play" disabled={this.disabled} onClick={() => this.playPause.emit(this.playing)}>
+          <ion-fab-button
+            id="player-controls-play"
+            data-testid="player-play-button"
+            disabled={this.disabled}
+            onClick={() => this.playPause.emit(this.playing)}>
             <ion-icon name={this.playing ? "pause" : "play"}></ion-icon>
           </ion-fab-button>
-          <ion-fab-button onClick={() => this.next.emit()}>
+          <ion-fab-button data-testid="player-next-button" onClick={() => this.next.emit()}>
             <ion-icon name="play-skip-forward"></ion-icon>
           </ion-fab-button>
         </div>
         <div id="player-position">
           <ion-range
+            data-testid="player-range-slider"
             onIonKnobMoveStart={(e) => { this.startPositionChange.emit(e.detail.value) }}
             onIonKnobMoveEnd={(e) => { this.endPositionChange.emit(e.detail.value) }}
             onChange={(e) => this.positionChange.emit(e.detail.value)}
@@ -49,8 +54,12 @@ export class PlayerControls {
             disabled={this.duration <= 0}
             min={0}
             max={this.duration}>
-              <ion-text slot="start">{this.getFormattedSeconds(this.position)}</ion-text>
-              <ion-text slot="end">{this.getFormattedSeconds(this.duration)}</ion-text>
+              <ion-text 
+                data-testid="player-position" 
+                slot="start">{this.getFormattedSeconds(this.position)}</ion-text>
+              <ion-text 
+                data-testid="player-duration" 
+                slot="end">{this.getFormattedSeconds(this.duration)}</ion-text>
           </ion-range>
         </div>
       </Host>

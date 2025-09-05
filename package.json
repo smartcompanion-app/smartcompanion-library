@@ -6,8 +6,8 @@
     "apps/*"
   ],
   "scripts": {
-    "test": "npm run test --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present"
+    "test": "npm run test -w packages/data -w packages/services -w packages/ui --if-present",
+    "build": "npm run build -w packages/data -w packages/services -w packages/ui --if-present"
   },
   "license": "BSD-2-Clause"
 }

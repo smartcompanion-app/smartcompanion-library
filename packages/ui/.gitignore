@@ -3,3 +3,5 @@ dist/
 loader/
 output/
 .stencil/
+storybook-static/
+.DS_Store

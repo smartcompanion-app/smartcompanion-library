@@ -210,7 +210,7 @@ export class PageStations {
           <div id="player-list" class="swiper">
             <div class="swiper-wrapper">
               {this.stations.map((station, index) =>
-                <div class={this.stationIndex == index ? 'swiper-slide active' : 'swiper-slide'}>
+                <div data-testid={`player-list-item-${index}`} class={this.stationIndex == index ? 'swiper-slide active' : 'swiper-slide'}>
                   <ion-card button onClick={() => { this.select(index) }}>
                     <div class="card-content">
                       <img src={this.getImageUri(index, 1)} />

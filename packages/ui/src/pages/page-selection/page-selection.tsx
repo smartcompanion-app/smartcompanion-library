@@ -70,7 +70,7 @@ export class PageSelection {
       </ion-header>,
       <ion-content fullscreen={true}>
         <div slot="fixed" class="station-selection-content">
-          <div class="numpad-input">
+          <div data-testid="numpad-input" class="numpad-input">
             {this.input}
           </div>
           <sc-numpad

@@ -1,10 +1,13 @@
-import { defineCustomElements } from '../loader';
-
+import { type Preview } from '@stencil/storybook-plugin';
+import { within as withinShadow } from 'shadow-dom-testing-library';
 import './style.css';
 
-defineCustomElements();
+const preview: Preview = {
 
-const preview = {
+  beforeEach({ canvasElement, canvas }) {
+    Object.assign(canvas, { ...withinShadow(canvasElement) });
+  },
+
   parameters: {
     layout: 'fullscreen',
     viewport: {
@@ -20,9 +23,16 @@ const preview = {
       }
     }
   },
+
   initialGlobals: {
     viewport: { value: 'mobile-sm', isRotated: false },
   },
-}; 
+};
+
+export type ShadowQueries = ReturnType<typeof withinShadow>;
+
+declare module 'storybook/internal/csf' {
+  interface Canvas extends ShadowQueries {}
+}
 
 export default preview;

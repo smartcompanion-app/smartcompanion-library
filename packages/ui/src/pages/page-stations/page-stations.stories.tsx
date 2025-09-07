@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
+import { expect, waitFor } from 'storybook/test';
 import { h } from '@stencil/core';
 import { AudioPlayerService, ServiceFacade, MenuService, CollectibleAudioPlayerService } from '@smartcompanion/services';
 import { StationService } from '@smartcompanion/data';
 import { stations } from '../../utils/test-utils';
 import { PageStations } from './page-stations';
-
 
 type StoryArgs = {
   facade: Partial<ServiceFacade>;
@@ -47,5 +47,33 @@ export const Example: Story = {
       }) as MenuService
     },
   },
+  play: async ({ canvas, userEvent, step }) => {
+
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    await step('Last item active, when click prev from first item', async () => {
+      // @ts-ignore
+      const prevButton = await canvas.findByShadowTestId('player-prev-button');
+      await userEvent.click(prevButton);
+      
+      await waitFor(() => {
+        // @ts-ignore
+        const firstListItem = canvas.getByShadowTestId('player-list-item-2');
+        expect(firstListItem.classList.contains('active')).toBe(true);
+      }, { timeout: 500 });
+    });
+
+    await step('First item active, when click next from last item', async () => {
+      // @ts-ignore
+      const nextButton = await canvas.findByShadowTestId('player-next-button');
+      await userEvent.click(nextButton);
+
+      await waitFor(() => {
+        // @ts-ignore
+        const firstListItem = canvas.getByShadowTestId('player-list-item-0');
+        expect(firstListItem.classList.contains('active')).toBe(true);
+      }, { timeout: 500 });
+    });
+  }
 };
 

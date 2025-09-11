@@ -8,7 +8,23 @@ import { ServiceFacade } from '@smartcompanion/services';
 export class PageLoading {
 
   @State() progress: number = 1;
+
+  /**
+   * Loading Spinner Color 'primary' or 'secondary' (default: 'primary')
+   */
+  @Prop() spinnerColor: 'primary' | 'secondary' = 'primary';
  
+  /**
+   * Loading Progress Bar Color 'primary' or 'secondary' (default: 'primary')
+   */
+  @Prop() progressBarColor: 'primary' | 'secondary' = 'primary';
+
+  /**
+   * Loading Text Color 'primary' or 'secondary' (default: 'primary')
+   */
+  @Prop() loadingTextColor: 'primary' | 'secondary' = 'primary';
+
+
   /**
    * The image to display while loading
    */
@@ -59,12 +75,12 @@ export class PageLoading {
           </div>
           <div id="loading-info">
             {this.progress >= 1
-              ? <ion-spinner></ion-spinner>
+              ? <ion-spinner color={this.spinnerColor}></ion-spinner>
               : [
-                <ion-text>
+                <ion-text color={this.loadingTextColor}>
                   <h4>Loading {this.progress >= 1 ? '' : ((Math.trunc(this.progress * 100)) + '%')}</h4>
                 </ion-text>,
-                <ion-progress-bar value={this.progress}></ion-progress-bar>
+                <ion-progress-bar color={this.progressBarColor} value={this.progress}></ion-progress-bar>
               ]
             }
           </div>

@@ -14,6 +14,12 @@ export class PageSelection {
   @State() stations: Station[] = [];
 
   /**
+   * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+   */
+  @Prop() headerBackgroundColor: 'primary' | 'secondary' = 'primary';
+  
+
+  /**
    * If tour id is given, stations only for the tour are queried.
    * Tour id 'default' is a placeholder for the default tour id.
    */
@@ -61,7 +67,7 @@ export class PageSelection {
   render() {
     return [
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color={this.headerBackgroundColor}>
           <ion-buttons slot="start">
             <ion-menu-button />
           </ion-buttons>

@@ -13,6 +13,12 @@ export class PageMap {
   protected map: any;
 
   /**
+   * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+   */
+  @Prop() headerBackgroundColor: 'primary' | 'secondary' = 'primary';
+  
+
+  /**
    * Enable Back Button instead of Menu Button
    */
   @Prop() enableBackButton: boolean = false;
@@ -100,7 +106,7 @@ export class PageMap {
   render() {
     return [
       <ion-header>
-        <ion-toolbar color="primary">
+        <ion-toolbar color={this.headerBackgroundColor}>
           <ion-buttons slot="start">
             {getMenuButton(this.enableBackButton, this.defaultBackButtonHref)}
           </ion-buttons>

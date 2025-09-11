@@ -15,10 +15,7 @@ export class AssetService {
 
   constructor(
     storage: Storage, 
-    resolveUrl: (asset: Asset) => Promise<{ fileUrl: string, webUrl: string }> =
-      async (asset: Asset) => {
-        return { webUrl: asset.externalUrl, fileUrl: asset.externalUrl };
-      }
+    resolveUrl: (asset: Asset) => Promise<{ fileUrl: string, webUrl: string }>      
   ) {
     this.storage = storage;
     this.resolveUrl = resolveUrl;

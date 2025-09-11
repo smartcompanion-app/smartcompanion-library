@@ -10,6 +10,11 @@ export class PageTourList {
 
   @State() tours: Tour[] = [];
 
+  /**
+   * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+   */
+  @Prop() headerBackgroundColor: 'primary' | 'secondary' = 'primary';
+
   @Prop() facade: ServiceFacade;
 
   async componentWillLoad() {
@@ -30,7 +35,7 @@ export class PageTourList {
   render() {
     return [
       <ion-header>
-        <ion-toolbar color="primary">
+        <ion-toolbar color={this.headerBackgroundColor}>
           <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
           </ion-buttons>

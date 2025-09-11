@@ -12,6 +12,11 @@ export class PageStationList {
   @State() stations: Station[] = [];
 
   /**
+   * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+   */
+  @Prop() headerBackgroundColor: 'primary' | 'secondary' = 'primary';
+
+  /**
    * The ID of the tour to display stations for, or null if all stations should be displayed
    */
   @Prop() tourId: string = null;
@@ -30,7 +35,7 @@ export class PageStationList {
   render() {
     return [
       <ion-header>
-        <ion-toolbar color="primary">
+        <ion-toolbar color={this.headerBackgroundColor}>
           <ion-buttons slot="start">
             {getMenuButton(!!this.tourId, "/tours")}
           </ion-buttons>

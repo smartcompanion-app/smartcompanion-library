@@ -6,7 +6,7 @@ import { getMenuButton, getStations } from '../../utils';
 
 @Component({
   tag: 'sc-page-station',
-  styleUrl: 'page-station.scss'
+  styleUrl: 'page-station.scss',
 })
 export class PageStation {
 
@@ -146,7 +146,7 @@ export class PageStation {
                 <ion-fab-button color="light" size="small" onClick={() => this.toggleOutput()}>
                   {this.earpiece ?
                     <ion-icon color="primary" name="volume-medium-outline"></ion-icon> :
-                    <ion-icon color="primary" src="../../assets/icon/earpiece.svg"></ion-icon>
+                    <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>
                   }
                 </ion-fab-button>
               )}

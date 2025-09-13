@@ -11,7 +11,7 @@ export class PageTourList {
   @State() tours: Tour[] = [];
 
   /**
-   * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+   * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
    */
   @Prop() headerBackgroundColor: 'primary' | 'secondary' = 'primary';
 

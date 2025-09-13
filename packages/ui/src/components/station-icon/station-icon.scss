@@ -32,6 +32,18 @@
   z-index: 1;
 }
 
+.station-icon-size-large {
+  &.station-icon-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+  .station-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 1em;
+  }
+}
+
 .collected-icon {
   position: absolute;
   font-size: 10px;

@@ -14,11 +14,13 @@ describe('test text service', () => {
 
   test('text should return default if no language and no text is available', () => {
     expect(service.getText('TRY_AGAIN')).toEqual('try again');
+    expect(service.getText('TRY-AGAIN')).toEqual('try again');
   });
 
   test('text should return default if no text is available', () => {
     memoryStorage.set('language', 'xy');
     expect(service.getText('TRY_AGAIN')).toEqual('try again');
+    expect(service.getText('TRY-AGAIN')).toEqual('try again');
   });
 
   test('text should return translation if available', () => {
@@ -26,5 +28,19 @@ describe('test text service', () => {
     memoryStorage.set('texts-xy-TRY_AGAIN', 'Neu Laden');
 
     expect(service.getText('TRY_AGAIN')).toEqual('Neu Laden');
+  });
+
+  test('text should return translation, based on alternative key variant 1', () => {
+    memoryStorage.set('language', 'xy');
+    memoryStorage.set('texts-xy-TRY-AGAIN', 'Neu Laden');
+
+    expect(service.getText('TRY_AGAIN')).toEqual('Neu Laden');
+  });
+
+  test('text should return translation, based on alternative key variant 2', () => {
+    memoryStorage.set('language', 'xy');
+    memoryStorage.set('texts-xy-TRY_AGAIN', 'Neu Laden');
+
+    expect(service.getText('TRY-AGAIN')).toEqual('Neu Laden');
   });
 });

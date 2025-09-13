@@ -1,4 +1,4 @@
-import { LoadService, Language, ServiceLocator, Storage, BrowserStorage, OnlineLoadService, DataUpdater, OfflineLoadService } from '@smartcompanion/data';
+import { LoadService, Language, ServiceLocator, Storage, BrowserStorage, OnlineLoadService, DataUpdater, OfflineLoadService, Asset } from '@smartcompanion/data';
 import { RoutingService, MenuService, AudioPlayerService, CollectibleAudioPlayerService } from './services';
 
 export class ServiceFacade extends ServiceLocator {
@@ -7,10 +7,15 @@ export class ServiceFacade extends ServiceLocator {
     super(storage);
   }
 
-  registerDefaultServices(): void {
-    super.registerDefaultServices();
+  registerDefaultServices(
+    resolveUrl: (asset: Asset) => Promise<{ fileUrl: string, webUrl: string }> =
+      async (asset: Asset) => {
+        return { webUrl: asset.externalUrl, fileUrl: asset.externalUrl };
+      }
+  ) {
+    super.registerDefaultServices(resolveUrl);
     this.register(RoutingService, (_: ServiceLocator) => new RoutingService());
-    this.register(MenuService, (_: ServiceLocator) => new MenuService());    
+    this.register(MenuService, (_: ServiceLocator) => new MenuService());
   }
 
   registerDefaultAudioPlayerService(subtitle: string): void {
@@ -46,7 +51,7 @@ export class ServiceFacade extends ServiceLocator {
       serviceLocator
     ));
   }
-  
+
   getRoutingService(): RoutingService {
     return this.get(RoutingService);
   }

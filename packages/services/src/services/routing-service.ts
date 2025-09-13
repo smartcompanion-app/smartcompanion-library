@@ -39,6 +39,10 @@ export class RoutingService {
     }
   }
 
+  /**
+   * Push loaded component from URI onto the stack and
+   * remove all previous components from the stack
+   */
   async pushReplace(uri: string) {
     const ionNav = document.querySelector('ion-nav');
     await this.push(uri);
@@ -57,6 +61,7 @@ export class RoutingService {
    */
   addRouteChangeListener(to: string, callback: () => void) {
     const ionRouter = document.querySelector('ion-router');
+    
     ionRouter.addEventListener('ionRouteDidChange', (e: CustomEvent) => {
       const match = to.match(/(.+)\*$/);
 

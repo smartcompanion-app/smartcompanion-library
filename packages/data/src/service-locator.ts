@@ -1,4 +1,4 @@
-import { AssetService, LanguageService, PinService, ServerService, StationService, TextService, TourService } from "./domain";
+import { AssetService, LanguageService, PinService, ServerService, StationService, TextService, TourService, Asset } from "./domain";
 import { LoadService } from "./load";
 import { Storage } from "./storage";
 
@@ -16,10 +16,15 @@ export class ServiceLocator {
     this.storage = storage;
   }
 
-  registerDefaultServices() {
+  registerDefaultServices(
+    resolveUrl: (asset: Asset) => Promise<{ fileUrl: string, webUrl: string }> =
+      async (asset: Asset) => {
+        return { webUrl: asset.externalUrl, fileUrl: asset.externalUrl };
+      }
+  ) {
     this.register(LanguageService, (serviceLocator: ServiceLocator) => new LanguageService(serviceLocator.storage));
     this.register(PinService, (serviceLocator: ServiceLocator) => new PinService(serviceLocator.storage));
-    this.register(AssetService, (serviceLocator: ServiceLocator) => new AssetService(serviceLocator.storage));
+    this.register(AssetService, (serviceLocator: ServiceLocator) => new AssetService(serviceLocator.storage, resolveUrl));
     this.register(ServerService, (serviceLocator: ServiceLocator) => new ServerService(serviceLocator.storage));
     this.register(TextService, (serviceLocator: ServiceLocator) => new TextService(serviceLocator.storage));
     this.register(StationService, (serviceLocator: ServiceLocator) => new StationService(

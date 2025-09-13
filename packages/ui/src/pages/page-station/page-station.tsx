@@ -6,7 +6,7 @@ import { getMenuButton, getStations } from '../../utils';
 
 @Component({
   tag: 'sc-page-station',
-  styleUrl: 'page-station.scss'
+  styleUrl: 'page-station.scss',
 })
 export class PageStation {
 
@@ -146,7 +146,7 @@ export class PageStation {
                 <ion-fab-button color="light" size="small" onClick={() => this.toggleOutput()}>
                   {this.earpiece ?
                     <ion-icon color="primary" name="volume-medium-outline"></ion-icon> :
-                    <ion-icon color="primary" src="../../assets/icon/earpiece.svg"></ion-icon>
+                    <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>
                   }
                 </ion-fab-button>
               )}
@@ -172,7 +172,7 @@ export class PageStation {
           <ion-grid class="station-content">
             <ion-row>
               <ion-col size="2">
-                <sc-station-icon>{this.stations[this.activeIndex].number}</sc-station-icon>
+                <sc-station-icon size="large">{this.stations[this.activeIndex].number}</sc-station-icon>
               </ion-col>
               <ion-col size="10">
                 <div style={{ "padding-right": "25px" }}>

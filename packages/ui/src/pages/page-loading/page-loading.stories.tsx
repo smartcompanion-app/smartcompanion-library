@@ -13,7 +13,7 @@ const meta: Meta<StoryArgs> = {
   component: PageLoading,
   render: args => (
     <div style={{width: "100vw", height: "100vh"}}>
-      <sc-page-loading facade={args.facade as ServiceFacade} image={"example-loading.png"} />
+      <sc-page-loading facade={args.facade as ServiceFacade} image={"assets/example-loading.png"} />
     </div>
   ),
 };

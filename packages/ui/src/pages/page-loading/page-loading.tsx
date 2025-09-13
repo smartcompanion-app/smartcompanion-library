@@ -8,7 +8,22 @@ import { ServiceFacade } from '@smartcompanion/services';
 export class PageLoading {
 
   @State() progress: number = 1;
+
+  /**
+   * Loading Spinner Color 'primary' or 'secondary' (default: 'primary')
+   */
+  @Prop() spinnerColor: 'primary' | 'secondary' = 'primary';
  
+  /**
+   * Loading Progress Bar Color 'primary' or 'secondary' (default: 'primary')
+   */
+  @Prop() progressBarColor: 'primary' | 'secondary' = 'primary';
+
+  /**
+   * Loading Text Color 'primary' or 'secondary' (default: 'primary')
+   */
+  @Prop() loadingTextColor: 'primary' | 'secondary' = 'primary';
+
   /**
    * The image to display while loading
    */
@@ -22,15 +37,12 @@ export class PageLoading {
   @Prop() facade: ServiceFacade;
 
   async componentWillLoad() {
-    this.facade
-      .getRoutingService()
-      .addRouteChangeListener('/', () => {
-        this.loading();
-      });
+    this.load();
   }
 
-  async loading() {
+  async load() {
     this.facade.getMenuService().disable();
+    this.progress = 1;
 
     this.facade.getLoadService().setProgressListener((progress) => {
       this.progress = progress / 100;
@@ -40,13 +52,13 @@ export class PageLoading {
     console.log("loading result", result);
 
     if (result == 'language') {
-      this.facade.getRoutingService().pushReplaceCurrent('/language');
+      this.facade.getRoutingService().pushReplace('/language');
     } else if (result == 'home') {
-      this.facade.getRoutingService().pushReplaceCurrent(this.homeRoute);
+      this.facade.getRoutingService().pushReplace(this.homeRoute);
     } else if (result == 'pin') {
-      this.facade.getRoutingService().pushReplaceCurrent('/pin');
+      this.facade.getRoutingService().pushReplace('/pin');
     } else {
-      this.facade.getRoutingService().pushReplaceCurrent('/error');
+      this.facade.getRoutingService().pushReplace('/error');
     }
   }
 
@@ -59,12 +71,12 @@ export class PageLoading {
           </div>
           <div id="loading-info">
             {this.progress >= 1
-              ? <ion-spinner></ion-spinner>
+              ? <ion-spinner color={this.spinnerColor}></ion-spinner>
               : [
-                <ion-text>
+                <ion-text color={this.loadingTextColor}>
                   <h4>Loading {this.progress >= 1 ? '' : ((Math.trunc(this.progress * 100)) + '%')}</h4>
                 </ion-text>,
-                <ion-progress-bar value={this.progress}></ion-progress-bar>
+                <ion-progress-bar color={this.progressBarColor} value={this.progress}></ion-progress-bar>
               ]
             }
           </div>

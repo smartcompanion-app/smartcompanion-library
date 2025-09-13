@@ -38,6 +38,21 @@ export namespace Components {
           * The image to display while loading
          */
         "image": string;
+        /**
+          * Loading Text Color 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "loadingTextColor": 'primary' | 'secondary';
+        /**
+          * Loading Progress Bar Color 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "progressBarColor": 'primary' | 'secondary';
+        /**
+          * Loading Spinner Color 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "spinnerColor": 'primary' | 'secondary';
     }
     interface ScPageMap {
         /**
@@ -51,6 +66,11 @@ export namespace Components {
          */
         "enableBackButton": boolean;
         "facade": ServiceFacade;
+        /**
+          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "headerBackgroundColor": 'primary' | 'secondary';
         /**
           * Map tiles attribution for the leaflet map
           * @default ''
@@ -77,6 +97,11 @@ export namespace Components {
     }
     interface ScPageSelection {
         "facade": ServiceFacade;
+        /**
+          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "headerBackgroundColor": 'primary' | 'secondary';
         /**
           * Maximum length of the input field, default to 2
           * @default 2
@@ -118,6 +143,11 @@ export namespace Components {
     interface ScPageStationList {
         "facade": ServiceFacade;
         /**
+          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "headerBackgroundColor": 'primary' | 'secondary';
+        /**
           * The ID of the tour to display stations for, or null if all stations should be displayed
           * @default null
          */
@@ -133,6 +163,11 @@ export namespace Components {
     }
     interface ScPageTourList {
         "facade": ServiceFacade;
+        /**
+          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "headerBackgroundColor": 'primary' | 'secondary';
     }
     interface ScPlayerControls {
         /**
@@ -163,6 +198,11 @@ export namespace Components {
           * @default 0
          */
         "collectedPercent": number;
+        /**
+          * The icon size: normal or large.
+          * @default 'normal'
+         */
+        "size": 'normal' | 'large';
         /**
           * @default 97
          */
@@ -342,6 +382,21 @@ declare namespace LocalJSX {
           * The image to display while loading
          */
         "image"?: string;
+        /**
+          * Loading Text Color 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "loadingTextColor"?: 'primary' | 'secondary';
+        /**
+          * Loading Progress Bar Color 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "progressBarColor"?: 'primary' | 'secondary';
+        /**
+          * Loading Spinner Color 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "spinnerColor"?: 'primary' | 'secondary';
     }
     interface ScPageMap {
         /**
@@ -355,6 +410,11 @@ declare namespace LocalJSX {
          */
         "enableBackButton"?: boolean;
         "facade"?: ServiceFacade;
+        /**
+          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "headerBackgroundColor"?: 'primary' | 'secondary';
         /**
           * Map tiles attribution for the leaflet map
           * @default ''
@@ -381,6 +441,11 @@ declare namespace LocalJSX {
     }
     interface ScPageSelection {
         "facade"?: ServiceFacade;
+        /**
+          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "headerBackgroundColor"?: 'primary' | 'secondary';
         /**
           * Maximum length of the input field, default to 2
           * @default 2
@@ -422,6 +487,11 @@ declare namespace LocalJSX {
     interface ScPageStationList {
         "facade"?: ServiceFacade;
         /**
+          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "headerBackgroundColor"?: 'primary' | 'secondary';
+        /**
           * The ID of the tour to display stations for, or null if all stations should be displayed
           * @default null
          */
@@ -437,6 +507,11 @@ declare namespace LocalJSX {
     }
     interface ScPageTourList {
         "facade"?: ServiceFacade;
+        /**
+          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "headerBackgroundColor"?: 'primary' | 'secondary';
     }
     interface ScPlayerControls {
         /**
@@ -473,6 +548,11 @@ declare namespace LocalJSX {
           * @default 0
          */
         "collectedPercent"?: number;
+        /**
+          * The icon size: normal or large.
+          * @default 'normal'
+         */
+        "size"?: 'normal' | 'large';
         /**
           * @default 97
          */

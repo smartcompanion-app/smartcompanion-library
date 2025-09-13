@@ -14,7 +14,7 @@ export class PageSelection {
   @State() stations: Station[] = [];
 
   /**
-   * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+   * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
    */
   @Prop() headerBackgroundColor: 'primary' | 'secondary' = 'primary';
   

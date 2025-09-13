@@ -24,7 +24,6 @@ export class PageLoading {
    */
   @Prop() loadingTextColor: 'primary' | 'secondary' = 'primary';
 
-
   /**
    * The image to display while loading
    */

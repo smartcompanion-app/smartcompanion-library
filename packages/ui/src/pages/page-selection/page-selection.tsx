@@ -17,8 +17,6 @@ export class PageSelection {
    * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
    */
   @Prop() headerBackgroundColor: 'primary' | 'secondary' = 'primary';
-  
-
   /**
    * If tour id is given, stations only for the tour are queried.
    * Tour id 'default' is a placeholder for the default tour id.

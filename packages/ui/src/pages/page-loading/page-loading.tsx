@@ -38,15 +38,12 @@ export class PageLoading {
   @Prop() facade: ServiceFacade;
 
   async componentWillLoad() {
-    this.facade
-      .getRoutingService()
-      .addRouteChangeListener('/', () => {
-        this.loading();
-      });
+    this.load();
   }
 
-  async loading() {
+  async load() {
     this.facade.getMenuService().disable();
+    this.progress = 1;
 
     this.facade.getLoadService().setProgressListener((progress) => {
       this.progress = progress / 100;
@@ -56,13 +53,13 @@ export class PageLoading {
     console.log("loading result", result);
 
     if (result == 'language') {
-      this.facade.getRoutingService().pushReplaceCurrent('/language');
+      this.facade.getRoutingService().pushReplace('/language');
     } else if (result == 'home') {
-      this.facade.getRoutingService().pushReplaceCurrent(this.homeRoute);
+      this.facade.getRoutingService().pushReplace(this.homeRoute);
     } else if (result == 'pin') {
-      this.facade.getRoutingService().pushReplaceCurrent('/pin');
+      this.facade.getRoutingService().pushReplace('/pin');
     } else {
-      this.facade.getRoutingService().pushReplaceCurrent('/error');
+      this.facade.getRoutingService().pushReplace('/error');
     }
   }
 

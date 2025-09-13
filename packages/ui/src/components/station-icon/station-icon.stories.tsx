@@ -6,6 +6,7 @@ type StoryArgs = {
   number: string;
   collected: boolean;
   collectedPercent: number;
+  size: 'normal' | 'large';
 };
 
 const meta: Meta<StoryArgs> = {
@@ -13,7 +14,8 @@ const meta: Meta<StoryArgs> = {
   tags: ['autodocs'],
   component: StationIcon,
   render: args => <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}>
-    <sc-station-icon 
+    <sc-station-icon
+      size={args.size}
       collected={args.collected} 
       collected-percent={args.collectedPercent}>{args.number}</sc-station-icon>
   </div>
@@ -27,7 +29,8 @@ export const BasicStationIcon: Story = {
   args: {
     number: '21',
     collectedPercent: 15,
-    collected: false
+    collected: false,
+    size: 'normal'
   }
 };
 
@@ -35,6 +38,25 @@ export const CollectedStationIcon: Story = {
   args: {
     number: '21',
     collectedPercent: 100,
-    collected: true
+    collected: true,
+    size: 'normal'
+  }
+};
+
+export const LargeStationIcon: Story = {
+  args: {
+    number: '21',
+    collectedPercent: 60,
+    collected: false,
+    size: 'large'
+  }
+};
+
+export const LargeCollectedStationIcon: Story = {
+  args: {
+    number: '21',
+    collectedPercent: 100,
+    collected: true,
+    size: 'large'
   }
 };

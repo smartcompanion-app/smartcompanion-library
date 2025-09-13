@@ -172,7 +172,7 @@ export class PageStation {
           <ion-grid class="station-content">
             <ion-row>
               <ion-col size="2">
-                <sc-station-icon>{this.stations[this.activeIndex].number}</sc-station-icon>
+                <sc-station-icon size="large">{this.stations[this.activeIndex].number}</sc-station-icon>
               </ion-col>
               <ion-col size="10">
                 <div style={{ "padding-right": "25px" }}>

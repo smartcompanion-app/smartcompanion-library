@@ -199,6 +199,11 @@ export namespace Components {
          */
         "collectedPercent": number;
         /**
+          * The icon size: normal or large.
+          * @default 'normal'
+         */
+        "size": 'normal' | 'large';
+        /**
           * @default 97
          */
         "upperLimitPercent": number;
@@ -543,6 +548,11 @@ declare namespace LocalJSX {
           * @default 0
          */
         "collectedPercent"?: number;
+        /**
+          * The icon size: normal or large.
+          * @default 'normal'
+         */
+        "size"?: 'normal' | 'large';
         /**
           * @default 97
          */

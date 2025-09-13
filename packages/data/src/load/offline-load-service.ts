@@ -77,6 +77,8 @@ export class OfflineLoadService {
         return 'home';
       }
     } catch (e) {
+      console.error('error loading data', e);
+
       if (
         this.serviceLocator.getLanguageService().hasLanguage() &&
         this.serviceLocator.getPinService().isPinValidationRequired() &&

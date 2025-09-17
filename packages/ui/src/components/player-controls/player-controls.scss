@@ -1,18 +1,22 @@
 #player {
-    background: #ddd;
-    z-index: 500;
-  
-    &-controls {
-        display: flex;
-        justify-content: center;
-        margin-top: -30px;
-    
-        &-play {
-            margin-left: 10px;
-            margin-right: 10px;
-            width:70px;
-            height: 70px;
-            margin-top: -5px;
-        }
+  background: #ddd;
+  z-index: 500;
+
+  &-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: -30px;
+
+    &-play {
+      margin-left: 10px;
+      margin-right: 10px;
+      width: 70px;
+      height: 70px;
+      margin-top: -5px;
     }
+
+    &>ion-fab-button {
+      z-index: 999;
+    }
+  }
 }

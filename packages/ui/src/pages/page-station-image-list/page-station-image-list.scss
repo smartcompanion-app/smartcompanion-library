@@ -1,0 +1,10 @@
+.station-image-list {
+    &-image {
+      object-fit: cover;
+      width: 100%
+    }
+    &-description {
+        padding-bottom: 10px;
+    }
+}
+

@@ -1,0 +1,46 @@
+@use "~swiper/swiper-bundle.css";
+
+:host {
+  .swiper {
+    height: 32vh;
+    width: 100%;
+    z-index: 0 !important;
+  }
+
+  .slideshow-image {
+    display: block;
+    height: 32vh;
+    width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  .slideshow-button {
+    position: absolute;
+    top: 50%;
+    width: calc(var(--swiper-navigation-size) / 44 * 27);
+    height: var(--swiper-navigation-size);
+    margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+
+    ion-icon {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  #slideshow-prev {
+    right: auto;
+    left: 10px;
+  }
+
+  #slideshow-next {
+    right: 10px;
+    left: auto;
+  }
+}

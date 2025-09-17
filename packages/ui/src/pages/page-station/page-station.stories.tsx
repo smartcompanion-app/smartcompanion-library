@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@stencil/storybook-plugin';
 import { h } from '@stencil/core';
 import { AudioPlayerService, MenuService, ServiceFacade } from '@smartcompanion/services';
 import { TourService, StationService } from '@smartcompanion/data';
-import { stations } from '../../utils/test-utils';
+import { stations } from '../../../test/fixtures';
 import { PageStation } from './page-station';
 
 type StoryArgs = {

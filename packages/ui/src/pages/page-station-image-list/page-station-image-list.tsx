@@ -36,7 +36,7 @@ export class PageStationImageList {
     return (
       <Host>
         <ion-header>
-          <ion-toolbar>
+          <ion-toolbar color={this.headerBackgroundColor}>
             <ion-buttons slot="start">
               {getMenuButton(!!this.tourId, "/tours")}
             </ion-buttons>

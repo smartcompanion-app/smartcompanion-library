@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@stencil/storybook-plugin';
 import { h } from '@stencil/core';
 import { MenuService, ServiceFacade } from '@smartcompanion/services';
 import { TourService, StationService } from '@smartcompanion/data';
-import { PageStationList } from './page-station-list';
+import { PageStationImageList } from './page-station-image-list';
 import { stations } from '../../../test/fixtures';
 
 type StoryArgs = {
@@ -10,12 +10,12 @@ type StoryArgs = {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: 'Pages/Page Station List',
+  title: 'Pages/Page Station Image List',
   tags: ['autodocs'],
-  component: PageStationList,
+  component: PageStationImageList,
   render: args => (
     <div style={{ width: "100vw", height: "100vh" }}>
-      <sc-page-station-list facade={args.facade as ServiceFacade} />
+      <sc-page-station-image-list facade={args.facade as ServiceFacade} />
     </div>
   ),
 };

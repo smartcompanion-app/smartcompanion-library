@@ -3,7 +3,7 @@ import { h } from '@stencil/core';
 import { MenuService, ServiceFacade } from '@smartcompanion/services';
 import { TourService } from '@smartcompanion/data';
 import { PageTourList } from './page-tour-list';
-import { tours } from '../../utils/test-utils';
+import { tours } from '../../../test/fixtures';
 
 type StoryArgs = {
   facade: Partial<ServiceFacade>;
@@ -48,4 +48,3 @@ export const Example: Story = {
     },
   },
 };
-

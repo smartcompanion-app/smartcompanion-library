@@ -1,0 +1,58 @@
+#multi-audio-station {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+
+  sc-station-icon {
+    --sc-station-icon-background: var(--ion-color-primary);
+    --sc-station-icon-dark: var(--ion-color-primary);
+  }
+
+  .station-subtitle {
+    font-size: 60%;
+    color: #666;
+    margin-top: 2px;
+    display: block;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .station-image {
+    flex: 32vh 0 0;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  .station-audios {
+    flex: 100% 1 1;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+
+    .active {
+      color: var(--ion-color-primary);
+      ion-icon {
+        color: var(--ion-color-primary);
+      }
+    }
+  }
+
+  #station-player-controls {
+    padding: 0 20px;
+  }
+}
+
+.md #multi-audio-station {
+  .station-title {
+    display: grid;
+    grid-template-columns: 25px 1fr;
+    align-items: center;
+  }
+}
+
+.ios #multi-audio-station {
+    sc-station-icon {
+      display: inline-block;
+      margin-right: 3px;
+      vertical-align: bottom;
+    }
+}

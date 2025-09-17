@@ -8,6 +8,13 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ServiceFacade } from "@smartcompanion/services";
 export { ServiceFacade } from "@smartcompanion/services";
 export namespace Components {
+    interface ScImageSlideshow {
+        /**
+          * List of image URLs to display in the slideshow
+          * @default []
+         */
+        "images": string[];
+    }
     interface ScMarquee {
         /**
           * @default false
@@ -87,6 +94,28 @@ export namespace Components {
          */
         "tourId": string;
     }
+    interface ScPageMultiAudioStation {
+        /**
+          * Define default back button href, only used if enableBackButton is true
+          * @default null
+         */
+        "defaultBackButtonHref": string;
+        /**
+          * This prop displays a button for switching audio output between speaker and earpiece. This feature is only available on hybrid apps
+          * @default false
+         */
+        "enableSwitchAudioOutput": boolean;
+        "facade": ServiceFacade;
+        /**
+          * The ID of the active station to display
+         */
+        "stationId": string;
+        /**
+          * If tour id is given, stations are retrieved from specific tour. Tour id 'default' is a placeholder for the default tour id.
+          * @default null
+         */
+        "tourId": string;
+    }
     interface ScPagePin {
         "facade": ServiceFacade;
         /**
@@ -140,6 +169,19 @@ export namespace Components {
          */
         "tourId": string;
     }
+    interface ScPageStationImageList {
+        "facade": ServiceFacade;
+        /**
+          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "headerBackgroundColor": 'primary' | 'secondary';
+        /**
+          * The ID of the tour to display stations for, or null if all stations should be displayed
+          * @default null
+         */
+        "tourId": string;
+    }
     interface ScPageStationList {
         "facade": ServiceFacade;
         /**
@@ -160,6 +202,19 @@ export namespace Components {
           * @default null
          */
         "stationId": string;
+    }
+    interface ScPageTabbedStationList {
+        "facade": ServiceFacade;
+        /**
+          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "headerBackgroundColor": 'primary' | 'secondary';
+        /**
+          * The ID of the tour to display stations for, or null if all stations should be displayed
+          * @default null
+         */
+        "tourId": string;
     }
     interface ScPageTourList {
         "facade": ServiceFacade;
@@ -199,10 +254,10 @@ export namespace Components {
          */
         "collectedPercent": number;
         /**
-          * The icon size: normal or large.
+          * The icon size: small, normal or large.
           * @default 'normal'
          */
-        "size": 'normal' | 'large';
+        "size": 'small' | 'normal' | 'large';
         /**
           * @default 97
          */
@@ -218,6 +273,12 @@ export interface ScPlayerControlsCustomEvent<T> extends CustomEvent<T> {
     target: HTMLScPlayerControlsElement;
 }
 declare global {
+    interface HTMLScImageSlideshowElement extends Components.ScImageSlideshow, HTMLStencilElement {
+    }
+    var HTMLScImageSlideshowElement: {
+        prototype: HTMLScImageSlideshowElement;
+        new (): HTMLScImageSlideshowElement;
+    };
     interface HTMLScMarqueeElement extends Components.ScMarquee, HTMLStencilElement {
     }
     var HTMLScMarqueeElement: {
@@ -267,6 +328,12 @@ declare global {
         prototype: HTMLScPageMapElement;
         new (): HTMLScPageMapElement;
     };
+    interface HTMLScPageMultiAudioStationElement extends Components.ScPageMultiAudioStation, HTMLStencilElement {
+    }
+    var HTMLScPageMultiAudioStationElement: {
+        prototype: HTMLScPageMultiAudioStationElement;
+        new (): HTMLScPageMultiAudioStationElement;
+    };
     interface HTMLScPagePinElement extends Components.ScPagePin, HTMLStencilElement {
     }
     var HTMLScPagePinElement: {
@@ -285,6 +352,12 @@ declare global {
         prototype: HTMLScPageStationElement;
         new (): HTMLScPageStationElement;
     };
+    interface HTMLScPageStationImageListElement extends Components.ScPageStationImageList, HTMLStencilElement {
+    }
+    var HTMLScPageStationImageListElement: {
+        prototype: HTMLScPageStationImageListElement;
+        new (): HTMLScPageStationImageListElement;
+    };
     interface HTMLScPageStationListElement extends Components.ScPageStationList, HTMLStencilElement {
     }
     var HTMLScPageStationListElement: {
@@ -296,6 +369,12 @@ declare global {
     var HTMLScPageStationsElement: {
         prototype: HTMLScPageStationsElement;
         new (): HTMLScPageStationsElement;
+    };
+    interface HTMLScPageTabbedStationListElement extends Components.ScPageTabbedStationList, HTMLStencilElement {
+    }
+    var HTMLScPageTabbedStationListElement: {
+        prototype: HTMLScPageTabbedStationListElement;
+        new (): HTMLScPageTabbedStationListElement;
     };
     interface HTMLScPageTourListElement extends Components.ScPageTourList, HTMLStencilElement {
     }
@@ -332,23 +411,34 @@ declare global {
         new (): HTMLScStationIconElement;
     };
     interface HTMLElementTagNameMap {
+        "sc-image-slideshow": HTMLScImageSlideshowElement;
         "sc-marquee": HTMLScMarqueeElement;
         "sc-numpad": HTMLScNumpadElement;
         "sc-page-error": HTMLScPageErrorElement;
         "sc-page-language": HTMLScPageLanguageElement;
         "sc-page-loading": HTMLScPageLoadingElement;
         "sc-page-map": HTMLScPageMapElement;
+        "sc-page-multi-audio-station": HTMLScPageMultiAudioStationElement;
         "sc-page-pin": HTMLScPagePinElement;
         "sc-page-selection": HTMLScPageSelectionElement;
         "sc-page-station": HTMLScPageStationElement;
+        "sc-page-station-image-list": HTMLScPageStationImageListElement;
         "sc-page-station-list": HTMLScPageStationListElement;
         "sc-page-stations": HTMLScPageStationsElement;
+        "sc-page-tabbed-station-list": HTMLScPageTabbedStationListElement;
         "sc-page-tour-list": HTMLScPageTourListElement;
         "sc-player-controls": HTMLScPlayerControlsElement;
         "sc-station-icon": HTMLScStationIconElement;
     }
 }
 declare namespace LocalJSX {
+    interface ScImageSlideshow {
+        /**
+          * List of image URLs to display in the slideshow
+          * @default []
+         */
+        "images"?: string[];
+    }
     interface ScMarquee {
         /**
           * @default false
@@ -431,6 +521,28 @@ declare namespace LocalJSX {
          */
         "tourId"?: string;
     }
+    interface ScPageMultiAudioStation {
+        /**
+          * Define default back button href, only used if enableBackButton is true
+          * @default null
+         */
+        "defaultBackButtonHref"?: string;
+        /**
+          * This prop displays a button for switching audio output between speaker and earpiece. This feature is only available on hybrid apps
+          * @default false
+         */
+        "enableSwitchAudioOutput"?: boolean;
+        "facade"?: ServiceFacade;
+        /**
+          * The ID of the active station to display
+         */
+        "stationId"?: string;
+        /**
+          * If tour id is given, stations are retrieved from specific tour. Tour id 'default' is a placeholder for the default tour id.
+          * @default null
+         */
+        "tourId"?: string;
+    }
     interface ScPagePin {
         "facade"?: ServiceFacade;
         /**
@@ -484,6 +596,19 @@ declare namespace LocalJSX {
          */
         "tourId"?: string;
     }
+    interface ScPageStationImageList {
+        "facade"?: ServiceFacade;
+        /**
+          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "headerBackgroundColor"?: 'primary' | 'secondary';
+        /**
+          * The ID of the tour to display stations for, or null if all stations should be displayed
+          * @default null
+         */
+        "tourId"?: string;
+    }
     interface ScPageStationList {
         "facade"?: ServiceFacade;
         /**
@@ -504,6 +629,19 @@ declare namespace LocalJSX {
           * @default null
          */
         "stationId"?: string;
+    }
+    interface ScPageTabbedStationList {
+        "facade"?: ServiceFacade;
+        /**
+          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * @default 'primary'
+         */
+        "headerBackgroundColor"?: 'primary' | 'secondary';
+        /**
+          * The ID of the tour to display stations for, or null if all stations should be displayed
+          * @default null
+         */
+        "tourId"?: string;
     }
     interface ScPageTourList {
         "facade"?: ServiceFacade;
@@ -549,27 +687,31 @@ declare namespace LocalJSX {
          */
         "collectedPercent"?: number;
         /**
-          * The icon size: normal or large.
+          * The icon size: small, normal or large.
           * @default 'normal'
          */
-        "size"?: 'normal' | 'large';
+        "size"?: 'small' | 'normal' | 'large';
         /**
           * @default 97
          */
         "upperLimitPercent"?: number;
     }
     interface IntrinsicElements {
+        "sc-image-slideshow": ScImageSlideshow;
         "sc-marquee": ScMarquee;
         "sc-numpad": ScNumpad;
         "sc-page-error": ScPageError;
         "sc-page-language": ScPageLanguage;
         "sc-page-loading": ScPageLoading;
         "sc-page-map": ScPageMap;
+        "sc-page-multi-audio-station": ScPageMultiAudioStation;
         "sc-page-pin": ScPagePin;
         "sc-page-selection": ScPageSelection;
         "sc-page-station": ScPageStation;
+        "sc-page-station-image-list": ScPageStationImageList;
         "sc-page-station-list": ScPageStationList;
         "sc-page-stations": ScPageStations;
+        "sc-page-tabbed-station-list": ScPageTabbedStationList;
         "sc-page-tour-list": ScPageTourList;
         "sc-player-controls": ScPlayerControls;
         "sc-station-icon": ScStationIcon;
@@ -579,17 +721,21 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "sc-image-slideshow": LocalJSX.ScImageSlideshow & JSXBase.HTMLAttributes<HTMLScImageSlideshowElement>;
             "sc-marquee": LocalJSX.ScMarquee & JSXBase.HTMLAttributes<HTMLScMarqueeElement>;
             "sc-numpad": LocalJSX.ScNumpad & JSXBase.HTMLAttributes<HTMLScNumpadElement>;
             "sc-page-error": LocalJSX.ScPageError & JSXBase.HTMLAttributes<HTMLScPageErrorElement>;
             "sc-page-language": LocalJSX.ScPageLanguage & JSXBase.HTMLAttributes<HTMLScPageLanguageElement>;
             "sc-page-loading": LocalJSX.ScPageLoading & JSXBase.HTMLAttributes<HTMLScPageLoadingElement>;
             "sc-page-map": LocalJSX.ScPageMap & JSXBase.HTMLAttributes<HTMLScPageMapElement>;
+            "sc-page-multi-audio-station": LocalJSX.ScPageMultiAudioStation & JSXBase.HTMLAttributes<HTMLScPageMultiAudioStationElement>;
             "sc-page-pin": LocalJSX.ScPagePin & JSXBase.HTMLAttributes<HTMLScPagePinElement>;
             "sc-page-selection": LocalJSX.ScPageSelection & JSXBase.HTMLAttributes<HTMLScPageSelectionElement>;
             "sc-page-station": LocalJSX.ScPageStation & JSXBase.HTMLAttributes<HTMLScPageStationElement>;
+            "sc-page-station-image-list": LocalJSX.ScPageStationImageList & JSXBase.HTMLAttributes<HTMLScPageStationImageListElement>;
             "sc-page-station-list": LocalJSX.ScPageStationList & JSXBase.HTMLAttributes<HTMLScPageStationListElement>;
             "sc-page-stations": LocalJSX.ScPageStations & JSXBase.HTMLAttributes<HTMLScPageStationsElement>;
+            "sc-page-tabbed-station-list": LocalJSX.ScPageTabbedStationList & JSXBase.HTMLAttributes<HTMLScPageTabbedStationListElement>;
             "sc-page-tour-list": LocalJSX.ScPageTourList & JSXBase.HTMLAttributes<HTMLScPageTourListElement>;
             "sc-player-controls": LocalJSX.ScPlayerControls & JSXBase.HTMLAttributes<HTMLScPlayerControlsElement>;
             "sc-station-icon": LocalJSX.ScStationIcon & JSXBase.HTMLAttributes<HTMLScStationIconElement>;

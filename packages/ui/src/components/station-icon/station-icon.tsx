@@ -20,9 +20,9 @@ export class StationIcon {
   @Prop() collectedPercent: number = 0;
 
   /**
-   * The icon size: normal or large.
+   * The icon size: small, normal or large.
    */
-  @Prop() size: 'normal' | 'large' = 'normal';
+  @Prop() size: 'small' | 'normal' | 'large' = 'normal';
 
   calculatePercent() {
     if (this.collectedPercent >= this.upperLimitPercent) {
@@ -41,7 +41,7 @@ export class StationIcon {
       <Host>
         <div 
           style={{'--collected-angle': this.calculateAngle() }}
-          class={`station-icon-wrapper ${this.size === 'large' ? 'station-icon-size-large' : ''}`}>
+          class={`station-icon-wrapper station-icon-size-${this.size}`}>
           <div class="station-icon">
             <slot />
             { (this.collected === true || this.collectedPercent >= this.upperLimitPercent) &&

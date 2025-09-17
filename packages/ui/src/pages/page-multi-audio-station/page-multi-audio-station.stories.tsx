@@ -8,7 +8,7 @@ import { getMultiAudioStation } from '../../../test/fixtures';
 
 type StoryArgs = {
   facade: Partial<ServiceFacade>;
-  enenableSwitchAudioOutput: boolean;
+  enableSwitchAudioOutput: boolean;
 };
 
 const meta: Meta<StoryArgs> = {
@@ -18,7 +18,7 @@ const meta: Meta<StoryArgs> = {
   render: args => (
     <div style={{ width: "100vw", height: "100vh" }}>
       <sc-page-multi-audio-station 
-        enableSwitchAudioOutput={args.enenableSwitchAudioOutput}
+        enableSwitchAudioOutput={args.enableSwitchAudioOutput}
         stationId="123" 
         facade={args.facade as ServiceFacade} />
     </div>
@@ -33,7 +33,7 @@ const audioPlayerService: AudioPlayerService = new AudioPlayerService("");
 
 export const Example: Story = {
   args: {
-    enenableSwitchAudioOutput: true,
+    enableSwitchAudioOutput: true,
     facade: {
       getAudioPlayerService: () => audioPlayerService,
       getMenuService: () => ({

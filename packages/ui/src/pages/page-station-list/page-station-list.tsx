@@ -1,7 +1,7 @@
 import { Component, Prop, State, h } from '@stencil/core';
 import { ServiceFacade } from '@smartcompanion/services';
 import { Station } from '@smartcompanion/data';
-import { getMenuButton, getStations, openStation } from '../../utils';
+import { getMenuButton, getSortedStations, openStation } from '../../utils';
 
 @Component({
   tag: 'sc-page-station-list',
@@ -25,7 +25,7 @@ export class PageStationList {
 
   async componentWillLoad() {
     await this.facade.getMenuService().enable();
-    this.stations = await getStations(this.facade, this.tourId);
+    this.stations = await getSortedStations(this.facade, this.tourId);
   }
 
   openStation(stationId: string) {

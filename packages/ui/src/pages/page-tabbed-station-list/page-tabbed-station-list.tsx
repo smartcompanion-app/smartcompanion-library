@@ -27,9 +27,9 @@ export class PageTabbedStationList {
   }
 
   async componentDidLoad() {
-    const tabs: any = this.element.querySelector('ion-tabs');
-    if (tabs) {
-      await tabs.select('tab-images');
+    const tabButton: any = this.element.shadowRoot.querySelector('#tab-button-tab-images');
+    if (tabButton) {
+      await tabButton.click();
     }
   }
 
@@ -50,7 +50,7 @@ export class PageTabbedStationList {
               headerBackgroundColor={this.headerBackgroundColor} />
           </ion-tab>
           <ion-tab-bar slot="bottom">
-            <ion-tab-button tab="tab-images">
+            <ion-tab-button selected tab="tab-images">
               <ion-icon name="images"></ion-icon>
             </ion-tab-button>
             <ion-tab-button tab="tab-list">

@@ -74,7 +74,7 @@ export namespace Components {
         "enableBackButton": boolean;
         "facade": ServiceFacade;
         /**
-          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor": 'primary' | 'secondary';
@@ -127,7 +127,7 @@ export namespace Components {
     interface ScPageSelection {
         "facade": ServiceFacade;
         /**
-          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor": 'primary' | 'secondary';
@@ -172,7 +172,7 @@ export namespace Components {
     interface ScPageStationImageList {
         "facade": ServiceFacade;
         /**
-          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor": 'primary' | 'secondary';
@@ -185,7 +185,7 @@ export namespace Components {
     interface ScPageStationList {
         "facade": ServiceFacade;
         /**
-          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor": 'primary' | 'secondary';
@@ -206,7 +206,7 @@ export namespace Components {
     interface ScPageTabbedStationList {
         "facade": ServiceFacade;
         /**
-          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor": 'primary' | 'secondary';
@@ -219,7 +219,7 @@ export namespace Components {
     interface ScPageTourList {
         "facade": ServiceFacade;
         /**
-          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor": 'primary' | 'secondary';
@@ -501,7 +501,7 @@ declare namespace LocalJSX {
         "enableBackButton"?: boolean;
         "facade"?: ServiceFacade;
         /**
-          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor"?: 'primary' | 'secondary';
@@ -554,7 +554,7 @@ declare namespace LocalJSX {
     interface ScPageSelection {
         "facade"?: ServiceFacade;
         /**
-          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor"?: 'primary' | 'secondary';
@@ -599,7 +599,7 @@ declare namespace LocalJSX {
     interface ScPageStationImageList {
         "facade"?: ServiceFacade;
         /**
-          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor"?: 'primary' | 'secondary';
@@ -612,7 +612,7 @@ declare namespace LocalJSX {
     interface ScPageStationList {
         "facade"?: ServiceFacade;
         /**
-          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor"?: 'primary' | 'secondary';
@@ -633,7 +633,7 @@ declare namespace LocalJSX {
     interface ScPageTabbedStationList {
         "facade"?: ServiceFacade;
         /**
-          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor"?: 'primary' | 'secondary';
@@ -646,7 +646,7 @@ declare namespace LocalJSX {
     interface ScPageTourList {
         "facade"?: ServiceFacade;
         /**
-          * Background color of the header toolbard, either 'primary' or 'secondary' (default: 'primary')
+          * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor"?: 'primary' | 'secondary';

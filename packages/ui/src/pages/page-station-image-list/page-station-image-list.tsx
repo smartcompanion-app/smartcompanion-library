@@ -1,7 +1,7 @@
 import { Component, Prop, State, Host, h } from '@stencil/core';
 import { ServiceFacade } from '@smartcompanion/services';
 import { Station, Asset } from '@smartcompanion/data';
-import { getMenuButton, getStations, openStation } from '../../utils';
+import { getMenuButton, getSortedStations, openStation } from '../../utils';
 
 @Component({
   tag: 'sc-page-station-image-list',
@@ -24,7 +24,7 @@ export class PageStationImageList {
   @Prop() facade: ServiceFacade;
 
   async componentWillLoad() {
-    this.stations = await getStations(this.facade, this.tourId);
+    this.stations = await getSortedStations(this.facade, this.tourId);
     await this.facade.getMenuService().enable();
   }
 
@@ -47,9 +47,9 @@ export class PageStationImageList {
           <ion-list>
             {this.stations.map(station => (
               <ion-card>
-                <ion-item button>
+                <ion-item button lines="none">
                   <ion-avatar slot="start">
-                    <sc-station-icon>{station.number}</sc-station-icon>
+                    <sc-station-icon size="large">{station.number}</sc-station-icon>
                   </ion-avatar>
                   <ion-label>
                     <h2>{station.title}</h2>
@@ -61,9 +61,7 @@ export class PageStationImageList {
                   src={(station.images[0] as Asset).internalWebUrl} />
                 <ion-card-content>
                   <p class="station-image-list-description">{station.description}</p>
-                  <ion-button 
-                    onClick={() => this.openStation(station.id)} 
-                    color="primary">{this.facade.__('view')}</ion-button>
+                  <ion-button onClick={() => this.openStation(station.id)}>{this.facade.__('view')}</ion-button>
                 </ion-card-content>
               </ion-card>
             ))}

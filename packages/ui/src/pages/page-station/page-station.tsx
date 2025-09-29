@@ -81,6 +81,7 @@ export class PageStation {
   }
 
   async disconnectedCallback() {
+    this.playing = false;
     await this.facade.getAudioPlayerService().stop();
     this.facade.getAudioPlayerService().unregisterUpdateListener();
   }

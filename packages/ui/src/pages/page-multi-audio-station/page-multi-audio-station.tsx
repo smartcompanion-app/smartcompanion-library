@@ -55,6 +55,8 @@ export class PageMultiAudioStation {
     }
 
     this.facade.getAudioPlayerService().registerUpdateListener(async (update: AudioPlayerUpdate) => {
+      console.log('AudioPlayerUpdate', update);
+
       if (update.state == 'playing') {
         this.playing = true;
         this.updatePosition();
@@ -69,8 +71,9 @@ export class PageMultiAudioStation {
   }
 
   async disconnectedCallback() {
-    this.facade.getAudioPlayerService().unregisterUpdateListener();
+    this.playing = false;
     await this.facade.getAudioPlayerService().stop();
+    this.facade.getAudioPlayerService().unregisterUpdateListener();    
   }
 
   async initPlayer() {
@@ -92,7 +95,7 @@ export class PageMultiAudioStation {
   }
 
   async changePosition(position: number) {
-    this.position = position;
+    this.position = position; 
     await this.facade.getAudioPlayerService().seek(position);
     await this.facade.getAudioPlayerService().play();
   }

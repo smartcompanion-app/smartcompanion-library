@@ -1,6 +1,6 @@
 {
   "name": "@smartcompanion/data",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": "SmartCompanion Team <hello@smartcompanion.app> (https://smartcompanion.app) ",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

@@ -33,6 +33,7 @@ export const Example: Story = {
       getAudioPlayerService: () => audioPlayerService,
       getStationService: () => ({
         updateCollectedPercentage: (stationId: string, _: string, collectedPercentage: number) => {
+          console.log(`Station ${stationId} collected percentage updated to ${collectedPercentage}`);
           return Promise.resolve({
             ...stations.find(station => station.id === stationId),
             collectedPercentage: collectedPercentage,

@@ -1,47 +1,36 @@
-import { Component, h, State, Prop } from '@stencil/core';
+import { Component, h, State, Prop, Mixin } from '@stencil/core';
 import { Swiper } from 'swiper';
 import { Asset, Station } from '@smartcompanion/data';
-import { ServiceFacade } from '@smartcompanion/services';
+import { audioPlayerBaseComponentFactory, getSortedStations } from '../../utils';
+import { AudioPlayerUpdate } from '@smartcompanion/services';
 
 @Component({
   tag: 'sc-page-stations',
   styleUrl: 'page-stations.scss',
 })
-export class PageStations {
+export class PageStations extends Mixin(audioPlayerBaseComponentFactory) {
 
   protected playerList: Swiper;
   protected restartPlaying = false;  
 
-  @State() stations: Station[] = [];
-  @State() stationIndex: number = 0;
-  @State() duration: number = 0; // seconds
-  @State() position: number = 0; // seconds
-  @State() playing: boolean = false;
-  @State() earpiece: boolean = false;
+  @State() stations: Array<Station> = [];
+
+  /**
+   * If tour id is given, stations are retrieved from specific tour.
+   * Tour id 'default' is a placeholder for the default tour id.
+   */
+  @Prop() tourId: string = null;
 
   /**
    * The ID of the initial active station to display, if set to null, the first station will be displayed
    */
   @Prop() stationId: string = null;
-
-  @Prop() facade: ServiceFacade;
   
   async componentWillLoad() {    
-    this.facade.getMenuService().enable();
-  
-    this.stations = await this
-      .facade
-      .getStationService()
-      .getStations();
-
-    if (this.stationId == "default") {
-      this.stationIndex = 0;
-    } else if (this.stationId) {
-      const index = this.stations.findIndex(station => station.id === this.stationId);
-      if (index >= 0) {
-        this.stationIndex = index;
-      }
-    }
+    this.facade.getMenuService().enable();  
+    this.stations = await getSortedStations(this.facade, this.tourId);
+    this.updateActiveIndex(this.stationId, this.stations);
+    this.initEarpiece();
   }
 
   async componentDidLoad() {    
@@ -50,133 +39,34 @@ export class PageStations {
       slidesPerView: 'auto',
       allowTouchMove: true,
     });
-    this.playerList.slideTo(this.stationIndex);
 
-    await this.facade.getAudioPlayerService().start(this.stations);
-    await this.facade.getAudioPlayerService().setSpeaker();
-
-    this.facade.getAudioPlayerService().registerUpdateListener(async (update) => {
-      if (update.state == 'skip') {
-        this.playing = false;
-        this.stationIndex = update.index;
-        await this.initPlayer();
-      } else if (update.state == 'playing') {
-        this.stationIndex = update.index;
-        this.playing = true;        
-        this.updatePosition();
-      } else if (update.state == 'paused') {
-        this.stationIndex = update.index;
-        this.playing = false;        
-      } else if (update.state == "collected") {
-        const station = await this
-          .facade
-          .getStationService()
-          .updateCollectedPercentage(
-            this.stations[this.stationIndex].id,
-            update.id,
-            update.percentage
-          );
-        this.stations = [
-          ...this.stations.slice(0, this.stationIndex),
-          station,
-          ...this.stations.slice(this.stationIndex + 1)  
-        ];
-      } else if (update.state == "completed") {
-        this.next();
-      }
-    });
-    
-    if (this.stationIndex > 0) { // set index to player
-      await this.facade.getAudioPlayerService().select(this.stationIndex);
-    }
-
-    await this.initPlayer();
+    await this.initAudioPlayer(this.stations);
+    this.playerList.slideTo(this.activeIndex);
   }
 
   async disconnectedCallback() {
-    await this.facade.getAudioPlayerService().stop();
-    this.facade.getAudioPlayerService().unregisterUpdateListener();
+    this.destroyAudioPlayer();
   }
-
-  async initPlayer() {
-    this.playerList.slideTo(this.stationIndex);
-    this.position = 0;
-    this.duration = await this
-      .facade
-      .getAudioPlayerService()
-      .getDuration();
-  }
-
-  getImageUri(stationIndex: number, imageIndex: number = 0) {
-    const station = this.stations[stationIndex];
+  
+  getImageUri(index: number, imageIndex: number = 0) {
+    const station = this.stations[index];
     return (station.images[imageIndex] as Asset).internalWebUrl;
-  }
-
-  async next() {
-    await this.facade.getAudioPlayerService().next();
-  }
-
-  async prev() {
-    await this.facade.getAudioPlayerService().prev();
-  }
-
-  async playPause() {
-    if (this.playing) {
-      await this.pause();
-    } else {
-      await this.play();
-    }
-  }
-
-  async play() {
-    await this.facade.getAudioPlayerService().play();
-  }
-
-  async pause() {
-    await this.facade.getAudioPlayerService().pause();
-  }
-
-  async select(index: number) {
-    await this.facade.getAudioPlayerService().select(index);
-  }
-
-  async updatePosition() {
-    this.position = await this.facade.getAudioPlayerService().getPosition();
-    this.duration = await this.facade.getAudioPlayerService().getDuration();
-
-    if (this.duration > 0 && this.position >= (this.duration - 1)) {
-      setTimeout(() => this.next(), 1000);
-    } else {
-      setTimeout(() => {
-        if (this.playing) {
-          this.updatePosition();
-        }
-      }, 800);
-    }
   }
 
   openMenu() {
     this.facade.getMenuService().open();
   }
 
-  toggleOutput() {
-    if (this.earpiece) {
-      this.facade.getAudioPlayerService().setSpeaker();
-      this.earpiece = false;
-    } else {
-      this.facade.getAudioPlayerService().setEarpiece();
-      this.earpiece = true;
-    }
+  async onCompleted(_: AudioPlayerUpdate) {
+    await this.next();
   }
 
-  async startPositionChange() {
-    await this.facade.getAudioPlayerService().pause();
+  async onSkip(_: AudioPlayerUpdate) {
+    this.playerList.slideTo(this.activeIndex);
   }
 
-  async changePosition(position: number) {
-    this.position = position;
-    await this.facade.getAudioPlayerService().seek(position);
-    await this.facade.getAudioPlayerService().play();
+  async onCollected(_: AudioPlayerUpdate, updatedStation: Station) {
+    this.stations = this.stations.map(s => s.id === updatedStation.id ? updatedStation : s);
   }
 
   render() {
@@ -193,7 +83,7 @@ export class PageStations {
       <ion-content id="home" fullscreen={true}>
         <div id="player-main">
           <div id="player-image">
-            <img src={this.getImageUri(this.stationIndex)} />
+            <img src={this.getImageUri(this.activeIndex)} />
           </div>
           <div id="player">
             <sc-player-controls
@@ -210,7 +100,7 @@ export class PageStations {
           <div id="player-list" class="swiper">
             <div class="swiper-wrapper">
               {this.stations.map((station, index) =>
-                <div data-testid={`player-list-item-${index}`} class={this.stationIndex == index ? 'swiper-slide active' : 'swiper-slide'}>
+                <div data-testid={`player-list-item-${index}`} class={this.activeIndex == index ? 'swiper-slide active' : 'swiper-slide'}>
                   <ion-card button onClick={() => { this.select(index) }}>
                     <div class="card-content">
                       <img src={this.getImageUri(index, 1)} />

@@ -1,4 +1,4 @@
-import { type Preview } from '@stencil/storybook-plugin';
+import { Preview } from '@stencil/storybook-plugin';
 import { within as withinShadow } from 'shadow-dom-testing-library';
 import './style.css';
 

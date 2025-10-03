@@ -1,4 +1,5 @@
 import { Component, Event, EventEmitter, Host, h, Prop } from "@stencil/core";
+import { formatSeconds } from "../../utils";
 
 @Component({
   tag: 'sc-player-controls',
@@ -18,13 +19,6 @@ export class PlayerControls {
   @Event() startPositionChange: EventEmitter<number>;
   @Event() endPositionChange: EventEmitter<number>;
   @Event() positionChange: EventEmitter<number>;
-
-  getFormattedSeconds(fullSeconds: number): string {
-    fullSeconds = Math.trunc(fullSeconds);
-    const minutes = Math.trunc(fullSeconds / 60);
-    const seconds = fullSeconds - (minutes * 60);
-    return (minutes > 9 ? minutes : ("0" + minutes)) + ":" + (seconds > 9 ? seconds : "0" + seconds);
-  }
 
   render() {
     return (
@@ -56,10 +50,10 @@ export class PlayerControls {
             max={this.duration}>
               <ion-text 
                 data-testid="player-position" 
-                slot="start">{this.getFormattedSeconds(this.position)}</ion-text>
+                slot="start">{formatSeconds(this.position)}</ion-text>
               <ion-text 
                 data-testid="player-duration" 
-                slot="end">{this.getFormattedSeconds(this.duration)}</ion-text>
+                slot="end">{formatSeconds(this.duration)}</ion-text>
           </ion-range>
         </div>
       </Host>

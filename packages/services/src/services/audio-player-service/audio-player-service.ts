@@ -3,9 +3,14 @@ import { NativeAudioPlayer, Item } from '@smartcompanion/native-audio-player';
 import { Station, Asset } from "@smartcompanion/data";
 import { AudioPlayerUpdate } from "./audio-player-update";
 
+export interface AudioPlayerServiceItem extends Item {
+  stationId: string;
+  collectedPercentage: number;
+}
+
 export class AudioPlayerService {
 
-  protected items: Item[] = [];
+  protected items: AudioPlayerServiceItem[] = [];
   protected updateListenerHandle: PluginListenerHandle;
 
   set stations(stations: Station[]) {
@@ -82,13 +87,45 @@ export class AudioPlayerService {
     return result.value;
   }
 
-  getIndex(id: String | string, items: Array<{id: string}> = this.items): number {
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].id == id) {
+  /**
+   * Get the index of the item identified by the given audio id
+   */
+  getIndex(id: string): number {
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].id == id) {
         return i;
       }
     }
-    return -1;
+    // fallback to first item
+    return 0;
+  }
+
+  /**
+   * Get the index of the first item identified by the given station id 
+   */
+  getIndexByStationId(stationId: string, items: Array<{stationId: string}> = this.items): number {
+    if (stationId == "default") {
+      return 0;
+    }
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].stationId == stationId) {
+        return i;
+      }
+    }
+
+    // fallback to first item
+    return 0;
+  }
+
+  /**
+   * Get the station id of the item at the given index
+   */
+  getStationId(index: number): string {
+    if (this.items && index < this.items.length && index >= 0) {
+      return this.items[index].stationId;
+    }
+    return "";
   }
 
   getId(index: number): string {
@@ -98,7 +135,11 @@ export class AudioPlayerService {
     return "";
   }
 
-  getPlayerItems(stations: Station[]): Item[] {
+  /**
+   * Convert stations to player items, each item is identified by their audio id
+   * A station with multiple audios will be split into multiple items
+   */
+  getPlayerItems(stations: Station[]): AudioPlayerServiceItem[] {
     return stations
       .map(station => (station.audios as Asset[])
         .map(audio => ({
@@ -106,7 +147,9 @@ export class AudioPlayerService {
           title: audio?.title ? audio?.title : station.title,
           subtitle: this.subtitle,
           audioUri: audio.internalFileUrl,
-          imageUri: (station.images as Asset[])[0].internalFileUrl
+          imageUri: (station.images as Asset[])[0].internalFileUrl,
+          stationId: station.id,
+          collectedPercentage: station.collectedPercentage || 0
         })))
       .flat();
   }

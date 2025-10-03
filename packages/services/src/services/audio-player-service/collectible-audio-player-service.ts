@@ -1,5 +1,5 @@
-import { Station, Asset } from "@smartcompanion/data";
-import { AudioPlayerService } from "./audio-player-service";
+import { Station } from "@smartcompanion/data";
+import { AudioPlayerService, AudioPlayerServiceItem } from "./audio-player-service";
 import { AudioPlayerUpdate } from "./audio-player-update";
 
 export class CollectibleAudioPlayerService extends AudioPlayerService {
@@ -98,18 +98,8 @@ export class CollectibleAudioPlayerService extends AudioPlayerService {
     return position;
   }
 
-  getPlayerItems(stations: Station[]): any[] {
-    const playerItems = stations
-      .map(station => (station.audios as Asset[])
-        .map(audio => ({
-          id: audio.id,
-          title: audio?.title ? audio?.title : station.title,
-          subtitle: this.subtitle,
-          audioUri: audio.internalFileUrl,
-          imageUri: (station.images as Asset[])[0].internalFileUrl,
-          collectedPercentage: station.collectedPercentage || 0
-        })))
-      .flat();
+  getPlayerItems(stations: Station[]): AudioPlayerServiceItem[] {
+    const playerItems = super.getPlayerItems(stations) as AudioPlayerServiceItem[];
 
     playerItems.forEach(item => this.collection[item.id] = {
       collectedTime: 0,

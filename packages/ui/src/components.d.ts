@@ -202,6 +202,11 @@ export namespace Components {
           * @default null
          */
         "stationId": string;
+        /**
+          * If tour id is given, stations are retrieved from specific tour. Tour id 'default' is a placeholder for the default tour id.
+          * @default null
+         */
+        "tourId": string;
     }
     interface ScPageTabbedStationList {
         "facade": ServiceFacade;
@@ -629,6 +634,11 @@ declare namespace LocalJSX {
           * @default null
          */
         "stationId"?: string;
+        /**
+          * If tour id is given, stations are retrieved from specific tour. Tour id 'default' is a placeholder for the default tour id.
+          * @default null
+         */
+        "tourId"?: string;
     }
     interface ScPageTabbedStationList {
         "facade"?: ServiceFacade;

@@ -91,6 +91,16 @@ test('test get index of id, stations with one audio', () => {
   expect(audioPlayerService.getIndex("test2-audio1")).toEqual(1);
 });
 
+test('test get index of "default" station id as 0', () => {
+  audioPlayerService.stations = stations;
+  expect(audioPlayerService.getIndexByStationId("default")).toEqual(0);
+});
+
+test('test get index of unkown station id, fallback to 0', () => {
+  audioPlayerService.stations = stations;
+  expect(audioPlayerService.getIndexByStationId("xyz-unknown")).toEqual(0);
+});
+
 test('test get id of index, station of audios', () => {
   audioPlayerService.stations = [station];
   expect(audioPlayerService.getId(1)).toEqual("test1-audio2");
@@ -99,6 +109,11 @@ test('test get id of index, station of audios', () => {
 test('test get id of index, stations with one audio', () => {
   audioPlayerService.stations = stations;
   expect(audioPlayerService.getId(1)).toEqual("test2-audio1");
+});
+
+test('test get station id of index, stations with one audio', () => {
+  audioPlayerService.stations = stations;
+  expect(audioPlayerService.getStationId(1)).toEqual("test2");
 });
 
 test('test setting a single station with multiple audios', () => {
@@ -111,14 +126,18 @@ test('test setting a single station with multiple audios', () => {
       title: "test1-audio1",
       subtitle: "a subtitle",
       audioUri: "file://storage/test1-audio1.mp3",
-      imageUri: "file://storage/test1-image.jpg"
+      imageUri: "file://storage/test1-image.jpg",
+      stationId: "test1",
+      collectedPercentage: 0
     },
     {
       id: "test1-audio2",
       title: "test1-audio2",
       subtitle: "a subtitle",
       audioUri: "file://storage/test1-audio2.mp3",
-      imageUri: "file://storage/test1-image.jpg"
+      imageUri: "file://storage/test1-image.jpg",
+      stationId: "test1",
+      collectedPercentage: 0
     }
   ]);
 });
@@ -133,14 +152,18 @@ test('test setting multiple stations', () => {
       title: "test1-audio1",
       subtitle: "a subtitle",
       audioUri: "file://storage/test1-audio1.mp3",
-      imageUri: "file://storage/test1-image.jpg"
+      imageUri: "file://storage/test1-image.jpg",
+      stationId: "test1",
+      collectedPercentage: 0
     },
     {
       id: "test2-audio1",
       title: "test2-audio1",
       subtitle: "a subtitle",
       audioUri: "file://storage/test2-audio1.mp3",
-      imageUri: "file://storage/test2-image.jpg"
+      imageUri: "file://storage/test2-image.jpg",
+      stationId: "test2",
+      collectedPercentage: 0
     }
   ]);
 });

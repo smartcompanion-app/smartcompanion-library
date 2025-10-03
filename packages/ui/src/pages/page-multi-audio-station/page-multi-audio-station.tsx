@@ -1,19 +1,14 @@
-import { Component, State, Prop, Host, h } from '@stencil/core';
+import { Component, State, Prop, Host, Mixin, h } from '@stencil/core';
 import { Station } from '@smartcompanion/data';
-import { AudioPlayerUpdate, ServiceFacade } from '@smartcompanion/services';
+import { audioPlayerBaseComponentFactory, formatSeconds } from '../../utils';
 
 @Component({
   tag: 'sc-page-multi-audio-station',
   styleUrl: 'page-multi-audio-station.scss'
 })
-export class PageMultiAudioStation {
+export class PageMultiAudioStation extends Mixin(audioPlayerBaseComponentFactory) {
 
   @State() station: Station;
-  @State() playing: boolean = false;
-  @State() position = 0;
-  @State() duration = 0;
-  @State() activeIndex = 0;
-  @State() earpiece;
 
   /**
    * Define default back button href, only used if enableBackButton is true
@@ -31,8 +26,6 @@ export class PageMultiAudioStation {
    */
   @Prop() stationId: string;
 
-  @Prop() facade: ServiceFacade;
-
   /**
    * This prop displays a button for switching audio output between speaker and earpiece.
    * This feature is only available on hybrid apps
@@ -40,101 +33,17 @@ export class PageMultiAudioStation {
   @Prop() enableSwitchAudioOutput: boolean = false;
 
   async componentWillLoad() {
-    this.station = await this.facade.getStationService().getStation(this.stationId);
     await this.facade.getMenuService().enable();
-    this.earpiece = window.localStorage.getItem('audio-earpiece') == 'yes' ? true : false;
-  }
+    this.station = await this.facade.getStationService().getStation(this.stationId);
+    this.initEarpiece();
+   }
 
   async componentDidLoad() {
-    await this.facade.getAudioPlayerService().start([this.station]);
-
-    if (this.earpiece) {
-      await this.facade.getAudioPlayerService().setEarpiece();
-    } else {
-      await this.facade.getAudioPlayerService().setSpeaker();
-    }
-
-    this.facade.getAudioPlayerService().registerUpdateListener(async (update: AudioPlayerUpdate) => {
-      console.log('AudioPlayerUpdate', update);
-
-      if (update.state == 'playing') {
-        this.playing = true;
-        this.updatePosition();
-      } else if (update.state == 'paused') {
-        this.playing = false;
-      } else if (update.state == 'skip' && update.index != this.activeIndex) {
-        this.activeIndex = update.index;
-        await this.initPlayer();
-      }
-    });
-    await this.initPlayer();
+    await this.initAudioPlayer([this.station]);
   }
 
   async disconnectedCallback() {
-    this.playing = false;
-    await this.facade.getAudioPlayerService().stop();
-    this.facade.getAudioPlayerService().unregisterUpdateListener();    
-  }
-
-  async initPlayer() {
-    this.playing = false;
-    this.position = 0;
-    this.duration = await this.facade.getAudioPlayerService().getDuration();
-  }
-
-  async next() {
-    await this.facade.getAudioPlayerService().next();
-  }
-
-  async prev() {
-    await this.facade.getAudioPlayerService().prev();
-  }
-
-  async startPositionChange() {
-    await this.facade.getAudioPlayerService().pause();
-  }
-
-  async changePosition(position: number) {
-    this.position = position; 
-    await this.facade.getAudioPlayerService().seek(position);
-    await this.facade.getAudioPlayerService().play();
-  }
-
-  async updatePosition() {
-    this.position = await this.facade.getAudioPlayerService().getPosition();
-    this.duration = await this.facade.getAudioPlayerService().getDuration();
-
-    if (this.duration > 0 && this.position >= this.duration) {
-      setTimeout(() => {
-        this.facade.getAudioPlayerService().pause();
-        this.facade.getAudioPlayerService().seek(0);
-        this.position = 0;
-      }, 500);
-    } else {
-      setTimeout(() => {
-        if (this.playing) {
-          this.updatePosition();
-        }
-      }, 1000);
-    }
-  }
-
-  async toggleOutput() {
-    if (this.earpiece) {
-      await this.facade.getAudioPlayerService().setSpeaker();
-      this.earpiece = false;
-    } else {
-      await this.facade.getAudioPlayerService().setEarpiece();
-      this.earpiece = true;
-    }
-    window.localStorage.setItem('audio-earpiece', this.earpiece ? 'yes' : 'no');
-  }
-
-  getFormattedSeconds(fullSeconds: number): string {
-    fullSeconds = Math.trunc(fullSeconds);
-    const minutes = Math.trunc(fullSeconds / 60);
-    const seconds = fullSeconds - (minutes * 60);
-    return (minutes > 9 ? minutes : ("0" + minutes)) + ":" + (seconds > 9 ? seconds : "0" + seconds);
+    await this.destroyAudioPlayer();  
   }
 
   render() {
@@ -186,7 +95,7 @@ export class PageMultiAudioStation {
                 duration={this.duration}
                 onNext={() => this.next()}
                 onPrev={() => this.prev()}
-                onPlayPause={() => this.playing ? this.facade.getAudioPlayerService().pause() : this.facade.getAudioPlayerService().play()}
+                onPlayPause={() => this.playPause()}
                 onStartPositionChange={() => this.startPositionChange()}
                 onEndPositionChange={(e) => this.changePosition(e.detail)}
               />
@@ -198,14 +107,14 @@ export class PageMultiAudioStation {
                   {this.station.audios.map((audio, audioIndex) => (
                     <ion-item
                       data-testid={`audio-item-${audioIndex}`}
-                      onClick={() => this.facade.getAudioPlayerService().select(audioIndex)}
+                      onClick={() => this.select(audioIndex)}
                       lines="none"
                       class={this.activeIndex == audioIndex ? 'active' : ''}>
                       <ion-icon slot="start" name="play"></ion-icon>
                       <ion-label>
                         <sc-marquee active={this.playing && this.activeIndex == audioIndex}>{audio.title}</sc-marquee>
                       </ion-label>
-                      <p slot="end">{this.getFormattedSeconds(audio.duration)}</p>
+                      <p slot="end">{formatSeconds(audio.duration)}</p>
                     </ion-item>
                   ))}
                 </ion-list>

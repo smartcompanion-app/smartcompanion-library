@@ -1,6 +1,7 @@
 import { Component, State, Prop, Host, Mixin, h } from '@stencil/core';
 import { Station } from '@smartcompanion/data';
-import { audioPlayerBaseComponentFactory, formatSeconds } from '../../utils';
+import { formatSeconds } from '../../utils';
+import { audioPlayerBaseComponentFactory } from '../../utils/audio-player-base-component';
 
 @Component({
   tag: 'sc-page-multi-audio-station',

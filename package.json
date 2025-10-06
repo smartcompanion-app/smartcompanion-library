@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "test": "npm run test -w packages/data -w packages/services -w packages/ui --if-present",
-    "build": "npm run build -w packages/data -w packages/services -w packages/ui --if-present"
+    "build": "npm run build -w packages/data -w packages/services -w packages/ui -w apps/audioguide-app --if-present"
   },
   "license": "BSD-2-Clause"
 }

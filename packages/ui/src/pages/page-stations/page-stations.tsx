@@ -1,8 +1,9 @@
 import { Component, h, State, Prop, Mixin } from '@stencil/core';
 import { Swiper } from 'swiper';
 import { Asset, Station } from '@smartcompanion/data';
-import { audioPlayerBaseComponentFactory, getSortedStations } from '../../utils';
 import { AudioPlayerUpdate } from '@smartcompanion/services';
+import { getSortedStations } from '../../utils';
+import { audioPlayerBaseComponentFactory } from '../../utils/audio-player-base-component';
 
 @Component({
   tag: 'sc-page-stations',

@@ -1,6 +1,7 @@
 import { Component, State, Prop, Host, Mixin, h } from '@stencil/core';
 import { Station } from '@smartcompanion/data';
-import { getMenuButton, getStations, audioPlayerBaseComponentFactory } from '../../utils';
+import { getMenuButton, getStations } from '../../utils';
+import { audioPlayerBaseComponentFactory } from '../../utils/audio-player-base-component';
 
 @Component({
   tag: 'sc-page-station',

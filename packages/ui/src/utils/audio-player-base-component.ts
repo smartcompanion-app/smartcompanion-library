@@ -1,8 +1,8 @@
-import { Prop, State } from '@stencil/core';
+import { Prop, State, MixinFactory } from '@stencil/core';
 import { AudioPlayerUpdate, ServiceFacade } from '@smartcompanion/services';
 import { Station } from '@smartcompanion/data';
 
-export const audioPlayerBaseComponentFactory = (Base) => {
+export const audioPlayerBaseComponentFactory: MixinFactory = (Base) => {
   class AudioPlayerBaseComponent extends Base {
 
     @State() playing: boolean = false;

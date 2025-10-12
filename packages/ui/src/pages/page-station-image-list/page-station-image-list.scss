@@ -1,10 +1,22 @@
-.station-image-list {
-    &-image {
-      object-fit: cover;
-      width: 100%
-    }
-    &-description {
-        padding-bottom: 10px;
-    }
+sc-page-station-image-list {
+
+  ion-card {
+    --ion-background-color: initial;
+    --ion-card-background: var(--ion-background-color);
+  }
+  ion-list {
+    --ion-background-color: #f6f6f6;
+  }
 }
 
+.station-image-list {  
+
+  &-image {
+    object-fit: cover;
+    width: 100%
+  }
+
+  &-description {
+    padding-bottom: 10px;
+  }
+}

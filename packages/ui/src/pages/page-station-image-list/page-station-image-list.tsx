@@ -43,7 +43,7 @@ export class PageStationImageList {
             <ion-title>{this.facade.__("station-list")}</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content>
+        <ion-content class="station-image-list">
           <ion-list>
             {this.stations.map(station => (
               <ion-card>

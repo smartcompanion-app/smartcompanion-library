@@ -12,7 +12,7 @@ import { audioPlayerBaseComponentFactory } from '../../utils/audio-player-base-c
 export class PageStations extends Mixin(audioPlayerBaseComponentFactory) {
 
   protected playerList: Swiper;
-  protected restartPlaying = false;  
+  protected restartPlaying = false;
 
   @State() stations: Array<Station> = [];
 
@@ -26,15 +26,21 @@ export class PageStations extends Mixin(audioPlayerBaseComponentFactory) {
    * The ID of the initial active station to display, if set to null, the first station will be displayed
    */
   @Prop() stationId: string = null;
-  
-  async componentWillLoad() {    
-    this.facade.getMenuService().enable();  
+
+  /**
+   * This prop displays a button for switching audio output between speaker and earpiece.
+   * This feature is only available on hybrid apps
+   */
+  @Prop() enableSwitchAudioOutput: boolean = false;
+
+  async componentWillLoad() {
+    this.facade.getMenuService().enable();
     this.stations = await getSortedStations(this.facade, this.tourId);
     this.updateActiveIndex(this.stationId, this.stations);
     this.initEarpiece();
   }
 
-  async componentDidLoad() {    
+  async componentDidLoad() {
     this.playerList = new Swiper('#player-list', {
       direction: 'vertical',
       slidesPerView: 'auto',
@@ -48,7 +54,7 @@ export class PageStations extends Mixin(audioPlayerBaseComponentFactory) {
   async disconnectedCallback() {
     this.destroyAudioPlayer();
   }
-  
+
   getImageUri(index: number, imageIndex: number = 0) {
     const station = this.stations[index];
     return (station.images[imageIndex] as Asset).internalWebUrl;
@@ -78,7 +84,17 @@ export class PageStations extends Mixin(audioPlayerBaseComponentFactory) {
             <ion-fab-button color="light" size="small" onClick={() => this.openMenu()}>
               <ion-icon color="primary" name="menu-outline"></ion-icon>
             </ion-fab-button>
-          </ion-buttons>          
+          </ion-buttons>
+          <ion-buttons slot="end">
+            {this.enableSwitchAudioOutput && (
+              <ion-fab-button color="light" size="small" onClick={() => this.toggleOutput()}>
+                {this.earpiece ?
+                  <ion-icon color="primary" name="volume-medium-outline"></ion-icon> :
+                  <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>
+                }
+              </ion-fab-button>
+            )}
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>,
       <ion-content id="home" fullscreen={true}>

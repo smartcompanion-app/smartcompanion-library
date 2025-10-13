@@ -7,6 +7,7 @@ import { stations } from '../../../test/fixtures';
 import { PageStations } from './page-stations';
 
 type StoryArgs = {
+  enableSwitchAudioOutput: boolean;
   facade: Partial<ServiceFacade>;
 };
 
@@ -16,7 +17,10 @@ const meta: Meta<StoryArgs> = {
   component: PageStations,
   render: args => (
     <div style={{width: "100vw", height: "100vh"}}>
-      <sc-page-stations stationId={"default"} facade={args.facade as ServiceFacade} />
+      <sc-page-stations 
+        stationId={"default"} 
+        enableSwitchAudioOutput={args.enableSwitchAudioOutput}
+        facade={args.facade as ServiceFacade} />
     </div>
   ),
 };
@@ -29,6 +33,7 @@ const audioPlayerService: AudioPlayerService = new CollectibleAudioPlayerService
 
 export const Example: Story = {
   args: {
+    enableSwitchAudioOutput: false,
     facade: {
       getAudioPlayerService: () => audioPlayerService,
       getStationService: () => ({

@@ -196,6 +196,11 @@ export namespace Components {
         "tourId": string;
     }
     interface ScPageStations {
+        /**
+          * This prop displays a button for switching audio output between speaker and earpiece. This feature is only available on hybrid apps
+          * @default false
+         */
+        "enableSwitchAudioOutput": boolean;
         "facade": ServiceFacade;
         /**
           * The ID of the initial active station to display, if set to null, the first station will be displayed
@@ -628,6 +633,11 @@ declare namespace LocalJSX {
         "tourId"?: string;
     }
     interface ScPageStations {
+        /**
+          * This prop displays a button for switching audio output between speaker and earpiece. This feature is only available on hybrid apps
+          * @default false
+         */
+        "enableSwitchAudioOutput"?: boolean;
         "facade"?: ServiceFacade;
         /**
           * The ID of the initial active station to display, if set to null, the first station will be displayed

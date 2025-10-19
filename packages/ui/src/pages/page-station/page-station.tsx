@@ -41,17 +41,12 @@ export class PageStation extends Mixin(audioPlayerBaseComponentFactory) {
   async componentWillLoad() {
     await this.facade.getMenuService().enable();
     this.stations = await getStations(this.facade, this.tourId);
-    
-    // if a stationId is given from URL, then search corresponding activeIndex
-    if (this.stationId) {
-      this.activeIndex = this.facade.getAudioPlayerService().getIndexByStationId(this.stationId);
-    }
-
+    this.updateActiveIndex(this.stationId, this.stations);
     this.initEarpiece();
   }
 
   async componentDidLoad() {
-    this.initAudioPlayer(this.stations);
+    await this.initAudioPlayer(this.stations);
   }
 
   async disconnectedCallback() {

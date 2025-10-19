@@ -120,6 +120,9 @@ export const audioPlayerBaseComponentFactory: MixinFactory = (Base) => {
       await this.facade.getAudioPlayerService().play();
     }
 
+    /**
+     * Update activeIndex based on given station id, this works even if audioplayer is not yet initialized
+     */
     updateActiveIndex(id: string, stations: Array<Station>) {
       const items = this.facade.getAudioPlayerService().getPlayerItems(stations);
       this.activeIndex = this.facade.getAudioPlayerService().getIndexByStationId(id, items);

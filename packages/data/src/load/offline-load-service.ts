@@ -1,8 +1,7 @@
-import { Asset } from "../domain";
 import { FileUpdater } from "../file";
 import { ServiceLocator } from "../service-locator";
-import { BrowserStorage, Storage } from "../storage";
 import { Updater } from "../update";
+import { autoSelectLanguage } from "./utils";
 
 /**
  * This load service strategy is designed for offline use,
@@ -56,6 +55,7 @@ export class OfflineLoadService {
     try {
       const data = await this.downloadData();
       this.dataUpdater.update(data);
+      autoSelectLanguage(this.serviceLocator.getLanguageService());
 
       if (!this.serviceLocator.getLanguageService().hasLanguage()) {
         return 'language';

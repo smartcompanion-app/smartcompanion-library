@@ -1,13 +1,13 @@
 import { LanguageService, PinService } from "../domain";
 import { ServiceLocator } from "../service-locator";
 import { Updater } from "../update";
-import { LoadService } from "./load-service";
+import { autoSelectLanguage } from "./utils";
 
 /**
  * This load service strategy assumes a constant internet connection,
  * Assets like audio files and images are downloaded on demand.
  */
-export class OnlineLoadService implements LoadService {
+export class OnlineLoadService {
   
   protected languageService: LanguageService;
   protected pinService: PinService;
@@ -34,6 +34,7 @@ export class OnlineLoadService implements LoadService {
     try {
       const data = await this.downloadData();
       this.dataUpdater.update(data);
+      autoSelectLanguage(this.languageService);
 
       if (!this.languageService.hasLanguage()) {
         return 'language';

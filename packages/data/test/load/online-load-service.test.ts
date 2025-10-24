@@ -29,6 +29,29 @@ describe('online load service', () => {
     loadService.setProgressListener(progressFn);
   });
 
+  test('should load data and return "home" if only one language is available', async () => {
+    downloadDataFn.mockResolvedValue({ example: 'data' });
+    jest.spyOn(serviceLocator.getLanguageService(), 'getLanguages').mockReturnValue([{ language: 'en', title: 'English' }]);
+
+    const result = await loadService.load();
+
+    expect(result).toBe('home');
+    expect(storage.get('language')).toBe('en');
+    expect(dataUpdater.update).toHaveBeenCalledWith({ example: 'data' });
+  });
+
+  test('should load data and return "language" if more than one language is available', async () => {
+    downloadDataFn.mockResolvedValue({ example: 'data' });
+    jest.spyOn(serviceLocator.getLanguageService(), 'getLanguages').mockReturnValue([
+      { language: 'en', title: 'English' }, { language: 'de', title: 'Deutsch' }
+    ]);
+
+    const result = await loadService.load();
+
+    expect(result).toBe('language');
+    expect(dataUpdater.update).toHaveBeenCalledWith({ example: 'data' });
+  });
+
   test('should load data and return "language" if no language is set', async () => {
     downloadDataFn.mockResolvedValue({ example: 'data' });
 

@@ -3,7 +3,6 @@ import { OfflineLoadService } from '../../src/load/offline-load-service';
 import { MemoryStorage } from '../../src/storage';
 import { ServiceLocator } from '../../src/service-locator';
 import { Updater } from '../../src/update';
-import { FileUpdater } from '../../src/file';
 
 describe('offline load service', () => {
   let downloadDataFn: jest.Mock<() => Promise<any>>;
@@ -53,6 +52,27 @@ describe('offline load service', () => {
     const result = await offlineLoadService.load();
     expect(downloadDataFn).toHaveBeenCalledTimes(1);
     expect(result).toEqual('error');
+  });
+
+  test('should load data and return "language" if more than one language is available', async () => {
+    downloadDataFn.mockResolvedValue({ example: 'data' });
+    jest.spyOn(serviceLocator.getLanguageService(), 'getLanguages').mockReturnValue([
+      { language: 'en', title: 'English' }, { language: 'de', title: 'Deutsch' }
+    ]);
+    const result = await offlineLoadService.load();
+    expect(result).toBe('language');
+    expect(dataUpdater.update).toHaveBeenCalledWith({ example: 'data' });
+  });
+
+  test('should load data and return "home" if only one language is available', async () => {
+    downloadDataFn.mockResolvedValue({ example: 'data' });
+    listFn.mockResolvedValue([]);
+    jest.spyOn(serviceLocator.getLanguageService(), 'getLanguages').mockReturnValue([{ language: 'en', title: 'English' }]);
+    jest.spyOn(serviceLocator.getAssetService(), 'getUnresolvedAssets').mockReturnValue([]);
+    const result = await offlineLoadService.load();
+    expect(result).toBe('home');
+    expect(memoryStorage.get('language')).toBe('en');
+    expect(dataUpdater.update).toHaveBeenCalledWith({ example: 'data' });
   });
 
   test('should result in "language" when data downloads and memory is empty', async () => {

@@ -48,4 +48,12 @@ export class OnlineLoadService {
       return 'error';
     }
   }
+
+  /**
+   * For the online load service, data is considered loaded
+   * if a language is selected and PIN validation is not required or valid.
+   */
+  isLoaded(): boolean {
+    return this.languageService.hasLanguage() && (!this.pinService.isPinValidationRequired() || this.pinService.isValid());
+  }
 }

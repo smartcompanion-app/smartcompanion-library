@@ -54,7 +54,8 @@ export class PageLoading {
     if (result == 'language') {
       this.facade.getRoutingService().pushReplace('/language');
     } else if (result == 'home') {
-      this.facade.getRoutingService().pushReplace(this.homeRoute);
+      const pendingRoute = this.facade.getPendingRoute();
+      this.facade.getRoutingService().pushReplace(pendingRoute || this.homeRoute);
     } else if (result == 'pin') {
       this.facade.getRoutingService().pushReplace('/pin');
     } else {

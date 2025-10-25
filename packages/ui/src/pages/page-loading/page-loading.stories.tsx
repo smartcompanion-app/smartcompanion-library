@@ -48,6 +48,7 @@ export const Example: Story = {
               }, 500); // Simulate loading
             });
           },
+          isLoaded: () => true,
         };
       },
       getMenuService: () => ({

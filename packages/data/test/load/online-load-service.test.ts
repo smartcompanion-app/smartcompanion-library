@@ -32,9 +32,7 @@ describe('online load service', () => {
   test('should load data and return "home" if only one language is available', async () => {
     downloadDataFn.mockResolvedValue({ example: 'data' });
     jest.spyOn(serviceLocator.getLanguageService(), 'getLanguages').mockReturnValue([{ language: 'en', title: 'English' }]);
-
     const result = await loadService.load();
-
     expect(result).toBe('home');
     expect(storage.get('language')).toBe('en');
     expect(dataUpdater.update).toHaveBeenCalledWith({ example: 'data' });
@@ -45,18 +43,14 @@ describe('online load service', () => {
     jest.spyOn(serviceLocator.getLanguageService(), 'getLanguages').mockReturnValue([
       { language: 'en', title: 'English' }, { language: 'de', title: 'Deutsch' }
     ]);
-
     const result = await loadService.load();
-
     expect(result).toBe('language');
     expect(dataUpdater.update).toHaveBeenCalledWith({ example: 'data' });
   });
 
   test('should load data and return "language" if no language is set', async () => {
     downloadDataFn.mockResolvedValue({ example: 'data' });
-
     const result = await loadService.load();
-
     expect(result).toBe('language');
     expect(dataUpdater.update).toHaveBeenCalledWith({ example: 'data' });
   });
@@ -64,9 +58,7 @@ describe('online load service', () => {
   test('should load data and return "home" if no pin is required', async () => {
     downloadDataFn.mockResolvedValue({ example: 'data' });
     jest.spyOn(serviceLocator.getLanguageService(), 'hasLanguage').mockReturnValue(true);
-
     const result = await loadService.load();
-
     expect(result).toBe('home');
     expect(dataUpdater.update).toHaveBeenCalledWith({ example: 'data' });
   });
@@ -76,19 +68,40 @@ describe('online load service', () => {
     jest.spyOn(serviceLocator.getLanguageService(), 'hasLanguage').mockReturnValue(true);
     jest.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
     jest.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(false);
-
     const result = await loadService.load();
-
     expect(result).toBe('pin');
     expect(dataUpdater.update).toHaveBeenCalledWith({ example: 'data' });
   });
 
 
   test('should return "error" when error is thrown from download', async () => {    
-    downloadDataFn.mockRejectedValue(new Error('Network error'));
-    
+    downloadDataFn.mockRejectedValue(new Error('Network error'));    
     const result = await loadService.load();
-
     expect(result).toBe('error');
+  });
+
+  test('isLoaded should return true when language is set and pin is not required', () => {
+    jest.spyOn(serviceLocator.getLanguageService(), 'hasLanguage').mockReturnValue(true);
+    jest.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(false);
+    expect(loadService.isLoaded()).toBeTruthy();
+  });
+
+  test('isLoaded should return true when language is set and pin is valid', () => {
+    jest.spyOn(serviceLocator.getLanguageService(), 'hasLanguage').mockReturnValue(true);
+    jest.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
+    jest.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(true);
+    expect(loadService.isLoaded()).toBeTruthy();
+  });
+
+  test('isLoaded should return false when no language is set', () => {
+    jest.spyOn(serviceLocator.getLanguageService(), 'hasLanguage').mockReturnValue(false);
+    expect(loadService.isLoaded()).toBeFalsy();
+  });
+
+  test('isLoaded should return false when pin is required and not valid', () => {
+    jest.spyOn(serviceLocator.getLanguageService(), 'hasLanguage').mockReturnValue(true);
+    jest.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
+    jest.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(false);
+    expect(loadService.isLoaded()).toBeFalsy();
   });
 });

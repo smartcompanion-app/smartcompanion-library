@@ -108,4 +108,40 @@ describe('offline load service', () => {
     expect(downloadDataFn).toHaveBeenCalledTimes(1);
     expect(result).toEqual('pin');
   });
+
+  test('isLoaded should return true when language is set, files are loaded and pin is not required', () => {
+    memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
+    memoryStorage.set('language', 'de');
+    memoryStorage.set('files-loaded', 'de');
+    jest.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(false);
+    expect(offlineLoadService.isLoaded()).toBeTruthy();
+  });
+
+  test('isLoaded should return true when language is set, files are loaded and pin is valid', () => {
+    memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
+    memoryStorage.set('language', 'de');
+    memoryStorage.set('files-loaded', 'de');
+    jest.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
+    jest.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(true);
+    expect(offlineLoadService.isLoaded()).toBeTruthy();
+  });
+
+  test('isLoaded should return false when no language is set', () => {
+    expect(offlineLoadService.isLoaded()).toBeFalsy();
+  });
+
+  test('isLoaded should return false when files are not loaded', () => {
+    memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
+    memoryStorage.set('language', 'de');
+    expect(offlineLoadService.isLoaded()).toBeFalsy();
+  });
+
+  test('isLoaded should return false when pin is required and not valid', () => {
+    memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
+    memoryStorage.set('language', 'de');
+    memoryStorage.set('files-loaded', 'de');
+    jest.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
+    jest.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(false);
+    expect(offlineLoadService.isLoaded()).toBeFalsy();
+  });
 });

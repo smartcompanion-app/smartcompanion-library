@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+      "allowJs": true,
       "allowUnreachableCode": false,
       "outDir": "dist",
       "removeComments": true,
@@ -14,6 +15,5 @@
       "types": ["react", "jest"], // bugfix: ../../node_modules/@types/mdx/types.d.ts:73:46 - error TS2503: Cannot find namespace 'JSX'.
     },
     "files": ["src/index.ts"],
-    "include": ["./src/**/*.ts"],
-    "exclude": ["node_modules/**/*"]
+    "include": ["./src/**/*.ts"]
   }

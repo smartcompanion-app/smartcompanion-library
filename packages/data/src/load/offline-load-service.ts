@@ -85,15 +85,22 @@ export class OfflineLoadService {
         !this.serviceLocator.getPinService().isValid()
       ) {
         return 'pin';
-      } else if (
-        this.serviceLocator.getLanguageService().hasLanguage() &&
-        this.serviceLocator.getStorage().has('files-loaded') &&
-        this.serviceLocator.getStorage().get('files-loaded') == this.serviceLocator.getLanguageService().getCurrentLanguage()
-      ) {
+      } else if (this.isLoaded()) {
         return 'home';
       } else {
         return 'error';
       }
     }
+  }
+
+  /**
+   * For the offline load service, data is considered loaded
+   * if a language is selected, files are loaded and PIN validation is not required or valid.
+   */
+  isLoaded(): boolean {
+    return this.serviceLocator.getLanguageService().hasLanguage() &&
+      this.serviceLocator.getStorage().has('files-loaded') &&
+      this.serviceLocator.getStorage().get('files-loaded') == this.serviceLocator.getLanguageService().getCurrentLanguage() &&
+      (!this.serviceLocator.getPinService().isPinValidationRequired() || this.serviceLocator.getPinService().isValid());
   }
 }

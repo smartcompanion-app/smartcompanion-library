@@ -72,11 +72,41 @@ export class ServiceFacade extends ServiceLocator {
     return this.getLanguageService().getLanguages();
   }
 
+  /**
+   * Get a translation for a specific key.
+   */
   __(key: string): string {
     if (this.getLanguageService().hasLanguage()) {
       return this.getTextService().getText(key);
     } else {
       return key; // Fallback to key if no language is set
     }
+  }
+
+  /**
+   * Default route guard to ensure data is loaded.
+   */
+  canLoadRoute(): boolean | { redirect: string } {
+    if (this.getLoadService().isLoaded()) {
+      return true;
+    } else {
+      const hash = globalThis?.location?.hash;
+      if (hash && hash.startsWith('#/')) {
+        this.storage.set("pending-route", hash.substring(1));
+      }
+      return { redirect: "/" };
+    }
+  }
+
+  /**
+   * Get and clear any stored pending route or null if none exists.
+   */
+  getPendingRoute(): string | null {
+    if (this.storage.has('pending-route')) {
+      const route = this.storage.get('pending-route');
+      this.storage.unset('pending-route');
+      return route;
+    }
+    return null;
   }
 }

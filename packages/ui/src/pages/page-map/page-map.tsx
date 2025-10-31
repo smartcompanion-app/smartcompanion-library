@@ -114,7 +114,7 @@ export class PageMap {
         </ion-toolbar>
       </ion-header>,
       <ion-content>
-        <div id="map"></div>
+        <div slot="fixed" id="map"></div>
       </ion-content>
     ];
   }

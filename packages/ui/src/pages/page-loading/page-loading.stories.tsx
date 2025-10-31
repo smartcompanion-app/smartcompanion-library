@@ -3,27 +3,24 @@ import { h } from '@stencil/core';
 import { ServiceFacade, MenuService, RoutingService } from '@smartcompanion/services';
 import { PageLoading } from './page-loading';
 
-type StoryArgs = {
-  facade: Partial<ServiceFacade>;
-};
-
-const meta: Meta<StoryArgs> = {
+const meta = {
   title: 'Pages/Page Loading',
   tags: ['autodocs'],
   component: PageLoading,
   render: args => (
     <div style={{width: "100vw", height: "100vh"}}>
-      <sc-page-loading facade={args.facade as ServiceFacade} image={"assets/example-loading.png"} />
+      <sc-page-loading {...args} />
     </div>
   ),
-};
+} satisfies Meta<PageLoading>;
 
 export default meta;
 
-type Story = StoryObj<StoryArgs>;
+type Story = StoryObj<PageLoading>;
 
 export const Example: Story = {
   args: {
+    image: "assets/example-loading.png",
     facade: {
       getLoadService: () => {
         let progress = 0;
@@ -63,7 +60,7 @@ export const Example: Story = {
           setTimeout(callback, 500); // Simulate route change after 500ms
         },      
       }) as RoutingService
-    },    
+    } as ServiceFacade,
   },
 };
 

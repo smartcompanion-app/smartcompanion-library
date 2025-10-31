@@ -5,24 +5,20 @@ import { ServiceFacade, MenuService } from '@smartcompanion/services';
 import { PageSelection } from './page-selection';
 import { StationService } from '@smartcompanion/data';
 
-type StoryArgs = {
-  facade: Partial<ServiceFacade>;
-};
-
-const meta: Meta<StoryArgs> = {
+const meta = {
   title: 'Pages/Page Selection',
   tags: ['autodocs'],
   component: PageSelection,
   render: args => (
     <div style={{width: "100vw", height: "100vh"}}>
-      <sc-page-selection facade={args.facade as ServiceFacade} />
+      <sc-page-selection {...args} />
     </div>
   ),
-};
+} satisfies Meta<PageSelection>;
 
 export default meta;
 
-type Story = StoryObj<StoryArgs>;
+type Story = StoryObj<PageSelection>;
 
 export const Example: Story = {
   args: {
@@ -46,7 +42,7 @@ export const Example: Story = {
             return key;
         }
       },
-    },
+    } as ServiceFacade,
   },
   play: async ({ canvas, userEvent, step }) => {
     

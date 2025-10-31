@@ -46,7 +46,7 @@
     "@smartcompanion/services": "*",
     "@stencil/core": "^4.36.2",
     "@stencil/sass": "^3.2.1",
-    "@stencil/storybook-plugin": "^0.4.2",
+    "@stencil/storybook-plugin": "^0.5.0",
     "@storybook/test-runner": "^0.23.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.8.0",

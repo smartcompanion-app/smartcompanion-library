@@ -2,42 +2,39 @@ import type { Meta, StoryObj } from '@stencil/storybook-plugin';
 import { h } from '@stencil/core';
 import { Marquee } from './marquee';
 
-type StoryArgs = {
-  active: boolean;
-  text: string;
-};
+const createRender = (text: string) => {
+  return args => <div style={{ width: "100vw" }}>
+    <sc-marquee {...args}>{text}</sc-marquee>
+  </div>;
+}
 
-const meta: Meta<StoryArgs> = {
+const meta = {
   title: 'Components/Marquee',
   tags: ['autodocs'],
   component: Marquee,
-  render: args => <div style={{ width: "100vw" }}>
-    <sc-marquee active={args.active}>{args.text}</sc-marquee>
-  </div>,
-};
+} satisfies Meta<Marquee>;
 
 export default meta;
 
-type Story = StoryObj<StoryArgs>;
-
+type Story = StoryObj<Marquee>;
 
 export const Example: Story = {
   args: {
     active: false,
-    text: 'A beatiful text, which however is too long for the width. A beatiful text, which however is too long for the width.',
   },
+  render: createRender('This is an example of a very long text that will scroll across the screen when the marquee is active.'),
 };
 
 export const ActiveExample: Story = {
   args: {
     active: true,
-    text: 'A beatiful text, which however is too long for the width. A beatiful text, which however is too long for the width.',
   },
+  render: createRender('This is an example of a very long text that will scroll across the screen when the marquee is active.'),
 };
 
 export const ActiveShortExample: Story = {
   args: {
     active: true,
-    text: 'Short Text',
   },
+  render: createRender('Short Text'),
 };

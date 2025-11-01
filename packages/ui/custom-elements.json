@@ -1,0 +1,2346 @@
+{
+  "timestamp": "2025-10-31T14:56:30",
+  "compiler": {
+    "name": "@stencil/core",
+    "version": "4.38.2",
+    "typescriptVersion": "5.9.3"
+  },
+  "components": [
+    {
+      "filePath": "src/components/image-slideshow/image-slideshow.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-image-slideshow",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "images",
+          "type": "string[]",
+          "complexType": {
+            "original": "string[]",
+            "resolved": "string[]",
+            "references": {}
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "List of image URLs to display in the slideshow",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "[]"
+            }
+          ],
+          "default": "[]",
+          "values": [
+            {
+              "type": "string[]"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-page-multi-audio-station"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-page-multi-audio-station": [
+          "sc-image-slideshow"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/marquee/marquee.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-marquee",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "active",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "active",
+          "reflectToAttr": true,
+          "docs": "",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-page-multi-audio-station"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-page-multi-audio-station": [
+          "sc-marquee"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/numpad/numpad.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-numpad",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "full",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "full",
+          "reflectToAttr": false,
+          "docs": "Enable the confirm button",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "confirm",
+          "detail": "void",
+          "bubbles": true,
+          "complexType": {
+            "original": "void",
+            "resolved": "void",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "delete",
+          "detail": "void",
+          "bubbles": true,
+          "complexType": {
+            "original": "void",
+            "resolved": "void",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "number",
+          "detail": "number",
+          "bubbles": true,
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-page-pin",
+        "sc-page-selection"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-page-pin": [
+          "sc-numpad"
+        ],
+        "sc-page-selection": [
+          "sc-numpad"
+        ]
+      }
+    },
+    {
+      "filePath": "src/pages/page-error/page-error.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-page-error",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "src/pages/page-language/page-language.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-page-language",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "src/pages/page-loading/page-loading.tsx",
+      "encapsulation": "none",
+      "tag": "sc-page-loading",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "homeRoute",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "home-route",
+          "reflectToAttr": false,
+          "docs": "The default or home route, when loading is successfully completed",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"/stations/default\""
+            }
+          ],
+          "default": "\"/stations/default\"",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "image",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "image",
+          "reflectToAttr": false,
+          "docs": "The image to display while loading",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "loadingTextColor",
+          "type": "\"primary\" | \"secondary\"",
+          "complexType": {
+            "original": "'primary' | 'secondary'",
+            "resolved": "\"primary\" | \"secondary\"",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "loading-text-color",
+          "reflectToAttr": false,
+          "docs": "Loading Text Color 'primary' or 'secondary' (default: 'primary')",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'primary'"
+            }
+          ],
+          "default": "'primary'",
+          "values": [
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "secondary",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "progressBarColor",
+          "type": "\"primary\" | \"secondary\"",
+          "complexType": {
+            "original": "'primary' | 'secondary'",
+            "resolved": "\"primary\" | \"secondary\"",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "progress-bar-color",
+          "reflectToAttr": false,
+          "docs": "Loading Progress Bar Color 'primary' or 'secondary' (default: 'primary')",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'primary'"
+            }
+          ],
+          "default": "'primary'",
+          "values": [
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "secondary",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "spinnerColor",
+          "type": "\"primary\" | \"secondary\"",
+          "complexType": {
+            "original": "'primary' | 'secondary'",
+            "resolved": "\"primary\" | \"secondary\"",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "spinner-color",
+          "reflectToAttr": false,
+          "docs": "Loading Spinner Color 'primary' or 'secondary' (default: 'primary')",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'primary'"
+            }
+          ],
+          "default": "'primary'",
+          "values": [
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "secondary",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "src/pages/page-map/page-map.tsx",
+      "encapsulation": "none",
+      "tag": "sc-page-map",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "defaultBackButtonHref",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "default-back-button-href",
+          "reflectToAttr": false,
+          "docs": "Define default back button href, only used if enableBackButton is true",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "enableBackButton",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "enable-back-button",
+          "reflectToAttr": false,
+          "docs": "Enable Back Button instead of Menu Button",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "headerBackgroundColor",
+          "type": "\"primary\" | \"secondary\"",
+          "complexType": {
+            "original": "'primary' | 'secondary'",
+            "resolved": "\"primary\" | \"secondary\"",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "header-background-color",
+          "reflectToAttr": false,
+          "docs": "Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'primary'"
+            }
+          ],
+          "default": "'primary'",
+          "values": [
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "secondary",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "mapAttribution",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "map-attribution",
+          "reflectToAttr": false,
+          "docs": "Map tiles attribution for the leaflet map",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "''"
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "mapBounds",
+          "type": "number[]",
+          "complexType": {
+            "original": "Array<number>",
+            "resolved": "number[]",
+            "references": {
+              "Array": {
+                "location": "global",
+                "id": "global::Array"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Map bounds for the leaflet map in top left Lat/Lng, bottom right Lat/Lng",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "number[]"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "tileUrlTemplate",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "tile-url-template",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "tourId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "tour-id",
+          "reflectToAttr": false,
+          "docs": "If tour id is given, stations only for the tour are shown.\nTour id 'default' is a placeholder for the default tour id.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "src/pages/page-multi-audio-station/page-multi-audio-station.tsx",
+      "encapsulation": "none",
+      "tag": "sc-page-multi-audio-station",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "defaultBackButtonHref",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "default-back-button-href",
+          "reflectToAttr": false,
+          "docs": "Define default back button href, only used if enableBackButton is true",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "enableSwitchAudioOutput",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "enable-switch-audio-output",
+          "reflectToAttr": false,
+          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\nThis feature is only available on hybrid apps",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "stationId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "station-id",
+          "reflectToAttr": false,
+          "docs": "The ID of the active station to display",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "tourId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "tour-id",
+          "reflectToAttr": false,
+          "docs": "If tour id is given, stations are retrieved from specific tour.\nTour id 'default' is a placeholder for the default tour id.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-station-icon",
+        "sc-image-slideshow",
+        "sc-player-controls",
+        "sc-marquee"
+      ],
+      "dependencyGraph": {
+        "sc-page-multi-audio-station": [
+          "sc-station-icon",
+          "sc-image-slideshow",
+          "sc-player-controls",
+          "sc-marquee"
+        ]
+      }
+    },
+    {
+      "filePath": "src/pages/page-pin/page-pin.tsx",
+      "encapsulation": "none",
+      "tag": "sc-page-pin",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "validHours",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "valid-hours",
+          "reflectToAttr": false,
+          "docs": "The number of hours the pin is valid for.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "6"
+            }
+          ],
+          "default": "6",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-numpad"
+      ],
+      "dependencyGraph": {
+        "sc-page-pin": [
+          "sc-numpad"
+        ]
+      }
+    },
+    {
+      "filePath": "src/pages/page-selection/page-selection.tsx",
+      "encapsulation": "none",
+      "tag": "sc-page-selection",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "headerBackgroundColor",
+          "type": "\"primary\" | \"secondary\"",
+          "complexType": {
+            "original": "'primary' | 'secondary'",
+            "resolved": "\"primary\" | \"secondary\"",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "header-background-color",
+          "reflectToAttr": false,
+          "docs": "Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'primary'"
+            }
+          ],
+          "default": "'primary'",
+          "values": [
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "secondary",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "maxLength",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "max-length",
+          "reflectToAttr": false,
+          "docs": "Maximum length of the input field, default to 2",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "2"
+            }
+          ],
+          "default": "2",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "tourId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "tour-id",
+          "reflectToAttr": false,
+          "docs": "If tour id is given, stations only for the tour are queried.\nTour id 'default' is a placeholder for the default tour id.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-numpad"
+      ],
+      "dependencyGraph": {
+        "sc-page-selection": [
+          "sc-numpad"
+        ]
+      }
+    },
+    {
+      "filePath": "src/pages/page-station/page-station.tsx",
+      "encapsulation": "none",
+      "tag": "sc-page-station",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "defaultBackButtonHref",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "default-back-button-href",
+          "reflectToAttr": false,
+          "docs": "Define default back button href, only used if enableBackButton is true",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "enableBackButton",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "enable-back-button",
+          "reflectToAttr": false,
+          "docs": "Enable Back Button instead of Menu Button",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "enableSwitchAudioOutput",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "enable-switch-audio-output",
+          "reflectToAttr": false,
+          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\nThis feature is only available on hybrid apps",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "stationId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "station-id",
+          "reflectToAttr": false,
+          "docs": "The ID of the active station to display",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "tourId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "tour-id",
+          "reflectToAttr": false,
+          "docs": "If tour id is given, stations are retrieved from specific tour.\nTour id 'default' is a placeholder for the default tour id.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-player-controls",
+        "sc-station-icon"
+      ],
+      "dependencyGraph": {
+        "sc-page-station": [
+          "sc-player-controls",
+          "sc-station-icon"
+        ]
+      }
+    },
+    {
+      "filePath": "src/pages/page-station-image-list/page-station-image-list.tsx",
+      "encapsulation": "none",
+      "tag": "sc-page-station-image-list",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "headerBackgroundColor",
+          "type": "\"primary\" | \"secondary\"",
+          "complexType": {
+            "original": "'primary' | 'secondary'",
+            "resolved": "\"primary\" | \"secondary\"",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "header-background-color",
+          "reflectToAttr": false,
+          "docs": "Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'primary'"
+            }
+          ],
+          "default": "'primary'",
+          "values": [
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "secondary",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "tourId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "tour-id",
+          "reflectToAttr": false,
+          "docs": "The ID of the tour to display stations for, or null if all stations should be displayed",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-page-tabbed-station-list"
+      ],
+      "dependencies": [
+        "sc-station-icon"
+      ],
+      "dependencyGraph": {
+        "sc-page-station-image-list": [
+          "sc-station-icon"
+        ],
+        "sc-page-tabbed-station-list": [
+          "sc-page-station-image-list"
+        ]
+      }
+    },
+    {
+      "filePath": "src/pages/page-station-list/page-station-list.tsx",
+      "encapsulation": "none",
+      "tag": "sc-page-station-list",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "headerBackgroundColor",
+          "type": "\"primary\" | \"secondary\"",
+          "complexType": {
+            "original": "'primary' | 'secondary'",
+            "resolved": "\"primary\" | \"secondary\"",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "header-background-color",
+          "reflectToAttr": false,
+          "docs": "Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'primary'"
+            }
+          ],
+          "default": "'primary'",
+          "values": [
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "secondary",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "tourId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "tour-id",
+          "reflectToAttr": false,
+          "docs": "The ID of the tour to display stations for, or null if all stations should be displayed",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-page-tabbed-station-list"
+      ],
+      "dependencies": [
+        "sc-station-icon"
+      ],
+      "dependencyGraph": {
+        "sc-page-station-list": [
+          "sc-station-icon"
+        ],
+        "sc-page-tabbed-station-list": [
+          "sc-page-station-list"
+        ]
+      }
+    },
+    {
+      "filePath": "src/pages/page-stations/page-stations.tsx",
+      "encapsulation": "none",
+      "tag": "sc-page-stations",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "enableSwitchAudioOutput",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "enable-switch-audio-output",
+          "reflectToAttr": false,
+          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\nThis feature is only available on hybrid apps",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "stationId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "station-id",
+          "reflectToAttr": false,
+          "docs": "The ID of the initial active station to display, if set to null, the first station will be displayed",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "tourId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "tour-id",
+          "reflectToAttr": false,
+          "docs": "If tour id is given, stations are retrieved from specific tour.\nTour id 'default' is a placeholder for the default tour id.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-player-controls",
+        "sc-station-icon"
+      ],
+      "dependencyGraph": {
+        "sc-page-stations": [
+          "sc-player-controls",
+          "sc-station-icon"
+        ]
+      }
+    },
+    {
+      "filePath": "src/pages/page-tabbed-station-list/page-tabbed-station-list.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-page-tabbed-station-list",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "headerBackgroundColor",
+          "type": "\"primary\" | \"secondary\"",
+          "complexType": {
+            "original": "'primary' | 'secondary'",
+            "resolved": "\"primary\" | \"secondary\"",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "header-background-color",
+          "reflectToAttr": false,
+          "docs": "Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'primary'"
+            }
+          ],
+          "default": "'primary'",
+          "values": [
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "secondary",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "tourId",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "tour-id",
+          "reflectToAttr": false,
+          "docs": "The ID of the tour to display stations for, or null if all stations should be displayed",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "sc-page-station-image-list",
+        "sc-page-station-list"
+      ],
+      "dependencyGraph": {
+        "sc-page-tabbed-station-list": [
+          "sc-page-station-image-list",
+          "sc-page-station-list"
+        ],
+        "sc-page-station-image-list": [
+          "sc-station-icon"
+        ],
+        "sc-page-station-list": [
+          "sc-station-icon"
+        ]
+      }
+    },
+    {
+      "filePath": "src/pages/page-tour-list/page-tour-list.tsx",
+      "encapsulation": "none",
+      "tag": "sc-page-tour-list",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "facade",
+          "type": "ServiceFacade",
+          "complexType": {
+            "original": "ServiceFacade",
+            "resolved": "ServiceFacade",
+            "references": {
+              "ServiceFacade": {
+                "location": "import",
+                "path": "@smartcompanion/services",
+                "id": "../services/dist/index.d.ts::ServiceFacade"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "ServiceFacade"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "headerBackgroundColor",
+          "type": "\"primary\" | \"secondary\"",
+          "complexType": {
+            "original": "'primary' | 'secondary'",
+            "resolved": "\"primary\" | \"secondary\"",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "header-background-color",
+          "reflectToAttr": false,
+          "docs": "Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'primary'"
+            }
+          ],
+          "default": "'primary'",
+          "values": [
+            {
+              "value": "primary",
+              "type": "string"
+            },
+            {
+              "value": "secondary",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [],
+      "dependencyGraph": {}
+    },
+    {
+      "filePath": "src/components/player-controls/player-controls.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-player-controls",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "disabled",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "duration",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "duration",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "0"
+            }
+          ],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "playing",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "playing",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "position",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "position",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "0"
+            }
+          ],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [
+        {
+          "event": "endPositionChange",
+          "detail": "number",
+          "bubbles": true,
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "next",
+          "detail": "void",
+          "bubbles": true,
+          "complexType": {
+            "original": "void",
+            "resolved": "void",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "playPause",
+          "detail": "boolean",
+          "bubbles": true,
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "positionChange",
+          "detail": "number",
+          "bubbles": true,
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "prev",
+          "detail": "void",
+          "bubbles": true,
+          "complexType": {
+            "original": "void",
+            "resolved": "void",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        },
+        {
+          "event": "startPositionChange",
+          "detail": "number",
+          "bubbles": true,
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "cancelable": true,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-page-multi-audio-station",
+        "sc-page-station",
+        "sc-page-stations"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-page-multi-audio-station": [
+          "sc-player-controls"
+        ],
+        "sc-page-station": [
+          "sc-player-controls"
+        ],
+        "sc-page-stations": [
+          "sc-player-controls"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/station-icon/station-icon.tsx",
+      "encapsulation": "shadow",
+      "tag": "sc-station-icon",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "collected",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "collected",
+          "reflectToAttr": false,
+          "docs": "Toggle collected icon",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "collectedPercent",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "collected-percent",
+          "reflectToAttr": false,
+          "docs": "Percentage value between 0 and 100 to display status",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "0"
+            }
+          ],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "size",
+          "type": "\"large\" | \"normal\" | \"small\"",
+          "complexType": {
+            "original": "'small' | 'normal' | 'large'",
+            "resolved": "\"large\" | \"normal\" | \"small\"",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "size",
+          "reflectToAttr": false,
+          "docs": "The icon size: small, normal or large.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'normal'"
+            }
+          ],
+          "default": "'normal'",
+          "values": [
+            {
+              "value": "large",
+              "type": "string"
+            },
+            {
+              "value": "normal",
+              "type": "string"
+            },
+            {
+              "value": "small",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "upperLimitPercent",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "upper-limit-percent",
+          "reflectToAttr": false,
+          "docs": "",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "97"
+            }
+          ],
+          "default": "97",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "sc-page-multi-audio-station",
+        "sc-page-station",
+        "sc-page-station-image-list",
+        "sc-page-station-list",
+        "sc-page-stations"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "sc-page-multi-audio-station": [
+          "sc-station-icon"
+        ],
+        "sc-page-station": [
+          "sc-station-icon"
+        ],
+        "sc-page-station-image-list": [
+          "sc-station-icon"
+        ],
+        "sc-page-station-list": [
+          "sc-station-icon"
+        ],
+        "sc-page-stations": [
+          "sc-station-icon"
+        ]
+      }
+    }
+  ],
+  "typeLibrary": {
+    "../services/dist/index.d.ts::ServiceFacade": {
+      "declaration": "any",
+      "docstring": "",
+      "path": "../services/dist/index.d.ts"
+    }
+  }
+}

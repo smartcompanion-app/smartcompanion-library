@@ -4,22 +4,18 @@ import { Asset } from '@smartcompanion/data';
 import { stations } from '../../../test/fixtures';
 import { ImageSlideshow } from './image-slideshow';
 
-type StoryArgs = {
-  images: string[];
-};
-
-const meta: Meta<StoryArgs> = {
+const meta = {
   title: 'Components/Image Slideshow',
   tags: ['autodocs'],
   component: ImageSlideshow,
   render: args => <div style={{ width: "100vw" }}>
     <sc-image-slideshow {...args} />
   </div>,
-};
+} satisfies Meta<ImageSlideshow>;
 
 export default meta;
 
-type Story = StoryObj<StoryArgs>;
+type Story = StoryObj<ImageSlideshow>;
 
 export const MultiImageExample: Story = {
   args: {

@@ -13,6 +13,10 @@ export const config: Config = {
       customElementsExportBehavior: 'auto-define-custom-elements',
       externalRuntime: false,
     },
+    {
+      type: 'docs-json',
+      file: './custom-elements.json',
+    },
   ],
   plugins: [
     sass()

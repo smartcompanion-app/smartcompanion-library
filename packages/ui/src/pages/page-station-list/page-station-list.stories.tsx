@@ -11,7 +11,7 @@ const meta = {
   component: PageStationList,
   render: args => (
     <div style={{ width: "100vw", height: "100vh" }}>
-      <sc-page-station-list facade={args.facade as ServiceFacade} />
+      <sc-page-station-list {...args} />
     </div>
   ),
 } satisfies Meta<PageStationList>;

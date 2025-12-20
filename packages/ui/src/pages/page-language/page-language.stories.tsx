@@ -3,24 +3,20 @@ import { h } from '@stencil/core';
 import { ServiceFacade, MenuService } from '@smartcompanion/services';
 import { PageLanguage } from './page-language';
 
-type StoryArgs = {
-  facade: Partial<ServiceFacade>;
-};
-
-const meta: Meta<StoryArgs> = {
+const meta = {
   title: 'Pages/Page Language',
   tags: ['autodocs'],
   component: PageLanguage,
   render: args => (
     <div style={{width: "100vw", height: "100vh"}}>
-      <sc-page-language facade={args.facade as ServiceFacade} />
+      <sc-page-language {...args} />
     </div>
   ),
-};
+} satisfies Meta<PageLanguage>;
 
 export default meta;
 
-type Story = StoryObj<StoryArgs>;
+type Story = StoryObj<PageLanguage>;
 
 export const Example: Story = {
   args: {
@@ -38,7 +34,7 @@ export const Example: Story = {
         { title: 'Français', language: 'fr' },
         { title: 'Italiano', language: 'it' },
       ]),
-    },
+    } as ServiceFacade,
   },
 };
 

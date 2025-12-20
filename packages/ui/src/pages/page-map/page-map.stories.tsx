@@ -4,32 +4,26 @@ import { ServiceFacade, MenuService } from '@smartcompanion/services';
 import { PageMap } from './page-map';
 import { Station, StationService } from '@smartcompanion/data';
 
-type StoryArgs = {
-  facade: Partial<ServiceFacade>;
-};
-
-const meta: Meta<StoryArgs> = {
+const meta = {
   title: 'Pages/Page Map',
   tags: ['autodocs'],
   component: PageMap,
   render: args => (
     <div style={{width: "100vw", height: "100vh"}}>
-      <sc-page-map 
-        facade={args.facade as ServiceFacade}
-        mapBounds={[47.58308, 12.166456, 47.578141, 12.171476]}
-        tileUrlTemplate={'map-assets/{z}/{y}/{x}.jpeg'}
-        mapAttribution={'&copy; basemap.at'}
-      />
+      <sc-page-map {...args} />
     </div>
   ),
-};
+} satisfies Meta<PageMap>;
 
 export default meta;
 
-type Story = StoryObj<StoryArgs>;
+type Story = StoryObj<PageMap>;
 
 export const Example: Story = {
   args: {
+    mapBounds: [47.58308, 12.166456, 47.578141, 12.171476],
+    tileUrlTemplate: 'map-assets/{z}/{y}/{x}.jpeg',
+    mapAttribution: '&copy; basemap.at',
     facade: {
       getStationService: () => ({
         getStations: () => Promise.resolve([
@@ -50,8 +44,8 @@ export const Example: Story = {
           default:
             return key;
         }
-      },      
-    },    
+      },
+    } as ServiceFacade,
   },
 };
 

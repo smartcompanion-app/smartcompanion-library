@@ -1,6 +1,9 @@
-import { Preview } from '@stencil/storybook-plugin';
+import { Preview, setCustomElementsManifest } from '@stencil/storybook-plugin';
 import { within as withinShadow } from 'shadow-dom-testing-library';
+import customElements from '../custom-elements.json';
 import './style.css';
+
+setCustomElementsManifest(customElements);
 
 const preview: Preview = {
 

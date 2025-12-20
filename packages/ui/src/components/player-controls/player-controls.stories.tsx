@@ -2,25 +2,18 @@ import type { Meta, StoryObj } from '@stencil/storybook-plugin';
 import { h } from '@stencil/core';
 import { PlayerControls } from './player-controls';
 
-type StoryArgs = {
-  position: number;
-  duration: number;
-  playing: boolean;
-  disabled: boolean;
-};
-
-const meta: Meta<StoryArgs> = {
+const meta = {
   title: 'Components/Player Controls',
   tags: ['autodocs'],
   component: PlayerControls,
   render: args => <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}>
     <sc-player-controls {...args} />
   </div>,
-};
+} satisfies Meta<PlayerControls>;
 
 export default meta;
 
-type Story = StoryObj<StoryArgs>;
+type Story = StoryObj<PlayerControls>;
 
 export const Example: Story = {
   args: {

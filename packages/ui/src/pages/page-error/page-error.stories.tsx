@@ -3,20 +3,16 @@ import { h } from '@stencil/core';
 import { ServiceFacade } from '@smartcompanion/services';
 import { PageError } from './page-error';
 
-type StoryArgs = {
-  facade: Partial<ServiceFacade>;
-};
-
-const meta: Meta<StoryArgs> = {
+const meta = {
   title: 'Pages/Page Error',
   tags: ['autodocs'],
   component: PageError,
-  render: args => (<div style={{width: '100vw', height: '100vh'}}><sc-page-error facade={args.facade as ServiceFacade} /></div>),
-};
+  render: args => (<div style={{width: '100vw', height: '100vh'}}><sc-page-error {...args} /></div>),
+} satisfies Meta<PageError>;
 
 export default meta;
 
-type Story = StoryObj<StoryArgs>;
+type Story = StoryObj<PageError>;
 
 export const Example: Story = {
   args: {
@@ -31,7 +27,7 @@ export const Example: Story = {
             return key;
         }
       },
-    },
+    } as ServiceFacade,
   },
 };
 

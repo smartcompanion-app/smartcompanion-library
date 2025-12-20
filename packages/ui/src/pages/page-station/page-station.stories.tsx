@@ -5,28 +5,20 @@ import { TourService, StationService } from '@smartcompanion/data';
 import { stations } from '../../../test/fixtures';
 import { PageStation } from './page-station';
 
-type StoryArgs = {
-  enableSwitchAudioOutput: boolean;
-  facade: Partial<ServiceFacade>;
-};
-
-const meta: Meta<StoryArgs> = {
+const meta = {
   title: 'Pages/Page Station',
   tags: ['autodocs'],
   component: PageStation,
   render: args => (
     <div style={{width: "100vw", height: "100vh"}}>
-      <sc-page-station
-        enableSwitchAudioOutput={args.enableSwitchAudioOutput}
-        facade={args.facade as ServiceFacade}
-      />
+      <sc-page-station {...args} />
     </div>
   ),
-};
+} satisfies Meta<PageStation>;
 
 export default meta;
 
-type Story = StoryObj<StoryArgs>;
+type Story = StoryObj<PageStation>;
 
 const audioPlayerService: AudioPlayerService = new AudioPlayerService("");
 
@@ -48,7 +40,7 @@ export const Example: Story = {
       getMenuService: () => ({
         enable: () => Promise.resolve(),
       }) as MenuService
-    },
+    } as ServiceFacade,
   },
 };
 

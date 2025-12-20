@@ -4,24 +4,20 @@ import { PinService } from '@smartcompanion/data';
 import { ServiceFacade, MenuService, RoutingService } from '@smartcompanion/services';
 import { PagePin } from './page-pin';
 
-type StoryArgs = {
-  facade: Partial<ServiceFacade>;
-};
-
-const meta: Meta<StoryArgs> = {
+const meta = {
   title: 'Pages/Page Pin',
   tags: ['autodocs'],
   component: PagePin,
   render: args => (
     <div style={{width: '100vw', height: '100vh'}}>
-      <sc-page-pin facade={args.facade as ServiceFacade} />
+      <sc-page-pin {...args} />
     </div>
   ),
-};
+} satisfies Meta<PagePin>;
 
 export default meta;
 
-type Story = StoryObj<StoryArgs>;
+type Story = StoryObj<PagePin>;
 
 export const Example: Story = {
   args: {
@@ -54,7 +50,7 @@ export const Example: Story = {
             return key;
         }
       },
-    },    
+    } as ServiceFacade,
   },
 };
 

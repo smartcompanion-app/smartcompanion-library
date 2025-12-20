@@ -5,24 +5,20 @@ import { TourService } from '@smartcompanion/data';
 import { PageTourList } from './page-tour-list';
 import { tours } from '../../../test/fixtures';
 
-type StoryArgs = {
-  facade: Partial<ServiceFacade>;
-};
-
-const meta: Meta<StoryArgs> = {
+const meta = {
   title: 'Pages/Page Tour List',
   tags: ['autodocs'],
   component: PageTourList,
   render: args => (
     <div style={{ width: "100vw", height: "100vh" }}>
-      <sc-page-tour-list facade={args.facade as ServiceFacade} />
+      <sc-page-tour-list {...args} />
     </div>
   ),
-};
+} satisfies Meta<PageTourList>;
 
 export default meta;
 
-type Story = StoryObj<StoryArgs>;
+type Story = StoryObj<PageTourList>;
 
 export const Example: Story = {
   args: {
@@ -45,6 +41,6 @@ export const Example: Story = {
             return key;
         }
       },
-    },
+    } as ServiceFacade,
   },
 };

@@ -1,20 +1,25 @@
-import { Component, h, State, Prop, Mixin } from '@stencil/core';
+import { Component, h, State, Prop } from '@stencil/core';
 import { Swiper } from 'swiper';
 import { Asset, Station } from '@smartcompanion/data';
-import { AudioPlayerUpdate } from '@smartcompanion/services';
-import { getSortedStations } from '../../utils';
-import { audioPlayerBaseComponentFactory } from '../../utils/audio-player-base-component';
+import { AudioPlayerUpdate, ServiceFacade } from '@smartcompanion/services';
+import { getSortedStations, ReactiveAudioPlayer } from '../../utils';
 
 @Component({
   tag: 'sc-page-stations',
   styleUrl: 'page-stations.scss',
 })
-export class PageStations extends Mixin(audioPlayerBaseComponentFactory) {
+export class PageStations {
 
   protected playerList: Swiper;
+  protected reactiveAudioPlayer: ReactiveAudioPlayer;
   protected restartPlaying = false;
 
   @State() stations: Array<Station> = [];
+  @State() playing: boolean = false;
+  @State() position = 0;
+  @State() duration = 0;
+  @State() activeIndex = 0;
+  @State() earpiece = false;
 
   /**
    * If tour id is given, stations are retrieved from specific tour.
@@ -33,11 +38,27 @@ export class PageStations extends Mixin(audioPlayerBaseComponentFactory) {
    */
   @Prop() enableSwitchAudioOutput: boolean = false;
 
+  /**
+   * Provides access to all services via the service facade
+   */
+  @Prop() facade: ServiceFacade;
+
   async componentWillLoad() {
+    this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
+   
+    this.reactiveAudioPlayer.setOnCompletedListener(async (_: AudioPlayerUpdate) => {
+      await this.reactiveAudioPlayer.next();
+    });
+    this.reactiveAudioPlayer.setOnCollectedListener(async (_: AudioPlayerUpdate, updatedStation: Station) => {
+      this.stations = this.stations.map(s => s.id === updatedStation.id ? updatedStation : s);
+    });
+    this.reactiveAudioPlayer.setOnSkipListener(async (_: AudioPlayerUpdate) => {
+      this.playerList?.slideTo(this.activeIndex);
+    });
+
     this.facade.getMenuService().enable();
     this.stations = await getSortedStations(this.facade, this.tourId);
-    this.updateActiveIndex(this.stationId, this.stations);
-    this.initEarpiece();
+    this.reactiveAudioPlayer.updateActiveIndexByStationId(this.stationId, this.stations);
   }
 
   async componentDidLoad() {
@@ -47,12 +68,13 @@ export class PageStations extends Mixin(audioPlayerBaseComponentFactory) {
       allowTouchMove: true,
     });
 
-    await this.initAudioPlayer(this.stations);
+    await this.reactiveAudioPlayer.initAudioPlayer(this.stations);
     this.playerList.slideTo(this.activeIndex);
   }
 
   async disconnectedCallback() {
-    this.destroyAudioPlayer();
+    this.reactiveAudioPlayer?.destroyAudioPlayer();
+    this.reactiveAudioPlayer = null;
   }
 
   getImageUri(index: number, imageIndex: number = 0) {
@@ -62,18 +84,6 @@ export class PageStations extends Mixin(audioPlayerBaseComponentFactory) {
 
   openMenu() {
     this.facade.getMenuService().open();
-  }
-
-  async onCompleted(_: AudioPlayerUpdate) {
-    await this.next();
-  }
-
-  async onSkip(_: AudioPlayerUpdate) {
-    this.playerList.slideTo(this.activeIndex);
-  }
-
-  async onCollected(_: AudioPlayerUpdate, updatedStation: Station) {
-    this.stations = this.stations.map(s => s.id === updatedStation.id ? updatedStation : s);
   }
 
   render() {
@@ -87,7 +97,7 @@ export class PageStations extends Mixin(audioPlayerBaseComponentFactory) {
           </ion-buttons>
           <ion-buttons slot="end">
             {this.enableSwitchAudioOutput && (
-              <ion-fab-button color="light" size="small" onClick={() => this.toggleOutput()}>
+              <ion-fab-button color="light" size="small" onClick={() => this.reactiveAudioPlayer.toggleOutput()}>
                 {this.earpiece ?
                   <ion-icon color="primary" name="volume-medium-outline"></ion-icon> :
                   <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>
@@ -107,18 +117,18 @@ export class PageStations extends Mixin(audioPlayerBaseComponentFactory) {
               playing={this.playing}
               position={this.position}
               duration={this.duration}
-              onNext={() => this.next()}
-              onPrev={() => this.prev()}
-              onPlayPause={() => this.playPause()}
-              onStartPositionChange={() => this.startPositionChange()}
-              onEndPositionChange={(e) => this.changePosition(e.detail)}
+              onNext={() => this.reactiveAudioPlayer.next()}
+              onPrev={() => this.reactiveAudioPlayer.prev()}
+              onPlayPause={() => this.reactiveAudioPlayer.playPause()}
+              onStartPositionChange={() => this.reactiveAudioPlayer.startPositionChange()}
+              onEndPositionChange={(e) => this.reactiveAudioPlayer.changePosition(e.detail)}
             />
           </div>
           <div id="player-list" class="swiper">
             <div class="swiper-wrapper">
               {this.stations.map((station, index) =>
                 <div data-testid={`player-list-item-${index}`} class={this.activeIndex == index ? 'swiper-slide active' : 'swiper-slide'}>
-                  <ion-card button onClick={() => { this.select(index) }}>
+                  <ion-card button onClick={() => { this.reactiveAudioPlayer.select(index) }}>
                     <div class="card-content">
                       <img src={this.getImageUri(index, 1)} />
                       <div class="card-content-text">

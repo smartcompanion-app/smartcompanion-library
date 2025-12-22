@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-12-20T17:33:54",
+  "timestamp": "2025-12-22T20:28:03",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.39.0",
@@ -838,7 +838,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Provides access to all services via the service facade",
           "docsTags": [],
           "values": [
             {
@@ -1263,7 +1263,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Provides access to all services via the service facade",
           "docsTags": [],
           "values": [
             {
@@ -1641,7 +1641,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Provides access to all services via the service facade",
           "docsTags": [],
           "values": [
             {

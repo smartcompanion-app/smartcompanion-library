@@ -1,15 +1,22 @@
-import { Component, State, Prop, Host, Mixin, h } from '@stencil/core';
+import { Component, State, Prop, Host, h } from '@stencil/core';
 import { Station } from '@smartcompanion/data';
-import { getMenuButton, getStations } from '../../utils';
-import { audioPlayerBaseComponentFactory } from '../../utils/audio-player-base-component';
+import { getMenuButton, getStations, ReactiveAudioPlayer } from '../../utils';
+import { ServiceFacade } from '@smartcompanion/services';
 
 @Component({
   tag: 'sc-page-station',
   styleUrl: 'page-station.scss',
 })
-export class PageStation extends Mixin(audioPlayerBaseComponentFactory) {
+export class PageStation {
+
+  protected reactiveAudioPlayer: ReactiveAudioPlayer;
 
   @State() stations: Array<Station> = [];
+  @State() playing: boolean = false;
+  @State() position = 0;
+  @State() duration = 0;
+  @State() activeIndex = 0;
+  @State() earpiece = false;
 
   /**
    * Enable Back Button instead of Menu Button
@@ -37,20 +44,26 @@ export class PageStation extends Mixin(audioPlayerBaseComponentFactory) {
    * This feature is only available on hybrid apps
    */
   @Prop() enableSwitchAudioOutput: boolean = false;
+
+  /**
+   * Provides access to all services via the service facade
+   */
+  @Prop() facade: ServiceFacade;
  
   async componentWillLoad() {
+    this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
     await this.facade.getMenuService().enable();
     this.stations = await getStations(this.facade, this.tourId);
-    this.updateActiveIndex(this.stationId, this.stations);
-    this.initEarpiece();
+    this.reactiveAudioPlayer.updateActiveIndexByStationId(this.stationId, this.stations);
   }
 
   async componentDidLoad() {
-    await this.initAudioPlayer(this.stations);
+    await this.reactiveAudioPlayer.initAudioPlayer(this.stations);
   }
 
   async disconnectedCallback() {
-    this.destroyAudioPlayer();
+    this.reactiveAudioPlayer?.destroyAudioPlayer();
+    this.reactiveAudioPlayer = null;
   }
 
   render() {
@@ -63,7 +76,7 @@ export class PageStation extends Mixin(audioPlayerBaseComponentFactory) {
             </ion-buttons>
             <ion-buttons slot="end">
               {this.enableSwitchAudioOutput && (
-                <ion-fab-button color="light" size="small" onClick={() => this.toggleOutput()}>
+                <ion-fab-button color="light" size="small" onClick={() => this.reactiveAudioPlayer.toggleOutput()}>
                   {this.earpiece ?
                     <ion-icon color="primary" name="volume-medium-outline"></ion-icon> :
                     <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>
@@ -81,11 +94,11 @@ export class PageStation extends Mixin(audioPlayerBaseComponentFactory) {
               playing={this.playing}
               position={this.position}
               duration={this.duration}
-              onNext={() => this.next()}
-              onPrev={() => this.prev()}
-              onPlayPause={() => this.playPause()}
-              onStartPositionChange={() => this.startPositionChange()}
-              onEndPositionChange={(e) => this.changePosition(e.detail)}
+              onNext={() => this.reactiveAudioPlayer.next()}
+              onPrev={() => this.reactiveAudioPlayer.prev()}
+              onPlayPause={() => this.reactiveAudioPlayer.playPause()}
+              onStartPositionChange={() => this.reactiveAudioPlayer.startPositionChange()}
+              onEndPositionChange={(e) => this.reactiveAudioPlayer.changePosition(e.detail)}
             />
           </div>
 

@@ -105,6 +105,9 @@ export namespace Components {
           * @default false
          */
         "enableSwitchAudioOutput": boolean;
+        /**
+          * Provides access to all services via the service facade
+         */
         "facade": ServiceFacade;
         /**
           * The ID of the active station to display
@@ -158,6 +161,9 @@ export namespace Components {
           * @default false
          */
         "enableSwitchAudioOutput": boolean;
+        /**
+          * Provides access to all services via the service facade
+         */
         "facade": ServiceFacade;
         /**
           * The ID of the active station to display
@@ -201,6 +207,9 @@ export namespace Components {
           * @default false
          */
         "enableSwitchAudioOutput": boolean;
+        /**
+          * Provides access to all services via the service facade
+         */
         "facade": ServiceFacade;
         /**
           * The ID of the initial active station to display, if set to null, the first station will be displayed
@@ -542,6 +551,9 @@ declare namespace LocalJSX {
           * @default false
          */
         "enableSwitchAudioOutput"?: boolean;
+        /**
+          * Provides access to all services via the service facade
+         */
         "facade"?: ServiceFacade;
         /**
           * The ID of the active station to display
@@ -595,6 +607,9 @@ declare namespace LocalJSX {
           * @default false
          */
         "enableSwitchAudioOutput"?: boolean;
+        /**
+          * Provides access to all services via the service facade
+         */
         "facade"?: ServiceFacade;
         /**
           * The ID of the active station to display
@@ -638,6 +653,9 @@ declare namespace LocalJSX {
           * @default false
          */
         "enableSwitchAudioOutput"?: boolean;
+        /**
+          * Provides access to all services via the service facade
+         */
         "facade"?: ServiceFacade;
         /**
           * The ID of the initial active station to display, if set to null, the first station will be displayed

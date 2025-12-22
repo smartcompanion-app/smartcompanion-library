@@ -1,15 +1,22 @@
-import { Component, State, Prop, Host, Mixin, h } from '@stencil/core';
+import { Component, State, Prop, Host, h } from '@stencil/core';
 import { Station } from '@smartcompanion/data';
-import { formatSeconds } from '../../utils';
-import { audioPlayerBaseComponentFactory } from '../../utils/audio-player-base-component';
+import { formatSeconds, ReactiveAudioPlayer } from '../../utils';
+import { ServiceFacade } from '@smartcompanion/services';
 
 @Component({
   tag: 'sc-page-multi-audio-station',
   styleUrl: 'page-multi-audio-station.scss'
 })
-export class PageMultiAudioStation extends Mixin(audioPlayerBaseComponentFactory) {
+export class PageMultiAudioStation {
+
+  protected reactiveAudioPlayer: ReactiveAudioPlayer;
 
   @State() station: Station;
+  @State() playing: boolean = false;
+  @State() position = 0;
+  @State() duration = 0;
+  @State() activeIndex = 0;
+  @State() earpiece = false;
 
   /**
    * Define default back button href, only used if enableBackButton is true
@@ -33,18 +40,24 @@ export class PageMultiAudioStation extends Mixin(audioPlayerBaseComponentFactory
    */
   @Prop() enableSwitchAudioOutput: boolean = false;
 
+  /**
+   * Provides access to all services via the service facade
+   */
+  @Prop() facade: ServiceFacade;
+
   async componentWillLoad() {
+    this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
     await this.facade.getMenuService().enable();
     this.station = await this.facade.getStationService().getStation(this.stationId);
-    this.initEarpiece();
    }
 
   async componentDidLoad() {
-    await this.initAudioPlayer([this.station]);
+    await this.reactiveAudioPlayer.initAudioPlayer([this.station]);
   }
 
   async disconnectedCallback() {
-    await this.destroyAudioPlayer();  
+    await this.reactiveAudioPlayer?.destroyAudioPlayer();  
+    this.reactiveAudioPlayer = null;
   }
 
   render() {
@@ -78,7 +91,7 @@ export class PageMultiAudioStation extends Mixin(audioPlayerBaseComponentFactory
         <ion-content class="ion-no-padding">
           {this.enableSwitchAudioOutput && (
             <ion-fab vertical="top" horizontal="end" slot="fixed">
-              <ion-fab-button color="primary" size="small" onClick={() => this.toggleOutput()}>
+              <ion-fab-button color="primary" size="small" onClick={() => this.reactiveAudioPlayer.toggleOutput()}>
                 {this.earpiece ?
                   <ion-icon name="volume-medium-outline"></ion-icon> :
                   <ion-icon src="assets/earpiece.svg"></ion-icon>
@@ -94,11 +107,11 @@ export class PageMultiAudioStation extends Mixin(audioPlayerBaseComponentFactory
                 playing={this.playing}
                 position={this.position}
                 duration={this.duration}
-                onNext={() => this.next()}
-                onPrev={() => this.prev()}
-                onPlayPause={() => this.playPause()}
-                onStartPositionChange={() => this.startPositionChange()}
-                onEndPositionChange={(e) => this.changePosition(e.detail)}
+                onNext={() => this.reactiveAudioPlayer.next()}
+                onPrev={() => this.reactiveAudioPlayer.prev()}
+                onPlayPause={() => this.reactiveAudioPlayer.playPause()}
+                onStartPositionChange={() => this.reactiveAudioPlayer.startPositionChange()}
+                onEndPositionChange={(e) => this.reactiveAudioPlayer.changePosition(e.detail)}
               />
             </div>
 
@@ -108,7 +121,7 @@ export class PageMultiAudioStation extends Mixin(audioPlayerBaseComponentFactory
                   {this.station.audios.map((audio, audioIndex) => (
                     <ion-item
                       data-testid={`audio-item-${audioIndex}`}
-                      onClick={() => this.select(audioIndex)}
+                      onClick={() => this.reactiveAudioPlayer.select(audioIndex)}
                       lines="none"
                       class={this.activeIndex == audioIndex ? 'active' : ''}>
                       <ion-icon slot="start" name="play"></ion-icon>

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git config:*)",
+      "Bash(git:*)",
+      "Bash(cd /c/Users/shu969/Projects/smartcompanion-library && npm install --save-dev eslint typescript-eslint prettier eslint-config-prettier 2>&1)",
+      "Bash(head:*)",
+      "Bash(cd /c/Users/shu969/Projects/smartcompanion-library && npm run format 2>&1)",
+      "Bash(cd /c/Users/shu969/Projects/smartcompanion-library && npm run format:check 2>&1)"
+    ]
+  }
+}

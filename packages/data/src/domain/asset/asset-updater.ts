@@ -1,8 +1,7 @@
-import { Storage } from "../../storage";
-import { Updater } from "../../update";
+import { Storage } from '../../storage';
+import { Updater } from '../../update';
 
 export class AssetUpdater implements Updater {
-
   protected storage: Storage;
 
   constructor(storage: Storage) {
@@ -11,7 +10,7 @@ export class AssetUpdater implements Updater {
 
   async update(data: any) {
     if (Array.isArray(data)) {
-      for (let asset of data) {
+      for (const asset of data) {
         this.storage.set(`asset-${asset.id}`, asset);
       }
       this.storage.set('assets', data);

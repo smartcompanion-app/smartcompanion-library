@@ -1,5 +1,4 @@
 export class RoutingService {
-
   async push(uri: string) {
     const ionRouter = document.querySelector('ion-router');
     await ionRouter.push(uri);
@@ -12,7 +11,7 @@ export class RoutingService {
     if (count > 1) {
       try {
         await nav.pop({ skipIfBusy: true });
-      } catch (e) { }
+      } catch (_e) {}
     }
   }
 
@@ -51,23 +50,25 @@ export class RoutingService {
   }
 
   /**
-   * 
+   *
    * Trigger callback when route change matches "to"
-   * 
+   *
    * to can be a string or a string ending with "*", when eding with "*" it will match the beginning of the route
-   * 
-   * @param to 
-   * @param callback 
+   *
+   * @param to
+   * @param callback
    */
   addRouteChangeListener(to: string, callback: () => void) {
     const ionRouter = document.querySelector('ion-router');
-    
+
     ionRouter.addEventListener('ionRouteDidChange', (e: CustomEvent) => {
       const match = to.match(/(.+)\*$/);
 
-      if (match && e.detail.to.indexOf(match[1]) === 0) { // match the beginning of the route
+      if (match && e.detail.to.indexOf(match[1]) === 0) {
+        // match the beginning of the route
         callback();
-      } else if (e.detail.to === to) { // exact match
+      } else if (e.detail.to === to) {
+        // exact match
         callback();
       }
     });

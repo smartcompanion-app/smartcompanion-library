@@ -1,8 +1,7 @@
-import { AssetService, StationService, Tour, Station } from "..";
-import { Storage } from "../../storage";
+import { AssetService, StationService, Tour, Station } from '..';
+import { Storage } from '../../storage';
 
 export class TourService {
-
   protected storage: Storage;
   protected assetService: AssetService;
   protected stationService: StationService;
@@ -42,13 +41,13 @@ export class TourService {
   }
 
   /**
-   * 
+   *
    * Returns the corresponding tour for the tourId
    * The stations are not retrieved, the getStations(tourId)
    * method is provided for that
-   * 
-   * @param tourId 
-   * @returns 
+   *
+   * @param tourId
+   * @returns
    */
   async getTour(tourId: string): Promise<Tour> {
     const tour: Tour = this.storage.get(`tour-${this.getLanguage()}-${tourId}`);

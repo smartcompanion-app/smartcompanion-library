@@ -1,7 +1,6 @@
-import { Storage } from "../../storage";
+import { Storage } from '../../storage';
 
 export class ServerService {
-
   protected storage: Storage;
 
   constructor(storage: Storage) {
@@ -17,6 +16,6 @@ export class ServerService {
       const servers: string[] = this.storage.get('servers');
       return servers[Math.floor(Math.random() * servers.length)];
     }
-    throw new Error("There are no servers defined");
+    throw new Error('There are no servers defined');
   }
 }

@@ -1,17 +1,16 @@
-import { Station } from "@smartcompanion/data";
-import { AudioPlayerService, AudioPlayerServiceItem } from "./audio-player-service";
-import { AudioPlayerUpdate } from "./audio-player-update";
+import { Station } from '@smartcompanion/data';
+import { AudioPlayerService, AudioPlayerServiceItem } from './audio-player-service';
+import { AudioPlayerUpdate } from './audio-player-update';
 
 export class CollectibleAudioPlayerService extends AudioPlayerService {
-
   protected positions: number[] = [];
-  protected id: string = "";
+  protected id: string = '';
   protected state = 'init';
   protected registeredCallback: (update: AudioPlayerUpdate) => void = null;
 
   constructor(
     subtitle: string,
-    protected collection: any = {}
+    protected collection: any = {},
   ) {
     super(subtitle);
   }
@@ -20,7 +19,7 @@ export class CollectibleAudioPlayerService extends AudioPlayerService {
     if (this.state == 'playing') {
       this.positions.push(position);
     }
-    if (this.positions.length >= 2 && this.id != "" && this.id in this.collection) {
+    if (this.positions.length >= 2 && this.id != '' && this.id in this.collection) {
       const duration = this.collection[this.id].duration;
       const collectedTime = this.calcuateCollectedTime(this.positions);
       const collectedPercentage = this.calculateCollectedPercentage(collectedTime, duration);
@@ -30,10 +29,10 @@ export class CollectibleAudioPlayerService extends AudioPlayerService {
 
       // publish "collected" state/event
       await this?.registeredCallback({
-        state: "collected",
+        state: 'collected',
         id: this.id,
         index: this.getIndex(this.id),
-        percentage: this.collection[this.id].collectedPercentage
+        percentage: this.collection[this.id].collectedPercentage,
       });
     }
   }
@@ -68,7 +67,6 @@ export class CollectibleAudioPlayerService extends AudioPlayerService {
   async registerUpdateListener(callback: (update: AudioPlayerUpdate) => void) {
     this.registeredCallback = callback;
     super.registerUpdateListener(async (update: AudioPlayerUpdate) => {
-
       // pass-through default events from AudioPlayerService
       await callback(update);
       this.initCollection(update.id);
@@ -101,11 +99,14 @@ export class CollectibleAudioPlayerService extends AudioPlayerService {
   getPlayerItems(stations: Station[]): AudioPlayerServiceItem[] {
     const playerItems = super.getPlayerItems(stations) as AudioPlayerServiceItem[];
 
-    playerItems.forEach(item => this.collection[item.id] = {
-      collectedTime: 0,
-      collectedPercentage: item.collectedPercentage,
-      duration: 0
-    });
+    playerItems.forEach(
+      item =>
+        (this.collection[item.id] = {
+          collectedTime: 0,
+          collectedPercentage: item.collectedPercentage,
+          duration: 0,
+        }),
+    );
     return playerItems;
   }
 }

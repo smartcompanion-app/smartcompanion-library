@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-12-22T20:28:03",
+  "timestamp": "2026-02-21T21:09:59",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.39.0",
@@ -727,7 +727,7 @@
           "mutable": false,
           "attr": "tour-id",
           "reflectToAttr": false,
-          "docs": "If tour id is given, stations only for the tour are shown.\nTour id 'default' is a placeholder for the default tour id.",
+          "docs": "If tour id is given, stations only for the tour are shown.\r\nTour id 'default' is a placeholder for the default tour id.",
           "docsTags": [
             {
               "name": "default",
@@ -804,7 +804,7 @@
           "mutable": false,
           "attr": "enable-switch-audio-output",
           "reflectToAttr": false,
-          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\nThis feature is only available on hybrid apps",
+          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\r\nThis feature is only available on hybrid apps",
           "docsTags": [
             {
               "name": "default",
@@ -884,7 +884,7 @@
           "mutable": false,
           "attr": "tour-id",
           "reflectToAttr": false,
-          "docs": "If tour id is given, stations are retrieved from specific tour.\nTour id 'default' is a placeholder for the default tour id.",
+          "docs": "If tour id is given, stations are retrieved from specific tour.\r\nTour id 'default' is a placeholder for the default tour id.",
           "docsTags": [
             {
               "name": "default",
@@ -1117,7 +1117,7 @@
           "mutable": false,
           "attr": "tour-id",
           "reflectToAttr": false,
-          "docs": "If tour id is given, stations only for the tour are queried.\nTour id 'default' is a placeholder for the default tour id.",
+          "docs": "If tour id is given, stations only for the tour are queried.\r\nTour id 'default' is a placeholder for the default tour id.",
           "docsTags": [
             {
               "name": "default",
@@ -1229,7 +1229,7 @@
           "mutable": false,
           "attr": "enable-switch-audio-output",
           "reflectToAttr": false,
-          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\nThis feature is only available on hybrid apps",
+          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\r\nThis feature is only available on hybrid apps",
           "docsTags": [
             {
               "name": "default",
@@ -1309,7 +1309,7 @@
           "mutable": false,
           "attr": "tour-id",
           "reflectToAttr": false,
-          "docs": "If tour id is given, stations are retrieved from specific tour.\nTour id 'default' is a placeholder for the default tour id.",
+          "docs": "If tour id is given, stations are retrieved from specific tour.\r\nTour id 'default' is a placeholder for the default tour id.",
           "docsTags": [
             {
               "name": "default",
@@ -1607,7 +1607,7 @@
           "mutable": false,
           "attr": "enable-switch-audio-output",
           "reflectToAttr": false,
-          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\nThis feature is only available on hybrid apps",
+          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\r\nThis feature is only available on hybrid apps",
           "docsTags": [
             {
               "name": "default",
@@ -1693,7 +1693,7 @@
           "mutable": false,
           "attr": "tour-id",
           "reflectToAttr": false,
-          "docs": "If tour id is given, stations are retrieved from specific tour.\nTour id 'default' is a placeholder for the default tour id.",
+          "docs": "If tour id is given, stations are retrieved from specific tour.\r\nTour id 'default' is a placeholder for the default tour id.",
           "docsTags": [
             {
               "name": "default",

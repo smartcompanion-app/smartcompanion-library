@@ -1,14 +1,13 @@
-import { FileUpdater } from "../file";
-import { ServiceLocator } from "../service-locator";
-import { Updater } from "../update";
-import { autoSelectLanguage } from "./utils";
+import { FileUpdater } from '../file';
+import { ServiceLocator } from '../service-locator';
+import { Updater } from '../update';
+import { autoSelectLanguage } from './utils';
 
 /**
  * This load service strategy is designed for offline use,
  * Assets like audio files and images are downloaded for offline use.
  */
 export class OfflineLoadService {
-
   protected downloadData: () => Promise<any>;
   protected downloadFile: (url: string) => Promise<any>;
   protected remove: (filename: string) => Promise<void>;
@@ -26,7 +25,7 @@ export class OfflineLoadService {
     save: (filename: string, data: string) => Promise<void>,
     list: () => Promise<string[]>,
     dataUpdater: Updater,
-    serviceLocator: ServiceLocator
+    serviceLocator: ServiceLocator,
   ) {
     this.downloadData = downloadData;
     this.downloadFile = downloadFile;
@@ -36,15 +35,9 @@ export class OfflineLoadService {
     this.dataUpdater = dataUpdater;
     this.serviceLocator = serviceLocator;
 
-    this.fileUpdater = new FileUpdater(
-      this.downloadFile,
-      this.remove,
-      this.save,
-      this.list,
-      (progress: number) => {
-        if (this.progress) this.progress(progress);
-      }
-    );
+    this.fileUpdater = new FileUpdater(this.downloadFile, this.remove, this.save, this.list, (progress: number) => {
+      if (this.progress) this.progress(progress);
+    });
   }
 
   setProgressListener(listener: (progress: number) => void) {
@@ -59,20 +52,14 @@ export class OfflineLoadService {
 
       if (!this.serviceLocator.getLanguageService().hasLanguage()) {
         return 'language';
-      } else if (
-        this.serviceLocator.getPinService().isPinValidationRequired() && 
-        !this.serviceLocator.getPinService().isValid()
-      ) {
+      } else if (this.serviceLocator.getPinService().isPinValidationRequired() && !this.serviceLocator.getPinService().isValid()) {
         return 'pin';
       } else {
         const assets = this.serviceLocator.getAssetService().getUnresolvedAssets({
-          language: this.serviceLocator.getLanguageService().getCurrentLanguage()
+          language: this.serviceLocator.getLanguageService().getCurrentLanguage(),
         });
         await this.fileUpdater.update(assets);
-        this.serviceLocator.getStorage().set(
-          'files-loaded', 
-          this.serviceLocator.getLanguageService().getCurrentLanguage()
-        );
+        this.serviceLocator.getStorage().set('files-loaded', this.serviceLocator.getLanguageService().getCurrentLanguage());
 
         return 'home';
       }
@@ -98,9 +85,11 @@ export class OfflineLoadService {
    * if a language is selected, files are loaded and PIN validation is not required or valid.
    */
   isLoaded(): boolean {
-    return this.serviceLocator.getLanguageService().hasLanguage() &&
+    return (
+      this.serviceLocator.getLanguageService().hasLanguage() &&
       this.serviceLocator.getStorage().has('files-loaded') &&
       this.serviceLocator.getStorage().get('files-loaded') == this.serviceLocator.getLanguageService().getCurrentLanguage() &&
-      (!this.serviceLocator.getPinService().isPinValidationRequired() || this.serviceLocator.getPinService().isValid());
+      (!this.serviceLocator.getPinService().isPinValidationRequired() || this.serviceLocator.getPinService().isValid())
+    );
   }
 }

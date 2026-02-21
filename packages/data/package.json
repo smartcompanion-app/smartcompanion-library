@@ -14,7 +14,10 @@
   "scripts": {
     "clean": "rimraf ./dist",
     "build": "npm run clean && tsc",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint src",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src"
   },
   "jest": {
     "preset": "ts-jest",

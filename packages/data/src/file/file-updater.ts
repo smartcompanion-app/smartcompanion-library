@@ -1,8 +1,7 @@
-import { FileMatcher } from "./file-matcher";
-import { File } from "./file";
+import { FileMatcher } from './file-matcher';
+import { File } from './file';
 
 export class FileUpdater {
-
   protected fileMatcher = new FileMatcher();
 
   /**
@@ -41,7 +40,7 @@ export class FileUpdater {
     remove: (filename: string) => Promise<void>,
     save: (filename: string, data: string) => Promise<void>,
     list: () => Promise<string[]>,
-    progress: (progress: number) => void
+    progress: (progress: number) => void,
   ) {
     this.download = download;
     this.remove = remove;
@@ -52,14 +51,17 @@ export class FileUpdater {
 
   async update(newFiles: File[]) {
     const oldFiles = await this.list();
-    const matching = this.fileMatcher.match(oldFiles, newFiles.map(file => file.filename));
+    const matching = this.fileMatcher.match(
+      oldFiles,
+      newFiles.map(file => file.filename),
+    );
     const filesToDownload = newFiles.filter(file => matching.download.indexOf(file.filename) >= 0);
     await this.removeFiles(matching.remove);
     await this.downloadFiles(filesToDownload);
   }
 
   async removeFiles(filesToRemove: string[]) {
-    for (let fileToRemove of filesToRemove) {
+    for (const fileToRemove of filesToRemove) {
       await this.remove(fileToRemove);
     }
   }

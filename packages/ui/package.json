@@ -20,10 +20,10 @@
     "build": "stencil build",
     "test": "npx playwright install --with-deps && npm run test-storybook:ci && npm run test:ci",
     "watch": "stencil build --watch",
-    "storybook": "storybook dev -p 6006 --no-open",
-    "build-storybook": "storybook build",
+    "storybook": "rm -rf dist/components && STORYBOOK=true storybook dev -p 6006 --no-open",
+    "build-storybook": "rm -rf dist/components && STORYBOOK=true storybook build",
     "test:ci": "jest",
-    "test-storybook:ci": "concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"storybook dev -p 6006 --no-open\" \"npx wait-on tcp:127.0.0.1:6006 && test-storybook\""
+    "test-storybook:ci": "rm -rf dist/components && concurrently -k -s first -n \"SB,TEST\" -c \"magenta,blue\" \"STORYBOOK=true storybook dev -p 6006 --no-open\" \"npx wait-on tcp:127.0.0.1:6006 && test-storybook\""
   },
   "jest": {
     "preset": "ts-jest",

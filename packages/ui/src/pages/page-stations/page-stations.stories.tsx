@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
-import { expect, waitFor } from 'storybook/test';
+import { expect, waitFor, userEvent } from 'storybook/test';
 import { h } from '@stencil/core';
 import { AudioPlayerService, ServiceFacade, MenuService, CollectibleAudioPlayerService } from '@smartcompanion/services';
 import { StationService } from '@smartcompanion/data';
@@ -46,7 +46,7 @@ export const Example: Story = {
       }) as MenuService
     } as ServiceFacade,
   },
-  play: async ({ canvas, userEvent, step }) => {
+  play: async ({ canvas, step }) => {
 
     await new Promise(resolve => setTimeout(resolve, 500));
     

@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-02-21T21:09:59",
+  "timestamp": "2026-02-22T11:52:46",
   "compiler": {
     "name": "@stencil/core",
-    "version": "4.39.0",
+    "version": "4.43.1",
     "typescriptVersion": "5.8.3"
   },
   "components": [
@@ -49,6 +49,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-multi-audio-station"
       ],
@@ -103,6 +104,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-multi-audio-station"
       ],
@@ -200,6 +202,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-pin",
         "sc-page-selection"
@@ -232,7 +235,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -257,6 +261,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -279,7 +284,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -304,6 +310,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -326,7 +333,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -505,6 +513,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -585,7 +594,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -727,7 +737,7 @@
           "mutable": false,
           "attr": "tour-id",
           "reflectToAttr": false,
-          "docs": "If tour id is given, stations only for the tour are shown.\r\nTour id 'default' is a placeholder for the default tour id.",
+          "docs": "If tour id is given, stations only for the tour are shown.\nTour id 'default' is a placeholder for the default tour id.",
           "docsTags": [
             {
               "name": "default",
@@ -752,6 +762,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -804,7 +815,7 @@
           "mutable": false,
           "attr": "enable-switch-audio-output",
           "reflectToAttr": false,
-          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\r\nThis feature is only available on hybrid apps",
+          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\nThis feature is only available on hybrid apps",
           "docsTags": [
             {
               "name": "default",
@@ -832,7 +843,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -884,7 +896,7 @@
           "mutable": false,
           "attr": "tour-id",
           "reflectToAttr": false,
-          "docs": "If tour id is given, stations are retrieved from specific tour.\r\nTour id 'default' is a placeholder for the default tour id.",
+          "docs": "If tour id is given, stations are retrieved from specific tour.\nTour id 'default' is a placeholder for the default tour id.",
           "docsTags": [
             {
               "name": "default",
@@ -909,6 +921,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [
         "sc-station-icon",
@@ -943,7 +956,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -997,6 +1011,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [
         "sc-numpad"
@@ -1025,7 +1040,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1117,7 +1133,7 @@
           "mutable": false,
           "attr": "tour-id",
           "reflectToAttr": false,
-          "docs": "If tour id is given, stations only for the tour are queried.\r\nTour id 'default' is a placeholder for the default tour id.",
+          "docs": "If tour id is given, stations only for the tour are queried.\nTour id 'default' is a placeholder for the default tour id.",
           "docsTags": [
             {
               "name": "default",
@@ -1142,6 +1158,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [
         "sc-numpad"
@@ -1229,7 +1246,7 @@
           "mutable": false,
           "attr": "enable-switch-audio-output",
           "reflectToAttr": false,
-          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\r\nThis feature is only available on hybrid apps",
+          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\nThis feature is only available on hybrid apps",
           "docsTags": [
             {
               "name": "default",
@@ -1257,7 +1274,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1309,7 +1327,7 @@
           "mutable": false,
           "attr": "tour-id",
           "reflectToAttr": false,
-          "docs": "If tour id is given, stations are retrieved from specific tour.\r\nTour id 'default' is a placeholder for the default tour id.",
+          "docs": "If tour id is given, stations are retrieved from specific tour.\nTour id 'default' is a placeholder for the default tour id.",
           "docsTags": [
             {
               "name": "default",
@@ -1334,6 +1352,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [
         "sc-player-controls",
@@ -1364,7 +1383,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1452,6 +1472,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-tabbed-station-list"
       ],
@@ -1485,7 +1506,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1573,6 +1595,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-tabbed-station-list"
       ],
@@ -1607,7 +1630,7 @@
           "mutable": false,
           "attr": "enable-switch-audio-output",
           "reflectToAttr": false,
-          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\r\nThis feature is only available on hybrid apps",
+          "docs": "This prop displays a button for switching audio output between speaker and earpiece.\nThis feature is only available on hybrid apps",
           "docsTags": [
             {
               "name": "default",
@@ -1635,7 +1658,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1693,7 +1717,7 @@
           "mutable": false,
           "attr": "tour-id",
           "reflectToAttr": false,
-          "docs": "If tour id is given, stations are retrieved from specific tour.\r\nTour id 'default' is a placeholder for the default tour id.",
+          "docs": "If tour id is given, stations are retrieved from specific tour.\nTour id 'default' is a placeholder for the default tour id.",
           "docsTags": [
             {
               "name": "default",
@@ -1718,6 +1742,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [
         "sc-player-controls",
@@ -1748,7 +1773,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1836,6 +1862,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [
         "sc-page-station-image-list",
@@ -1872,7 +1899,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1931,6 +1959,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -2151,6 +2180,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-multi-audio-station",
         "sc-page-station",
@@ -2309,6 +2339,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-multi-audio-station",
         "sc-page-station",

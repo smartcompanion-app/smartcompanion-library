@@ -9,6 +9,9 @@ TypeScript monorepo with npm workspaces containing reusable packages for SmartCo
 - `@smartcompanion/services` — Service layer (AudioPlayerService, MenuService, RoutingService)
 - `@smartcompanion/ui` — Stencil web components (image-slideshow, marquee, numpad, player-controls, station-icon)
 
+**Apps:**
+- `apps/audioguide-app` — Consumer application workspace member built on top of the packages above
+
 ## Git
 
 - Main branch: `main`
@@ -27,9 +30,13 @@ npm test           # Run tests for all packages
 ```bash
 npm run build -w packages/data
 npm run test -w packages/data
+npm run lint -w packages/data
+npm run format -w packages/data
 
 npm run build -w packages/services
 npm run test -w packages/services
+npm run lint -w packages/services
+npm run format -w packages/services
 
 npm run build -w packages/ui
 npm run test -w packages/ui

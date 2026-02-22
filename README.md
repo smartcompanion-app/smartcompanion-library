@@ -6,6 +6,8 @@
 ## Table of Contents
 
 - [Packages](#packages)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
 - [Local Development](#local-development)
 - [License](#license)
 - [Links](#links)
@@ -14,23 +16,57 @@
 
 | Package | Description |
 | --- | --- |
-| `@smartcompanion/ui` | UI components and pages developed with [Stencil](https://stenciljs.com/) |
-| `@smartcompanion/data` | Download, store and retrieve data within SmartCompanion apps |
-| `@smartcompanion/services` | General services for SmartCompanion apps |
+| `@smartcompanion/ui` | Stencil v4 web components — `image-slideshow`, `marquee`, `numpad`, `player-controls`, `station-icon` |
+| `@smartcompanion/data` | Domain models and data layer — assets, languages, pins, servers, stations, text, tours |
+| `@smartcompanion/services` | Service layer — `AudioPlayerService`, `MenuService`, `RoutingService` |
+
+## Prerequisites
+
+- Node.js >= 14
+- npm >= 7 (workspaces support)
+
+## Getting Started
+
+```bash
+npm install        # Install all workspace dependencies
+npm run build      # Build all packages
+npm test           # Run tests for all packages
+```
 
 ## Local Development
 
 ### @smartcompanion/data
 
-The package is developed with TDD, test can be run with `npm run test`
+```bash
+npm run build -w packages/data    # Compile TypeScript to dist/
+npm run test -w packages/data     # Run Jest tests
+npm run lint -w packages/data     # Lint source files
+npm run format -w packages/data   # Format source files with Prettier
+```
 
-### @smartcompanion/servies
+### @smartcompanion/services
 
-The package is developed with TDD, test can be run with `npm run test`
+```bash
+npm run build -w packages/services    # Compile TypeScript to dist/
+npm run test -w packages/services     # Run Jest tests
+npm run lint -w packages/services     # Lint source files
+npm run format -w packages/services   # Format source files with Prettier
+```
 
 ### @smartcompanion/ui
 
-UI Components and UI Pages are developed in isolation with [Storybook](https://storybook.js.org/). `npm run storybook` would start the storybook environment on [http://localhost:6006](http://localhost:6006) for local development and live reloads.
+UI components are developed in isolation with [Storybook](https://storybook.js.org/).
+
+```bash
+npm run build -w packages/ui       # Compile Stencil components
+npm run test -w packages/ui        # Run Playwright and Jest tests
+npm run watch -w packages/ui       # Stencil watch mode
+npm run storybook -w packages/ui   # Dev server at http://localhost:6006
+```
+
+### apps/audioguide-app
+
+The `apps/audioguide-app` workspace is a consumer application included in this monorepo. It is built on top of the packages above.
 
 ## License
 

@@ -1,7 +1,7 @@
 import { PluginListenerHandle } from '@capacitor/core';
 import { NativeAudioPlayer, Item } from '@smartcompanion/native-audio-player';
-import { Station, Asset } from "@smartcompanion/data";
-import { AudioPlayerUpdate } from "./audio-player-update";
+import { Station, Asset } from '@smartcompanion/data';
+import { AudioPlayerUpdate } from './audio-player-update';
 
 export interface AudioPlayerServiceItem extends Item {
   stationId: string;
@@ -9,7 +9,6 @@ export interface AudioPlayerServiceItem extends Item {
 }
 
 export class AudioPlayerService {
-
   protected items: AudioPlayerServiceItem[] = [];
   protected updateListenerHandle: PluginListenerHandle;
 
@@ -17,12 +16,11 @@ export class AudioPlayerService {
     this.items = this.getPlayerItems(stations);
   }
 
-  constructor(protected subtitle: string) {
-  }
+  constructor(protected subtitle: string) {}
 
   async start(stations: Station[]) {
     this.stations = stations;
-    await NativeAudioPlayer.start({ items: this.items })
+    await NativeAudioPlayer.start({ items: this.items });
   }
 
   async stop() {
@@ -54,11 +52,11 @@ export class AudioPlayerService {
   }
 
   async registerUpdateListener(callback: (update: AudioPlayerUpdate) => void) {
-    this.updateListenerHandle = await NativeAudioPlayer.addListener("update", async (result) => {
+    this.updateListenerHandle = await NativeAudioPlayer.addListener('update', async result => {
       callback({
         state: result.state,
         id: result.id,
-        index: this.getIndex(result.id)
+        index: this.getIndex(result.id),
       });
     });
   }
@@ -101,10 +99,10 @@ export class AudioPlayerService {
   }
 
   /**
-   * Get the index of the first item identified by the given station id 
+   * Get the index of the first item identified by the given station id
    */
-  getIndexByStationId(stationId: string, items: Array<{stationId: string}> = this.items): number {
-    if (stationId == "default") {
+  getIndexByStationId(stationId: string, items: Array<{ stationId: string }> = this.items): number {
+    if (stationId == 'default') {
       return 0;
     }
 
@@ -125,14 +123,14 @@ export class AudioPlayerService {
     if (this.items && index < this.items.length && index >= 0) {
       return this.items[index].stationId;
     }
-    return "";
+    return '';
   }
 
   getId(index: number): string {
     if (this.items && index < this.items.length && index >= 0) {
       return this.items[index].id;
     }
-    return "";
+    return '';
   }
 
   /**
@@ -141,16 +139,17 @@ export class AudioPlayerService {
    */
   getPlayerItems(stations: Station[]): AudioPlayerServiceItem[] {
     return stations
-      .map(station => (station.audios as Asset[])
-        .map(audio => ({
+      .map(station =>
+        (station.audios as Asset[]).map(audio => ({
           id: audio.id,
           title: audio?.title ? audio?.title : station.title,
           subtitle: this.subtitle,
           audioUri: audio.internalFileUrl,
           imageUri: (station.images as Asset[])[0].internalFileUrl,
           stationId: station.id,
-          collectedPercentage: station.collectedPercentage || 0
-        })))
+          collectedPercentage: station.collectedPercentage || 0,
+        })),
+      )
       .flat();
   }
 }

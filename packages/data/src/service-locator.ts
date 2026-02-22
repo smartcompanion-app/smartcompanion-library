@@ -1,41 +1,31 @@
-import { AssetService, LanguageService, PinService, ServerService, StationService, TextService, TourService, Asset } from "./domain";
-import { LoadService } from "./load";
-import { Storage } from "./storage";
+import { AssetService, LanguageService, PinService, ServerService, StationService, TextService, TourService, Asset } from './domain';
+import { LoadService } from './load';
+import { Storage } from './storage';
 
 /**
  * ServiceLocator is a central registry for services in the SmartCompanion app.
  */
 export class ServiceLocator {
-  protected servicesFactories = new Map<Function, (serviceLocator: ServiceLocator) => unknown>();
-  protected services = new Map<Function, unknown>();
+  protected servicesFactories = new Map<new (...args: any[]) => unknown, (serviceLocator: ServiceLocator) => unknown>();
+  protected services = new Map<new (...args: any[]) => unknown, unknown>();
   protected storage: Storage;
 
-  constructor(
-    storage: Storage
-  ) {
+  constructor(storage: Storage) {
     this.storage = storage;
   }
 
   registerDefaultServices(
-    resolveUrl: (asset: Asset) => Promise<{ fileUrl: string, webUrl: string }> =
-      async (asset: Asset) => {
-        return { webUrl: asset.externalUrl, fileUrl: asset.externalUrl };
-      }
+    resolveUrl: (asset: Asset) => Promise<{ fileUrl: string; webUrl: string }> = async (asset: Asset) => {
+      return { webUrl: asset.externalUrl, fileUrl: asset.externalUrl };
+    },
   ) {
     this.register(LanguageService, (serviceLocator: ServiceLocator) => new LanguageService(serviceLocator.storage));
     this.register(PinService, (serviceLocator: ServiceLocator) => new PinService(serviceLocator.storage));
     this.register(AssetService, (serviceLocator: ServiceLocator) => new AssetService(serviceLocator.storage, resolveUrl));
     this.register(ServerService, (serviceLocator: ServiceLocator) => new ServerService(serviceLocator.storage));
     this.register(TextService, (serviceLocator: ServiceLocator) => new TextService(serviceLocator.storage));
-    this.register(StationService, (serviceLocator: ServiceLocator) => new StationService(
-      serviceLocator.storage,
-      serviceLocator.getAssetService()
-    ));
-    this.register(TourService, (serviceLocator: ServiceLocator) => new TourService(
-      serviceLocator.storage,
-      serviceLocator.getAssetService(),
-      serviceLocator.getStationService()
-    ));
+    this.register(StationService, (serviceLocator: ServiceLocator) => new StationService(serviceLocator.storage, serviceLocator.getAssetService()));
+    this.register(TourService, (serviceLocator: ServiceLocator) => new TourService(serviceLocator.storage, serviceLocator.getAssetService(), serviceLocator.getStationService()));
   }
 
   register<T>(type: new (...args: any[]) => T, serviceFactory: (serviceLocator: ServiceLocator) => T) {
@@ -43,12 +33,12 @@ export class ServiceLocator {
   }
 
   get<T>(type: new (...args: any[]) => T): T {
-    if (!this.services.has(type)) {      
+    if (!this.services.has(type)) {
       if (!this.servicesFactories.has(type)) {
         throw new Error(`Service of type ${type.name} is not registered.`);
       }
       const factory = this.servicesFactories.get(type)!;
-      this.services.set(type, factory(this));      
+      this.services.set(type, factory(this));
     }
     return this.services.get(type) as T;
   }
@@ -64,7 +54,7 @@ export class ServiceLocator {
   getPinService(): PinService {
     return this.get(PinService);
   }
-  
+
   getAssetService(): AssetService {
     return this.get(AssetService);
   }

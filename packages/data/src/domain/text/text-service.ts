@@ -1,7 +1,6 @@
-import { Storage } from "../../storage";
+import { Storage } from '../../storage';
 
 export class TextService {
-
   protected storage: Storage;
   protected cache: any;
 
@@ -14,14 +13,14 @@ export class TextService {
     const language = this.storage.get('language');
 
     if (!language) {
-      return "en"; // default set en for texts
+      return 'en'; // default set en for texts
     } else {
       return language;
     }
   }
 
   /**
-   * A translation key can have alternative keys, e.g. with _ or - as separator 
+   * A translation key can have alternative keys, e.g. with _ or - as separator
    */
   getAllKeys(key: string, storageKeyPrefix: string): string[] {
     const keys: string[] = [];
@@ -39,7 +38,7 @@ export class TextService {
     const language = this.getCurrentLanguage();
     const storageKeyPrefix = `texts-${language}-`;
     const storageKey = `${storageKeyPrefix}${key}`;
-    
+
     if (this.cache[storageKey]) {
       return this.cache[storageKey];
     }
@@ -53,9 +52,6 @@ export class TextService {
     }
 
     // fallback, if no translation is available, return lowercase key with spaces
-    return key
-      .replace('_', ' ')
-      .replace('-', ' ')
-      .toLowerCase();
+    return key.replace('_', ' ').replace('-', ' ').toLowerCase();
   }
 }

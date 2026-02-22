@@ -734,49 +734,125 @@ declare namespace LocalJSX {
          */
         "upperLimitPercent"?: number;
     }
+
+    interface ScMarqueeAttributes {
+        "active": boolean;
+    }
+    interface ScNumpadAttributes {
+        "full": boolean;
+    }
+    interface ScPageLoadingAttributes {
+        "spinnerColor": 'primary' | 'secondary';
+        "progressBarColor": 'primary' | 'secondary';
+        "loadingTextColor": 'primary' | 'secondary';
+        "image": string;
+        "homeRoute": string;
+    }
+    interface ScPageMapAttributes {
+        "headerBackgroundColor": 'primary' | 'secondary';
+        "enableBackButton": boolean;
+        "defaultBackButtonHref": string;
+        "tourId": string;
+        "tileUrlTemplate": string;
+        "mapAttribution": string;
+    }
+    interface ScPageMultiAudioStationAttributes {
+        "defaultBackButtonHref": string;
+        "tourId": string;
+        "stationId": string;
+        "enableSwitchAudioOutput": boolean;
+    }
+    interface ScPagePinAttributes {
+        "validHours": number;
+    }
+    interface ScPageSelectionAttributes {
+        "headerBackgroundColor": 'primary' | 'secondary';
+        "tourId": string;
+        "maxLength": number;
+    }
+    interface ScPageStationAttributes {
+        "enableBackButton": boolean;
+        "defaultBackButtonHref": string;
+        "tourId": string;
+        "stationId": string;
+        "enableSwitchAudioOutput": boolean;
+    }
+    interface ScPageStationImageListAttributes {
+        "headerBackgroundColor": 'primary' | 'secondary';
+        "tourId": string;
+    }
+    interface ScPageStationListAttributes {
+        "headerBackgroundColor": 'primary' | 'secondary';
+        "tourId": string;
+    }
+    interface ScPageStationsAttributes {
+        "tourId": string;
+        "stationId": string;
+        "enableSwitchAudioOutput": boolean;
+    }
+    interface ScPageTabbedStationListAttributes {
+        "headerBackgroundColor": 'primary' | 'secondary';
+        "tourId": string;
+    }
+    interface ScPageTourListAttributes {
+        "headerBackgroundColor": 'primary' | 'secondary';
+    }
+    interface ScPlayerControlsAttributes {
+        "playing": boolean;
+        "position": number;
+        "duration": number;
+        "disabled": boolean;
+    }
+    interface ScStationIconAttributes {
+        "upperLimitPercent": number;
+        "collected": boolean;
+        "collectedPercent": number;
+        "size": 'small' | 'normal' | 'large';
+    }
+
     interface IntrinsicElements {
         "sc-image-slideshow": ScImageSlideshow;
-        "sc-marquee": ScMarquee;
-        "sc-numpad": ScNumpad;
+        "sc-marquee": Omit<ScMarquee, keyof ScMarqueeAttributes> & { [K in keyof ScMarquee & keyof ScMarqueeAttributes]?: ScMarquee[K] } & { [K in keyof ScMarquee & keyof ScMarqueeAttributes as `attr:${K}`]?: ScMarqueeAttributes[K] } & { [K in keyof ScMarquee & keyof ScMarqueeAttributes as `prop:${K}`]?: ScMarquee[K] };
+        "sc-numpad": Omit<ScNumpad, keyof ScNumpadAttributes> & { [K in keyof ScNumpad & keyof ScNumpadAttributes]?: ScNumpad[K] } & { [K in keyof ScNumpad & keyof ScNumpadAttributes as `attr:${K}`]?: ScNumpadAttributes[K] } & { [K in keyof ScNumpad & keyof ScNumpadAttributes as `prop:${K}`]?: ScNumpad[K] };
         "sc-page-error": ScPageError;
         "sc-page-language": ScPageLanguage;
-        "sc-page-loading": ScPageLoading;
-        "sc-page-map": ScPageMap;
-        "sc-page-multi-audio-station": ScPageMultiAudioStation;
-        "sc-page-pin": ScPagePin;
-        "sc-page-selection": ScPageSelection;
-        "sc-page-station": ScPageStation;
-        "sc-page-station-image-list": ScPageStationImageList;
-        "sc-page-station-list": ScPageStationList;
-        "sc-page-stations": ScPageStations;
-        "sc-page-tabbed-station-list": ScPageTabbedStationList;
-        "sc-page-tour-list": ScPageTourList;
-        "sc-player-controls": ScPlayerControls;
-        "sc-station-icon": ScStationIcon;
+        "sc-page-loading": Omit<ScPageLoading, keyof ScPageLoadingAttributes> & { [K in keyof ScPageLoading & keyof ScPageLoadingAttributes]?: ScPageLoading[K] } & { [K in keyof ScPageLoading & keyof ScPageLoadingAttributes as `attr:${K}`]?: ScPageLoadingAttributes[K] } & { [K in keyof ScPageLoading & keyof ScPageLoadingAttributes as `prop:${K}`]?: ScPageLoading[K] };
+        "sc-page-map": Omit<ScPageMap, keyof ScPageMapAttributes> & { [K in keyof ScPageMap & keyof ScPageMapAttributes]?: ScPageMap[K] } & { [K in keyof ScPageMap & keyof ScPageMapAttributes as `attr:${K}`]?: ScPageMapAttributes[K] } & { [K in keyof ScPageMap & keyof ScPageMapAttributes as `prop:${K}`]?: ScPageMap[K] };
+        "sc-page-multi-audio-station": Omit<ScPageMultiAudioStation, keyof ScPageMultiAudioStationAttributes> & { [K in keyof ScPageMultiAudioStation & keyof ScPageMultiAudioStationAttributes]?: ScPageMultiAudioStation[K] } & { [K in keyof ScPageMultiAudioStation & keyof ScPageMultiAudioStationAttributes as `attr:${K}`]?: ScPageMultiAudioStationAttributes[K] } & { [K in keyof ScPageMultiAudioStation & keyof ScPageMultiAudioStationAttributes as `prop:${K}`]?: ScPageMultiAudioStation[K] };
+        "sc-page-pin": Omit<ScPagePin, keyof ScPagePinAttributes> & { [K in keyof ScPagePin & keyof ScPagePinAttributes]?: ScPagePin[K] } & { [K in keyof ScPagePin & keyof ScPagePinAttributes as `attr:${K}`]?: ScPagePinAttributes[K] } & { [K in keyof ScPagePin & keyof ScPagePinAttributes as `prop:${K}`]?: ScPagePin[K] };
+        "sc-page-selection": Omit<ScPageSelection, keyof ScPageSelectionAttributes> & { [K in keyof ScPageSelection & keyof ScPageSelectionAttributes]?: ScPageSelection[K] } & { [K in keyof ScPageSelection & keyof ScPageSelectionAttributes as `attr:${K}`]?: ScPageSelectionAttributes[K] } & { [K in keyof ScPageSelection & keyof ScPageSelectionAttributes as `prop:${K}`]?: ScPageSelection[K] };
+        "sc-page-station": Omit<ScPageStation, keyof ScPageStationAttributes> & { [K in keyof ScPageStation & keyof ScPageStationAttributes]?: ScPageStation[K] } & { [K in keyof ScPageStation & keyof ScPageStationAttributes as `attr:${K}`]?: ScPageStationAttributes[K] } & { [K in keyof ScPageStation & keyof ScPageStationAttributes as `prop:${K}`]?: ScPageStation[K] };
+        "sc-page-station-image-list": Omit<ScPageStationImageList, keyof ScPageStationImageListAttributes> & { [K in keyof ScPageStationImageList & keyof ScPageStationImageListAttributes]?: ScPageStationImageList[K] } & { [K in keyof ScPageStationImageList & keyof ScPageStationImageListAttributes as `attr:${K}`]?: ScPageStationImageListAttributes[K] } & { [K in keyof ScPageStationImageList & keyof ScPageStationImageListAttributes as `prop:${K}`]?: ScPageStationImageList[K] };
+        "sc-page-station-list": Omit<ScPageStationList, keyof ScPageStationListAttributes> & { [K in keyof ScPageStationList & keyof ScPageStationListAttributes]?: ScPageStationList[K] } & { [K in keyof ScPageStationList & keyof ScPageStationListAttributes as `attr:${K}`]?: ScPageStationListAttributes[K] } & { [K in keyof ScPageStationList & keyof ScPageStationListAttributes as `prop:${K}`]?: ScPageStationList[K] };
+        "sc-page-stations": Omit<ScPageStations, keyof ScPageStationsAttributes> & { [K in keyof ScPageStations & keyof ScPageStationsAttributes]?: ScPageStations[K] } & { [K in keyof ScPageStations & keyof ScPageStationsAttributes as `attr:${K}`]?: ScPageStationsAttributes[K] } & { [K in keyof ScPageStations & keyof ScPageStationsAttributes as `prop:${K}`]?: ScPageStations[K] };
+        "sc-page-tabbed-station-list": Omit<ScPageTabbedStationList, keyof ScPageTabbedStationListAttributes> & { [K in keyof ScPageTabbedStationList & keyof ScPageTabbedStationListAttributes]?: ScPageTabbedStationList[K] } & { [K in keyof ScPageTabbedStationList & keyof ScPageTabbedStationListAttributes as `attr:${K}`]?: ScPageTabbedStationListAttributes[K] } & { [K in keyof ScPageTabbedStationList & keyof ScPageTabbedStationListAttributes as `prop:${K}`]?: ScPageTabbedStationList[K] };
+        "sc-page-tour-list": Omit<ScPageTourList, keyof ScPageTourListAttributes> & { [K in keyof ScPageTourList & keyof ScPageTourListAttributes]?: ScPageTourList[K] } & { [K in keyof ScPageTourList & keyof ScPageTourListAttributes as `attr:${K}`]?: ScPageTourListAttributes[K] } & { [K in keyof ScPageTourList & keyof ScPageTourListAttributes as `prop:${K}`]?: ScPageTourList[K] };
+        "sc-player-controls": Omit<ScPlayerControls, keyof ScPlayerControlsAttributes> & { [K in keyof ScPlayerControls & keyof ScPlayerControlsAttributes]?: ScPlayerControls[K] } & { [K in keyof ScPlayerControls & keyof ScPlayerControlsAttributes as `attr:${K}`]?: ScPlayerControlsAttributes[K] } & { [K in keyof ScPlayerControls & keyof ScPlayerControlsAttributes as `prop:${K}`]?: ScPlayerControls[K] };
+        "sc-station-icon": Omit<ScStationIcon, keyof ScStationIconAttributes> & { [K in keyof ScStationIcon & keyof ScStationIconAttributes]?: ScStationIcon[K] } & { [K in keyof ScStationIcon & keyof ScStationIconAttributes as `attr:${K}`]?: ScStationIconAttributes[K] } & { [K in keyof ScStationIcon & keyof ScStationIconAttributes as `prop:${K}`]?: ScStationIcon[K] };
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "sc-image-slideshow": LocalJSX.ScImageSlideshow & JSXBase.HTMLAttributes<HTMLScImageSlideshowElement>;
-            "sc-marquee": LocalJSX.ScMarquee & JSXBase.HTMLAttributes<HTMLScMarqueeElement>;
-            "sc-numpad": LocalJSX.ScNumpad & JSXBase.HTMLAttributes<HTMLScNumpadElement>;
-            "sc-page-error": LocalJSX.ScPageError & JSXBase.HTMLAttributes<HTMLScPageErrorElement>;
-            "sc-page-language": LocalJSX.ScPageLanguage & JSXBase.HTMLAttributes<HTMLScPageLanguageElement>;
-            "sc-page-loading": LocalJSX.ScPageLoading & JSXBase.HTMLAttributes<HTMLScPageLoadingElement>;
-            "sc-page-map": LocalJSX.ScPageMap & JSXBase.HTMLAttributes<HTMLScPageMapElement>;
-            "sc-page-multi-audio-station": LocalJSX.ScPageMultiAudioStation & JSXBase.HTMLAttributes<HTMLScPageMultiAudioStationElement>;
-            "sc-page-pin": LocalJSX.ScPagePin & JSXBase.HTMLAttributes<HTMLScPagePinElement>;
-            "sc-page-selection": LocalJSX.ScPageSelection & JSXBase.HTMLAttributes<HTMLScPageSelectionElement>;
-            "sc-page-station": LocalJSX.ScPageStation & JSXBase.HTMLAttributes<HTMLScPageStationElement>;
-            "sc-page-station-image-list": LocalJSX.ScPageStationImageList & JSXBase.HTMLAttributes<HTMLScPageStationImageListElement>;
-            "sc-page-station-list": LocalJSX.ScPageStationList & JSXBase.HTMLAttributes<HTMLScPageStationListElement>;
-            "sc-page-stations": LocalJSX.ScPageStations & JSXBase.HTMLAttributes<HTMLScPageStationsElement>;
-            "sc-page-tabbed-station-list": LocalJSX.ScPageTabbedStationList & JSXBase.HTMLAttributes<HTMLScPageTabbedStationListElement>;
-            "sc-page-tour-list": LocalJSX.ScPageTourList & JSXBase.HTMLAttributes<HTMLScPageTourListElement>;
-            "sc-player-controls": LocalJSX.ScPlayerControls & JSXBase.HTMLAttributes<HTMLScPlayerControlsElement>;
-            "sc-station-icon": LocalJSX.ScStationIcon & JSXBase.HTMLAttributes<HTMLScStationIconElement>;
+            "sc-image-slideshow": LocalJSX.IntrinsicElements["sc-image-slideshow"] & JSXBase.HTMLAttributes<HTMLScImageSlideshowElement>;
+            "sc-marquee": LocalJSX.IntrinsicElements["sc-marquee"] & JSXBase.HTMLAttributes<HTMLScMarqueeElement>;
+            "sc-numpad": LocalJSX.IntrinsicElements["sc-numpad"] & JSXBase.HTMLAttributes<HTMLScNumpadElement>;
+            "sc-page-error": LocalJSX.IntrinsicElements["sc-page-error"] & JSXBase.HTMLAttributes<HTMLScPageErrorElement>;
+            "sc-page-language": LocalJSX.IntrinsicElements["sc-page-language"] & JSXBase.HTMLAttributes<HTMLScPageLanguageElement>;
+            "sc-page-loading": LocalJSX.IntrinsicElements["sc-page-loading"] & JSXBase.HTMLAttributes<HTMLScPageLoadingElement>;
+            "sc-page-map": LocalJSX.IntrinsicElements["sc-page-map"] & JSXBase.HTMLAttributes<HTMLScPageMapElement>;
+            "sc-page-multi-audio-station": LocalJSX.IntrinsicElements["sc-page-multi-audio-station"] & JSXBase.HTMLAttributes<HTMLScPageMultiAudioStationElement>;
+            "sc-page-pin": LocalJSX.IntrinsicElements["sc-page-pin"] & JSXBase.HTMLAttributes<HTMLScPagePinElement>;
+            "sc-page-selection": LocalJSX.IntrinsicElements["sc-page-selection"] & JSXBase.HTMLAttributes<HTMLScPageSelectionElement>;
+            "sc-page-station": LocalJSX.IntrinsicElements["sc-page-station"] & JSXBase.HTMLAttributes<HTMLScPageStationElement>;
+            "sc-page-station-image-list": LocalJSX.IntrinsicElements["sc-page-station-image-list"] & JSXBase.HTMLAttributes<HTMLScPageStationImageListElement>;
+            "sc-page-station-list": LocalJSX.IntrinsicElements["sc-page-station-list"] & JSXBase.HTMLAttributes<HTMLScPageStationListElement>;
+            "sc-page-stations": LocalJSX.IntrinsicElements["sc-page-stations"] & JSXBase.HTMLAttributes<HTMLScPageStationsElement>;
+            "sc-page-tabbed-station-list": LocalJSX.IntrinsicElements["sc-page-tabbed-station-list"] & JSXBase.HTMLAttributes<HTMLScPageTabbedStationListElement>;
+            "sc-page-tour-list": LocalJSX.IntrinsicElements["sc-page-tour-list"] & JSXBase.HTMLAttributes<HTMLScPageTourListElement>;
+            "sc-player-controls": LocalJSX.IntrinsicElements["sc-player-controls"] & JSXBase.HTMLAttributes<HTMLScPlayerControlsElement>;
+            "sc-station-icon": LocalJSX.IntrinsicElements["sc-station-icon"] & JSXBase.HTMLAttributes<HTMLScStationIconElement>;
         }
     }
 }

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
-import { expect, waitFor } from 'storybook/test';
+import { expect, waitFor, userEvent } from 'storybook/test';
 import { h } from '@stencil/core';
 import { ServiceFacade, MenuService } from '@smartcompanion/services';
 import { PageSelection } from './page-selection';
@@ -44,7 +44,7 @@ export const Example: Story = {
       },
     } as ServiceFacade,
   },
-  play: async ({ canvas, userEvent, step }) => {
+  play: async ({ canvas, step }) => {
     
     await step('Type 4 and 2, check each entry in the input', async () => {
       // @ts-ignore

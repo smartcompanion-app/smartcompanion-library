@@ -1,10 +1,9 @@
-import { Storage } from "../../storage";
-import { Language } from "./language";
+import { Storage } from '../../storage';
+import { Language } from './language';
 
 export class LanguageService {
-
   protected storage: Storage;
-  protected language: string = "";
+  protected language: string = '';
 
   constructor(storage: Storage) {
     this.storage = storage;
@@ -15,17 +14,14 @@ export class LanguageService {
   }
 
   changeLanguage(language: string) {
-    if (
-      typeof language === 'string' &&
-      this.getLanguages().some(item => item.language == language)
-    ) {
+    if (typeof language === 'string' && this.getLanguages().some(item => item.language == language)) {
       this.storage.set('language', language);
       this.language = language;
     }
   }
 
   hasLanguage(): boolean {
-    return this.language != "";
+    return this.language != '';
   }
 
   getCurrentLanguage(): string {

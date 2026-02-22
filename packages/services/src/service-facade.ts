@@ -2,16 +2,14 @@ import { LoadService, Language, ServiceLocator, Storage, BrowserStorage, OnlineL
 import { RoutingService, MenuService, AudioPlayerService, CollectibleAudioPlayerService } from './services';
 
 export class ServiceFacade extends ServiceLocator {
-
   constructor(storage: Storage = new BrowserStorage()) {
     super(storage);
   }
 
   registerDefaultServices(
-    resolveUrl: (asset: Asset) => Promise<{ fileUrl: string, webUrl: string }> =
-      async (asset: Asset) => {
-        return { webUrl: asset.externalUrl, fileUrl: asset.externalUrl };
-      }
+    resolveUrl: (asset: Asset) => Promise<{ fileUrl: string; webUrl: string }> = async (asset: Asset) => {
+      return { webUrl: asset.externalUrl, fileUrl: asset.externalUrl };
+    },
   ) {
     super.registerDefaultServices(resolveUrl);
     this.register(RoutingService, (_: ServiceLocator) => new RoutingService());
@@ -27,11 +25,7 @@ export class ServiceFacade extends ServiceLocator {
   }
 
   registerOnlineLoadService(downloadData: () => Promise<any>): void {
-    this.register(LoadService, (serviceLocator: ServiceLocator) => new OnlineLoadService(
-      downloadData,
-      new DataUpdater(serviceLocator.getStorage()),
-      serviceLocator
-    ));
+    this.register(LoadService, (serviceLocator: ServiceLocator) => new OnlineLoadService(downloadData, new DataUpdater(serviceLocator.getStorage()), serviceLocator));
   }
 
   registerOfflineLoadService(
@@ -39,17 +33,12 @@ export class ServiceFacade extends ServiceLocator {
     downloadFile: (url: string) => Promise<string>,
     remove: (filename: string) => Promise<void>,
     save: (filename: string, data: string) => Promise<void>,
-    list: () => Promise<string[]>
+    list: () => Promise<string[]>,
   ): void {
-    this.register(LoadService, (serviceLocator: ServiceLocator) => new OfflineLoadService(
-      downloadData,
-      downloadFile,
-      remove,
-      save,
-      list,
-      new DataUpdater(serviceLocator.getStorage()),
-      serviceLocator
-    ));
+    this.register(
+      LoadService,
+      (serviceLocator: ServiceLocator) => new OfflineLoadService(downloadData, downloadFile, remove, save, list, new DataUpdater(serviceLocator.getStorage()), serviceLocator),
+    );
   }
 
   getRoutingService(): RoutingService {
@@ -92,9 +81,9 @@ export class ServiceFacade extends ServiceLocator {
     } else {
       const hash = globalThis?.location?.hash;
       if (hash && hash.startsWith('#/')) {
-        this.storage.set("pending-route", hash.substring(1));
+        this.storage.set('pending-route', hash.substring(1));
       }
-      return { redirect: "/" };
+      return { redirect: '/' };
     }
   }
 

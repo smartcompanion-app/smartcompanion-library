@@ -1,7 +1,6 @@
-import { Storage } from "../../storage";
+import { Storage } from '../../storage';
 
 export class PinService {
-
   protected storage: Storage;
 
   constructor(storage: Storage) {
@@ -26,10 +25,7 @@ export class PinService {
   }
 
   isValid(): boolean {
-    if (
-      this.storage.has('pin-validation') &&
-      parseInt(this.storage.get('pin-validation')) > this.now()
-    ) {
+    if (this.storage.has('pin-validation') && parseInt(this.storage.get('pin-validation')) > this.now()) {
       return true;
     } else {
       return false;
@@ -46,10 +42,6 @@ export class PinService {
   }
 
   isPinValidationRequired(): boolean {
-    return (
-      this.storage.has('pins') &&
-      Array.isArray(this.storage.get('pins')) &&
-      this.storage.get('pins').length > 0
-    );
+    return this.storage.has('pins') && Array.isArray(this.storage.get('pins')) && this.storage.get('pins').length > 0;
   }
 }

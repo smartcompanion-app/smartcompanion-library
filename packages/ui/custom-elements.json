@@ -1,8 +1,8 @@
 {
-  "timestamp": "2025-12-22T20:28:03",
+  "timestamp": "2026-02-22T12:05:11",
   "compiler": {
     "name": "@stencil/core",
-    "version": "4.39.0",
+    "version": "4.43.1",
     "typescriptVersion": "5.8.3"
   },
   "components": [
@@ -49,6 +49,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-multi-audio-station"
       ],
@@ -103,6 +104,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-multi-audio-station"
       ],
@@ -200,6 +202,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-pin",
         "sc-page-selection"
@@ -232,7 +235,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -257,6 +261,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -279,7 +284,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -304,6 +310,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -326,7 +333,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -505,6 +513,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -585,7 +594,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -752,6 +762,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -832,7 +843,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -909,6 +921,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [
         "sc-station-icon",
@@ -943,7 +956,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -997,6 +1011,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [
         "sc-numpad"
@@ -1025,7 +1040,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1142,6 +1158,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [
         "sc-numpad"
@@ -1257,7 +1274,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1334,6 +1352,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [
         "sc-player-controls",
@@ -1364,7 +1383,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1452,6 +1472,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-tabbed-station-list"
       ],
@@ -1485,7 +1506,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1573,6 +1595,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-tabbed-station-list"
       ],
@@ -1635,7 +1658,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1718,6 +1742,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [
         "sc-player-controls",
@@ -1748,7 +1773,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1836,6 +1862,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [
         "sc-page-station-image-list",
@@ -1872,7 +1899,8 @@
               "ServiceFacade": {
                 "location": "import",
                 "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade"
+                "id": "../services/dist/index.d.ts::ServiceFacade",
+                "referenceLocation": "ServiceFacade"
               }
             }
           },
@@ -1931,6 +1959,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [],
       "dependencies": [],
       "dependencyGraph": {}
@@ -2151,6 +2180,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-multi-audio-station",
         "sc-page-station",
@@ -2309,6 +2339,7 @@
       "styles": [],
       "slots": [],
       "parts": [],
+      "states": [],
       "dependents": [
         "sc-page-multi-audio-station",
         "sc-page-station",

@@ -1,4 +1,4 @@
-import { LanguageService } from "../domain";
+import { LanguageService } from '../domain';
 
 /**
  * If only one language is available and no language is set, set that language automatically

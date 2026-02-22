@@ -1,7 +1,6 @@
 import { menuController } from '@ionic/core';
 
 export class MenuService {
-
   async open() {
     if (await menuController.isEnabled()) {
       await menuController.open();

@@ -28,7 +28,7 @@ export class PageStationImageList {
     await this.facade.getMenuService().enable();
   }
 
-  openStation(stationId: string) {
+  private openStation(stationId: string) {
     openStation(this.facade, stationId, this.tourId);
   }
 

@@ -35,7 +35,7 @@ export class PageSelection {
     this.stations = await getStations(this.facade, this.tourId);
   }
 
-  addToInput(input: string) {
+  private addToInput(input: string) {
     if (this.input.length >= this.maxLength) {
       this.input = this.input.slice(0, -1) + input;
     } else {
@@ -43,13 +43,13 @@ export class PageSelection {
     }
   }
 
-  clearLastInput() {
+  private clearLastInput() {
     if (this.input.length > 0) {
       this.input = this.input.slice(0, -1);
     }
   }
 
-  async checkStation() {
+  private async checkStation() {
     const station = this.stations.find(station => station.number == this.input);
     this.input = "";
 
@@ -58,7 +58,7 @@ export class PageSelection {
     }
   }  
 
-  openStation(stationId: string) {
+  private openStation(stationId: string) {
     openStation(this.facade, stationId, this.tourId);
   }
 

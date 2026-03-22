@@ -18,6 +18,8 @@
   "license": "BSD-2-Clause",
   "scripts": {
     "build": "stencil build",
+    "lint": "eslint src",
+    "format": "prettier --write src",
     "test": "npx playwright install --with-deps && npm run test-storybook:ci && npm run test:ci",
     "watch": "stencil build --watch",
     "storybook": "rm -rf dist/components && STORYBOOK=true storybook dev -p 6006 --no-open",

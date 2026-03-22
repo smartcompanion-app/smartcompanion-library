@@ -28,7 +28,7 @@ export class PageStationList {
     this.stations = await getSortedStations(this.facade, this.tourId);
   }
 
-  openStation(stationId: string) {
+  private openStation(stationId: string) {
     openStation(this.facade, stationId, this.tourId);
   }
 

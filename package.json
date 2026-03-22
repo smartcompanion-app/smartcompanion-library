@@ -8,14 +8,15 @@
   "scripts": {
     "test": "npm run test -w packages/data -w packages/services -w packages/ui --if-present",
     "build": "npm run build -w packages/data -w packages/services -w packages/ui -w apps/audioguide-app --if-present",
-    "lint": "npm run lint -w packages/data -w packages/services --if-present",
-    "format": "npm run format -w packages/data -w packages/services --if-present",
-    "format:check": "npm run format:check -w packages/data -w packages/services --if-present"
+    "lint": "npm run lint -w packages/data -w packages/services -w packages/ui --if-present",
+    "format": "npm run format -w packages/data -w packages/services -w packages/ui --if-present",
+    "format:check": "npm run format:check -w packages/data -w packages/services -w packages/ui --if-present"
   },
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "@jest/globals": "^29.7.0",
     "@ionic/core": "^8.7.2",
+    "@jest/globals": "^29.7.0",
+    "@stencil/eslint-plugin": "^1.1.0",
     "@stencil/sass": "^3.2.1",
     "@types/jest": "^29.5.14",
     "eslint": "^9.39.3",

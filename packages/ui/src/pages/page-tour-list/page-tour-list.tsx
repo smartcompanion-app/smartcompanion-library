@@ -22,13 +22,13 @@ export class PageTourList {
     await this.facade.getMenuService().enable();
   }
 
-  getTourStyle(tour: Tour) {
+  private getTourStyle(tour: Tour) {
     return {
       'background-image': "url('" + (tour.images[0] as Asset).internalWebUrl + "')"
     };
   }
 
-  startTour(tourId: string) {
+  private startTour(tourId: string) {
     this.facade.getRoutingService().push(`/tours/${tourId}`);
   }
 

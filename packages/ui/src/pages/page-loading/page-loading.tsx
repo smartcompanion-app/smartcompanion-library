@@ -40,7 +40,7 @@ export class PageLoading {
     this.load();
   }
 
-  async load() {
+  private async load() {
     this.facade.getMenuService().disable();
     this.progress = 1;
 

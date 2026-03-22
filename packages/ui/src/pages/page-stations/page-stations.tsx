@@ -77,12 +77,12 @@ export class PageStations {
     this.reactiveAudioPlayer = null;
   }
 
-  getImageUri(index: number, imageIndex: number = 0) {
+  private getImageUri(index: number, imageIndex: number = 0) {
     const station = this.stations[index];
     return (station.images[imageIndex] as Asset).internalWebUrl;
   }
 
-  openMenu() {
+  private openMenu() {
     this.facade.getMenuService().open();
   }
 

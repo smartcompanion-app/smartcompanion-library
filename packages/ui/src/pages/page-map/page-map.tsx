@@ -81,17 +81,17 @@ export class PageMap {
     await this.stationMarkers();
   }
 
-  async stationMarkers() {
+  private async stationMarkers() {
     const stations: Station[] = await getStations(this.facade, this.tourId);
 
-    for (let station of stations) {
+    for (const station of stations) {
       if (station.latitude && station.longitude) {
-        let icon = L.divIcon({
+        const icon = L.divIcon({
           className: 'station-map-icon',
           html: '<sc-station-icon>' + station.number + '</sc-station-icon>'
         });
 
-        let markerOptions: L.MarkerOptions = {
+        const markerOptions: L.MarkerOptions = {
           icon: icon
         };
 

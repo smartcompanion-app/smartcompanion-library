@@ -47,7 +47,7 @@ export const Example: Story = {
   play: async ({ canvas, step }) => {
     
     await step('Type 4 and 2, check each entry in the input', async () => {
-      // @ts-ignore
+      // @ts-expect-error shadow DOM testing method
       await userEvent.click(await canvas.findByShadowTestId('numpad-button-4'));
 
       await waitFor(async () => {        
@@ -55,7 +55,7 @@ export const Example: Story = {
         expect(numpadInput.textContent).toBe("4");
       });
 
-      // @ts-ignore
+      // @ts-expect-error shadow DOM testing method
       await userEvent.click(await canvas.findByShadowTestId('numpad-button-2'));
 
       await waitFor(async () => {        
@@ -65,7 +65,7 @@ export const Example: Story = {
     });
 
     await step('Type 3 on a filled, 2-sized numpad should result in 43', async () => {
-      // @ts-ignore
+      // @ts-expect-error shadow DOM testing method
       await userEvent.click(await canvas.findByShadowTestId('numpad-button-3'));
 
       await waitFor(async () => {        
@@ -75,7 +75,7 @@ export const Example: Story = {
     });
 
     await step('Deleting numpad input with button', async () => {
-      // @ts-ignore
+      // @ts-expect-error shadow DOM testing method
       await userEvent.click(await canvas.findByShadowTestId('numpad-button-delete'));
 
       await waitFor(async () => {        
@@ -83,7 +83,7 @@ export const Example: Story = {
         expect(numpadInput.textContent).toBe("4");
       });
 
-      // @ts-ignore
+      // @ts-expect-error shadow DOM testing method
       await userEvent.click(await canvas.findByShadowTestId('numpad-button-delete'));
 
       await waitFor(async () => {        
@@ -93,11 +93,11 @@ export const Example: Story = {
     });
 
     await step('Confirming should delete numpad input', async () => {
-      // @ts-ignore
+      // @ts-expect-error shadow DOM testing method
       await userEvent.click(await canvas.findByShadowTestId('numpad-button-4'));
-      // @ts-ignore
+      // @ts-expect-error shadow DOM testing method
       await userEvent.click(await canvas.findByShadowTestId('numpad-button-2'));
-      // @ts-ignore
+      // @ts-expect-error shadow DOM testing method
       await userEvent.click(await canvas.findByShadowTestId('numpad-button-confirm'));
 
       await waitFor(async () => {        

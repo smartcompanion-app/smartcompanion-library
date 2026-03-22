@@ -21,28 +21,28 @@ export class PagePin {
     this.facade.getMenuService().disable();
   }
 
-  isActivePinPosition(position: number): boolean {
+  private isActivePinPosition(position: number): boolean {
     return this.pin.length == (position - 1);
   }
 
-  hasPinPosition(position: number): boolean {
+  private hasPinPosition(position: number): boolean {
     return this.pin.length >= position;
   }
 
-  getPinPosition(position: number): string {
+  private getPinPosition(position: number): string {
     if (this.hasPinPosition(position)) {
       return this.pin[position - 1];
     }
     return "";
   }
 
-  delete() {
+  private delete() {
     if (this.pin.length > 0) {
       this.pin = this.pin.substring(0, this.pin.length - 1);
     }
   }
 
-  add(position: string) {
+  private add(position: string) {
     if (this.pin.length < 4) {
       this.error = false;
       this.pin = `${this.pin}${position}`;

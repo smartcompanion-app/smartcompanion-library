@@ -7,7 +7,7 @@ import { Component, Prop, Element, Host, h, State } from "@stencil/core";
 })
 export class Marquee {
 
-  originalText: string = "";
+  private originalText: string = "";
 
   @Prop({ mutable: true, reflect: true }) active: boolean = false;
 

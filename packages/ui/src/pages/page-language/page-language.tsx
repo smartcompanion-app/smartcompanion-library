@@ -14,7 +14,7 @@ export class PageLanguage {
     this.facade.getMenuService().disable();
   }
 
-  changeLanguage(languageCode: string) {
+  private changeLanguage(languageCode: string) {
     this.facade.changeLanguage(languageCode);
     this.facade.getRoutingService().pushReplaceCurrent('/');
   }

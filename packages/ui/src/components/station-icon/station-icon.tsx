@@ -24,14 +24,14 @@ export class StationIcon {
    */
   @Prop() size: 'small' | 'normal' | 'large' = 'normal';
 
-  calculatePercent() {
+  private calculatePercent() {
     if (this.collectedPercent >= this.upperLimitPercent) {
       return 100;
     }
     return Math.min(this.upperLimitPercent, Math.max(0, this.collectedPercent));
   }
 
-  calculateAngle(): string {
+  private calculateAngle(): string {
     const percent = this.calculatePercent();
     return `${percent * 3.6}deg`;
   }

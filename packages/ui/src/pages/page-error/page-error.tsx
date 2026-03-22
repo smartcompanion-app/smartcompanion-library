@@ -14,7 +14,7 @@ export class PageError {
     this.facade.getMenuService().disable();
   }
 
-  tryAgain() {
+  private tryAgain() {
     this
       .facade
       .getRoutingService()

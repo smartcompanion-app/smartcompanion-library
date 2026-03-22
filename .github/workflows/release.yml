@@ -48,7 +48,7 @@ jobs:
           for pkg in packages/*; do
             if [ -f "$pkg/package.json" ]; then
               cd "$pkg"
-              npm publish --access public
+              npm publish --access public --provenance
               cd -
             fi
           done

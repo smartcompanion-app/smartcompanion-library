@@ -1,6 +1,10 @@
 {
   "name": "smartcompanion",
   "author": "SmartCompanion Team <hello@smartcompanion.app> (https://smartcompanion.app) ",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smartcompanion-app/smartcompanion-library.git"
+  },
   "workspaces": [
     "packages/*",
     "apps/*"

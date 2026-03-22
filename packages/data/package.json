@@ -2,6 +2,11 @@
   "name": "@smartcompanion/data",
   "version": "0.6.2",
   "author": "SmartCompanion Team <hello@smartcompanion.app> (https://smartcompanion.app) ",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smartcompanion-app/smartcompanion-library.git",
+    "directory": "packages/data"
+  },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [

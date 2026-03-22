@@ -1,6 +1,9 @@
+import { fileURLToPath } from 'node:url';
 import tseslint from 'typescript-eslint';
 import prettierConfig from 'eslint-config-prettier';
 import stencil from '@stencil/eslint-plugin';
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export default tseslint.config(
   { ignores: ['**/dist/**', '**/node_modules/**', '**/loader/**'] },
@@ -20,6 +23,7 @@ export default tseslint.config(
       parserOptions: {
         ...stencil.configs.flat.recommended.languageOptions?.parserOptions,
         project: './packages/ui/tsconfig.json',
+        tsconfigRootDir: __dirname,
       },
     },
   },

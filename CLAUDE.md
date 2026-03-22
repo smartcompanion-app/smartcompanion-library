@@ -16,6 +16,7 @@ TypeScript monorepo with npm workspaces containing reusable packages for SmartCo
 
 - Main branch: `main`
 - Releases triggered by tags matching `v[0-9]+.[0-9]+.[0-9]+`
+- Follows [Conventional Commits](https://www.conventionalcommits.org/) (e.g. `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`)
 
 ## Commands
 

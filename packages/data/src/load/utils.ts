@@ -10,7 +10,7 @@ export const autoSelectLanguage = (languageService: LanguageService) => {
 
   const languages = languageService.getLanguages();
 
-  const search = typeof window !== 'undefined' ? window.location.search : '';
+  const search = globalThis?.location?.search ?? '';
   const params = new URLSearchParams(search);
   const languageParam = params.get('language');
   if (languageParam && languages.some((l) => l.language === languageParam)) {

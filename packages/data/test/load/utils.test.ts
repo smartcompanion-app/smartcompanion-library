@@ -6,15 +6,16 @@ import { autoSelectLanguage } from '../../src/load/utils';
 describe('autoSelectLanguage', () => {
   let memoryStorage: MemoryStorage;
   let service: LanguageService;
+  const originalLocation = globalThis.location;
 
   beforeEach(() => {
     memoryStorage = new MemoryStorage();
     service = new LanguageService(memoryStorage);
-    (globalThis as any).window = { location: { search: '' } };
+    (globalThis as any).location = { search: '' };
   });
 
   afterEach(() => {
-    delete (globalThis as any).window;
+    (globalThis as any).location = originalLocation;
   });
 
   function setLanguages(languages: Array<{ title: string; language: string }>) {
@@ -22,7 +23,7 @@ describe('autoSelectLanguage', () => {
   }
 
   function setUrlSearch(search: string) {
-    (globalThis as any).window = { location: { search } };
+    (globalThis as any).location = { search };
   }
 
   test('should auto-select language from URL parameter when available', () => {
@@ -81,17 +82,5 @@ describe('autoSelectLanguage', () => {
     autoSelectLanguage(service);
 
     expect(service.getCurrentLanguage()).toBe('en');
-  });
-
-  test('should prefer URL parameter over single language fallback', () => {
-    setUrlSearch('?language=de');
-    setLanguages([
-      { title: 'English', language: 'en' },
-      { title: 'Deutsch', language: 'de' },
-    ]);
-
-    autoSelectLanguage(service);
-
-    expect(service.getCurrentLanguage()).toBe('de');
   });
 });

@@ -1,5 +1,6 @@
 import { Storage } from '../../storage';
 import { Updater } from '../../update';
+import { Station } from './station';
 
 export class StationUpdater implements Updater {
   protected storage: Storage;
@@ -8,11 +9,11 @@ export class StationUpdater implements Updater {
     this.storage = storage;
   }
 
-  async update(data: any) {
-    const languageFilteredStations: any = {};
+  async update(data: unknown) {
+    const languageFilteredStations: Record<string, Station[]> = {};
 
     if (Array.isArray(data)) {
-      for (const station of data) {
+      for (const station of data as Station[]) {
         if (!languageFilteredStations[station.language]) {
           languageFilteredStations[station.language] = [];
         }

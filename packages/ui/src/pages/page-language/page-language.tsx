@@ -8,6 +8,7 @@ import { ServiceFacade } from '@smartcompanion/services';
 })
 export class PageLanguage {
 
+  /** The service facade instance */
   @Prop() facade: ServiceFacade;
 
   async componentDidLoad() {
@@ -19,6 +20,11 @@ export class PageLanguage {
     this.facade.getRoutingService().pushReplaceCurrent('/');
   }
 
+  private handleChangeLanguage = (e: Event) => {
+    const languageCode = (e.currentTarget as HTMLElement).dataset.language;
+    this.changeLanguage(languageCode);
+  };
+
   render() {
     const languages = this.facade.getLanguages();
 
@@ -27,8 +33,8 @@ export class PageLanguage {
         <ion-toolbar></ion-toolbar>
       </ion-header>,
       <ion-content>
-        { languages.map((language => 
-          <ion-button onClick={() => this.changeLanguage(language.language)} expand="block" size="large">
+        { languages.map((language =>
+          <ion-button data-language={language.language} onClick={this.handleChangeLanguage} expand="block" size="large">
             { language.title }
           </ion-button>
         )) }

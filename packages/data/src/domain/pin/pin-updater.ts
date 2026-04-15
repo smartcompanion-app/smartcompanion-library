@@ -8,7 +8,7 @@ export class PinUpdater implements Updater {
     this.storage = storage;
   }
 
-  async update(data: any) {
+  async update(data: unknown) {
     if (Array.isArray(data)) {
       this.storage.set('pins', data);
     }

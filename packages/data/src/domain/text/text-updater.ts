@@ -8,9 +8,9 @@ export class TextUpdater implements Updater {
     this.storage = storage;
   }
 
-  async update(data: any) {
+  async update(data: unknown) {
     if (Array.isArray(data)) {
-      for (const text of data) {
+      for (const text of data as Array<{ language: string; key: string; value: string }>) {
         this.storage.set(`texts-${text.language}-${text.key}`, text.value);
       }
     }

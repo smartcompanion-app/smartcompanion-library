@@ -28,17 +28,26 @@ export class DataUpdater implements Updater {
     this.updaters[name] = updater;
   }
 
-  requiresUpdate(data: any): boolean {
-    return data && (!this.storage.has('checksum') || this.storage.get('checksum') != data['checksum']);
+  requiresUpdate(data: Record<string, unknown>): boolean {
+    return !!data && (!this.storage.has('checksum') || this.storage.get('checksum') != data['checksum']);
   }
 
-  async update(data: any) {
+  private isPlainObject(data: unknown): data is Record<string, unknown> {
+    return Object.prototype.toString.call(data) === '[object Object]';
+  }
+
+  async update(data: unknown) {
+    if (!this.isPlainObject(data)) {
+      return;
+    }
     if (this.requiresUpdate(data)) {
+      const updates: Promise<void>[] = [];
       for (const updaterKey in data) {
         if (updaterKey in this.updaters) {
-          this.updaters[updaterKey].update(data[updaterKey]);
+          updates.push(this.updaters[updaterKey].update(data[updaterKey]));
         }
       }
+      await Promise.all(updates);
       this.storage.set('checksum', data['checksum']);
     }
   }

@@ -17,6 +17,7 @@ export namespace Components {
     }
     interface ScMarquee {
         /**
+          * Whether the marquee animation is active
           * @default false
          */
         "active": boolean;
@@ -29,12 +30,21 @@ export namespace Components {
         "full": boolean;
     }
     interface ScPageError {
+        /**
+          * The service facade instance
+         */
         "facade": ServiceFacade;
     }
     interface ScPageLanguage {
+        /**
+          * The service facade instance
+         */
         "facade": ServiceFacade;
     }
     interface ScPageLoading {
+        /**
+          * The service facade instance
+         */
         "facade": ServiceFacade;
         /**
           * The default or home route, when loading is successfully completed
@@ -72,6 +82,9 @@ export namespace Components {
           * @default false
          */
         "enableBackButton": boolean;
+        /**
+          * The service facade instance
+         */
         "facade": ServiceFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -87,6 +100,9 @@ export namespace Components {
           * Map bounds for the leaflet map in top left Lat/Lng, bottom right Lat/Lng
          */
         "mapBounds": Array<number>;
+        /**
+          * Map tiles URL for the leaflet map, e.g., 'assets/map/{z}/{y}/{x}.jpeg'
+         */
         "tileUrlTemplate": string;
         /**
           * If tour id is given, stations only for the tour are shown. Tour id 'default' is a placeholder for the default tour id.
@@ -120,6 +136,9 @@ export namespace Components {
         "tourId": string;
     }
     interface ScPagePin {
+        /**
+          * The service facade instance
+         */
         "facade": ServiceFacade;
         /**
           * The number of hours the pin is valid for.
@@ -128,6 +147,9 @@ export namespace Components {
         "validHours": number;
     }
     interface ScPageSelection {
+        /**
+          * The service facade instance
+         */
         "facade": ServiceFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -176,6 +198,9 @@ export namespace Components {
         "tourId": string;
     }
     interface ScPageStationImageList {
+        /**
+          * The service facade instance
+         */
         "facade": ServiceFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -189,6 +214,9 @@ export namespace Components {
         "tourId": string;
     }
     interface ScPageStationList {
+        /**
+          * The service facade instance
+         */
         "facade": ServiceFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -223,6 +251,9 @@ export namespace Components {
         "tourId": string;
     }
     interface ScPageTabbedStationList {
+        /**
+          * The service facade instance
+         */
         "facade": ServiceFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -236,6 +267,9 @@ export namespace Components {
         "tourId": string;
     }
     interface ScPageTourList {
+        /**
+          * The service facade instance
+         */
         "facade": ServiceFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -245,18 +279,22 @@ export namespace Components {
     }
     interface ScPlayerControls {
         /**
+          * Whether the controls are disabled
           * @default false
          */
         "disabled": boolean;
         /**
+          * Total duration of the audio in seconds
           * @default 0
          */
         "duration": number;
         /**
+          * Whether audio is currently playing
           * @default false
          */
         "playing": boolean;
         /**
+          * Current playback position in seconds
           * @default 0
          */
         "position": number;
@@ -278,6 +316,7 @@ export namespace Components {
          */
         "size": 'small' | 'normal' | 'large';
         /**
+          * Upper limit percentage threshold for showing the collected icon
           * @default 97
          */
         "upperLimitPercent": number;
@@ -460,6 +499,7 @@ declare namespace LocalJSX {
     }
     interface ScMarquee {
         /**
+          * Whether the marquee animation is active
           * @default false
          */
         "active"?: boolean;
@@ -470,17 +510,35 @@ declare namespace LocalJSX {
           * @default false
          */
         "full"?: boolean;
+        /**
+          * Emitted when the confirm button is pressed
+         */
         "onConfirm"?: (event: ScNumpadCustomEvent<void>) => void;
+        /**
+          * Emitted when the delete button is pressed
+         */
         "onDelete"?: (event: ScNumpadCustomEvent<void>) => void;
+        /**
+          * Emitted when a number button is pressed
+         */
         "onNumber"?: (event: ScNumpadCustomEvent<number>) => void;
     }
     interface ScPageError {
+        /**
+          * The service facade instance
+         */
         "facade"?: ServiceFacade;
     }
     interface ScPageLanguage {
+        /**
+          * The service facade instance
+         */
         "facade"?: ServiceFacade;
     }
     interface ScPageLoading {
+        /**
+          * The service facade instance
+         */
         "facade"?: ServiceFacade;
         /**
           * The default or home route, when loading is successfully completed
@@ -518,6 +576,9 @@ declare namespace LocalJSX {
           * @default false
          */
         "enableBackButton"?: boolean;
+        /**
+          * The service facade instance
+         */
         "facade"?: ServiceFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -533,6 +594,9 @@ declare namespace LocalJSX {
           * Map bounds for the leaflet map in top left Lat/Lng, bottom right Lat/Lng
          */
         "mapBounds"?: Array<number>;
+        /**
+          * Map tiles URL for the leaflet map, e.g., 'assets/map/{z}/{y}/{x}.jpeg'
+         */
         "tileUrlTemplate"?: string;
         /**
           * If tour id is given, stations only for the tour are shown. Tour id 'default' is a placeholder for the default tour id.
@@ -566,6 +630,9 @@ declare namespace LocalJSX {
         "tourId"?: string;
     }
     interface ScPagePin {
+        /**
+          * The service facade instance
+         */
         "facade"?: ServiceFacade;
         /**
           * The number of hours the pin is valid for.
@@ -574,6 +641,9 @@ declare namespace LocalJSX {
         "validHours"?: number;
     }
     interface ScPageSelection {
+        /**
+          * The service facade instance
+         */
         "facade"?: ServiceFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -622,6 +692,9 @@ declare namespace LocalJSX {
         "tourId"?: string;
     }
     interface ScPageStationImageList {
+        /**
+          * The service facade instance
+         */
         "facade"?: ServiceFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -635,6 +708,9 @@ declare namespace LocalJSX {
         "tourId"?: string;
     }
     interface ScPageStationList {
+        /**
+          * The service facade instance
+         */
         "facade"?: ServiceFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -669,6 +745,9 @@ declare namespace LocalJSX {
         "tourId"?: string;
     }
     interface ScPageTabbedStationList {
+        /**
+          * The service facade instance
+         */
         "facade"?: ServiceFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -682,6 +761,9 @@ declare namespace LocalJSX {
         "tourId"?: string;
     }
     interface ScPageTourList {
+        /**
+          * The service facade instance
+         */
         "facade"?: ServiceFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -691,24 +773,46 @@ declare namespace LocalJSX {
     }
     interface ScPlayerControls {
         /**
+          * Whether the controls are disabled
           * @default false
          */
         "disabled"?: boolean;
         /**
+          * Total duration of the audio in seconds
           * @default 0
          */
         "duration"?: number;
+        /**
+          * Emitted when the user finishes dragging the position slider
+         */
         "onEndPositionChange"?: (event: ScPlayerControlsCustomEvent<number>) => void;
+        /**
+          * Emitted when the next button is pressed
+         */
         "onNext"?: (event: ScPlayerControlsCustomEvent<void>) => void;
+        /**
+          * Emitted when the play/pause button is pressed
+         */
         "onPlayPause"?: (event: ScPlayerControlsCustomEvent<boolean>) => void;
+        /**
+          * Emitted when the position slider value changes
+         */
         "onPositionChange"?: (event: ScPlayerControlsCustomEvent<number>) => void;
+        /**
+          * Emitted when the previous button is pressed
+         */
         "onPrev"?: (event: ScPlayerControlsCustomEvent<void>) => void;
+        /**
+          * Emitted when the user starts dragging the position slider
+         */
         "onStartPositionChange"?: (event: ScPlayerControlsCustomEvent<number>) => void;
         /**
+          * Whether audio is currently playing
           * @default false
          */
         "playing"?: boolean;
         /**
+          * Current playback position in seconds
           * @default 0
          */
         "position"?: number;
@@ -730,6 +834,7 @@ declare namespace LocalJSX {
          */
         "size"?: 'small' | 'normal' | 'large';
         /**
+          * Upper limit percentage threshold for showing the collected icon
           * @default 97
          */
         "upperLimitPercent"?: number;

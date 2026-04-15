@@ -24,12 +24,12 @@ export class ServiceFacade extends ServiceLocator {
     this.register(AudioPlayerService, (_: ServiceLocator) => new CollectibleAudioPlayerService(subtitle));
   }
 
-  registerOnlineLoadService(downloadData: () => Promise<any>): void {
+  registerOnlineLoadService(downloadData: () => Promise<unknown>): void {
     this.register(LoadService, (serviceLocator: ServiceLocator) => new OnlineLoadService(downloadData, new DataUpdater(serviceLocator.getStorage()), serviceLocator));
   }
 
   registerOfflineLoadService(
-    downloadData: () => Promise<any>,
+    downloadData: () => Promise<unknown>,
     downloadFile: (url: string) => Promise<string>,
     remove: (filename: string) => Promise<void>,
     save: (filename: string, data: string) => Promise<void>,
@@ -92,7 +92,7 @@ export class ServiceFacade extends ServiceLocator {
    */
   getPendingRoute(): string | null {
     if (this.storage.has('pending-route')) {
-      const route = this.storage.get('pending-route');
+      const route = this.storage.get('pending-route') as string;
       this.storage.unset('pending-route');
       return route;
     }

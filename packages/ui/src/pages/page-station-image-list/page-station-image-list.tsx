@@ -21,6 +21,7 @@ export class PageStationImageList {
    */
   @Prop() tourId: string = null;
 
+  /** The service facade instance */
   @Prop() facade: ServiceFacade;
 
   async componentWillLoad() {
@@ -32,13 +33,18 @@ export class PageStationImageList {
     openStation(this.facade, stationId, this.tourId);
   }
 
+  private handleOpenStation = (e: Event) => {
+    const stationId = (e.currentTarget as HTMLElement).dataset.stationId;
+    this.openStation(stationId);
+  };
+
   render() {
     return (
       <Host>
         <ion-header>
           <ion-toolbar color={this.headerBackgroundColor}>
             <ion-buttons slot="start">
-              {getMenuButton(!!this.tourId, "/tours")}
+              {getMenuButton(this.tourId !== null, "/tours")}
             </ion-buttons>
             <ion-title>{this.facade.__("station-list")}</ion-title>
           </ion-toolbar>
@@ -61,7 +67,7 @@ export class PageStationImageList {
                   src={(station.images[0] as Asset).internalWebUrl} />
                 <ion-card-content>
                   <p class="station-image-list-description">{station.description}</p>
-                  <ion-button onClick={() => this.openStation(station.id)}>{this.facade.__('view')}</ion-button>
+                  <ion-button data-station-id={station.id} onClick={this.handleOpenStation}>{this.facade.__('view')}</ion-button>
                 </ion-card-content>
               </ion-card>
             ))}

@@ -34,6 +34,7 @@ export class PageLoading {
    */
   @Prop() homeRoute: string = "/stations/default";
 
+  /** The service facade instance */
   @Prop() facade: ServiceFacade;
 
   async componentWillLoad() {

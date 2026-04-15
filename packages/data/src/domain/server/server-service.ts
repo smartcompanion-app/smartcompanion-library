@@ -13,7 +13,7 @@ export class ServerService {
 
   getRandomServer(): string {
     if (this.hasServers()) {
-      const servers: string[] = this.storage.get('servers');
+      const servers = this.storage.get('servers') as string[];
       return servers[Math.floor(Math.random() * servers.length)];
     }
     throw new Error('There are no servers defined');

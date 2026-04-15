@@ -1,6 +1,6 @@
 import { expect, test, describe, beforeEach } from '@jest/globals';
 import { MemoryStorage, Storage } from '../../../src/storage';
-import { StationService, AssetService, Asset } from '../../../src/domain';
+import { StationService, AssetService, Asset, Station } from '../../../src/domain';
 import { setStationToStorage } from '../../fixtures';
 
 describe('test station service', () => {
@@ -65,12 +65,12 @@ describe('test station service', () => {
 
     // check single stations
     expect(updatedStation?.collectedPercentage).toEqual(0.456);
-    expect(memoryStorage.get(`station-xy-${initialStation.id}`).collectedPercentage).toEqual(0.456);
+    expect((memoryStorage.get(`station-xy-${initialStation.id}`) as Station).collectedPercentage).toEqual(0.456);
 
     // check all stations
-    const storedStations = memoryStorage.get(`stations-xy`);
-    expect(storedStations.filter((station: any) => station.id == initialStation.id).length).toEqual(1);
-    expect(storedStations.filter((station: any) => station.id == initialStation.id)[0].collectedPercentage).toEqual(0.456);
+    const storedStations = memoryStorage.get(`stations-xy`) as Station[];
+    expect(storedStations.filter((station: Station) => station.id == initialStation.id).length).toEqual(1);
+    expect(storedStations.filter((station: Station) => station.id == initialStation.id)[0].collectedPercentage).toEqual(0.456);
   });
 
   test('should not throw for non existing station, when storing collected percentage', async () => {
@@ -85,9 +85,9 @@ describe('test station service', () => {
     setStationToStorage(memoryStorage, 'xy', 1, true);
     setStationToStorage(memoryStorage, 'xy', 1, true);
 
-    expect(memoryStorage.get(`stations-xy`).filter((station: any) => station.collectedPercentage > 0 && station.collectedPercentage < 1).length).toEqual(3);
+    expect((memoryStorage.get(`stations-xy`) as Station[]).filter((station: Station) => station.collectedPercentage! > 0 && station.collectedPercentage! < 1).length).toEqual(3);
     await service.clearCollectedPercentage('xy');
-    expect(memoryStorage.get(`stations-xy`).filter((station: any) => station.collectedPercentage == 0).length).toEqual(3);
+    expect((memoryStorage.get(`stations-xy`) as Station[]).filter((station: Station) => station.collectedPercentage == 0).length).toEqual(3);
   });
 
   test('should not throw for non existing language, when clearing collected percentage', async () => {

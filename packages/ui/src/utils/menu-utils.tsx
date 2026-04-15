@@ -5,7 +5,7 @@ export function getMenuButton(
   defaultBackButtonHref: string = null,
   additionalProps = {}
 ) {
-  if (enableBackButton && defaultBackButtonHref) {
+  if (enableBackButton && defaultBackButtonHref !== null && defaultBackButtonHref !== undefined && defaultBackButtonHref !== '') {
     return <ion-back-button text="" default-href={defaultBackButtonHref} {...additionalProps}></ion-back-button>;
   } else if (enableBackButton) {
     return <ion-back-button text="" {...additionalProps}></ion-back-button>;

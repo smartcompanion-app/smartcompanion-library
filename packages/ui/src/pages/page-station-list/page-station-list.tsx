@@ -21,7 +21,8 @@ export class PageStationList {
    */
   @Prop() tourId: string = null;
 
-  @Prop() facade: ServiceFacade;  
+  /** The service facade instance */
+  @Prop() facade: ServiceFacade;
 
   async componentWillLoad() {
     await this.facade.getMenuService().enable();
@@ -32,12 +33,17 @@ export class PageStationList {
     openStation(this.facade, stationId, this.tourId);
   }
 
+  private handleOpenStation = (e: Event) => {
+    const stationId = (e.currentTarget as HTMLElement).dataset.stationId;
+    this.openStation(stationId);
+  };
+
   render() {
     return [
       <ion-header>
         <ion-toolbar color={this.headerBackgroundColor}>
           <ion-buttons slot="start">
-            {getMenuButton(!!this.tourId, "/tours")}
+            {getMenuButton(this.tourId !== null, "/tours")}
           </ion-buttons>
           <ion-title>{this.facade.__("station-list")}</ion-title>
         </ion-toolbar>
@@ -45,7 +51,7 @@ export class PageStationList {
       <ion-content>
         <ion-list lines="full" class="station-list">
           {this.stations.map(station =>
-            <ion-item button onClick={() => this.openStation(station.id)}>
+            <ion-item button data-station-id={station.id} onClick={this.handleOpenStation}>
               <ion-avatar slot="start">
                 <sc-station-icon>{station.number}</sc-station-icon>
               </ion-avatar>

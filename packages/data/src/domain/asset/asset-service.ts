@@ -27,7 +27,7 @@ export class AssetService {
 
   // with internalUrl resolved
   async getAsset(assetId: string): Promise<Asset> {
-    const asset: Asset = this.storage.get(`asset-${assetId}`);
+    const asset = this.storage.get(`asset-${assetId}`) as Asset;
     await this.resolveInternalUrls(asset);
     return asset;
   }
@@ -45,7 +45,7 @@ export class AssetService {
 
   // with internalUrl unresolved
   getUnresolvedAssets(filter: { language?: string; excludeNoLanguage?: boolean } = {}): Asset[] {
-    const assets: Asset[] = this.storage.get(`assets`);
+    const assets = this.storage.get(`assets`) as Asset[];
     const result: Asset[] = [];
 
     for (const asset of assets) {

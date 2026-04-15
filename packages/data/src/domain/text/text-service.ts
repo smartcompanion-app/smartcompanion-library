@@ -2,7 +2,7 @@ import { Storage } from '../../storage';
 
 export class TextService {
   protected storage: Storage;
-  protected cache: any;
+  protected cache: Record<string, string>;
 
   constructor(storage: Storage) {
     this.storage = storage;
@@ -10,7 +10,7 @@ export class TextService {
   }
 
   getCurrentLanguage() {
-    const language = this.storage.get('language');
+    const language = this.storage.get('language') as string | null;
 
     if (!language) {
       return 'en'; // default set en for texts
@@ -46,7 +46,7 @@ export class TextService {
     const allKeys = this.getAllKeys(key, storageKeyPrefix);
     for (const k of allKeys) {
       if (this.storage.has(k)) {
-        this.cache[storageKey] = this.storage.get(k);
+        this.cache[storageKey] = this.storage.get(k) as string;
         return this.cache[storageKey];
       }
     }

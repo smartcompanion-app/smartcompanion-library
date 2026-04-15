@@ -28,7 +28,8 @@ export class PageSelection {
    */
   @Prop() maxLength = 2;
 
-  @Prop() facade: ServiceFacade;  
+  /** The service facade instance */
+  @Prop() facade: ServiceFacade;
 
   async componentWillLoad() {
     await this.facade.getMenuService().enable();
@@ -43,20 +44,24 @@ export class PageSelection {
     }
   }
 
-  private clearLastInput() {
+  private clearLastInput = () => {
     if (this.input.length > 0) {
       this.input = this.input.slice(0, -1);
     }
-  }
+  };
 
-  private async checkStation() {
+  private handleNumber = (e: CustomEvent<number>) => {
+    this.addToInput(`${e.detail}`);
+  };
+
+  private checkStation = async () => {
     const station = this.stations.find(station => station.number == this.input);
     this.input = "";
 
-    if (station) {
+    if (station !== undefined) {
       this.openStation(station.id);
     }
-  }  
+  };
 
   private openStation(stationId: string) {
     openStation(this.facade, stationId, this.tourId);
@@ -79,9 +84,9 @@ export class PageSelection {
           </div>
           <sc-numpad
             full
-            onConfirm={() => this.checkStation()}
-            onDelete={() => this.clearLastInput()}
-            onNumber={(e) => this.addToInput(`${e.detail}`)}
+            onConfirm={this.checkStation}
+            onDelete={this.clearLastInput}
+            onNumber={this.handleNumber}
           />
         </div>
       </ion-content>

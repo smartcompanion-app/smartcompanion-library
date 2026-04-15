@@ -6,8 +6,8 @@ import { Storage } from './storage';
  * ServiceLocator is a central registry for services in the SmartCompanion app.
  */
 export class ServiceLocator {
-  protected servicesFactories = new Map<new (...args: any[]) => unknown, (serviceLocator: ServiceLocator) => unknown>();
-  protected services = new Map<new (...args: any[]) => unknown, unknown>();
+  protected servicesFactories = new Map<new (...args: unknown[]) => unknown, (serviceLocator: ServiceLocator) => unknown>();
+  protected services = new Map<new (...args: unknown[]) => unknown, unknown>();
   protected storage: Storage;
 
   constructor(storage: Storage) {
@@ -28,11 +28,11 @@ export class ServiceLocator {
     this.register(TourService, (serviceLocator: ServiceLocator) => new TourService(serviceLocator.storage, serviceLocator.getAssetService(), serviceLocator.getStationService()));
   }
 
-  register<T>(type: new (...args: any[]) => T, serviceFactory: (serviceLocator: ServiceLocator) => T) {
+  register<T>(type: new (...args: unknown[]) => T, serviceFactory: (serviceLocator: ServiceLocator) => T) {
     this.servicesFactories.set(type, serviceFactory);
   }
 
-  get<T>(type: new (...args: any[]) => T): T {
+  get<T>(type: new (...args: unknown[]) => T): T {
     if (!this.services.has(type)) {
       if (!this.servicesFactories.has(type)) {
         throw new Error(`Service of type ${type.name} is not registered.`);

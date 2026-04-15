@@ -8,10 +8,10 @@ import { autoSelectLanguage } from './utils';
  * Assets like audio files and images are downloaded for offline use.
  */
 export class OfflineLoadService {
-  protected downloadData: () => Promise<any>;
-  protected downloadFile: (url: string) => Promise<any>;
+  protected downloadData: () => Promise<unknown>;
+  protected downloadFile: (url: string) => Promise<string>;
   protected remove: (filename: string) => Promise<void>;
-  protected save: (filename: string, data: any) => Promise<void>;
+  protected save: (filename: string, data: string) => Promise<void>;
   protected list: () => Promise<string[]>;
   protected progress: ((progress: number) => void) | undefined;
   protected dataUpdater: Updater;
@@ -19,7 +19,7 @@ export class OfflineLoadService {
   protected serviceLocator: ServiceLocator;
 
   constructor(
-    downloadData: () => Promise<any>,
+    downloadData: () => Promise<unknown>,
     downloadFile: (url: string) => Promise<string>,
     remove: (filename: string) => Promise<void>,
     save: (filename: string, data: string) => Promise<void>,

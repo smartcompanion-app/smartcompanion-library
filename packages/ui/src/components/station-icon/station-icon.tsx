@@ -7,6 +7,7 @@ import { Component, Prop, Host, h } from "@stencil/core";
 })
 export class StationIcon {
 
+  /** Upper limit percentage threshold for showing the collected icon */
   @Prop() upperLimitPercent: number = 97;
 
   /**

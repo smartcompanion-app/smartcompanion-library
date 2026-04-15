@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-22T09:31:55",
+  "timestamp": "2026-04-15T19:22:11",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.43.3",
@@ -79,7 +79,7 @@
           "mutable": true,
           "attr": "active",
           "reflectToAttr": true,
-          "docs": "",
+          "docs": "Whether the marquee animation is active",
           "docsTags": [
             {
               "name": "default",
@@ -166,7 +166,7 @@
           },
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "Emitted when the confirm button is pressed",
           "docsTags": []
         },
         {
@@ -180,7 +180,7 @@
           },
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "Emitted when the delete button is pressed",
           "docsTags": []
         },
         {
@@ -194,7 +194,7 @@
           },
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "Emitted when a number button is pressed",
           "docsTags": []
         }
       ],
@@ -242,7 +242,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The service facade instance",
           "docsTags": [],
           "values": [
             {
@@ -291,7 +291,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The service facade instance",
           "docsTags": [],
           "values": [
             {
@@ -340,7 +340,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The service facade instance",
           "docsTags": [],
           "values": [
             {
@@ -601,7 +601,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The service facade instance",
           "docsTags": [],
           "values": [
             {
@@ -714,7 +714,7 @@
           "mutable": false,
           "attr": "tile-url-template",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Map tiles URL for the leaflet map, e.g., 'assets/map/{z}/{y}/{x}.jpeg'",
           "docsTags": [],
           "values": [
             {
@@ -963,7 +963,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The service facade instance",
           "docsTags": [],
           "values": [
             {
@@ -1047,7 +1047,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The service facade instance",
           "docsTags": [],
           "values": [
             {
@@ -1390,7 +1390,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The service facade instance",
           "docsTags": [],
           "values": [
             {
@@ -1513,7 +1513,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The service facade instance",
           "docsTags": [],
           "values": [
             {
@@ -1780,7 +1780,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The service facade instance",
           "docsTags": [],
           "values": [
             {
@@ -1906,7 +1906,7 @@
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "The service facade instance",
           "docsTags": [],
           "values": [
             {
@@ -1983,7 +1983,7 @@
           "mutable": false,
           "attr": "disabled",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Whether the controls are disabled",
           "docsTags": [
             {
               "name": "default",
@@ -2012,7 +2012,7 @@
           "mutable": false,
           "attr": "duration",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Total duration of the audio in seconds",
           "docsTags": [
             {
               "name": "default",
@@ -2041,7 +2041,7 @@
           "mutable": false,
           "attr": "playing",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Whether audio is currently playing",
           "docsTags": [
             {
               "name": "default",
@@ -2070,7 +2070,7 @@
           "mutable": false,
           "attr": "position",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Current playback position in seconds",
           "docsTags": [
             {
               "name": "default",
@@ -2102,7 +2102,7 @@
           },
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "Emitted when the user finishes dragging the position slider",
           "docsTags": []
         },
         {
@@ -2116,7 +2116,7 @@
           },
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "Emitted when the next button is pressed",
           "docsTags": []
         },
         {
@@ -2130,7 +2130,7 @@
           },
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "Emitted when the play/pause button is pressed",
           "docsTags": []
         },
         {
@@ -2144,7 +2144,7 @@
           },
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "Emitted when the position slider value changes",
           "docsTags": []
         },
         {
@@ -2158,7 +2158,7 @@
           },
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "Emitted when the previous button is pressed",
           "docsTags": []
         },
         {
@@ -2172,7 +2172,7 @@
           },
           "cancelable": true,
           "composed": true,
-          "docs": "",
+          "docs": "Emitted when the user starts dragging the position slider",
           "docsTags": []
         }
       ],
@@ -2314,7 +2314,7 @@
           "mutable": false,
           "attr": "upper-limit-percent",
           "reflectToAttr": false,
-          "docs": "",
+          "docs": "Upper limit percentage threshold for showing the collected icon",
           "docsTags": [
             {
               "name": "default",

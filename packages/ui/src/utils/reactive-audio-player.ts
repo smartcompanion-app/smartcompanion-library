@@ -105,35 +105,35 @@ export class ReactiveAudioPlayer {
 
   updateEarpiece(earpiece: boolean) {
     this.earpiece = earpiece;
-    if (this.earpieceListener) {
+    if (this.earpieceListener !== null) {
       this.earpieceListener(earpiece);
     }
   }
 
   updatePlaying(playing: boolean) {
     this.playing = playing;
-    if (this.playingListener) {
+    if (this.playingListener !== null) {
       this.playingListener(playing);
     }
   }
 
   updatePosition(position: number) {
     this.position = position;
-    if (this.positionListener) {
+    if (this.positionListener !== null) {
       this.positionListener(position);
     }
   }
 
   updateDuration(duration: number) {
     this.duration = duration;
-    if (this.durationListener) {
+    if (this.durationListener !== null) {
       this.durationListener(duration);
     }
   }
 
   updateActiveIndex(activeIndex: number) {
     this.activeIndex = activeIndex;
-    if (this.activeIndexListener) {
+    if (this.activeIndexListener !== null) {
       this.activeIndexListener(activeIndex);
     }
   }
@@ -272,19 +272,19 @@ export class ReactiveAudioPlayer {
   }
 
   async onSkip(update: AudioPlayerUpdate) {
-    if (this.skipListener) {
+    if (this.skipListener !== null) {
       await this.skipListener(update);
     }
   }
   
   async onCompleted(update: AudioPlayerUpdate) {
-    if (this.completedListener) {
+    if (this.completedListener !== null) {
       await this.completedListener(update);
     }
   }
 
   async onCollected(update: AudioPlayerUpdate, station: Station) {
-    if (this.collectedListener) {
+    if (this.collectedListener !== null) {
       await this.collectedListener(update, station);
     }
   }

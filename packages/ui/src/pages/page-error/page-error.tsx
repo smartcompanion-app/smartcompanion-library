@@ -8,18 +8,19 @@ import { ServiceFacade } from '@smartcompanion/services';
 })
 export class PageError {
 
+  /** The service facade instance */
   @Prop() facade: ServiceFacade;
 
   async componentDidLoad() {
     this.facade.getMenuService().disable();
   }
 
-  private tryAgain() {
+  private tryAgain = () => {
     this
       .facade
       .getRoutingService()
       .pushReplaceCurrent('/');
-  }
+  };
 
   render() {
     return (
@@ -34,7 +35,7 @@ export class PageError {
             </ion-text>
           </div>
           <div>
-            <ion-button onClick={() => this.tryAgain()}>
+            <ion-button onClick={this.tryAgain}>
               <ion-icon slot="start" name="refresh-circle"></ion-icon>
               {this.facade.__('try-again')}
             </ion-button>

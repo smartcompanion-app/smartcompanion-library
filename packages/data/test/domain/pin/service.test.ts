@@ -35,7 +35,7 @@ describe('test text service', () => {
 
   test('should validate correct pin for 2 hour', () => {
     expect(service.validatePin('1234', 2)).toBeTruthy();
-    const pinValidation = parseInt(memoryStorage.get('pin-validation'));
+    const pinValidation = parseInt(memoryStorage.get('pin-validation') as string);
     expect(pinValidation).toEqual(Math.trunc(Date.now() / 1000) + (2 * 60 * 60));
   });
 

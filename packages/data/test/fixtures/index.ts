@@ -120,19 +120,19 @@ export function setStationToStorage(
 }
 
 function appendAssetInStorage(asset: Asset, storage: Storage) {
-  let assets: Asset[] = storage.get('assets') || [];
+  let assets = (storage.get('assets') as Asset[]) || [];
   assets.push(asset);
   storage.set('assets', assets);
 }
 
 function appendStationInStorage(station: Station, storage: Storage) {
-  let stations: Station[] = storage.get(`stations-${station.language}`) || [];
+  let stations = (storage.get(`stations-${station.language}`) as Station[]) || [];
   stations.push(station);
   storage.set(`stations-${station.language}`, stations);
 }
 
 function appendTourInStorage(tour: Tour, storage: Storage) {
-  let tours: Tour[] = storage.get(`tours-${tour.language}`) || [];
+  let tours = (storage.get(`tours-${tour.language}`) as Tour[]) || [];
   tours.push(tour);
   storage.set(`tours-${tour.language}`, tours);
 }

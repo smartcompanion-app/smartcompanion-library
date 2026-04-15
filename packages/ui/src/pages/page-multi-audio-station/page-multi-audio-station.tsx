@@ -56,9 +56,38 @@ export class PageMultiAudioStation {
   }
 
   async disconnectedCallback() {
-    await this.reactiveAudioPlayer?.destroyAudioPlayer();  
+    await this.reactiveAudioPlayer?.destroyAudioPlayer();
     this.reactiveAudioPlayer = null;
   }
+
+  private handleToggleOutput = () => {
+    this.reactiveAudioPlayer.toggleOutput();
+  };
+
+  private handleNext = () => {
+    this.reactiveAudioPlayer.next();
+  };
+
+  private handlePrev = () => {
+    this.reactiveAudioPlayer.prev();
+  };
+
+  private handlePlayPause = () => {
+    this.reactiveAudioPlayer.playPause();
+  };
+
+  private handleStartPositionChange = () => {
+    this.reactiveAudioPlayer.startPositionChange();
+  };
+
+  private handleEndPositionChange = (e: CustomEvent<number>) => {
+    this.reactiveAudioPlayer.changePosition(e.detail);
+  };
+
+  private handleSelectAudio = (e: Event) => {
+    const audioIndex = parseInt((e.currentTarget as HTMLElement).dataset.audioIndex);
+    this.reactiveAudioPlayer.select(audioIndex);
+  };
 
   render() {
     return (
@@ -91,7 +120,7 @@ export class PageMultiAudioStation {
         <ion-content class="ion-no-padding">
           {this.enableSwitchAudioOutput && (
             <ion-fab vertical="top" horizontal="end" slot="fixed">
-              <ion-fab-button color="primary" size="small" onClick={() => this.reactiveAudioPlayer.toggleOutput()}>
+              <ion-fab-button color="primary" size="small" onClick={this.handleToggleOutput}>
                 {this.earpiece ?
                   <ion-icon name="volume-medium-outline"></ion-icon> :
                   <ion-icon src="assets/earpiece.svg"></ion-icon>
@@ -107,11 +136,11 @@ export class PageMultiAudioStation {
                 playing={this.playing}
                 position={this.position}
                 duration={this.duration}
-                onNext={() => this.reactiveAudioPlayer.next()}
-                onPrev={() => this.reactiveAudioPlayer.prev()}
-                onPlayPause={() => this.reactiveAudioPlayer.playPause()}
-                onStartPositionChange={() => this.reactiveAudioPlayer.startPositionChange()}
-                onEndPositionChange={(e) => this.reactiveAudioPlayer.changePosition(e.detail)}
+                onNext={this.handleNext}
+                onPrev={this.handlePrev}
+                onPlayPause={this.handlePlayPause}
+                onStartPositionChange={this.handleStartPositionChange}
+                onEndPositionChange={this.handleEndPositionChange}
               />
             </div>
 
@@ -121,7 +150,8 @@ export class PageMultiAudioStation {
                   {this.station.audios.map((audio, audioIndex) => (
                     <ion-item
                       data-testid={`audio-item-${audioIndex}`}
-                      onClick={() => this.reactiveAudioPlayer.select(audioIndex)}
+                      data-audio-index={audioIndex}
+                      onClick={this.handleSelectAudio}
                       lines="none"
                       class={this.activeIndex == audioIndex ? 'active' : ''}>
                       <ion-icon slot="start" name="play"></ion-icon>

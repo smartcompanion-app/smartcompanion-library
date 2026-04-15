@@ -17,7 +17,7 @@ export class PinService {
 
   checkPin(pin: string): boolean {
     if (this.storage.has('pins')) {
-      const pins: string[] = this.storage.get('pins');
+      const pins = this.storage.get('pins') as string[];
       return pins.some(storedPin => pin == storedPin);
     } else {
       return false;
@@ -25,7 +25,7 @@ export class PinService {
   }
 
   isValid(): boolean {
-    if (this.storage.has('pin-validation') && parseInt(this.storage.get('pin-validation')) > this.now()) {
+    if (this.storage.has('pin-validation') && parseInt(this.storage.get('pin-validation') as string) > this.now()) {
       return true;
     } else {
       return false;
@@ -42,6 +42,7 @@ export class PinService {
   }
 
   isPinValidationRequired(): boolean {
-    return this.storage.has('pins') && Array.isArray(this.storage.get('pins')) && this.storage.get('pins').length > 0;
+    const pins = this.storage.get('pins') as string[];
+    return this.storage.has('pins') && Array.isArray(pins) && pins.length > 0;
   }
 }

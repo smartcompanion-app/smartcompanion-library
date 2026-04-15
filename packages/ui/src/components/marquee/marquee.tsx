@@ -9,6 +9,7 @@ export class Marquee {
 
   private originalText: string = "";
 
+  /** Whether the marquee animation is active */
   @Prop({ mutable: true, reflect: true }) active: boolean = false;
 
   @State() marqueeText: string = "";

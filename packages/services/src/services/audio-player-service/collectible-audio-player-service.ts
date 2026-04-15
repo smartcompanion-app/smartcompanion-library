@@ -10,7 +10,7 @@ export class CollectibleAudioPlayerService extends AudioPlayerService {
 
   constructor(
     subtitle: string,
-    protected collection: any = {},
+    protected collection: Record<string, { collectedTime: number; collectedPercentage: number; duration: number }> = {},
   ) {
     super(subtitle);
   }

@@ -1,9 +1,9 @@
 import { Storage } from './storage';
 
 export class MemoryStorage implements Storage {
-  protected storage: any = {};
+  protected storage: Record<string, unknown> = {};
 
-  set(key: string, value: any): void {
+  set(key: string, value: unknown): void {
     this.storage[key] = value;
   }
 

@@ -13,11 +13,11 @@ export class TourService {
   }
 
   getLanguage(): string {
-    return this.storage.get('language');
+    return this.storage.get('language') as string;
   }
 
   async getStations(tourId: string): Promise<Station[]> {
-    const tour: Tour = this.storage.get(`tour-${this.getLanguage()}-${tourId}`);
+    const tour = this.storage.get(`tour-${this.getLanguage()}-${tourId}`) as Tour;
     const result: Station[] = [];
 
     for (const station of tour.stations) {
@@ -29,7 +29,7 @@ export class TourService {
   }
 
   async getTours(): Promise<Tour[]> {
-    const tours: Tour[] = this.storage.get(`tours-${this.getLanguage()}`);
+    const tours = this.storage.get(`tours-${this.getLanguage()}`) as Tour[];
     const result: Tour[] = [];
 
     for (const tour of tours) {
@@ -50,7 +50,7 @@ export class TourService {
    * @returns
    */
   async getTour(tourId: string): Promise<Tour> {
-    const tour: Tour = this.storage.get(`tour-${this.getLanguage()}-${tourId}`);
+    const tour = this.storage.get(`tour-${this.getLanguage()}-${tourId}`) as Tour;
 
     if (tour && tour.images) {
       for (let i = 0; i < tour.images.length; i++) {
@@ -62,7 +62,7 @@ export class TourService {
   }
 
   async getDefaultTour(): Promise<Tour> {
-    const tourId = this.storage.get(`tour-${this.getLanguage()}-default-id`);
+    const tourId = this.storage.get(`tour-${this.getLanguage()}-default-id`) as string;
     return this.getTour(tourId);
   }
 }

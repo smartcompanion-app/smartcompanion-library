@@ -15,6 +15,7 @@ export class PageTourList {
    */
   @Prop() headerBackgroundColor: 'primary' | 'secondary' = 'primary';
 
+  /** The service facade instance */
   @Prop() facade: ServiceFacade;
 
   async componentWillLoad() {
@@ -31,6 +32,11 @@ export class PageTourList {
   private startTour(tourId: string) {
     this.facade.getRoutingService().push(`/tours/${tourId}`);
   }
+
+  private handleStartTour = (e: Event) => {
+    const tourId = (e.currentTarget as HTMLElement).dataset.tourId;
+    this.startTour(tourId);
+  };
 
   render() {
     return [
@@ -56,7 +62,7 @@ export class PageTourList {
                   </span>
                 </div>
                 <div class="right">
-                  <ion-button onClick={() => this.startTour(tour.id)} color="primary" >{this.facade.__('start-tour')}</ion-button>
+                  <ion-button data-tour-id={tour.id} onClick={this.handleStartTour} color="primary" >{this.facade.__('start-tour')}</ion-button>
                 </div>
               </div>
             </div>

@@ -1,5 +1,6 @@
 import { Storage } from '../../storage';
 import { Updater } from '../../update';
+import { Tour } from './tour';
 
 export class TourUpdater implements Updater {
   protected storage: Storage;
@@ -8,11 +9,11 @@ export class TourUpdater implements Updater {
     this.storage = storage;
   }
 
-  async update(data: any) {
-    const languageFilteredTours: any = {};
+  async update(data: unknown) {
+    const languageFilteredTours: Record<string, Tour[]> = {};
 
     if (Array.isArray(data)) {
-      for (const tour of data) {
+      for (const tour of data as Tour[]) {
         if (!languageFilteredTours[tour.language]) {
           languageFilteredTours[tour.language] = [];
         }

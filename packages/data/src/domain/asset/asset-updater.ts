@@ -1,5 +1,6 @@
 import { Storage } from '../../storage';
 import { Updater } from '../../update';
+import { Asset } from './asset';
 
 export class AssetUpdater implements Updater {
   protected storage: Storage;
@@ -8,9 +9,9 @@ export class AssetUpdater implements Updater {
     this.storage = storage;
   }
 
-  async update(data: any) {
+  async update(data: unknown) {
     if (Array.isArray(data)) {
-      for (const asset of data) {
+      for (const asset of data as Asset[]) {
         this.storage.set(`asset-${asset.id}`, asset);
       }
       this.storage.set('assets', data);

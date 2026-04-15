@@ -11,14 +11,14 @@ export class StationService {
   }
 
   getLanguage(): string {
-    return this.storage.get('language');
+    return this.storage.get('language') as string;
   }
 
   /**
    * Get Stations without resolving assets
    */
   getUnresolvedStations(): Station[] {
-    return this.storage.get(`stations-${this.getLanguage()}`);
+    return this.storage.get(`stations-${this.getLanguage()}`) as Station[];
   }
 
   async getStations(): Promise<Station[]> {
@@ -34,7 +34,7 @@ export class StationService {
   }
 
   async getStation(stationId: string): Promise<Station> {
-    const station: Station = this.storage.get(`station-${this.getLanguage()}-${stationId}`);
+    const station = this.storage.get(`station-${this.getLanguage()}-${stationId}`) as Station;
 
     if (station && station.images) {
       for (let i = 0; i < station.images.length; i++) {
@@ -53,11 +53,11 @@ export class StationService {
 
   updateCollectedPercentage(stationId: string, audioAssetId: string, collectedPercentage: number): Promise<Station> {
     if (this.storage.has(`station-${this.getLanguage()}-${stationId}`)) {
-      const station: Station = this.storage.get(`station-${this.getLanguage()}-${stationId}`);
+      const station = this.storage.get(`station-${this.getLanguage()}-${stationId}`) as Station;
 
       // currently only a 1-to-1 correspondence between audio and station is supported
       if (station?.audios?.length == 1 && station?.audios[0] == audioAssetId) {
-        const stations: Station[] = this.storage.get(`stations-${this.getLanguage()}`);
+        const stations = this.storage.get(`stations-${this.getLanguage()}`) as Station[];
         station.collectedPercentage = collectedPercentage;
         this.storage.set(`station-${this.getLanguage()}-${stationId}`, station);
         this.storage.set(
@@ -72,7 +72,7 @@ export class StationService {
 
   clearCollectedPercentage(language: string) {
     if (this.storage.has(`stations-${language}`)) {
-      const stations: Station[] = this.storage.get(`stations-${language}`);
+      const stations = this.storage.get(`stations-${language}`) as Station[];
       this.storage.set(
         `stations-${language}`,
         stations.map((s: Station) => {

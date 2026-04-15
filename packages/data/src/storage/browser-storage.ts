@@ -1,7 +1,7 @@
 import { Storage } from './storage';
 
 export class BrowserStorage implements Storage {
-  set(key: string, value: any): void {
+  set(key: string, value: unknown): void {
     if (typeof value == 'object') {
       globalThis.localStorage.setItem(key, `json:${JSON.stringify(value)}`);
     } else {

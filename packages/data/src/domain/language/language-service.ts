@@ -9,7 +9,7 @@ export class LanguageService {
     this.storage = storage;
 
     if (this.storage.has('language')) {
-      this.changeLanguage(this.storage.get('language'));
+      this.changeLanguage(this.storage.get('language') as string);
     }
   }
 
@@ -30,7 +30,7 @@ export class LanguageService {
 
   getLanguages(): Array<Language> {
     if (this.storage.has('languages')) {
-      return this.storage.get('languages') || [];
+      return (this.storage.get('languages') as Array<Language>) || [];
     } else {
       return [];
     }

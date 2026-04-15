@@ -82,22 +82,51 @@ export class PageStations {
     return (station.images[imageIndex] as Asset).internalWebUrl;
   }
 
-  private openMenu() {
+  private openMenu = () => {
     this.facade.getMenuService().open();
-  }
+  };
+
+  private handleToggleOutput = () => {
+    this.reactiveAudioPlayer.toggleOutput();
+  };
+
+  private handleNext = () => {
+    this.reactiveAudioPlayer.next();
+  };
+
+  private handlePrev = () => {
+    this.reactiveAudioPlayer.prev();
+  };
+
+  private handlePlayPause = () => {
+    this.reactiveAudioPlayer.playPause();
+  };
+
+  private handleStartPositionChange = () => {
+    this.reactiveAudioPlayer.startPositionChange();
+  };
+
+  private handleEndPositionChange = (e: CustomEvent<number>) => {
+    this.reactiveAudioPlayer.changePosition(e.detail);
+  };
+
+  private handleSelect = (e: Event) => {
+    const index = parseInt((e.currentTarget as HTMLElement).dataset.index);
+    this.reactiveAudioPlayer.select(index);
+  };
 
   render() {
     return [
       <ion-header class="ion-no-border">
         <ion-toolbar class="ion-hide-md-up">
           <ion-buttons slot="start">
-            <ion-fab-button color="light" size="small" onClick={() => this.openMenu()}>
+            <ion-fab-button color="light" size="small" onClick={this.openMenu}>
               <ion-icon color="primary" name="menu-outline"></ion-icon>
             </ion-fab-button>
           </ion-buttons>
           <ion-buttons slot="end">
             {this.enableSwitchAudioOutput && (
-              <ion-fab-button color="light" size="small" onClick={() => this.reactiveAudioPlayer.toggleOutput()}>
+              <ion-fab-button color="light" size="small" onClick={this.handleToggleOutput}>
                 {this.earpiece ?
                   <ion-icon color="primary" name="volume-medium-outline"></ion-icon> :
                   <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>
@@ -117,18 +146,18 @@ export class PageStations {
               playing={this.playing}
               position={this.position}
               duration={this.duration}
-              onNext={() => this.reactiveAudioPlayer.next()}
-              onPrev={() => this.reactiveAudioPlayer.prev()}
-              onPlayPause={() => this.reactiveAudioPlayer.playPause()}
-              onStartPositionChange={() => this.reactiveAudioPlayer.startPositionChange()}
-              onEndPositionChange={(e) => this.reactiveAudioPlayer.changePosition(e.detail)}
+              onNext={this.handleNext}
+              onPrev={this.handlePrev}
+              onPlayPause={this.handlePlayPause}
+              onStartPositionChange={this.handleStartPositionChange}
+              onEndPositionChange={this.handleEndPositionChange}
             />
           </div>
           <div id="player-list" class="swiper">
             <div class="swiper-wrapper">
               {this.stations.map((station, index) =>
                 <div data-testid={`player-list-item-${index}`} class={this.activeIndex == index ? 'swiper-slide active' : 'swiper-slide'}>
-                  <ion-card button onClick={() => { this.reactiveAudioPlayer.select(index) }}>
+                  <ion-card button data-index={index} onClick={this.handleSelect}>
                     <div class="card-content">
                       <img src={this.getImageUri(index, 1)} />
                       <div class="card-content-text">

@@ -10,7 +10,7 @@ import { getMenuButton, getStations, openStation } from '../../utils';
 })
 export class PageMap {
 
-  protected map: any;
+  protected map: L.Map;
 
   /**
    * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -39,7 +39,7 @@ export class PageMap {
    */
   @Prop() mapBounds: Array<number>;
 
-  /*
+  /**
    * Map tiles URL for the leaflet map, e.g., 'assets/map/{z}/{y}/{x}.jpeg'
    */
   @Prop() tileUrlTemplate: string;
@@ -49,6 +49,7 @@ export class PageMap {
    */
   @Prop() mapAttribution: string = '';
 
+  /** The service facade instance */
   @Prop() facade: ServiceFacade;
 
   async componentWillLoad() {
@@ -85,7 +86,7 @@ export class PageMap {
     const stations: Station[] = await getStations(this.facade, this.tourId);
 
     for (const station of stations) {
-      if (station.latitude && station.longitude) {
+      if (station.latitude !== undefined && station.longitude !== undefined) {
         const icon = L.divIcon({
           className: 'station-map-icon',
           html: '<sc-station-icon>' + station.number + '</sc-station-icon>'

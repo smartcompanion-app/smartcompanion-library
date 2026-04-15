@@ -11,10 +11,10 @@ export class OnlineLoadService {
   protected languageService: LanguageService;
   protected pinService: PinService;
   protected dataUpdater: Updater;
-  protected downloadData: () => Promise<any>;
+  protected downloadData: () => Promise<unknown>;
   protected progress: (progress: number) => void = (_: number) => {};
 
-  constructor(downloadData: () => Promise<any>, dataUpdater: Updater, serviceLocator: ServiceLocator) {
+  constructor(downloadData: () => Promise<unknown>, dataUpdater: Updater, serviceLocator: ServiceLocator) {
     this.downloadData = downloadData;
     this.dataUpdater = dataUpdater;
     this.languageService = serviceLocator.getLanguageService();

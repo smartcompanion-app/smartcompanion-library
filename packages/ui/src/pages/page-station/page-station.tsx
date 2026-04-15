@@ -66,6 +66,30 @@ export class PageStation {
     this.reactiveAudioPlayer = null;
   }
 
+  private handleToggleOutput = () => {
+    this.reactiveAudioPlayer.toggleOutput();
+  };
+
+  private handleNext = () => {
+    this.reactiveAudioPlayer.next();
+  };
+
+  private handlePrev = () => {
+    this.reactiveAudioPlayer.prev();
+  };
+
+  private handlePlayPause = () => {
+    this.reactiveAudioPlayer.playPause();
+  };
+
+  private handleStartPositionChange = () => {
+    this.reactiveAudioPlayer.startPositionChange();
+  };
+
+  private handleEndPositionChange = (e: CustomEvent<number>) => {
+    this.reactiveAudioPlayer.changePosition(e.detail);
+  };
+
   render() {
     return (
       <Host id="station">
@@ -76,7 +100,7 @@ export class PageStation {
             </ion-buttons>
             <ion-buttons slot="end">
               {this.enableSwitchAudioOutput && (
-                <ion-fab-button color="light" size="small" onClick={() => this.reactiveAudioPlayer.toggleOutput()}>
+                <ion-fab-button color="light" size="small" onClick={this.handleToggleOutput}>
                   {this.earpiece ?
                     <ion-icon color="primary" name="volume-medium-outline"></ion-icon> :
                     <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>
@@ -94,11 +118,11 @@ export class PageStation {
               playing={this.playing}
               position={this.position}
               duration={this.duration}
-              onNext={() => this.reactiveAudioPlayer.next()}
-              onPrev={() => this.reactiveAudioPlayer.prev()}
-              onPlayPause={() => this.reactiveAudioPlayer.playPause()}
-              onStartPositionChange={() => this.reactiveAudioPlayer.startPositionChange()}
-              onEndPositionChange={(e) => this.reactiveAudioPlayer.changePosition(e.detail)}
+              onNext={this.handleNext}
+              onPrev={this.handlePrev}
+              onPlayPause={this.handlePlayPause}
+              onStartPositionChange={this.handleStartPositionChange}
+              onEndPositionChange={this.handleEndPositionChange}
             />
           </div>
 

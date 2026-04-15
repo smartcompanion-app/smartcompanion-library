@@ -20,6 +20,7 @@ export class PageTabbedStationList {
    */
   @Prop() tourId: string = null;
 
+  /** The service facade instance */
   @Prop() facade: ServiceFacade;
 
   async componentWillLoad() {
@@ -27,8 +28,8 @@ export class PageTabbedStationList {
   }
 
   async componentDidLoad() {
-    const tabButton: any = this.element.shadowRoot.querySelector('#tab-button-tab-images');
-    if (tabButton) {
+    const tabButton = this.element.shadowRoot.querySelector('#tab-button-tab-images') as HTMLElement | null;
+    if (tabButton !== null) {
       await tabButton.click();
     }
   }

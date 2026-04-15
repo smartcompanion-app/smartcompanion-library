@@ -7,6 +7,7 @@ import { ServiceFacade } from '@smartcompanion/services';
 })
 export class PagePin {
 
+  /** The service facade instance */
   @Prop() facade: ServiceFacade;
 
   /**
@@ -36,11 +37,15 @@ export class PagePin {
     return "";
   }
 
-  private delete() {
+  private delete = () => {
     if (this.pin.length > 0) {
       this.pin = this.pin.substring(0, this.pin.length - 1);
     }
-  }
+  };
+
+  private handleNumber = (e: CustomEvent<number>) => {
+    this.add(`${e.detail}`);
+  };
 
   private add(position: string) {
     if (this.pin.length < 4) {
@@ -74,8 +79,8 @@ export class PagePin {
             )}
           </div>
           <sc-numpad
-            onNumber={(e) => this.add(`${e.detail}`)}
-            onDelete={() => this.delete()} />
+            onNumber={this.handleNumber}
+            onDelete={this.delete} />
         </div>
       </ion-content>
     );

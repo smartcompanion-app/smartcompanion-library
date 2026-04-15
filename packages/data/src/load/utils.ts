@@ -1,12 +1,24 @@
 import { LanguageService } from '../domain';
 
 /**
- * If only one language is available and no language is set, set that language automatically
- * and prevent the language selection screen from showing up.
+ * If no language is set, try to auto-select one:
+ * 1. From the URL query parameter `?language=de`
+ * 2. If only one language is available, select it automatically
  */
 export const autoSelectLanguage = (languageService: LanguageService) => {
+  if (languageService.hasLanguage()) return;
+
   const languages = languageService.getLanguages();
-  if (!languageService.hasLanguage() && languages.length === 1) {
+
+  const search = globalThis?.location?.search ?? '';
+  const params = new URLSearchParams(search);
+  const languageParam = params.get('language');
+  if (languageParam && languages.some((l) => l.language === languageParam)) {
+    languageService.changeLanguage(languageParam);
+    return;
+  }
+
+  if (languages.length === 1) {
     languageService.changeLanguage(languages[0].language);
   }
 };

@@ -1,4 +1,4 @@
-import { test, beforeEach, expect } from '@jest/globals';
+import { test, beforeEach, expect } from 'vitest';
 import { CollectibleAudioPlayerService } from '../src/services/audio-player-service/collectible-audio-player-service';
 
 let service: CollectibleAudioPlayerService;

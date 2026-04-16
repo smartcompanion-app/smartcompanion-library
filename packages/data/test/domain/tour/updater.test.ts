@@ -1,4 +1,4 @@
-import { expect, test, describe, beforeEach } from '@jest/globals';
+import { expect, test, describe, beforeEach } from 'vitest';
 import { getTour } from '../../fixtures';
 import { MemoryStorage } from '../../../src/storage';
 import { TourUpdater } from '../../../src/domain';

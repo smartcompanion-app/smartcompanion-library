@@ -49,7 +49,7 @@ npm run storybook -w packages/ui     # Dev server at http://localhost:6006
 
 - **Data & Services**: TypeScript compiled with `tsc`, output to `dist/`
 - **UI**: Stencil v4 web components compiled to CJS, ESM, and custom-elements distributions
-- **Testing**: Jest + ts-jest across all packages; Playwright for UI component tests via Storybook
+- **Testing**: Vitest across all packages; Playwright for UI browser tests via @vitest/browser-playwright
 - **Pattern**: Domain-driven (data), Service/Facade (services), Web Components (ui)
 
 ## Code Style
@@ -59,8 +59,16 @@ npm run storybook -w packages/ui     # Dev server at http://localhost:6006
 - TypeScript: strict mode (`noImplicitAny`), ES modules
 - File names: kebab-case; Classes/Interfaces: PascalCase
 
+## Quality Gates
+
+Every change must pass lint and tests before committing. Run these after every change:
+```bash
+npm run lint           # Lint all packages (must pass with 0 errors, 0 warnings)
+npm test               # Run tests for all packages
+```
+
 ## CI/CD
 
-- CI runs on all PRs/pushes: install → build → test (Ubuntu 24.04, Node 20)
+- CI runs on all PRs/pushes: install → build → lint → test (Ubuntu 24.04, Node 22)
 - Release publishes to NPM on version tags; requires `NPM_TOKEN` secret
 - Version is set across all packages simultaneously during release

@@ -1,4 +1,4 @@
-import { test, expect } from '@jest/globals';
+import { test, expect } from 'vitest';
 import { Station } from '@smartcompanion/data';
 import { AudioPlayerService } from '../src/services/audio-player-service/audio-player-service';
 

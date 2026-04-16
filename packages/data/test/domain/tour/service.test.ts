@@ -1,4 +1,4 @@
-import { expect, test, describe, beforeEach } from '@jest/globals';
+import { expect, test, describe, beforeEach, vi, Mock } from 'vitest';
 import { MemoryStorage, Storage } from '../../../src/storage';
 import { TourService, AssetService, StationService, Asset } from '../../../src/domain';
 import { setTourToStorage } from '../../fixtures';
@@ -8,11 +8,11 @@ describe('test tour service', () => {
   let memoryStorage: Storage;
   let service: TourService;
   let assetService: AssetService;
-  let resolveUrl: jest.Mock;
+  let resolveUrl: Mock;
 
   beforeEach(() => {
     memoryStorage = new MemoryStorage();
-    resolveUrl = jest.fn();
+    resolveUrl = vi.fn();
     assetService = new AssetService(memoryStorage, resolveUrl);
     service = new TourService(
       memoryStorage,

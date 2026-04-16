@@ -1,4 +1,4 @@
-import { expect, test, beforeAll } from '@jest/globals';
+import { expect, test, beforeAll, vi } from 'vitest';
 import { BrowserStorage } from '../src/storage';
 
 const browserStorage = new BrowserStorage();
@@ -9,7 +9,7 @@ beforeAll(() => {
 });
 
 test('set json', () => {
-  const mockSet = jest.fn();
+  const mockSet = vi.fn();
   globalThis.localStorage.setItem = mockSet;
 
   browserStorage.set('key', { abc: 'abc' });
@@ -18,7 +18,7 @@ test('set json', () => {
 });
 
 test('set number', () => {
-  const mockSet = jest.fn();
+  const mockSet = vi.fn();
   globalThis.localStorage.setItem = mockSet;
 
   browserStorage.set('key', 123);
@@ -27,7 +27,7 @@ test('set number', () => {
 });
 
 test('set string', () => {
-  const mockSet = jest.fn();
+  const mockSet = vi.fn();
   globalThis.localStorage.setItem = mockSet;
 
   browserStorage.set('key', '123');
@@ -36,7 +36,7 @@ test('set string', () => {
 });
 
 test('get string', () => {
-  const mockSet = jest.fn();
+  const mockSet = vi.fn();
   mockSet.mockReturnValueOnce('strg:123');
   globalThis.localStorage.getItem = mockSet;
 
@@ -46,7 +46,7 @@ test('get string', () => {
 });
 
 test('get object', () => {
-  const mockSet = jest.fn();
+  const mockSet = vi.fn();
   mockSet.mockReturnValueOnce('json:{"abc":123}')
   globalThis.localStorage.getItem = mockSet;
 
@@ -56,7 +56,7 @@ test('get object', () => {
 });
 
 test('get array', () => {
-  const mockSet = jest.fn();
+  const mockSet = vi.fn();
   mockSet.mockReturnValueOnce('json:[1,2,3]')
   globalThis.localStorage.getItem = mockSet;
 
@@ -66,7 +66,7 @@ test('get array', () => {
 });
 
 test('get unset key', () => {
-  const mockSet = jest.fn();
+  const mockSet = vi.fn();
   mockSet.mockReturnValueOnce(null)
   globalThis.localStorage.getItem = mockSet;
 

@@ -1,20 +1,20 @@
-import { expect, test, describe } from '@jest/globals';
+import { expect, test, describe, beforeEach, vi, Mock } from 'vitest';
 import { FileUpdater, File } from '../../src/file';
 
 describe('test file updater', () => {
   let fileUpdater: FileUpdater;
-  let downloadFn: jest.Mock;
-  let removeFn: jest.Mock;
-  let saveFn: jest.Mock;
-  let listFn: jest.Mock;
-  let progressFn: jest.Mock;
+  let downloadFn: Mock;
+  let removeFn: Mock;
+  let saveFn: Mock;
+  let listFn: Mock;
+  let progressFn: Mock;
 
   beforeEach(() => {
-    downloadFn = jest.fn();
-    removeFn = jest.fn();
-    saveFn = jest.fn();
-    listFn = jest.fn();
-    progressFn = jest.fn();
+    downloadFn = vi.fn();
+    removeFn = vi.fn();
+    saveFn = vi.fn();
+    listFn = vi.fn();
+    progressFn = vi.fn();
 
     fileUpdater = new FileUpdater(
       downloadFn,

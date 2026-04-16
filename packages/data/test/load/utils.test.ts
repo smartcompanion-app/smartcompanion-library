@@ -1,4 +1,4 @@
-import { expect, test, describe, beforeEach, afterEach } from '@jest/globals';
+import { expect, test, describe, beforeEach, afterEach } from 'vitest';
 import { MemoryStorage } from '../../src/storage';
 import { LanguageService } from '../../src/domain';
 import { autoSelectLanguage } from '../../src/load/utils';

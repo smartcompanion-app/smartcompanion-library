@@ -1,4 +1,4 @@
-import { expect, test, describe, beforeEach } from '@jest/globals';
+import { expect, test, describe, beforeEach, vi } from 'vitest';
 import { MemoryStorage } from '../../src/storage';
 import { DataUpdater } from '../../src/update';
 
@@ -28,7 +28,7 @@ describe('test data updater', () => {
 
   test('updaters should be loaded based on keys in the data and availability of Updater', () => {
     class MockUpdater {
-      update = jest.fn();
+      update = vi.fn();
     }
     const mockAssetUpdater = new MockUpdater();
     const mockStationUpdater = new MockUpdater();

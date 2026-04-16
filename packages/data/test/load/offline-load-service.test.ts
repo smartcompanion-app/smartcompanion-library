@@ -1,33 +1,33 @@
-import { describe, test, beforeEach, expect, jest } from '@jest/globals';
+import { describe, test, beforeEach, expect, vi, Mock, Mocked } from 'vitest';
 import { OfflineLoadService } from '../../src/load/offline-load-service';
 import { MemoryStorage } from '../../src/storage';
 import { ServiceLocator } from '../../src/service-locator';
 import { Updater } from '../../src/update';
 
 describe('offline load service', () => {
-  let downloadDataFn: jest.Mock<() => Promise<any>>;
-  let downloadFileFn: jest.Mock<(url: string) => Promise<string>>;
-  let removeFn: jest.Mock<(filename: string) => Promise<void>>;
-  let saveFn: jest.Mock<(filename: string, data: any) => Promise<void>>;
-  let listFn: jest.Mock<() => Promise<string[]>>;
-  let progressFn: jest.Mock;
+  let downloadDataFn: Mock<() => Promise<any>>;
+  let downloadFileFn: Mock<(url: string) => Promise<string>>;
+  let removeFn: Mock<(filename: string) => Promise<void>>;
+  let saveFn: Mock<(filename: string, data: any) => Promise<void>>;
+  let listFn: Mock<() => Promise<string[]>>;
+  let progressFn: Mock;
   let memoryStorage: MemoryStorage;
   let serviceLocator: ServiceLocator;
-  let dataUpdater: jest.Mocked<Updater>;
+  let dataUpdater: Mocked<Updater>;
   let offlineLoadService: OfflineLoadService;
 
   beforeEach(() => {
-    downloadDataFn = jest.fn();
-    downloadFileFn = jest.fn();
-    removeFn = jest.fn();
-    saveFn = jest.fn();
-    listFn = jest.fn();
-    progressFn = jest.fn();
+    downloadDataFn = vi.fn();
+    downloadFileFn = vi.fn();
+    removeFn = vi.fn();
+    saveFn = vi.fn();
+    listFn = vi.fn();
+    progressFn = vi.fn();
     memoryStorage = new MemoryStorage();
 
     // Mock Updater
     dataUpdater = {
-      update: jest.fn(),
+      update: vi.fn(),
     };
 
     // ServiceLocator needs to be constructed with storage
@@ -56,7 +56,7 @@ describe('offline load service', () => {
 
   test('should load data and return "language" if more than one language is available', async () => {
     downloadDataFn.mockResolvedValue({ example: 'data' });
-    jest.spyOn(serviceLocator.getLanguageService(), 'getLanguages').mockReturnValue([
+    vi.spyOn(serviceLocator.getLanguageService(), 'getLanguages').mockReturnValue([
       { language: 'en', title: 'English' }, { language: 'de', title: 'Deutsch' }
     ]);
     const result = await offlineLoadService.load();
@@ -67,8 +67,8 @@ describe('offline load service', () => {
   test('should load data and return "home" if only one language is available', async () => {
     downloadDataFn.mockResolvedValue({ example: 'data' });
     listFn.mockResolvedValue([]);
-    jest.spyOn(serviceLocator.getLanguageService(), 'getLanguages').mockReturnValue([{ language: 'en', title: 'English' }]);
-    jest.spyOn(serviceLocator.getAssetService(), 'getUnresolvedAssets').mockReturnValue([]);
+    vi.spyOn(serviceLocator.getLanguageService(), 'getLanguages').mockReturnValue([{ language: 'en', title: 'English' }]);
+    vi.spyOn(serviceLocator.getAssetService(), 'getUnresolvedAssets').mockReturnValue([]);
     const result = await offlineLoadService.load();
     expect(result).toBe('home');
     expect(memoryStorage.get('language')).toBe('en');
@@ -101,8 +101,8 @@ describe('offline load service', () => {
     downloadDataFn.mockImplementationOnce(async () => ({ 'random': 'data', 'checksum': 'something' }));
 
     // Mock pin service to require pin and be invalid
-    jest.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
-    jest.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(false);
+    vi.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
+    vi.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(false);
 
     const result = await offlineLoadService.load();
     expect(downloadDataFn).toHaveBeenCalledTimes(1);
@@ -113,7 +113,7 @@ describe('offline load service', () => {
     memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
     memoryStorage.set('language', 'de');
     memoryStorage.set('files-loaded', 'de');
-    jest.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(false);
+    vi.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(false);
     expect(offlineLoadService.isLoaded()).toBeTruthy();
   });
 
@@ -121,8 +121,8 @@ describe('offline load service', () => {
     memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
     memoryStorage.set('language', 'de');
     memoryStorage.set('files-loaded', 'de');
-    jest.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
-    jest.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(true);
+    vi.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
+    vi.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(true);
     expect(offlineLoadService.isLoaded()).toBeTruthy();
   });
 
@@ -140,8 +140,8 @@ describe('offline load service', () => {
     memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
     memoryStorage.set('language', 'de');
     memoryStorage.set('files-loaded', 'de');
-    jest.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
-    jest.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(false);
+    vi.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
+    vi.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(false);
     expect(offlineLoadService.isLoaded()).toBeFalsy();
   });
 });

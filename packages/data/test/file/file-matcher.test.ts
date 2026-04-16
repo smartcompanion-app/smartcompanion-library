@@ -1,4 +1,4 @@
-import { expect, test } from '@jest/globals';
+import { expect, test } from 'vitest';
 import { FileMatcher } from '../../src/file';
 
 const fileMatcher = new FileMatcher();

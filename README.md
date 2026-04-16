@@ -40,7 +40,7 @@ npm test           # Run tests for all packages
 
 ```bash
 npm run build -w packages/data    # Compile TypeScript to dist/
-npm run test -w packages/data     # Run Jest tests
+npm run test -w packages/data     # Run Vitest tests
 npm run lint -w packages/data     # Lint source files
 npm run format -w packages/data   # Format source files with Prettier
 ```
@@ -49,7 +49,7 @@ npm run format -w packages/data   # Format source files with Prettier
 
 ```bash
 npm run build -w packages/services    # Compile TypeScript to dist/
-npm run test -w packages/services     # Run Jest tests
+npm run test -w packages/services     # Run Vitest tests
 npm run lint -w packages/services     # Lint source files
 npm run format -w packages/services   # Format source files with Prettier
 ```
@@ -60,7 +60,7 @@ UI components are developed in isolation with [Storybook](https://storybook.js.o
 
 ```bash
 npm run build -w packages/ui       # Compile Stencil components
-npm run test -w packages/ui        # Run Playwright and Jest tests
+npm run test -w packages/ui        # Run Vitest and Playwright browser tests
 npm run watch -w packages/ui       # Stencil watch mode
 npm run storybook -w packages/ui   # Dev server at http://localhost:6006
 ```

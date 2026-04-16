@@ -12,7 +12,7 @@
       "declaration": true,
       "skipLibCheck": true,
       "jsx": "react", // bugfix: ../../node_modules/@types/mdx/types.d.ts:73:46 - error TS2503: Cannot find namespace 'JSX'.
-      "types": ["react", "jest"], // bugfix: ../../node_modules/@types/mdx/types.d.ts:73:46 - error TS2503: Cannot find namespace 'JSX'.
+      "types": ["react"], // bugfix: ../../node_modules/@types/mdx/types.d.ts:73:46 - error TS2503: Cannot find namespace 'JSX'.
     },
     "files": ["src/index.ts"],
     "include": ["./src/**/*.ts"]

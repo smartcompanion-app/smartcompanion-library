@@ -1,4 +1,4 @@
-import { test, beforeEach, expect } from '@jest/globals';
+import { test, beforeEach, expect } from 'vitest';
 import { MemoryStorage } from "@smartcompanion/data";
 import { ServiceFacade } from '../src/service-facade';
 

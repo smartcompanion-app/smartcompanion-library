@@ -23,4 +23,10 @@ export default tseslint.config(
       },
     },
   },
+  {
+    files: ['packages/ui/src/**/*.{test,spec,snapshot,browser}.{ts,tsx}'],
+    rules: {
+      'stencil/ban-side-effects': 'off',
+    },
+  },
 );

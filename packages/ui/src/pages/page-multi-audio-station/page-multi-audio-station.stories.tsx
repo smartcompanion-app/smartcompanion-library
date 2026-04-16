@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
 import { h } from '@stencil/core';
-import { expect, waitFor, userEvent } from 'storybook/test';
 import { MenuService, ServiceFacade, AudioPlayerService } from '@smartcompanion/services';
 import { StationService } from '@smartcompanion/data';
 import { PageMultiAudioStation } from './page-multi-audio-station';
@@ -46,35 +45,6 @@ export const Example: Story = {
         }
       },
     } as ServiceFacade,
-  },
-  play: async ({ canvas, step }) => {
-
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    await step('Last item active, when click prev from first item', async () => {
-      // @ts-expect-error shadow DOM testing method
-      const prevButton = await canvas.findByShadowTestId('player-prev-button');
-      await userEvent.click(prevButton);
-      
-      await waitFor(() => {
-        // @ts-expect-error shadow DOM testing method
-        const lastListItem = canvas.getByShadowTestId('audio-item-2');
-        expect(lastListItem.classList.contains('active')).toBe(true);
-      }, { timeout: 500 });
-    });
-
-    await step('First item active, when click next from last item', async () => {
-      // @ts-expect-error shadow DOM testing method
-      const nextButton = await canvas.findByShadowTestId('player-next-button');
-      await userEvent.click(nextButton);
-
-      await waitFor(() => {
-        // @ts-expect-error shadow DOM testing method
-        const firstListItem = canvas.getByShadowTestId('audio-item-0');
-        expect(firstListItem.classList.contains('active')).toBe(true);
-      }, { timeout: 500 });
-    });
-
   },
 };
 

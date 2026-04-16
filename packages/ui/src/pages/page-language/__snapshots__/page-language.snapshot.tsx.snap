@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render page language with language list 1`] = `
+<sc-page-language class="hydrated">
+  <mock:shadow-root>
+    <ion-header class="ion-no-border">
+      <ion-toolbar></ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-button data-language="en" expand="block" size="large">
+        English
+      </ion-button>
+      <ion-button data-language="de" expand="block" size="large">
+        Deutsch
+      </ion-button>
+      <ion-button data-language="it" expand="block" size="large">
+        Italiano
+      </ion-button>
+    </ion-content>
+  </mock:shadow-root>
+</sc-page-language>
+`;

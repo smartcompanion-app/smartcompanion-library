@@ -5,3 +5,5 @@ output/
 .stencil/
 storybook-static/
 .DS_Store
+.vitest-attachments/
+__screenshots__/

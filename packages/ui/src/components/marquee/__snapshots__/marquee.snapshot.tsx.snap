@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render active marquee 1`] = `
+<sc-marquee active class="hydrated">
+  <mock:shadow-root>
+    <div>
+      Sample text content
+    </div>
+  </mock:shadow-root>
+  Sample text content
+</sc-marquee>
+`;
+
+exports[`render inactive marquee 1`] = `
+<sc-marquee class="hydrated">
+  <mock:shadow-root>
+    <div class="ellipsis">
+      <slot></slot>
+    </div>
+  </mock:shadow-root>
+  Sample text content
+</sc-marquee>
+`;

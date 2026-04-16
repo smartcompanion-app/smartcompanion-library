@@ -1,0 +1,28 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render page error 1`] = `
+<sc-page-error class="hydrated">
+  <mock:shadow-root>
+    <ion-content>
+      <div id="error-page">
+        <div id="error-page-icon">
+          <ion-icon name="radio-outline"></ion-icon>
+        </div>
+        <div>
+          <ion-text>
+            <h4>
+              No Internet Connection
+            </h4>
+          </ion-text>
+        </div>
+        <div>
+          <ion-button>
+            <ion-icon slot="start" name="refresh-circle"></ion-icon>
+            Try Again
+          </ion-button>
+        </div>
+      </div>
+    </ion-content>
+  </mock:shadow-root>
+</sc-page-error>
+`;

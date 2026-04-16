@@ -1,0 +1,86 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render page station list 1`] = `
+<sc-page-station-list class="hydrated">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Station Overview
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list lines="full" class="station-list">
+      <ion-item button data-station-id="1">
+        <ion-avatar slot="start">
+          <sc-station-icon class="hydrated">
+            <mock:shadow-root>
+              <div class="station-icon-wrapper station-icon-size-normal">
+                <div class="station-icon">
+                  <slot></slot>
+                </div>
+              </div>
+            </mock:shadow-root>
+            1
+          </sc-station-icon>
+        </ion-avatar>
+        <ion-label>
+          <h2>
+            Station 1
+          </h2>
+          <p>
+            Crocodile
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item button data-station-id="2">
+        <ion-avatar slot="start">
+          <sc-station-icon class="hydrated">
+            <mock:shadow-root>
+              <div class="station-icon-wrapper station-icon-size-normal">
+                <div class="station-icon">
+                  <slot></slot>
+                </div>
+              </div>
+            </mock:shadow-root>
+            2
+          </sc-station-icon>
+        </ion-avatar>
+        <ion-label>
+          <h2>
+            Station 2
+          </h2>
+          <p>
+            Elephant
+          </p>
+        </ion-label>
+      </ion-item>
+      <ion-item button data-station-id="3">
+        <ion-avatar slot="start">
+          <sc-station-icon class="hydrated">
+            <mock:shadow-root>
+              <div class="station-icon-wrapper station-icon-size-normal">
+                <div class="station-icon">
+                  <slot></slot>
+                </div>
+              </div>
+            </mock:shadow-root>
+            3
+          </sc-station-icon>
+        </ion-avatar>
+        <ion-label>
+          <h2>
+            Station 3
+          </h2>
+          <p>
+            Leopard
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</sc-page-station-list>
+`;

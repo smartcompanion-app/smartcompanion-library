@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render page loading with spinner 1`] = `
+<sc-page-loading class="hydrated">
+  <ion-content>
+    <div id="loading">
+      <div id="loading-image">
+        <img src="assets/loading.png">
+      </div>
+      <div id="loading-info">
+        <ion-spinner color="primary"></ion-spinner>
+      </div>
+    </div>
+  </ion-content>
+</sc-page-loading>
+`;

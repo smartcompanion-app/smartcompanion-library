@@ -1,0 +1,129 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render page stations 1`] = `
+<sc-page-stations class="hydrated">
+  <ion-header class="ion-no-border">
+    <ion-toolbar class="ion-hide-md-up">
+      <ion-buttons slot="start">
+        <ion-fab-button color="light" size="small">
+          <ion-icon color="primary" name="menu-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-buttons>
+      <ion-buttons slot="end"></ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content id="home" fullscreen>
+    <div id="player-main">
+      <div id="player-image">
+        <img src="station-assets/crocodile.jpg">
+      </div>
+      <div id="player">
+        <sc-player-controls id="player" class="hydrated">
+          <mock:shadow-root>
+            <div id="player-controls">
+              <ion-fab-button data-testid="player-prev-button">
+                <ion-icon name="play-skip-back"></ion-icon>
+              </ion-fab-button>
+              <ion-fab-button id="player-controls-play" data-testid="player-play-button">
+                <ion-icon name="play"></ion-icon>
+              </ion-fab-button>
+              <ion-fab-button data-testid="player-next-button">
+                <ion-icon name="play-skip-forward"></ion-icon>
+              </ion-fab-button>
+            </div>
+            <div id="player-position">
+              <ion-range data-testid="player-range-slider" value="0" disabled min="0" max="0">
+                <ion-text data-testid="player-position" slot="start">
+                  00:00
+                </ion-text>
+                <ion-text data-testid="player-duration" slot="end">
+                  00:00
+                </ion-text>
+              </ion-range>
+            </div>
+          </mock:shadow-root>
+        </sc-player-controls>
+      </div>
+      <div id="player-list" class="swiper swiper-initialized swiper-vertical swiper-backface-hidden">
+        <div class="swiper-wrapper">
+          <div data-testid="player-list-item-0" class="swiper-slide active swiper-slide-active">
+            <ion-card button data-index="0">
+              <div class="card-content">
+                <img src="station-assets/crocodile.jpg">
+                <div class="card-content-text">
+                  <sc-station-icon class="hydrated">
+                    <mock:shadow-root>
+                      <div class="station-icon-wrapper station-icon-size-normal">
+                        <div class="station-icon">
+                          <slot></slot>
+                        </div>
+                      </div>
+                    </mock:shadow-root>
+                    1
+                  </sc-station-icon>
+                  <p class="subtitle">
+                    Crocodile
+                  </p>
+                  <p class="title">
+                    Station 1
+                  </p>
+                </div>
+              </div>
+            </ion-card>
+          </div>
+          <div data-testid="player-list-item-1" class="swiper-slide swiper-slide-next">
+            <ion-card button data-index="1">
+              <div class="card-content">
+                <img src="station-assets/elephant.jpg">
+                <div class="card-content-text">
+                  <sc-station-icon class="hydrated">
+                    <mock:shadow-root>
+                      <div class="station-icon-wrapper station-icon-size-normal">
+                        <div class="station-icon">
+                          <slot></slot>
+                        </div>
+                      </div>
+                    </mock:shadow-root>
+                    2
+                  </sc-station-icon>
+                  <p class="subtitle">
+                    Elephant
+                  </p>
+                  <p class="title">
+                    Station 2
+                  </p>
+                </div>
+              </div>
+            </ion-card>
+          </div>
+          <div data-testid="player-list-item-2" class="swiper-slide">
+            <ion-card button data-index="2">
+              <div class="card-content">
+                <img src="station-assets/leopard.jpg">
+                <div class="card-content-text">
+                  <sc-station-icon class="hydrated">
+                    <mock:shadow-root>
+                      <div class="station-icon-wrapper station-icon-size-normal">
+                        <div class="station-icon">
+                          <slot></slot>
+                        </div>
+                      </div>
+                    </mock:shadow-root>
+                    3
+                  </sc-station-icon>
+                  <p class="subtitle">
+                    Leopard
+                  </p>
+                  <p class="title">
+                    Station 3
+                  </p>
+                </div>
+              </div>
+            </ion-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</sc-page-stations>
+`;

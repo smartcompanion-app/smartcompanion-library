@@ -37,7 +37,8 @@ export class StationIcon {
     } else if (this.collectedPercent <= this.lowerLimitPercent) {
       return 0;
     }
-    return Math.min(this.upperLimitPercent, Math.max(this.lowerLimitPercent, this.collectedPercent));
+    const value = Math.min(this.upperLimitPercent, Math.max(this.lowerLimitPercent, this.collectedPercent));
+    return Math.round(value * 100) / 100;
   }
 
   render() {

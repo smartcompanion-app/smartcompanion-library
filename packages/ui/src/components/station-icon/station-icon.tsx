@@ -51,7 +51,18 @@ export class StationIcon {
     return (
       <Host>
         <div class={`station-icon-wrapper station-icon-size-${this.size}`}>
-          <svg class="progress-ring" width={outerSize} height={outerSize} viewBox={`0 0 ${outerSize} ${outerSize}`}>
+          <svg
+            class="progress-ring"
+            width={outerSize}
+            height={outerSize}
+            viewBox={`0 0 ${outerSize} ${outerSize}`}
+            role="progressbar"
+            aria-label="Collection progress"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={percent}
+            focusable="false"
+          >
             <circle
               class="progress-ring-track"
               cx={center} cy={center} r={radius}

@@ -21,11 +21,6 @@
 | `@smartcompanion/data` | Domain models and data layer — assets, languages, pins, servers, stations, text, tours |
 | `@smartcompanion/services` | Service layer — `AudioPlayerService`, `MenuService`, `RoutingService` |
 
-## Prerequisites
-
-- Node.js >= 14
-- npm >= 7 (workspaces support)
-
 ## Getting Started
 
 ```bash

@@ -311,6 +311,11 @@ export namespace Components {
          */
         "collectedPercent": number;
         /**
+          * Lower limit percentage threshold for starting to show the collection progress
+          * @default 3
+         */
+        "lowerLimitPercent": number;
+        /**
           * The icon size: small, normal or large.
           * @default 'normal'
          */
@@ -829,6 +834,11 @@ declare namespace LocalJSX {
          */
         "collectedPercent"?: number;
         /**
+          * Lower limit percentage threshold for starting to show the collection progress
+          * @default 3
+         */
+        "lowerLimitPercent"?: number;
+        /**
           * The icon size: small, normal or large.
           * @default 'normal'
          */
@@ -910,6 +920,7 @@ declare namespace LocalJSX {
     }
     interface ScStationIconAttributes {
         "upperLimitPercent": number;
+        "lowerLimitPercent": number;
         "collected": boolean;
         "collectedPercent": number;
         "size": 'small' | 'normal' | 'large';

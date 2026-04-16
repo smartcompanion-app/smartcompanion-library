@@ -54,6 +54,10 @@ exports[`render page stations 1`] = `
                   <sc-station-icon class="hydrated">
                     <mock:shadow-root>
                       <div class="station-icon-wrapper station-icon-size-normal">
+                        <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30">
+                          <circle class="progress-ring-track" cx="15" cy="15" r="13.5" stroke-width="3" fill="none"></circle>
+                          <circle class="progress-ring-fill" cx="15" cy="15" r="13.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="84.82300164692441" stroke-dashoffset="63.61725123519331" transform="rotate(-90 15 15)"></circle>
+                        </svg>
                         <div class="station-icon">
                           <slot></slot>
                         </div>
@@ -79,6 +83,10 @@ exports[`render page stations 1`] = `
                   <sc-station-icon class="hydrated">
                     <mock:shadow-root>
                       <div class="station-icon-wrapper station-icon-size-normal">
+                        <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30">
+                          <circle class="progress-ring-track" cx="15" cy="15" r="13.5" stroke-width="3" fill="none"></circle>
+                          <circle class="progress-ring-fill" cx="15" cy="15" r="13.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="84.82300164692441" stroke-dashoffset="38.17035074111598" transform="rotate(-90 15 15)"></circle>
+                        </svg>
                         <div class="station-icon">
                           <slot></slot>
                         </div>
@@ -104,6 +112,10 @@ exports[`render page stations 1`] = `
                   <sc-station-icon class="hydrated">
                     <mock:shadow-root>
                       <div class="station-icon-wrapper station-icon-size-normal">
+                        <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30">
+                          <circle class="progress-ring-track" cx="15" cy="15" r="13.5" stroke-width="3" fill="none"></circle>
+                          <circle class="progress-ring-fill" cx="15" cy="15" r="13.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="84.82300164692441" stroke-dashoffset="55.13495107050087" transform="rotate(-90 15 15)"></circle>
+                        </svg>
                         <div class="station-icon">
                           <slot></slot>
                         </div>

@@ -1,3 +1,4 @@
+import storybook from "eslint-plugin-storybook";
 import tseslint from 'typescript-eslint';
 import prettierConfig from 'eslint-config-prettier';
 import stencil from '@stencil/eslint-plugin';
@@ -29,4 +30,5 @@ export default tseslint.config(
       'stencil/ban-side-effects': 'off',
     },
   },
+  storybook.configs["flat/recommended"]
 );

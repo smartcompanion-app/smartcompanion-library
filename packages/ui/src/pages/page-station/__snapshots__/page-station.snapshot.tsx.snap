@@ -45,7 +45,7 @@ exports[`render page station 1`] = `
           <sc-station-icon class="hydrated">
             <mock:shadow-root>
               <div class="station-icon-wrapper station-icon-size-large">
-                <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40">
+                <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
                   <circle class="progress-ring-track" cx="20" cy="20" r="18.5" stroke-width="3" fill="none"></circle>
                   <circle class="progress-ring-fill" cx="20" cy="20" r="18.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="116.23892818282235" stroke-dashoffset="116.23892818282235" transform="rotate(-90 20 20)"></circle>
                 </svg>

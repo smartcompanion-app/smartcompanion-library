@@ -24,7 +24,7 @@ exports[`render page tabbed station list 1`] = `
                     <sc-station-icon class="hydrated">
                       <mock:shadow-root>
                         <div class="station-icon-wrapper station-icon-size-large">
-                          <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40">
+                          <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
                             <circle class="progress-ring-track" cx="20" cy="20" r="18.5" stroke-width="3" fill="none"></circle>
                             <circle class="progress-ring-fill" cx="20" cy="20" r="18.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="116.23892818282235" stroke-dashoffset="116.23892818282235" transform="rotate(-90 20 20)"></circle>
                           </svg>
@@ -61,7 +61,7 @@ exports[`render page tabbed station list 1`] = `
                     <sc-station-icon class="hydrated">
                       <mock:shadow-root>
                         <div class="station-icon-wrapper station-icon-size-large">
-                          <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40">
+                          <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
                             <circle class="progress-ring-track" cx="20" cy="20" r="18.5" stroke-width="3" fill="none"></circle>
                             <circle class="progress-ring-fill" cx="20" cy="20" r="18.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="116.23892818282235" stroke-dashoffset="116.23892818282235" transform="rotate(-90 20 20)"></circle>
                           </svg>
@@ -98,7 +98,7 @@ exports[`render page tabbed station list 1`] = `
                     <sc-station-icon class="hydrated">
                       <mock:shadow-root>
                         <div class="station-icon-wrapper station-icon-size-large">
-                          <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40">
+                          <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
                             <circle class="progress-ring-track" cx="20" cy="20" r="18.5" stroke-width="3" fill="none"></circle>
                             <circle class="progress-ring-fill" cx="20" cy="20" r="18.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="116.23892818282235" stroke-dashoffset="116.23892818282235" transform="rotate(-90 20 20)"></circle>
                           </svg>
@@ -152,7 +152,7 @@ exports[`render page tabbed station list 1`] = `
                   <sc-station-icon class="hydrated">
                     <mock:shadow-root>
                       <div class="station-icon-wrapper station-icon-size-normal">
-                        <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30">
+                        <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
                           <circle class="progress-ring-track" cx="15" cy="15" r="13.5" stroke-width="3" fill="none"></circle>
                           <circle class="progress-ring-fill" cx="15" cy="15" r="13.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="84.82300164692441" stroke-dashoffset="84.82300164692441" transform="rotate(-90 15 15)"></circle>
                         </svg>
@@ -178,7 +178,7 @@ exports[`render page tabbed station list 1`] = `
                   <sc-station-icon class="hydrated">
                     <mock:shadow-root>
                       <div class="station-icon-wrapper station-icon-size-normal">
-                        <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30">
+                        <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
                           <circle class="progress-ring-track" cx="15" cy="15" r="13.5" stroke-width="3" fill="none"></circle>
                           <circle class="progress-ring-fill" cx="15" cy="15" r="13.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="84.82300164692441" stroke-dashoffset="84.82300164692441" transform="rotate(-90 15 15)"></circle>
                         </svg>
@@ -204,7 +204,7 @@ exports[`render page tabbed station list 1`] = `
                   <sc-station-icon class="hydrated">
                     <mock:shadow-root>
                       <div class="station-icon-wrapper station-icon-size-normal">
-                        <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30">
+                        <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
                           <circle class="progress-ring-track" cx="15" cy="15" r="13.5" stroke-width="3" fill="none"></circle>
                           <circle class="progress-ring-fill" cx="15" cy="15" r="13.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="84.82300164692441" stroke-dashoffset="84.82300164692441" transform="rotate(-90 15 15)"></circle>
                         </svg>

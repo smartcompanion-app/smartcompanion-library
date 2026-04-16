@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render page pin in initial state 1`] = `
+<sc-page-pin class="hydrated">
+  <ion-content>
+    <div id="pin">
+      <div id="pin-help">
+        <p>
+          Enter PIN
+        </p>
+        <p class="error"></p>
+      </div>
+      <div id="pin-entry">
+        <div class="active"></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <sc-numpad class="hydrated">
+        <mock:shadow-root>
+          <ion-fab-button data-testid="numpad-button-1" data-value="1">
+            1
+          </ion-fab-button>
+          <ion-fab-button data-testid="numpad-button-2" data-value="2">
+            2
+          </ion-fab-button>
+          <ion-fab-button data-testid="numpad-button-3" data-value="3">
+            3
+          </ion-fab-button>
+          <ion-fab-button data-testid="numpad-button-4" data-value="4">
+            4
+          </ion-fab-button>
+          <ion-fab-button data-testid="numpad-button-5" data-value="5">
+            5
+          </ion-fab-button>
+          <ion-fab-button data-testid="numpad-button-6" data-value="6">
+            6
+          </ion-fab-button>
+          <ion-fab-button data-testid="numpad-button-7" data-value="7">
+            7
+          </ion-fab-button>
+          <ion-fab-button data-testid="numpad-button-8" data-value="8">
+            8
+          </ion-fab-button>
+          <ion-fab-button data-testid="numpad-button-9" data-value="9">
+            9
+          </ion-fab-button>
+          <ion-fab-button data-testid="numpad-button-delete">
+            <ion-icon name="backspace-outline"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button data-testid="numpad-button-0" data-value="0">
+            0
+          </ion-fab-button>
+        </mock:shadow-root>
+      </sc-numpad>
+    </div>
+  </ion-content>
+</sc-page-pin>
+`;

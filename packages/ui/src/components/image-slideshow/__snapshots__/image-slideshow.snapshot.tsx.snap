@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render slideshow with single image 1`] = `
+<sc-image-slideshow class="hydrated">
+  <mock:shadow-root>
+    <ion-img class="slideshow-image" src="img1.jpg"></ion-img>
+  </mock:shadow-root>
+</sc-image-slideshow>
+`;

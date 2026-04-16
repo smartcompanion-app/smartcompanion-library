@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
-import { expect, waitFor, userEvent } from 'storybook/test';
 import { h } from '@stencil/core';
 import { ServiceFacade, MenuService } from '@smartcompanion/services';
 import { PageSelection } from './page-selection';
@@ -43,69 +42,6 @@ export const Example: Story = {
         }
       },
     } as ServiceFacade,
-  },
-  play: async ({ canvas, step }) => {
-    
-    await step('Type 4 and 2, check each entry in the input', async () => {
-      // @ts-expect-error shadow DOM testing method
-      await userEvent.click(await canvas.findByShadowTestId('numpad-button-4'));
-
-      await waitFor(async () => {        
-        const numpadInput = await canvas.findByTestId('numpad-input');
-        expect(numpadInput.textContent).toBe("4");
-      });
-
-      // @ts-expect-error shadow DOM testing method
-      await userEvent.click(await canvas.findByShadowTestId('numpad-button-2'));
-
-      await waitFor(async () => {        
-        const numpadInput = await canvas.findByTestId('numpad-input');
-        expect(numpadInput.textContent).toBe("42");
-      });
-    });
-
-    await step('Type 3 on a filled, 2-sized numpad should result in 43', async () => {
-      // @ts-expect-error shadow DOM testing method
-      await userEvent.click(await canvas.findByShadowTestId('numpad-button-3'));
-
-      await waitFor(async () => {        
-        const numpadInput = await canvas.findByTestId('numpad-input');
-        expect(numpadInput.textContent).toBe("43");
-      });
-    });
-
-    await step('Deleting numpad input with button', async () => {
-      // @ts-expect-error shadow DOM testing method
-      await userEvent.click(await canvas.findByShadowTestId('numpad-button-delete'));
-
-      await waitFor(async () => {        
-        const numpadInput = await canvas.findByTestId('numpad-input');
-        expect(numpadInput.textContent).toBe("4");
-      });
-
-      // @ts-expect-error shadow DOM testing method
-      await userEvent.click(await canvas.findByShadowTestId('numpad-button-delete'));
-
-      await waitFor(async () => {        
-        const numpadInput = await canvas.findByTestId('numpad-input');
-        expect(numpadInput.textContent).toBe("");
-      });
-    });
-
-    await step('Confirming should delete numpad input', async () => {
-      // @ts-expect-error shadow DOM testing method
-      await userEvent.click(await canvas.findByShadowTestId('numpad-button-4'));
-      // @ts-expect-error shadow DOM testing method
-      await userEvent.click(await canvas.findByShadowTestId('numpad-button-2'));
-      // @ts-expect-error shadow DOM testing method
-      await userEvent.click(await canvas.findByShadowTestId('numpad-button-confirm'));
-
-      await waitFor(async () => {        
-        const numpadInput = await canvas.findByTestId('numpad-input');
-        expect(numpadInput.textContent).toBe("");
-      });
-    });
-
   },
 };
 

@@ -1,5 +1,5 @@
-import { test, expect } from '@jest/globals';
-import { formatSeconds } from '../../src/utils/formatting-utils';
+import { test, expect } from '@stencil/vitest';
+import { formatSeconds } from './formatting-utils';
 
 test('formatSeconds formats seconds correctly', () => {
   expect(formatSeconds(0)).toBe('00:00');

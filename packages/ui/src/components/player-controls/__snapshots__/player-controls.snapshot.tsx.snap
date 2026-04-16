@@ -1,0 +1,85 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render player controls in default state 1`] = `
+<sc-player-controls id="player" class="hydrated">
+  <mock:shadow-root>
+    <div id="player-controls">
+      <ion-fab-button data-testid="player-prev-button">
+        <ion-icon name="play-skip-back"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button id="player-controls-play" data-testid="player-play-button">
+        <ion-icon name="play"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button data-testid="player-next-button">
+        <ion-icon name="play-skip-forward"></ion-icon>
+      </ion-fab-button>
+    </div>
+    <div id="player-position">
+      <ion-range data-testid="player-range-slider" value="0" disabled min="0" max="0">
+        <ion-text data-testid="player-position" slot="start">
+          00:00
+        </ion-text>
+        <ion-text data-testid="player-duration" slot="end">
+          00:00
+        </ion-text>
+      </ion-range>
+    </div>
+  </mock:shadow-root>
+</sc-player-controls>
+`;
+
+exports[`render player controls in disabled state 1`] = `
+<sc-player-controls id="player" class="hydrated">
+  <mock:shadow-root>
+    <div id="player-controls">
+      <ion-fab-button data-testid="player-prev-button">
+        <ion-icon name="play-skip-back"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button id="player-controls-play" data-testid="player-play-button" disabled>
+        <ion-icon name="play"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button data-testid="player-next-button">
+        <ion-icon name="play-skip-forward"></ion-icon>
+      </ion-fab-button>
+    </div>
+    <div id="player-position">
+      <ion-range data-testid="player-range-slider" value="0" disabled min="0" max="0">
+        <ion-text data-testid="player-position" slot="start">
+          00:00
+        </ion-text>
+        <ion-text data-testid="player-duration" slot="end">
+          00:00
+        </ion-text>
+      </ion-range>
+    </div>
+  </mock:shadow-root>
+</sc-player-controls>
+`;
+
+exports[`render player controls in playing state 1`] = `
+<sc-player-controls id="player" class="hydrated">
+  <mock:shadow-root>
+    <div id="player-controls">
+      <ion-fab-button data-testid="player-prev-button">
+        <ion-icon name="play-skip-back"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button id="player-controls-play" data-testid="player-play-button">
+        <ion-icon name="pause"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button data-testid="player-next-button">
+        <ion-icon name="play-skip-forward"></ion-icon>
+      </ion-fab-button>
+    </div>
+    <div id="player-position">
+      <ion-range data-testid="player-range-slider" value="30" min="0" max="120">
+        <ion-text data-testid="player-position" slot="start">
+          00:30
+        </ion-text>
+        <ion-text data-testid="player-duration" slot="end">
+          02:00
+        </ion-text>
+      </ion-range>
+    </div>
+  </mock:shadow-root>
+</sc-player-controls>
+`;

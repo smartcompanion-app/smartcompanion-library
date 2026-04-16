@@ -1,0 +1,72 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render 98% collected station icon as collected 13 1`] = `
+<sc-station-icon class="hydrated">
+  <mock:shadow-root>
+    <div class="station-icon-wrapper station-icon-size-normal">
+      <div class="station-icon">
+        <slot></slot>
+        <div class="collected-icon animate-pop-appearance">
+          <ion-icon name="checkmark"></ion-icon>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+  13
+</sc-station-icon>
+`;
+
+exports[`render collected station icon 13 1`] = `
+<sc-station-icon class="hydrated">
+  <mock:shadow-root>
+    <div class="station-icon-wrapper station-icon-size-normal">
+      <div class="station-icon">
+        <slot></slot>
+        <div class="collected-icon animate-pop-appearance">
+          <ion-icon name="checkmark"></ion-icon>
+        </div>
+      </div>
+    </div>
+  </mock:shadow-root>
+  13
+</sc-station-icon>
+`;
+
+exports[`render large station icon 13 1`] = `
+<sc-station-icon class="hydrated">
+  <mock:shadow-root>
+    <div class="station-icon-wrapper station-icon-size-large">
+      <div class="station-icon">
+        <slot></slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+  13
+</sc-station-icon>
+`;
+
+exports[`render normal station icon 13 1`] = `
+<sc-station-icon class="hydrated">
+  <mock:shadow-root>
+    <div class="station-icon-wrapper station-icon-size-normal">
+      <div class="station-icon">
+        <slot></slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+  13
+</sc-station-icon>
+`;
+
+exports[`render small station icon 13 1`] = `
+<sc-station-icon class="hydrated">
+  <mock:shadow-root>
+    <div class="station-icon-wrapper station-icon-size-small">
+      <div class="station-icon">
+        <slot></slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+  13
+</sc-station-icon>
+`;

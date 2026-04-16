@@ -1,0 +1,70 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render page tour list 1`] = `
+<sc-page-tour-list class="hydrated">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Tours
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <div class="tour-card">
+      <div class="tour-card-transparency"></div>
+      <div class="tour-details">
+        <div class="tour-title">
+          Tour 1
+        </div>
+        <div class="tour-description">
+          Dangerous Crocodile Tour
+        </div>
+        <div class="tour-actions">
+          <div>
+            <span class="info">
+              <ion-icon name="time-outline"></ion-icon>
+              <strong>
+                30 min
+              </strong>
+            </span>
+          </div>
+          <div class="right">
+            <ion-button data-tour-id="1" color="primary">
+              Start Tour
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tour-card">
+      <div class="tour-card-transparency"></div>
+      <div class="tour-details">
+        <div class="tour-title">
+          Tour 2
+        </div>
+        <div class="tour-description">
+          Majestic Elephant Tour
+        </div>
+        <div class="tour-actions">
+          <div>
+            <span class="info">
+              <ion-icon name="time-outline"></ion-icon>
+              <strong>
+                45 min
+              </strong>
+            </span>
+          </div>
+          <div class="right">
+            <ion-button data-tour-id="2" color="primary">
+              Start Tour
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</sc-page-tour-list>
+`;

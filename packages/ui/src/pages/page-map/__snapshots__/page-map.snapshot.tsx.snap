@@ -1,0 +1,69 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render page map 1`] = `
+<sc-page-map class="hydrated">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        menu-map
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <div slot="fixed" id="map" class="leaflet-container leaflet-grab leaflet-touch-drag" tabindex="0">
+      <div class="leaflet-pane leaflet-map-pane">
+        <div class="leaflet-pane leaflet-tile-pane">
+          <div class="leaflet-layer ">
+            <div class="leaflet-tile-container leaflet-zoom-animated">
+              <img src="map-assets/17/45789/69966.jpeg" class="leaflet-tile">
+            </div>
+          </div>
+        </div>
+        <div class="leaflet-pane leaflet-overlay-pane"></div>
+        <div class="leaflet-pane leaflet-shadow-pane"></div>
+        <div class="leaflet-pane leaflet-marker-pane">
+          <div class="leaflet-marker-icon station-map-icon leaflet-zoom-hide leaflet-interactive" tabindex="0" role="button">
+            <sc-station-icon class="hydrated">
+              <mock:shadow-root>
+                <div class="station-icon-wrapper station-icon-size-normal">
+                  <div class="station-icon">
+                    <slot></slot>
+                  </div>
+                </div>
+              </mock:shadow-root>
+              1
+            </sc-station-icon>
+          </div>
+          <div class="leaflet-marker-icon station-map-icon leaflet-zoom-hide leaflet-interactive" tabindex="0" role="button">
+            <sc-station-icon class="hydrated">
+              <mock:shadow-root>
+                <div class="station-icon-wrapper station-icon-size-normal">
+                  <div class="station-icon">
+                    <slot></slot>
+                  </div>
+                </div>
+              </mock:shadow-root>
+              2
+            </sc-station-icon>
+          </div>
+        </div>
+        <div class="leaflet-pane leaflet-tooltip-pane"></div>
+        <div class="leaflet-pane leaflet-popup-pane"></div>
+      </div>
+      <div class="leaflet-control-container">
+        <div class="leaflet-top leaflet-left"></div>
+        <div class="leaflet-top leaflet-right"></div>
+        <div class="leaflet-bottom leaflet-left"></div>
+        <div class="leaflet-bottom leaflet-right">
+          <div class="leaflet-control-attribution leaflet-control">
+            © basemap.at
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</sc-page-map>
+`;

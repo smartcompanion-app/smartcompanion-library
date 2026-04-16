@@ -1,0 +1,84 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render numpad with confirm button 1`] = `
+<sc-numpad class="hydrated">
+  <mock:shadow-root>
+    <ion-fab-button data-testid="numpad-button-1" data-value="1">
+      1
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-2" data-value="2">
+      2
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-3" data-value="3">
+      3
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-4" data-value="4">
+      4
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-5" data-value="5">
+      5
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-6" data-value="6">
+      6
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-7" data-value="7">
+      7
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-8" data-value="8">
+      8
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-9" data-value="9">
+      9
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-delete">
+      <ion-icon name="backspace-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-0" data-value="0">
+      0
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-confirm">
+      <ion-icon name="send-outline"></ion-icon>
+    </ion-fab-button>
+  </mock:shadow-root>
+</sc-numpad>
+`;
+
+exports[`render numpad without confirm button 1`] = `
+<sc-numpad class="hydrated">
+  <mock:shadow-root>
+    <ion-fab-button data-testid="numpad-button-1" data-value="1">
+      1
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-2" data-value="2">
+      2
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-3" data-value="3">
+      3
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-4" data-value="4">
+      4
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-5" data-value="5">
+      5
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-6" data-value="6">
+      6
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-7" data-value="7">
+      7
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-8" data-value="8">
+      8
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-9" data-value="9">
+      9
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-delete">
+      <ion-icon name="backspace-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button data-testid="numpad-button-0" data-value="0">
+      0
+    </ion-fab-button>
+  </mock:shadow-root>
+</sc-numpad>
+`;

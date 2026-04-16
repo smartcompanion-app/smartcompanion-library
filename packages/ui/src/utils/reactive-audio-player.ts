@@ -142,7 +142,7 @@ export class ReactiveAudioPlayer {
    * Read earpiece state from storage or default to false
    */
   readEarpiece(): boolean {
-    return window.localStorage.getItem('audio-earpiece') == 'yes' ? true : false;
+    return globalThis.localStorage.getItem('audio-earpiece') == 'yes' ? true : false;
   }
   
   /**
@@ -268,7 +268,7 @@ export class ReactiveAudioPlayer {
       await this.facade.getAudioPlayerService().setEarpiece();
     }
     this.updateEarpiece(!this.earpiece);
-    window.localStorage.setItem('audio-earpiece', this.earpiece ? 'yes' : 'no');
+    globalThis.localStorage.setItem('audio-earpiece', this.earpiece ? 'yes' : 'no');
   }
 
   async onSkip(update: AudioPlayerUpdate) {

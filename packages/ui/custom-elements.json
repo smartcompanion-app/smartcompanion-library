@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-16T07:21:52",
+  "timestamp": "2026-04-16T19:26:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.43.3",
@@ -2255,6 +2255,35 @@
             }
           ],
           "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "lowerLimitPercent",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "lower-limit-percent",
+          "reflectToAttr": false,
+          "docs": "Lower limit percentage threshold for starting to show the collection progress",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "3"
+            }
+          ],
+          "default": "3",
           "values": [
             {
               "type": "number"

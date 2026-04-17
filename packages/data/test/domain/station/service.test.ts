@@ -56,6 +56,14 @@ describe('test station service', () => {
     expect(resolveUrl.mock.calls.length).toEqual(0);
   });
 
+  test('should return empty array when unresolved stations storage entry does not exist', () => {
+    memoryStorage.set('language', 'xy');
+
+    const stations = service.getUnresolvedStations();
+
+    expect(stations).toEqual([]);
+  });
+
   test('should store collected percentage for station', async () => {
     resolveUrl.mockReturnValue('http://internal.url');
     memoryStorage.set('language', 'xy');
@@ -75,6 +83,26 @@ describe('test station service', () => {
 
   test('should throw for non existing station, when storing collected percentage', async () => {
     await expect(service.updateCollectedPercentage("123", "123", 0.456)).rejects.toThrow();
+  });
+
+  test('should default collectedPercentage to 0 when missing, null, or NaN in storage', async () => {
+    memoryStorage.set('language', 'xy');
+    resolveUrl.mockReturnValue('http://internal.url');
+
+    const undefinedStation = setStationToStorage(memoryStorage, 'xy');
+    const nullStation = setStationToStorage(memoryStorage, 'xy');
+    const nanStation = setStationToStorage(memoryStorage, 'xy');
+
+    (memoryStorage.get(`station-xy-${nullStation.id}`) as Station).collectedPercentage = null as unknown as number;
+    (memoryStorage.get(`station-xy-${nanStation.id}`) as Station).collectedPercentage = NaN;
+
+    const loadedUndefined = await service.getStation(undefinedStation.id);
+    const loadedNull = await service.getStation(nullStation.id);
+    const loadedNaN = await service.getStation(nanStation.id);
+
+    expect(loadedUndefined.collectedPercentage).toBe(0);
+    expect(loadedNull.collectedPercentage).toBe(0);
+    expect(loadedNaN.collectedPercentage).toBe(0);
   });
 
   test('should remove collected percentage for all stations in language', async () => {

@@ -50,3 +50,8 @@ test('render station icon with custom lowerLimitPercent above boundary shows pro
   const { root } = await render(<sc-station-icon collectedPercent={15} lowerLimitPercent={10}>13</sc-station-icon>);
   expect(root).toMatchSnapshot();
 });
+
+test('render station icon with NaN collectedPercent falls back to 0% progress', async () => {
+  const { root } = await render(<sc-station-icon collectedPercent={NaN}>13</sc-station-icon>);
+  expect(root).toMatchSnapshot();
+});

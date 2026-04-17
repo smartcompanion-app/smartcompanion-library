@@ -32,6 +32,9 @@ export class StationIcon {
   @Prop() size: 'small' | 'normal' | 'large' = 'normal';
 
   private calculatePercent() {
+    if (!Number.isFinite(this.collectedPercent)) {
+      return 0;
+    }
     if (this.collectedPercent >= this.upperLimitPercent) {
       return 100;
     } else if (this.collectedPercent <= this.lowerLimitPercent) {

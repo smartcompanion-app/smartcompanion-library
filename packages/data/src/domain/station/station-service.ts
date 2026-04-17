@@ -22,7 +22,11 @@ export class StationService {
    * Get Stations without resolving assets
    */
   getUnresolvedStations(): Station[] {
-    return this.storage.get(`stations-${this.getLanguage()}`) as Station[];
+    if (this.storage.has(`stations-${this.getLanguage()}`)) {
+      return this.storage.get(`stations-${this.getLanguage()}`) as Station[];
+    } else {
+      return [];
+    }
   }
 
   async getStations(): Promise<Station[]> {
@@ -45,6 +49,10 @@ export class StationService {
     }
 
     const station = this.storage.get(storageKey) as Station;
+
+    if (!Number.isFinite(station.collectedPercentage)) {
+      station.collectedPercentage = 0;
+    }
 
     if (station && station.images) {
       for (let i = 0; i < station.images.length; i++) {

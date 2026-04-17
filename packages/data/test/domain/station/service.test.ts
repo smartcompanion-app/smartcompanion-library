@@ -73,8 +73,8 @@ describe('test station service', () => {
     expect(storedStations.filter((station: Station) => station.id == initialStation.id)[0].collectedPercentage).toEqual(0.456);
   });
 
-  test('should not throw for non existing station, when storing collected percentage', async () => {
-    expect(async () => service.updateCollectedPercentage("123", "123", 0.456)).not.toThrow();
+  test('should throw for non existing station, when storing collected percentage', async () => {
+    await expect(service.updateCollectedPercentage("123", "123", 0.456)).rejects.toThrow();
   });
 
   test('should remove collected percentage for all stations in language', async () => {

@@ -179,18 +179,20 @@ export class ReactiveAudioPlayer {
       } else if (update.state == "completed") {
         await this.onCompleted(update);
       } else if (update.state == "collected") {
-        const stationId = this.facade.getAudioPlayerService().getStationId(update.index);
-
-        const station = await this
-          .facade
-          .getStationService()
-          .updateCollectedPercentage(
-            stationId,
-            update.id,
-            update.percentage
-          );
-
-        await this.onCollected(update, station);
+        try {
+          const stationId = this.facade.getAudioPlayerService().getStationId(update.index);
+          const station = await this
+            .facade
+            .getStationService()
+            .updateCollectedPercentage(
+              stationId,
+              update.id,
+              update.percentage
+            );
+          await this.onCollected(update, station);
+        } catch (e) {
+          console.error("Error updating collected percentage for station", e);
+        }
       }
     });
 

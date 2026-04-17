@@ -22,7 +22,7 @@ describe('test data language', () => {
       service.changeLanguage(test['language']);
 
       expect(service.hasLanguage()).toBeFalsy();
-      expect(memoryStorage.get('language')).toBeNull();
+      expect(memoryStorage.has('language')).toBeFalsy();
   });
 
     test('should set language, when no language set in storage', () => {
@@ -60,6 +60,6 @@ describe('test data language', () => {
         service.changeLanguage('xy');
 
         expect(service.hasLanguage()).toBeFalsy();
-        expect(memoryStorage.get('language')).toEqual(null);
+        expect(memoryStorage.has('language')).toBeFalsy();
     });
 });

@@ -42,7 +42,11 @@ export class PinService {
   }
 
   isPinValidationRequired(): boolean {
-    const pins = this.storage.get('pins') as string[];
-    return this.storage.has('pins') && Array.isArray(pins) && pins.length > 0;
+    if (this.storage.has('pins')) {
+      const pins = this.storage.get('pins') as string[];
+      return Array.isArray(pins) && pins.length > 0;
+    } else {
+      return false;
+    }    
   }
 }

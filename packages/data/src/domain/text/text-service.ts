@@ -10,12 +10,10 @@ export class TextService {
   }
 
   getCurrentLanguage() {
-    const language = this.storage.get('language') as string | null;
-
-    if (!language) {
+    if (!this.storage.has('language')) {
       return 'en'; // default set en for texts
     } else {
-      return language;
+      return this.storage.get('language') as string;
     }
   }
 

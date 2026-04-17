@@ -11,7 +11,11 @@ export class StationService {
   }
 
   getLanguage(): string {
-    return this.storage.get('language') as string;
+    if (!this.storage.has('language')) {
+      return 'en'; // default set en for stations
+    } else {
+      return this.storage.get('language') as string;
+    }    
   }
 
   /**
@@ -34,7 +38,13 @@ export class StationService {
   }
 
   async getStation(stationId: string): Promise<Station> {
-    const station = this.storage.get(`station-${this.getLanguage()}-${stationId}`) as Station;
+    const storageKey = `station-${this.getLanguage()}-${stationId}`;
+
+    if (!this.storage.has(storageKey)) {
+      throw new Error(`station with id ${stationId} not found`);
+    }
+
+    const station = this.storage.get(storageKey) as Station;
 
     if (station && station.images) {
       for (let i = 0; i < station.images.length; i++) {
@@ -52,20 +62,22 @@ export class StationService {
   }
 
   updateCollectedPercentage(stationId: string, audioAssetId: string, collectedPercentage: number): Promise<Station> {
-    if (this.storage.has(`station-${this.getLanguage()}-${stationId}`)) {
-      const station = this.storage.get(`station-${this.getLanguage()}-${stationId}`) as Station;
+    const storageKey = `station-${this.getLanguage()}-${stationId}`;
+
+    if (this.storage.has(storageKey)) {
+      const station = this.storage.get(storageKey) as Station;
 
       // currently only a 1-to-1 correspondence between audio and station is supported
       if (station?.audios?.length == 1 && station?.audios[0] == audioAssetId) {
         const stations = this.storage.get(`stations-${this.getLanguage()}`) as Station[];
         station.collectedPercentage = collectedPercentage;
-        this.storage.set(`station-${this.getLanguage()}-${stationId}`, station);
+        this.storage.set(storageKey, station);
         this.storage.set(
           `stations-${this.getLanguage()}`,
           stations.map((s: Station) => (s.id == stationId ? station : s)),
         );
       }
-    }
+    }    
 
     return this.getStation(stationId);
   }

@@ -9,11 +9,11 @@ export class MemoryStorage implements Storage {
 
   get(key: string) {
     if (this.has(key)) return this.storage[key];
-    return null;
+    throw new Error(`reading ${key} was a null value`);
   }
 
   has(key: string): boolean {
-    return !!this.storage[key];
+    return this.storage[key] !== undefined;
   }
 
   unset(key: string): void {

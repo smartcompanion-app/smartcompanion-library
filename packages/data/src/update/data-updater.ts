@@ -1,7 +1,7 @@
 import { Storage } from '../storage';
 import { Updater } from './updater';
 
-import { AssetUpdater, StationUpdater, LanguageUpdater, TextUpdater, PinUpdater, TourUpdater, ServerUpdater } from '../domain';
+import { AssetUpdater, StationUpdater, LanguageUpdater, TextUpdater, PinUpdater, TourUpdater, ServerUpdater, ShareUpdater } from '../domain';
 
 /**
  * Based on the provided data, updates on the storage are processed.
@@ -22,6 +22,7 @@ export class DataUpdater implements Updater {
     this.registerUpdater('pins', new PinUpdater(this.storage));
     this.registerUpdater('tours', new TourUpdater(this.storage));
     this.registerUpdater('servers', new ServerUpdater(this.storage));
+    this.registerUpdater('share', new ShareUpdater(this.storage));
   }
 
   registerUpdater(name: string, updater: Updater) {

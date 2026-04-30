@@ -5,3 +5,4 @@ export * from './station';
 export * from './pin';
 export * from './tour';
 export * from './server';
+export * from './share';

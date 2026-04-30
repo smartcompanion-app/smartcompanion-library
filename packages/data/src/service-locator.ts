@@ -1,4 +1,4 @@
-import { AssetService, LanguageService, PinService, ServerService, StationService, TextService, TourService, Asset } from './domain';
+import { AssetService, LanguageService, PinService, ServerService, ShareService, StationService, TextService, TourService, Asset } from './domain';
 import { LoadService } from './load';
 import { Storage } from './storage';
 
@@ -23,6 +23,7 @@ export class ServiceLocator {
     this.register(PinService, (serviceLocator: ServiceLocator) => new PinService(serviceLocator.storage));
     this.register(AssetService, (serviceLocator: ServiceLocator) => new AssetService(serviceLocator.storage, resolveUrl));
     this.register(ServerService, (serviceLocator: ServiceLocator) => new ServerService(serviceLocator.storage));
+    this.register(ShareService, (serviceLocator: ServiceLocator) => new ShareService(serviceLocator.storage));
     this.register(TextService, (serviceLocator: ServiceLocator) => new TextService(serviceLocator.storage));
     this.register(StationService, (serviceLocator: ServiceLocator) => new StationService(serviceLocator.storage, serviceLocator.getAssetService()));
     this.register(TourService, (serviceLocator: ServiceLocator) => new TourService(serviceLocator.storage, serviceLocator.getAssetService(), serviceLocator.getStationService()));
@@ -61,6 +62,10 @@ export class ServiceLocator {
 
   getServerService(): ServerService {
     return this.get(ServerService);
+  }
+
+  getShareService(): ShareService {
+    return this.get(ShareService);
   }
 
   getTextService(): TextService {

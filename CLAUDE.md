@@ -9,9 +9,6 @@ TypeScript monorepo with npm workspaces containing reusable packages for SmartCo
 - `@smartcompanion/services` — Service layer (AudioPlayerService, MenuService, RoutingService)
 - `@smartcompanion/ui` — Stencil web components (image-slideshow, marquee, numpad, player-controls, station-icon)
 
-**Apps:**
-- `apps/audioguide-app` — Consumer application workspace member built on top of the packages above
-
 ## Git
 
 - Main branch: `main`

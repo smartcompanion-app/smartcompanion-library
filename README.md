@@ -60,10 +60,6 @@ npm run watch -w packages/ui       # Stencil watch mode
 npm run storybook -w packages/ui   # Dev server at http://localhost:6006
 ```
 
-### apps/audioguide-app
-
-The `apps/audioguide-app` workspace is a consumer application included in this monorepo. It is built on top of the packages above.
-
 ## License
 
 The SmartCompanion Library Packages are licensed under the terms of the BSD 2-Clause license. Check the [LICENSE](LICENSE) text for further details.
@@ -72,4 +68,5 @@ The SmartCompanion Library Packages are licensed under the terms of the BSD 2-Cl
 
 - [Web site](https://www.smartcompanion.app)
 - [Storybook](https://smartcompanion-app.github.io/smartcompanion-library/)
+- [SmartCompanion Audioguide App](https://github.com/smartcompanion-app/audioguide-app)
 - [Native Audio Capacitor Plugin](https://github.com/smartcompanion-app/native-audio-player)

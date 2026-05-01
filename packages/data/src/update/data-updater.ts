@@ -38,7 +38,11 @@ export class DataUpdater implements Updater {
   }
 
   isValidDataObject(data: unknown): data is Record<string, unknown> {
-    return this.isPlainObject(data) && ['checksum', 'assets', 'stations', 'languages', 'texts'].every(key => data[key] !== undefined);
+    return (
+      this.isPlainObject(data) &&
+      typeof data['checksum'] === 'string' &&
+      ['assets', 'stations', 'languages', 'texts'].every(key => Array.isArray(data[key]))
+    );
   }
 
   async update(data: unknown) {

@@ -16,9 +16,16 @@ describe('test data updater', () => {
     expect(dataUpdater.isValidDataObject(null)).toBeFalsy();
     expect(dataUpdater.isValidDataObject(undefined)).toBeFalsy();
     expect(dataUpdater.isValidDataObject([])).toBeFalsy();
-    expect(dataUpdater.isValidDataObject("123")).toBeFalsy();
+    expect(dataUpdater.isValidDataObject('123')).toBeFalsy();
     expect(dataUpdater.isValidDataObject({})).toBeFalsy();
-    expect(dataUpdater.isValidDataObject({ checksum: '123' })).toBeFalsy();
+    expect(dataUpdater.isValidDataObject({ checksum: '123' })).toBeFalsy();    
+    expect(dataUpdater.isValidDataObject({ checksum: 123, assets: [], stations: [], languages: [], texts: [] })).toBeFalsy();
+    expect(dataUpdater.isValidDataObject({ checksum: '123', assets: null, stations: [], languages: [], texts: [] })).toBeFalsy();
+    expect(dataUpdater.isValidDataObject({ checksum: '123', assets: undefined, stations: [], languages: [], texts: [] })).toBeFalsy();
+    expect(dataUpdater.isValidDataObject({ checksum: '123', assets: {}, stations: [], languages: [], texts: [] })).toBeFalsy();
+    expect(dataUpdater.isValidDataObject({ checksum: '123', assets: '123', stations: [], languages: [], texts: [] })).toBeFalsy();
+    expect(dataUpdater.isValidDataObject({ checksum: '123', assets: 123, stations: [], languages: [], texts: [] })).toBeFalsy();
+    expect(dataUpdater.isValidDataObject({ checksum: '123', assets: { length: 1 }, stations: [], languages: [], texts: [] })).toBeFalsy();
     expect(dataUpdater.isValidDataObject({ checksum: '123', assets: [], stations: [], languages: [], texts: [] })).toBeTruthy();
   });
 
@@ -36,7 +43,7 @@ describe('test data updater', () => {
     expect(dataUpdater.requiresUpdate({ checksum: '123' })).toBeFalsy();
   });
 
-  test('updaters should be loaded based on keys in the data and availability of Updater', () => {
+  test('updaters should be loaded based on keys in the data and availability of Updater', async () => {
     class MockUpdater {
       update = vi.fn();
     }
@@ -60,7 +67,7 @@ describe('test data updater', () => {
       languages: [{ id: '1', name: 'Language 1' }]      
     };
 
-    dataUpdater.update(data);
+    await dataUpdater.update(data);
 
     expect(mockTourUpdater.update).not.toHaveBeenCalled();
     expect(mockStationUpdater.update).toHaveBeenCalled();

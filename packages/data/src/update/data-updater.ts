@@ -30,18 +30,19 @@ export class DataUpdater implements Updater {
   }
 
   requiresUpdate(data: Record<string, unknown>): boolean {
-    return !!data && (!this.storage.has('checksum') || this.storage.get('checksum') != data['checksum']);
+    return !this.storage.has('checksum') || (this.storage.get('checksum') != data['checksum']);
   }
 
-  private isPlainObject(data: unknown): data is Record<string, unknown> {
+  isPlainObject(data: unknown): data is Record<string, unknown> {
     return Object.prototype.toString.call(data) === '[object Object]';
   }
 
+  isValidDataObject(data: unknown): data is Record<string, unknown> {
+    return this.isPlainObject(data) && ['checksum', 'assets', 'stations', 'languages', 'texts'].every(key => data[key] !== undefined);
+  }
+
   async update(data: unknown) {
-    if (!this.isPlainObject(data)) {
-      return;
-    }
-    if (this.requiresUpdate(data)) {
+    if (this.isValidDataObject(data) && this.requiresUpdate(data)) {
       const updates: Promise<void>[] = [];
       for (const updaterKey in data) {
         if (updaterKey in this.updaters) {

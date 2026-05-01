@@ -30,7 +30,7 @@ export class DataUpdater implements Updater {
   }
 
   requiresUpdate(data: Record<string, unknown>): boolean {
-    return !this.storage.has('checksum') || (this.storage.get('checksum') != data['checksum']);
+    return !this.storage.has('checksum') || (this.storage.get('checksum') !== data['checksum']);
   }
 
   isPlainObject(data: unknown): data is Record<string, unknown> {

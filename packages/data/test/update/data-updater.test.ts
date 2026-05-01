@@ -74,6 +74,6 @@ describe('test data updater', () => {
     await dataUpdater.update({});
     await dataUpdater.update(undefined);
     await dataUpdater.update([]);
-    await dataUpdater.update("123");
+    await dataUpdater.update('123');
   });
 });

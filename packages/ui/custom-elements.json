@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-16T16:01:09",
+  "timestamp": "2026-05-16T16:43:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.43.4",
@@ -400,6 +400,29 @@
             }
           ],
           "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "imageDark",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "image-dark",
+          "reflectToAttr": false,
+          "docs": "The image to display while loading when dark mode is active. Falls back to `image` if not provided.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false

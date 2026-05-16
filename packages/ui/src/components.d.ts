@@ -56,6 +56,10 @@ export namespace Components {
          */
         "image": string;
         /**
+          * The image to display while loading when dark mode is active. Falls back to `image` if not provided.
+         */
+        "imageDark"?: string;
+        /**
           * Loading Text Color 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
@@ -555,6 +559,10 @@ declare namespace LocalJSX {
          */
         "image"?: string;
         /**
+          * The image to display while loading when dark mode is active. Falls back to `image` if not provided.
+         */
+        "imageDark"?: string;
+        /**
           * Loading Text Color 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
@@ -861,6 +869,7 @@ declare namespace LocalJSX {
         "progressBarColor": 'primary' | 'secondary';
         "loadingTextColor": 'primary' | 'secondary';
         "image": string;
+        "imageDark": string;
         "homeRoute": string;
     }
     interface ScPageMapAttributes {

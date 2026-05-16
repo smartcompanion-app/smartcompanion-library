@@ -17,7 +17,7 @@
 }
 
 .progress-ring-fill {
-  stroke: var(--sc-station-icon-progress);
+  stroke: var(--sc-station-icon-progress-color);
   transition: stroke-dashoffset 0.5s ease-out;
 }
 
@@ -73,8 +73,8 @@
   align-content: center;
   right: -4px;
   bottom: -4px;
-  border: 1px solid var(--sc-station-icon-progress);
-  color: var(--sc-station-icon-progress);
+  border: 1px solid var(--sc-station-icon-progress-color);
+  color: var(--sc-station-icon-progress-color);
   background: var(--ion-color-primary-contrast);
   z-index: 2;
 }

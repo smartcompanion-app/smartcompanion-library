@@ -1,5 +1,5 @@
 #player {
-  background: #ddd;
+  background: var(--ion-color-step-150, #ddd);
   z-index: 500;
 
   &-controls {

@@ -3,17 +3,13 @@
     flex-flow: column;
     height: 100%;
 
-    sc-station-icon {
-      --sc-station-icon-background: var(--ion-color-primary);
-      --sc-station-icon-progress: var(--ion-color-primary);
-    }
     ion-content {
-      --background: #f6f6f6;
+      --background: var(--ion-background-color-step-50);
     }
 
     .station-subtitle {
       font-size: 60%;
-      color: #666;
+      color: var(--ion-text-color-step-400);
       margin-top: 2px;
       display: block;
       grid-column-start: 1;
@@ -29,14 +25,17 @@
     .station-audios {
       flex: 100% 1 1;
       padding: 10px 0;
-      border-top: 1px solid #eee;
+      border-top: 1px solid var(--ion-background-color-step-100);
 
       .active {
         color: var(--ion-color-primary);
-
         ion-icon {
           color: var(--ion-color-primary);
         }
+      }
+
+      ion-card, ion-list, ion-item {
+        --background: var(--ion-background-color);
       }
     }
 

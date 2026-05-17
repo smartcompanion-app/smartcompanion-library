@@ -34,11 +34,17 @@ const getPlayerButton = (root: HTMLElement, testId: string) => {
 };
 
 describe('sc-page-stations', () => {
+  // The native audio player appends `<audio id="web-audio">` to document.body
+  // once start() has populated its items list. Wait for it before any prev/next
+  // click, otherwise the player throws when accessing items[-1].
+  const waitForAudioReady = () => expect.poll(() => document.querySelector('#web-audio') !== null).toBe(true);
+
   it('should activate last item when clicking prev from first item', async () => {
     const { root, waitForChanges } = await render(
       <sc-page-stations stationId="default" enableSwitchAudioOutput={false} facade={facade}></sc-page-stations>
     );
     await waitForChanges();
+    await waitForAudioReady();
 
     getPlayerButton(root, 'player-prev-button').click();
 
@@ -53,6 +59,7 @@ describe('sc-page-stations', () => {
       <sc-page-stations stationId="default" enableSwitchAudioOutput={false} facade={facade}></sc-page-stations>
     );
     await waitForChanges();
+    await waitForAudioReady();
 
     // Navigate to last item first
     getPlayerButton(root, 'player-prev-button').click();

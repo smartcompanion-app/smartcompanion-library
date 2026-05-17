@@ -18,49 +18,59 @@ export default meta;
 
 type Story = StoryObj<PageLoading>;
 
+const facadeMock = {
+  getLoadService: () => {
+    let progress = 0;
+    return {
+      setProgressListener: (listener: (progress: number) => void) => {
+        progress = 0; // Reset progress
+        const interval = setInterval(() => {
+          progress += 2;
+          listener(progress);
+          if (progress >= 500) {
+            clearInterval(interval);
+          }
+        }, 100); // Simulate progress every 100ms
+      },
+      load: () => {
+        return new Promise((resolve) => {
+          const interval = setInterval(() => {
+            if (progress >= 100) {
+              clearInterval(interval);
+              resolve('home'); // Simulate successful load
+            }
+          }, 500); // Simulate loading
+        });
+      },
+      isLoaded: () => true,
+    };
+  },
+  getMenuService: () => ({
+    disable: () => {
+      console.log('Menu disabled');
+      return Promise.resolve();
+    },
+  }) as MenuService,
+  getRoutingService: () => ({
+    addRouteChangeListener: (route: string, callback: () => void) => {
+      console.log(`Route change listener added for ${route}`);
+      setTimeout(callback, 500); // Simulate route change after 500ms
+    },
+  }) as RoutingService,
+} as ServiceFacade;
+
 export const Example: Story = {
   args: {
     image: "assets/example-loading.png",
-    facade: {
-      getLoadService: () => {
-        let progress = 0;
-        return {
-          setProgressListener: (listener: (progress: number) => void) => {            
-            progress = 0; // Reset progress
-            const interval = setInterval(() => {
-              progress += 2;
-              listener(progress);
-              if (progress >= 500) {
-                clearInterval(interval);
-              }
-            }, 100); // Simulate progress every 100ms
-          },
-          load: () => {
-            return new Promise((resolve) => {
-              const interval = setInterval(() => {
-                if (progress >= 100) {
-                  clearInterval(interval);
-                  resolve('home'); // Simulate successful load
-                }
-              }, 500); // Simulate loading
-            });
-          },
-          isLoaded: () => true,
-        };
-      },
-      getMenuService: () => ({
-        disable: () => {
-          console.log('Menu disabled');
-          return Promise.resolve();
-        },
-      }) as MenuService,
-      getRoutingService: () => ({
-        addRouteChangeListener: (route: string, callback: () => void) => {
-          console.log(`Route change listener added for ${route}`);
-          setTimeout(callback, 500); // Simulate route change after 500ms
-        },      
-      }) as RoutingService
-    } as ServiceFacade,
+    facade: facadeMock,
+  },
+};
+
+export const DarkImageExample: Story = {
+  args: {
+    image: "assets/example-loading.png",
+    imageDark: "assets/example-loading-dark.png",
+    facade: facadeMock,
   },
 };
 

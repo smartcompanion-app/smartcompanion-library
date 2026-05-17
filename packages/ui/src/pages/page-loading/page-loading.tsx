@@ -28,7 +28,12 @@ export class PageLoading {
    * The image to display while loading
    */
   @Prop() image: string;
-  
+
+  /**
+   * The image to display while loading when dark mode is active. Falls back to `image` if not provided.
+   */
+  @Prop() imageDark?: string;
+
   /**
    * The default or home route, when loading is successfully completed
    */
@@ -69,7 +74,13 @@ export class PageLoading {
       <ion-content>
         <div id="loading">
           <div id="loading-image" >
-            <img src={ this.image }></img>
+            {this.imageDark !== undefined && this.imageDark !== ''
+              ? [
+                <img class="loading-image-light" src={this.image} />,
+                <img class="loading-image-dark" src={this.imageDark} />,
+              ]
+              : <img src={this.image} />
+            }
           </div>
           <div id="loading-info">
             {this.progress >= 1

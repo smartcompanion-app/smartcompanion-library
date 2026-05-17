@@ -33,7 +33,7 @@ export const Example: Story = {
       }) as TourService,
       __: (key: string) => {
         switch (key) {
-          case 'tour-list':
+          case 'menu-overview':
             return 'Tour Overview';
           case 'start-tour':
             return 'Start Tour';

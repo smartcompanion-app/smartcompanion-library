@@ -6,6 +6,29 @@ setCustomElementsManifest(customElements);
 
 const preview: Preview = {
 
+  globalTypes: {
+    theme: {
+      description: 'Color theme',
+      defaultValue: 'light',
+      toolbar: {
+        title: 'Theme',
+        icon: 'circlehollow',
+        items: [
+          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark', icon: 'moon' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+
+  decorators: [
+    (Story, context) => {
+      document.documentElement.classList.toggle('ion-palette-dark', context.globals.theme === 'dark');
+      return Story();
+    },
+  ],
+
   parameters: {
     layout: 'fullscreen',
     viewport: {

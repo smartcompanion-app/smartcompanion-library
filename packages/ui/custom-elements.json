@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-17T17:21:18",
+  "timestamp": "2026-05-17T17:33:08",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.43.4",
@@ -400,6 +400,29 @@
             }
           ],
           "optional": false,
+          "required": false,
+          "getter": false,
+          "setter": false
+        },
+        {
+          "name": "imageDark",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "image-dark",
+          "reflectToAttr": false,
+          "docs": "The image to display while loading when dark mode is active. Falls back to `image` if not provided.",
+          "docsTags": [],
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": true,
           "required": false,
           "getter": false,
           "setter": false
@@ -1757,7 +1780,7 @@
     },
     {
       "filePath": "src/pages/page-tabbed-station-list/page-tabbed-station-list.tsx",
-      "encapsulation": "shadow",
+      "encapsulation": "none",
       "tag": "sc-page-tabbed-station-list",
       "docs": "",
       "docsTags": [],

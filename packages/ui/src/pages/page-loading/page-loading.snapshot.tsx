@@ -23,3 +23,10 @@ test('render page loading with spinner', async () => {
   );
   expect(root).toMatchSnapshot();
 });
+
+test('render page loading with dark image', async () => {
+  const { root } = await render(
+    <sc-page-loading image="assets/loading.png" imageDark="assets/loading-dark.png" facade={facade}></sc-page-loading>
+  );
+  expect(root).toMatchSnapshot();
+});

@@ -1,5 +1,21 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`render page loading with dark image 1`] = `
+<sc-page-loading class="hydrated">
+  <ion-content>
+    <div id="loading">
+      <div id="loading-image">
+        <img class="loading-image-light" src="assets/loading.png">
+        <img class="loading-image-dark" src="assets/loading-dark.png">
+      </div>
+      <div id="loading-info">
+        <ion-spinner color="primary"></ion-spinner>
+      </div>
+    </div>
+  </ion-content>
+</sc-page-loading>
+`;
+
 exports[`render page loading with spinner 1`] = `
 <sc-page-loading class="hydrated">
   <ion-content>

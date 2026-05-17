@@ -2,159 +2,30 @@
 
 exports[`render page tabbed station list 1`] = `
 <sc-page-tabbed-station-list class="hydrated">
-  <mock:shadow-root>
-    <ion-tabs>
-      <ion-tab tab="tab-images">
-        <sc-page-station-image-list class="hydrated">
-          <ion-header>
-            <ion-toolbar color="primary">
-              <ion-buttons slot="start">
-                <ion-menu-button></ion-menu-button>
-              </ion-buttons>
-              <ion-title>
-                Station Overview
-              </ion-title>
-            </ion-toolbar>
-          </ion-header>
-          <ion-content class="station-image-list">
-            <ion-list>
-              <ion-card>
-                <ion-item button lines="none">
-                  <ion-avatar slot="start">
-                    <sc-station-icon class="hydrated">
-                      <mock:shadow-root>
-                        <div class="station-icon-wrapper station-icon-size-large">
-                          <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
-                            <circle class="progress-ring-track" cx="20" cy="20" r="18.5" stroke-width="3" fill="none"></circle>
-                            <circle class="progress-ring-fill" cx="20" cy="20" r="18.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="116.23892818282235" stroke-dashoffset="116.23892818282235" transform="rotate(-90 20 20)"></circle>
-                          </svg>
-                          <div class="station-icon">
-                            <slot></slot>
-                          </div>
-                        </div>
-                      </mock:shadow-root>
-                      1
-                    </sc-station-icon>
-                  </ion-avatar>
-                  <ion-label>
-                    <h2>
-                      Station 1
-                    </h2>
-                    <p>
-                      Crocodile
-                    </p>
-                  </ion-label>
-                </ion-item>
-                <img class="station-image-list-image" src="station-assets/crocodile.jpg">
-                <ion-card-content>
-                  <p class="station-image-list-description">
-                    The crocodile is a large aquatic reptile that lives throughout the tropics in Africa, Asia, the Americas and Australia. Crocodiles tend to congregate in freshwater habitats like rivers, lakes, wetlands and sometimes in brackish water.
-                  </p>
-                  <ion-button data-station-id="1">
-                    View
-                  </ion-button>
-                </ion-card-content>
-              </ion-card>
-              <ion-card>
-                <ion-item button lines="none">
-                  <ion-avatar slot="start">
-                    <sc-station-icon class="hydrated">
-                      <mock:shadow-root>
-                        <div class="station-icon-wrapper station-icon-size-large">
-                          <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
-                            <circle class="progress-ring-track" cx="20" cy="20" r="18.5" stroke-width="3" fill="none"></circle>
-                            <circle class="progress-ring-fill" cx="20" cy="20" r="18.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="116.23892818282235" stroke-dashoffset="116.23892818282235" transform="rotate(-90 20 20)"></circle>
-                          </svg>
-                          <div class="station-icon">
-                            <slot></slot>
-                          </div>
-                        </div>
-                      </mock:shadow-root>
-                      2
-                    </sc-station-icon>
-                  </ion-avatar>
-                  <ion-label>
-                    <h2>
-                      Station 2
-                    </h2>
-                    <p>
-                      Elephant
-                    </p>
-                  </ion-label>
-                </ion-item>
-                <img class="station-image-list-image" src="station-assets/elephant.jpg">
-                <ion-card-content>
-                  <p class="station-image-list-description">
-                    The elephant is the largest land animal on Earth, known for its intelligence, social behavior, and strong family bonds. Elephants are found in various habitats, including savannas, forests, and grasslands.
-                  </p>
-                  <ion-button data-station-id="2">
-                    View
-                  </ion-button>
-                </ion-card-content>
-              </ion-card>
-              <ion-card>
-                <ion-item button lines="none">
-                  <ion-avatar slot="start">
-                    <sc-station-icon class="hydrated">
-                      <mock:shadow-root>
-                        <div class="station-icon-wrapper station-icon-size-large">
-                          <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
-                            <circle class="progress-ring-track" cx="20" cy="20" r="18.5" stroke-width="3" fill="none"></circle>
-                            <circle class="progress-ring-fill" cx="20" cy="20" r="18.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="116.23892818282235" stroke-dashoffset="116.23892818282235" transform="rotate(-90 20 20)"></circle>
-                          </svg>
-                          <div class="station-icon">
-                            <slot></slot>
-                          </div>
-                        </div>
-                      </mock:shadow-root>
-                      3
-                    </sc-station-icon>
-                  </ion-avatar>
-                  <ion-label>
-                    <h2>
-                      Station 3
-                    </h2>
-                    <p>
-                      Leopard
-                    </p>
-                  </ion-label>
-                </ion-item>
-                <img class="station-image-list-image" src="station-assets/leopard.jpg">
-                <ion-card-content>
-                  <p class="station-image-list-description">
-                    The leopard is a large feline species found in various habitats, including savannas, forests, and mountains. Known for their agility and strength, leopards are skilled hunters and are primarily nocturnal.
-                  </p>
-                  <ion-button data-station-id="3">
-                    View
-                  </ion-button>
-                </ion-card-content>
-              </ion-card>
-            </ion-list>
-          </ion-content>
-        </sc-page-station-image-list>
-      </ion-tab>
-      <ion-tab tab="tab-list">
-        <sc-page-station-list class="hydrated">
-          <ion-header>
-            <ion-toolbar color="primary">
-              <ion-buttons slot="start">
-                <ion-menu-button></ion-menu-button>
-              </ion-buttons>
-              <ion-title>
-                Station Overview
-              </ion-title>
-            </ion-toolbar>
-          </ion-header>
-          <ion-content>
-            <ion-list lines="full" class="station-list">
-              <ion-item button data-station-id="1">
+  <ion-tabs>
+    <ion-tab tab="tab-images">
+      <sc-page-station-image-list class="ion-page hydrated">
+        <ion-header>
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+              <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title>
+              Station Overview
+            </ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="station-image-list">
+          <ion-list>
+            <ion-card>
+              <ion-item button lines="none">
                 <ion-avatar slot="start">
                   <sc-station-icon class="hydrated">
                     <mock:shadow-root>
-                      <div class="station-icon-wrapper station-icon-size-normal">
-                        <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
-                          <circle class="progress-ring-track" cx="15" cy="15" r="13.5" stroke-width="3" fill="none"></circle>
-                          <circle class="progress-ring-fill" cx="15" cy="15" r="13.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="84.82300164692441" stroke-dashoffset="84.82300164692441" transform="rotate(-90 15 15)"></circle>
+                      <div class="station-icon-wrapper station-icon-size-large">
+                        <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
+                          <circle class="progress-ring-track" cx="20" cy="20" r="18.5" stroke-width="3" fill="none"></circle>
+                          <circle class="progress-ring-fill" cx="20" cy="20" r="18.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="116.23892818282235" stroke-dashoffset="116.23892818282235" transform="rotate(-90 20 20)"></circle>
                         </svg>
                         <div class="station-icon">
                           <slot></slot>
@@ -173,14 +44,25 @@ exports[`render page tabbed station list 1`] = `
                   </p>
                 </ion-label>
               </ion-item>
-              <ion-item button data-station-id="2">
+              <img class="station-image-list-image" src="station-assets/crocodile.jpg">
+              <ion-card-content>
+                <p class="station-image-list-description">
+                  The crocodile is a large aquatic reptile that lives throughout the tropics in Africa, Asia, the Americas and Australia. Crocodiles tend to congregate in freshwater habitats like rivers, lakes, wetlands and sometimes in brackish water.
+                </p>
+                <ion-button data-station-id="1">
+                  View
+                </ion-button>
+              </ion-card-content>
+            </ion-card>
+            <ion-card>
+              <ion-item button lines="none">
                 <ion-avatar slot="start">
                   <sc-station-icon class="hydrated">
                     <mock:shadow-root>
-                      <div class="station-icon-wrapper station-icon-size-normal">
-                        <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
-                          <circle class="progress-ring-track" cx="15" cy="15" r="13.5" stroke-width="3" fill="none"></circle>
-                          <circle class="progress-ring-fill" cx="15" cy="15" r="13.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="84.82300164692441" stroke-dashoffset="84.82300164692441" transform="rotate(-90 15 15)"></circle>
+                      <div class="station-icon-wrapper station-icon-size-large">
+                        <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
+                          <circle class="progress-ring-track" cx="20" cy="20" r="18.5" stroke-width="3" fill="none"></circle>
+                          <circle class="progress-ring-fill" cx="20" cy="20" r="18.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="116.23892818282235" stroke-dashoffset="116.23892818282235" transform="rotate(-90 20 20)"></circle>
                         </svg>
                         <div class="station-icon">
                           <slot></slot>
@@ -199,14 +81,25 @@ exports[`render page tabbed station list 1`] = `
                   </p>
                 </ion-label>
               </ion-item>
-              <ion-item button data-station-id="3">
+              <img class="station-image-list-image" src="station-assets/elephant.jpg">
+              <ion-card-content>
+                <p class="station-image-list-description">
+                  The elephant is the largest land animal on Earth, known for its intelligence, social behavior, and strong family bonds. Elephants are found in various habitats, including savannas, forests, and grasslands.
+                </p>
+                <ion-button data-station-id="2">
+                  View
+                </ion-button>
+              </ion-card-content>
+            </ion-card>
+            <ion-card>
+              <ion-item button lines="none">
                 <ion-avatar slot="start">
                   <sc-station-icon class="hydrated">
                     <mock:shadow-root>
-                      <div class="station-icon-wrapper station-icon-size-normal">
-                        <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
-                          <circle class="progress-ring-track" cx="15" cy="15" r="13.5" stroke-width="3" fill="none"></circle>
-                          <circle class="progress-ring-fill" cx="15" cy="15" r="13.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="84.82300164692441" stroke-dashoffset="84.82300164692441" transform="rotate(-90 15 15)"></circle>
+                      <div class="station-icon-wrapper station-icon-size-large">
+                        <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
+                          <circle class="progress-ring-track" cx="20" cy="20" r="18.5" stroke-width="3" fill="none"></circle>
+                          <circle class="progress-ring-fill" cx="20" cy="20" r="18.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="116.23892818282235" stroke-dashoffset="116.23892818282235" transform="rotate(-90 20 20)"></circle>
                         </svg>
                         <div class="station-icon">
                           <slot></slot>
@@ -225,19 +118,124 @@ exports[`render page tabbed station list 1`] = `
                   </p>
                 </ion-label>
               </ion-item>
-            </ion-list>
-          </ion-content>
-        </sc-page-station-list>
-      </ion-tab>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button selected tab="tab-images">
-          <ion-icon name="images"></ion-icon>
-        </ion-tab-button>
-        <ion-tab-button tab="tab-list">
-          <ion-icon name="list"></ion-icon>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </mock:shadow-root>
+              <img class="station-image-list-image" src="station-assets/leopard.jpg">
+              <ion-card-content>
+                <p class="station-image-list-description">
+                  The leopard is a large feline species found in various habitats, including savannas, forests, and mountains. Known for their agility and strength, leopards are skilled hunters and are primarily nocturnal.
+                </p>
+                <ion-button data-station-id="3">
+                  View
+                </ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-list>
+        </ion-content>
+      </sc-page-station-image-list>
+    </ion-tab>
+    <ion-tab tab="tab-list">
+      <sc-page-station-list class="ion-page hydrated">
+        <ion-header>
+          <ion-toolbar color="primary">
+            <ion-buttons slot="start">
+              <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title>
+              Station Overview
+            </ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-list lines="full" class="station-list">
+            <ion-item button data-station-id="1">
+              <ion-avatar slot="start">
+                <sc-station-icon class="hydrated">
+                  <mock:shadow-root>
+                    <div class="station-icon-wrapper station-icon-size-normal">
+                      <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
+                        <circle class="progress-ring-track" cx="15" cy="15" r="13.5" stroke-width="3" fill="none"></circle>
+                        <circle class="progress-ring-fill" cx="15" cy="15" r="13.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="84.82300164692441" stroke-dashoffset="84.82300164692441" transform="rotate(-90 15 15)"></circle>
+                      </svg>
+                      <div class="station-icon">
+                        <slot></slot>
+                      </div>
+                    </div>
+                  </mock:shadow-root>
+                  1
+                </sc-station-icon>
+              </ion-avatar>
+              <ion-label>
+                <h2>
+                  Station 1
+                </h2>
+                <p>
+                  Crocodile
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item button data-station-id="2">
+              <ion-avatar slot="start">
+                <sc-station-icon class="hydrated">
+                  <mock:shadow-root>
+                    <div class="station-icon-wrapper station-icon-size-normal">
+                      <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
+                        <circle class="progress-ring-track" cx="15" cy="15" r="13.5" stroke-width="3" fill="none"></circle>
+                        <circle class="progress-ring-fill" cx="15" cy="15" r="13.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="84.82300164692441" stroke-dashoffset="84.82300164692441" transform="rotate(-90 15 15)"></circle>
+                      </svg>
+                      <div class="station-icon">
+                        <slot></slot>
+                      </div>
+                    </div>
+                  </mock:shadow-root>
+                  2
+                </sc-station-icon>
+              </ion-avatar>
+              <ion-label>
+                <h2>
+                  Station 2
+                </h2>
+                <p>
+                  Elephant
+                </p>
+              </ion-label>
+            </ion-item>
+            <ion-item button data-station-id="3">
+              <ion-avatar slot="start">
+                <sc-station-icon class="hydrated">
+                  <mock:shadow-root>
+                    <div class="station-icon-wrapper station-icon-size-normal">
+                      <svg class="progress-ring" width="30" height="30" viewBox="0 0 30 30" role="progressbar" aria-label="Collection progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" focusable="false">
+                        <circle class="progress-ring-track" cx="15" cy="15" r="13.5" stroke-width="3" fill="none"></circle>
+                        <circle class="progress-ring-fill" cx="15" cy="15" r="13.5" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="84.82300164692441" stroke-dashoffset="84.82300164692441" transform="rotate(-90 15 15)"></circle>
+                      </svg>
+                      <div class="station-icon">
+                        <slot></slot>
+                      </div>
+                    </div>
+                  </mock:shadow-root>
+                  3
+                </sc-station-icon>
+              </ion-avatar>
+              <ion-label>
+                <h2>
+                  Station 3
+                </h2>
+                <p>
+                  Leopard
+                </p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </sc-page-station-list>
+    </ion-tab>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button selected tab="tab-images">
+        <ion-icon name="images"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button tab="tab-list">
+        <ion-icon name="list"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </sc-page-tabbed-station-list>
 `;

@@ -4,7 +4,6 @@ import { ServiceFacade } from '@smartcompanion/services';
 @Component({
   tag: 'sc-page-tabbed-station-list',
   styleUrl: 'page-tabbed-station-list.scss',
-  shadow: true,
 })
 export class PageTabbedStationList {
 
@@ -28,7 +27,7 @@ export class PageTabbedStationList {
   }
 
   async componentDidLoad() {
-    const tabButton = this.element.shadowRoot.querySelector('#tab-button-tab-images') as HTMLElement | null;
+    const tabButton = this.element.querySelector('#tab-button-tab-images') as HTMLElement | null;
     if (tabButton !== null) {
       await tabButton.click();
     }
@@ -39,13 +38,15 @@ export class PageTabbedStationList {
       <Host>
         <ion-tabs>          
           <ion-tab tab="tab-images">
-            <sc-page-station-image-list 
+            <sc-page-station-image-list
+              class="ion-page"
               facade={this.facade}
               tourId={this.tourId}
               headerBackgroundColor={this.headerBackgroundColor} />
           </ion-tab>
           <ion-tab tab="tab-list">
-            <sc-page-station-list 
+            <sc-page-station-list
+              class="ion-page"
               facade={this.facade}
               tourId={this.tourId}
               headerBackgroundColor={this.headerBackgroundColor} />

@@ -3,10 +3,6 @@
     flex-flow: column;
     height: 100%;
 
-    sc-station-icon {
-      --sc-station-icon-background: var(--ion-color-primary);
-      --sc-station-icon-progress: var(--ion-color-primary);
-    }
     ion-content {
       --background: var(--ion-background-color-step-50);
     }

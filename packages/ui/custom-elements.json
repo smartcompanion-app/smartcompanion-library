@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-05-16T17:01:11",
+  "timestamp": "2026-05-17T17:33:08",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.43.4",
@@ -1780,7 +1780,7 @@
     },
     {
       "filePath": "src/pages/page-tabbed-station-list/page-tabbed-station-list.tsx",
-      "encapsulation": "shadow",
+      "encapsulation": "none",
       "tag": "sc-page-tabbed-station-list",
       "docs": "",
       "docsTags": [],

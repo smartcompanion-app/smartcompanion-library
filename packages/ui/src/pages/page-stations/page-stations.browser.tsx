@@ -45,6 +45,11 @@ describe('sc-page-stations', () => {
     );
     await waitForChanges();
     await waitForAudioReady();
+    // Confirm initial select(0) + listener wiring landed before interacting
+    await expect.poll(() => {
+      const firstItem = root.querySelector('[data-testid="player-list-item-0"]');
+      return firstItem?.classList.contains('active');
+    }).toBe(true);
 
     getPlayerButton(root, 'player-prev-button').click();
 
@@ -60,6 +65,11 @@ describe('sc-page-stations', () => {
     );
     await waitForChanges();
     await waitForAudioReady();
+    // Confirm initial select(0) + listener wiring landed before interacting
+    await expect.poll(() => {
+      const firstItem = root.querySelector('[data-testid="player-list-item-0"]');
+      return firstItem?.classList.contains('active');
+    }).toBe(true);
 
     // Navigate to last item first
     getPlayerButton(root, 'player-prev-button').click();

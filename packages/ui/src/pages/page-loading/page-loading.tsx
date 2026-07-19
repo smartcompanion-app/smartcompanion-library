@@ -1,5 +1,5 @@
 import { Component, Prop, State, h } from '@stencil/core';
-import { ServiceFacade } from '@smartcompanion/services';
+import { PageLoadingFacade } from '../../contracts';
 
 @Component({
   tag: 'sc-page-loading',
@@ -40,7 +40,7 @@ export class PageLoading {
   @Prop() homeRoute: string = "/stations/default";
 
   /** The service facade instance */
-  @Prop() facade: ServiceFacade;
+  @Prop() facade: PageLoadingFacade;
 
   async componentWillLoad() {
     this.load();

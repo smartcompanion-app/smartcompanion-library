@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-19T10:53:49",
+  "timestamp": "2026-07-19T22:19:59",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.43.5",
@@ -237,16 +237,16 @@
       "props": [
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "PageErrorFacade",
+            "resolved": "Translator & { getMenuService(): Menu; getRoutingService(): Router; }",
             "references": {
-              "ServiceFacade": {
+              "PageErrorFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::PageErrorFacade",
+                "referenceLocation": "PageErrorFacade"
               }
             }
           },
@@ -256,7 +256,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; }"
             }
           ],
           "optional": false,
@@ -286,16 +286,16 @@
       "props": [
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "LanguageSwitcher & { getMenuService(): Menu; getRoutingService(): Router; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "PageLanguageFacade",
+            "resolved": "LanguageSwitcher & { getMenuService(): Menu; getRoutingService(): Router; }",
             "references": {
-              "ServiceFacade": {
+              "PageLanguageFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::PageLanguageFacade",
+                "referenceLocation": "PageLanguageFacade"
               }
             }
           },
@@ -305,7 +305,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "LanguageSwitcher & { getMenuService(): Menu; getRoutingService(): Router; }"
             }
           ],
           "optional": false,
@@ -335,16 +335,16 @@
       "props": [
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "{ getMenuService(): Menu; getRoutingService(): Router; getLoadService(): Loader; getPendingRoute(): string; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "PageLoadingFacade",
+            "resolved": "{ getMenuService(): Menu; getRoutingService(): Router; getLoadService(): Loader; getPendingRoute(): string; }",
             "references": {
-              "ServiceFacade": {
+              "PageLoadingFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::PageLoadingFacade",
+                "referenceLocation": "PageLoadingFacade"
               }
             }
           },
@@ -354,7 +354,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "{ getMenuService(): Menu; getRoutingService(): Router; getLoadService(): Loader; getPendingRoute(): string; }"
             }
           ],
           "optional": false,
@@ -619,16 +619,16 @@
         },
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "StationListFacade",
+            "resolved": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }",
             "references": {
-              "ServiceFacade": {
+              "StationListFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::StationListFacade",
+                "referenceLocation": "StationListFacade"
               }
             }
           },
@@ -638,7 +638,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }"
             }
           ],
           "optional": false,
@@ -868,16 +868,16 @@
         },
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "AudioPlayerFacade & { getMenuService(): Menu; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "PageMultiAudioStationFacade",
+            "resolved": "AudioPlayerFacade & { getMenuService(): Menu; }",
             "references": {
-              "ServiceFacade": {
+              "PageMultiAudioStationFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::PageMultiAudioStationFacade",
+                "referenceLocation": "PageMultiAudioStationFacade"
               }
             }
           },
@@ -887,7 +887,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "AudioPlayerFacade & { getMenuService(): Menu; }"
             }
           ],
           "optional": false,
@@ -981,16 +981,16 @@
       "props": [
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getPinService(): PinValidator; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "PagePinFacade",
+            "resolved": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getPinService(): PinValidator; }",
             "references": {
-              "ServiceFacade": {
+              "PagePinFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::PagePinFacade",
+                "referenceLocation": "PagePinFacade"
               }
             }
           },
@@ -1000,7 +1000,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getPinService(): PinValidator; }"
             }
           ],
           "optional": false,
@@ -1065,16 +1065,16 @@
       "props": [
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "StationListFacade",
+            "resolved": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }",
             "references": {
-              "ServiceFacade": {
+              "StationListFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::StationListFacade",
+                "referenceLocation": "StationListFacade"
               }
             }
           },
@@ -1084,7 +1084,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }"
             }
           ],
           "optional": false,
@@ -1299,16 +1299,16 @@
         },
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "AudioPlayerFacade & { getMenuService(): Menu; getTourService(): TourSource; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "PageStationFacade",
+            "resolved": "AudioPlayerFacade & { getMenuService(): Menu; getTourService(): TourSource; }",
             "references": {
-              "ServiceFacade": {
+              "PageStationFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::PageStationFacade",
+                "referenceLocation": "PageStationFacade"
               }
             }
           },
@@ -1318,7 +1318,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "AudioPlayerFacade & { getMenuService(): Menu; getTourService(): TourSource; }"
             }
           ],
           "optional": false,
@@ -1408,16 +1408,16 @@
       "props": [
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "StationListFacade",
+            "resolved": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }",
             "references": {
-              "ServiceFacade": {
+              "StationListFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::StationListFacade",
+                "referenceLocation": "StationListFacade"
               }
             }
           },
@@ -1427,7 +1427,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }"
             }
           ],
           "optional": false,
@@ -1531,16 +1531,16 @@
       "props": [
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "StationListFacade",
+            "resolved": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }",
             "references": {
-              "ServiceFacade": {
+              "StationListFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::StationListFacade",
+                "referenceLocation": "StationListFacade"
               }
             }
           },
@@ -1550,7 +1550,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }"
             }
           ],
           "optional": false,
@@ -1683,16 +1683,16 @@
         },
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "AudioPlayerFacade & { getMenuService(): Menu; getTourService(): TourSource; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "PageStationFacade",
+            "resolved": "AudioPlayerFacade & { getMenuService(): Menu; getTourService(): TourSource; }",
             "references": {
-              "ServiceFacade": {
+              "PageStationFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::PageStationFacade",
+                "referenceLocation": "PageStationFacade"
               }
             }
           },
@@ -1702,7 +1702,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "AudioPlayerFacade & { getMenuService(): Menu; getTourService(): TourSource; }"
             }
           ],
           "optional": false,
@@ -1798,16 +1798,16 @@
       "props": [
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "StationListFacade",
+            "resolved": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }",
             "references": {
-              "ServiceFacade": {
+              "StationListFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::StationListFacade",
+                "referenceLocation": "StationListFacade"
               }
             }
           },
@@ -1817,7 +1817,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; getStationService(): StationSource; }"
             }
           ],
           "optional": false,
@@ -1924,16 +1924,16 @@
       "props": [
         {
           "name": "facade",
-          "type": "ServiceFacade",
+          "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; }",
           "complexType": {
-            "original": "ServiceFacade",
-            "resolved": "ServiceFacade",
+            "original": "PageTourListFacade",
+            "resolved": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; }",
             "references": {
-              "ServiceFacade": {
+              "PageTourListFacade": {
                 "location": "import",
-                "path": "@smartcompanion/services",
-                "id": "../services/dist/index.d.ts::ServiceFacade",
-                "referenceLocation": "ServiceFacade"
+                "path": "../../contracts",
+                "id": "src/contracts/index.ts::PageTourListFacade",
+                "referenceLocation": "PageTourListFacade"
               }
             }
           },
@@ -1943,7 +1943,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "ServiceFacade"
+              "type": "Translator & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; }"
             }
           ],
           "optional": false,
@@ -2440,10 +2440,45 @@
     }
   ],
   "typeLibrary": {
-    "../services/dist/index.d.ts::ServiceFacade": {
-      "declaration": "any",
+    "src/contracts/index.ts::PageErrorFacade": {
+      "declaration": "export type PageErrorFacade = Translator & {\n  getMenuService(): Menu;\n  getRoutingService(): Router;\n};",
       "docstring": "",
-      "path": "../services/dist/index.d.ts"
+      "path": "src/contracts/index.ts"
+    },
+    "src/contracts/index.ts::PageLanguageFacade": {
+      "declaration": "export type PageLanguageFacade = LanguageSwitcher & {\n  getMenuService(): Menu;\n  getRoutingService(): Router;\n};",
+      "docstring": "",
+      "path": "src/contracts/index.ts"
+    },
+    "src/contracts/index.ts::PageLoadingFacade": {
+      "declaration": "{\n  getMenuService(): Menu;\n  getRoutingService(): Router;\n  getLoadService(): Loader;\n  getPendingRoute(): string | null;\n}",
+      "docstring": "",
+      "path": "src/contracts/index.ts"
+    },
+    "src/contracts/index.ts::StationListFacade": {
+      "declaration": "export type StationListFacade = Translator & {\n  getMenuService(): Menu;\n  getRoutingService(): Router;\n  getTourService(): TourSource;\n  getStationService(): StationSource;\n};",
+      "docstring": "",
+      "path": "src/contracts/index.ts"
+    },
+    "src/contracts/index.ts::PageMultiAudioStationFacade": {
+      "declaration": "export type PageMultiAudioStationFacade = AudioPlayerFacade & {\n  getMenuService(): Menu;\n};",
+      "docstring": "",
+      "path": "src/contracts/index.ts"
+    },
+    "src/contracts/index.ts::PagePinFacade": {
+      "declaration": "export type PagePinFacade = Translator & {\n  getMenuService(): Menu;\n  getRoutingService(): Router;\n  getPinService(): PinValidator;\n};",
+      "docstring": "",
+      "path": "src/contracts/index.ts"
+    },
+    "src/contracts/index.ts::PageStationFacade": {
+      "declaration": "export type PageStationFacade = AudioPlayerFacade & {\n  getMenuService(): Menu;\n  getTourService(): TourSource;\n};",
+      "docstring": "",
+      "path": "src/contracts/index.ts"
+    },
+    "src/contracts/index.ts::PageTourListFacade": {
+      "declaration": "export type PageTourListFacade = Translator & {\n  getMenuService(): Menu;\n  getRoutingService(): Router;\n  getTourService(): TourSource;\n};",
+      "docstring": "",
+      "path": "src/contracts/index.ts"
     }
   }
 }

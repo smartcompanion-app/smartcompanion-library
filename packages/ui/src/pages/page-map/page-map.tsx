@@ -1,6 +1,6 @@
 import { Component, Prop, h } from '@stencil/core';
 import L from 'leaflet';
-import { ServiceFacade } from '@smartcompanion/services';
+import { StationListFacade } from '../../contracts';
 import { Station } from '@smartcompanion/data';
 import { getMenuButton, getStations, openStation } from '../../utils';
 
@@ -50,7 +50,7 @@ export class PageMap {
   @Prop() mapAttribution: string = '';
 
   /** The service facade instance */
-  @Prop() facade: ServiceFacade;
+  @Prop() facade: StationListFacade;
 
   async componentWillLoad() {
     await this.facade.getMenuService().enable();

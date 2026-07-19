@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
+import { PageErrorFacade } from '../../contracts';
 import { h } from '@stencil/core';
-import { ServiceFacade } from '@smartcompanion/services';
 import { PageError } from './page-error';
 
 const meta = {
@@ -27,7 +27,7 @@ export const Example: Story = {
             return key;
         }
       },
-    } as ServiceFacade,
+    } as PageErrorFacade,
   },
 };
 

@@ -1,6 +1,7 @@
 import { render, h, describe, it, expect } from '@stencil/vitest';
-import { MenuService, ServiceFacade, AudioPlayerService } from '@smartcompanion/services';
-import { StationService, Station } from '@smartcompanion/data';
+import { Menu, PageMultiAudioStationFacade, StationSource } from '../../contracts';
+import { AudioPlayerService } from '@smartcompanion/services';
+import { Station } from '@smartcompanion/data';
 import { getMultiAudioStation } from '../../../test/fixtures';
 
 // Use silent audio data URI so loadAudio resolves without needing real files
@@ -18,10 +19,10 @@ const facade = {
   getAudioPlayerService: () => audioPlayerService,
   getMenuService: () => ({
     enable: () => Promise.resolve(),
-  }) as MenuService,
+  }) as Menu,
   getStationService: () => ({
     getStation: (_: string) => Promise.resolve(createStation()),
-  }) as StationService,
+  }) as StationSource,
   __: (key: string) => {
     switch (key) {
       case 'station-list':
@@ -30,7 +31,7 @@ const facade = {
         return key;
     }
   },
-} as ServiceFacade;
+} as PageMultiAudioStationFacade;
 
 const getPlayerButton = (root: HTMLElement, testId: string) => {
   return root.querySelector('sc-player-controls').shadowRoot.querySelector(`[data-testid="${testId}"]`) as HTMLElement;

@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
+import { Menu, StationListFacade, StationSource } from '../../contracts';
 import { h } from '@stencil/core';
-import { ServiceFacade, MenuService } from '@smartcompanion/services';
 import { PageSelection } from './page-selection';
-import { StationService } from '@smartcompanion/data';
 
 const meta = {
   title: 'Pages/Page Selection',
@@ -27,12 +26,12 @@ export const Example: Story = {
           console.log('Menu enabled');
           return Promise.resolve();
         },
-      }) as MenuService,
+      }) as Menu,
       getStationService: () => ({
         getStations: () => {
           return Promise.resolve([]);
         },
-      }) as StationService,
+      }) as StationSource,
       __: (key: string) => {
         switch (key) {
           case 'menu-selection':
@@ -41,7 +40,7 @@ export const Example: Story = {
             return key;
         }
       },
-    } as ServiceFacade,
+    } as StationListFacade,
   },
 };
 

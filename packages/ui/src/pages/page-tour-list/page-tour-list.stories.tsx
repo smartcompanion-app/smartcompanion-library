@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
+import { Menu, PageTourListFacade, TourSource } from '../../contracts';
 import { h } from '@stencil/core';
-import { MenuService, ServiceFacade } from '@smartcompanion/services';
-import { TourService } from '@smartcompanion/data';
 import { PageTourList } from './page-tour-list';
 import { tours } from '../../../test/fixtures';
 
@@ -25,12 +24,12 @@ export const Example: Story = {
     facade: {
       getMenuService: () => ({
         enable: () => Promise.resolve(),
-      }) as MenuService,
+      }) as Menu,
       getTourService: () => ({
         getTours: () => {
           return Promise.resolve(tours);
         },
-      }) as TourService,
+      }) as TourSource,
       __: (key: string) => {
         switch (key) {
           case 'menu-overview':
@@ -41,6 +40,6 @@ export const Example: Story = {
             return key;
         }
       },
-    } as ServiceFacade,
+    } as PageTourListFacade,
   },
 };

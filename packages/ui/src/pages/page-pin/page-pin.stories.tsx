@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
+import { Menu, PagePinFacade, PinValidator, Router } from '../../contracts';
 import { h } from '@stencil/core';
-import { PinService } from '@smartcompanion/data';
-import { ServiceFacade, MenuService, RoutingService } from '@smartcompanion/services';
 import { PagePin } from './page-pin';
 
 const meta = {
@@ -27,19 +26,19 @@ export const Example: Story = {
           console.log(`Validating pin: ${pin} for ${validHours} hours`);
           return pin === "1234";
         }
-      }) as PinService,
+      }) as PinValidator,
       getMenuService: () => ({
         disable: () => {
           console.log('Menu disabled');
           return Promise.resolve();
         },
-      }) as MenuService,
+      }) as Menu,
       getRoutingService: () => ({
         pushReplaceCurrent: (route: string) => {
           console.log(`Move to route ${route}`);        
           return Promise.resolve();
         },
-      }) as RoutingService,
+      }) as Router,
       __: (key: string) => {
         switch (key) {
           case 'enter-pin':
@@ -50,7 +49,7 @@ export const Example: Story = {
             return key;
         }
       },
-    } as ServiceFacade,
+    } as PagePinFacade,
   },
 };
 

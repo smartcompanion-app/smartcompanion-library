@@ -5,8 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { ServiceFacade } from "@smartcompanion/services";
-export { ServiceFacade } from "@smartcompanion/services";
+import { PageErrorFacade, PageLanguageFacade, PageLoadingFacade, PageMultiAudioStationFacade, PagePinFacade, PageStationFacade, PageTourListFacade, StationListFacade } from "./contracts";
+export { PageErrorFacade, PageLanguageFacade, PageLoadingFacade, PageMultiAudioStationFacade, PagePinFacade, PageStationFacade, PageTourListFacade, StationListFacade } from "./contracts";
 export namespace Components {
     interface ScImageSlideshow {
         /**
@@ -33,19 +33,19 @@ export namespace Components {
         /**
           * The service facade instance
          */
-        "facade": ServiceFacade;
+        "facade": PageErrorFacade;
     }
     interface ScPageLanguage {
         /**
           * The service facade instance
          */
-        "facade": ServiceFacade;
+        "facade": PageLanguageFacade;
     }
     interface ScPageLoading {
         /**
           * The service facade instance
          */
-        "facade": ServiceFacade;
+        "facade": PageLoadingFacade;
         /**
           * The default or home route, when loading is successfully completed
           * @default "/stations/default"
@@ -89,7 +89,7 @@ export namespace Components {
         /**
           * The service facade instance
          */
-        "facade": ServiceFacade;
+        "facade": StationListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
@@ -128,7 +128,7 @@ export namespace Components {
         /**
           * Provides access to all services via the service facade
          */
-        "facade": ServiceFacade;
+        "facade": PageMultiAudioStationFacade;
         /**
           * The ID of the active station to display
          */
@@ -143,7 +143,7 @@ export namespace Components {
         /**
           * The service facade instance
          */
-        "facade": ServiceFacade;
+        "facade": PagePinFacade;
         /**
           * The number of hours the pin is valid for.
           * @default 6
@@ -154,7 +154,7 @@ export namespace Components {
         /**
           * The service facade instance
          */
-        "facade": ServiceFacade;
+        "facade": StationListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
@@ -190,7 +190,7 @@ export namespace Components {
         /**
           * Provides access to all services via the service facade
          */
-        "facade": ServiceFacade;
+        "facade": PageStationFacade;
         /**
           * The ID of the active station to display
          */
@@ -205,7 +205,7 @@ export namespace Components {
         /**
           * The service facade instance
          */
-        "facade": ServiceFacade;
+        "facade": StationListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
@@ -221,7 +221,7 @@ export namespace Components {
         /**
           * The service facade instance
          */
-        "facade": ServiceFacade;
+        "facade": StationListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
@@ -242,7 +242,7 @@ export namespace Components {
         /**
           * Provides access to all services via the service facade
          */
-        "facade": ServiceFacade;
+        "facade": PageStationFacade;
         /**
           * The ID of the initial active station to display, if set to null, the first station will be displayed
           * @default null
@@ -258,7 +258,7 @@ export namespace Components {
         /**
           * The service facade instance
          */
-        "facade": ServiceFacade;
+        "facade": StationListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
@@ -274,7 +274,7 @@ export namespace Components {
         /**
           * The service facade instance
          */
-        "facade": ServiceFacade;
+        "facade": PageTourListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
@@ -536,19 +536,19 @@ declare namespace LocalJSX {
         /**
           * The service facade instance
          */
-        "facade"?: ServiceFacade;
+        "facade"?: PageErrorFacade;
     }
     interface ScPageLanguage {
         /**
           * The service facade instance
          */
-        "facade"?: ServiceFacade;
+        "facade"?: PageLanguageFacade;
     }
     interface ScPageLoading {
         /**
           * The service facade instance
          */
-        "facade"?: ServiceFacade;
+        "facade"?: PageLoadingFacade;
         /**
           * The default or home route, when loading is successfully completed
           * @default "/stations/default"
@@ -592,7 +592,7 @@ declare namespace LocalJSX {
         /**
           * The service facade instance
          */
-        "facade"?: ServiceFacade;
+        "facade"?: StationListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
@@ -631,7 +631,7 @@ declare namespace LocalJSX {
         /**
           * Provides access to all services via the service facade
          */
-        "facade"?: ServiceFacade;
+        "facade"?: PageMultiAudioStationFacade;
         /**
           * The ID of the active station to display
          */
@@ -646,7 +646,7 @@ declare namespace LocalJSX {
         /**
           * The service facade instance
          */
-        "facade"?: ServiceFacade;
+        "facade"?: PagePinFacade;
         /**
           * The number of hours the pin is valid for.
           * @default 6
@@ -657,7 +657,7 @@ declare namespace LocalJSX {
         /**
           * The service facade instance
          */
-        "facade"?: ServiceFacade;
+        "facade"?: StationListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
@@ -693,7 +693,7 @@ declare namespace LocalJSX {
         /**
           * Provides access to all services via the service facade
          */
-        "facade"?: ServiceFacade;
+        "facade"?: PageStationFacade;
         /**
           * The ID of the active station to display
          */
@@ -708,7 +708,7 @@ declare namespace LocalJSX {
         /**
           * The service facade instance
          */
-        "facade"?: ServiceFacade;
+        "facade"?: StationListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
@@ -724,7 +724,7 @@ declare namespace LocalJSX {
         /**
           * The service facade instance
          */
-        "facade"?: ServiceFacade;
+        "facade"?: StationListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
@@ -745,7 +745,7 @@ declare namespace LocalJSX {
         /**
           * Provides access to all services via the service facade
          */
-        "facade"?: ServiceFacade;
+        "facade"?: PageStationFacade;
         /**
           * The ID of the initial active station to display, if set to null, the first station will be displayed
           * @default null
@@ -761,7 +761,7 @@ declare namespace LocalJSX {
         /**
           * The service facade instance
          */
-        "facade"?: ServiceFacade;
+        "facade"?: StationListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
@@ -777,7 +777,7 @@ declare namespace LocalJSX {
         /**
           * The service facade instance
          */
-        "facade"?: ServiceFacade;
+        "facade"?: PageTourListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
+import { Menu, StationListFacade, StationSource } from '../../contracts';
 import { h } from '@stencil/core';
-import { ServiceFacade, MenuService } from '@smartcompanion/services';
 import { PageMap } from './page-map';
-import { Station, StationService } from '@smartcompanion/data';
+import { Station } from '@smartcompanion/data';
 
 const meta = {
   title: 'Pages/Page Map',
@@ -30,13 +30,13 @@ export const Example: Story = {
           { id: '1', number: '1', latitude: 47.580, longitude: 12.168 } as Station,
           { id: '2', number: '2', latitude: 47.579, longitude: 12.169 } as Station,
         ]),
-      }) as StationService,
+      }) as StationSource,
       getMenuService: () => ({
         enable: () => {
           console.log('Menu enabled');
           return Promise.resolve();
         },
-      }) as MenuService,
+      }) as Menu,
       __: (key: string) => {
         switch (key) {
           case 'page-map':
@@ -45,7 +45,7 @@ export const Example: Story = {
             return key;
         }
       },
-    } as ServiceFacade,
+    } as StationListFacade,
   },
 };
 

@@ -1,5 +1,5 @@
 import { Component, Prop, State, h } from '@stencil/core';
-import { ServiceFacade } from '@smartcompanion/services';
+import { PagePinFacade } from '../../contracts';
 
 @Component({
   tag: 'sc-page-pin',
@@ -8,7 +8,7 @@ import { ServiceFacade } from '@smartcompanion/services';
 export class PagePin {
 
   /** The service facade instance */
-  @Prop() facade: ServiceFacade;
+  @Prop() facade: PagePinFacade;
 
   /**
    * The number of hours the pin is valid for.

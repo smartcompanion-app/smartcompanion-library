@@ -1,17 +1,16 @@
 import { render, expect, test, h } from '@stencil/vitest';
-import { ServiceFacade, MenuService, RoutingService } from '@smartcompanion/services';
-import { PinService } from '@smartcompanion/data';
+import { Menu, PagePinFacade, PinValidator, Router } from '../../contracts';
 
 const facade = {
   getPinService: () => ({
     validatePin: () => false,
-  }) as Partial<PinService>,
+  }) as Partial<PinValidator>,
   getMenuService: () => ({
     disable: () => Promise.resolve(),
-  }) as Partial<MenuService>,
+  }) as Partial<Menu>,
   getRoutingService: () => ({
     pushReplaceCurrent: () => Promise.resolve(),
-  }) as Partial<RoutingService>,
+  }) as Partial<Router>,
   __: (key: string) => {
     switch (key) {
       case 'enter-pin': return 'Enter PIN';
@@ -19,7 +18,7 @@ const facade = {
       default: return key;
     }
   },
-} as unknown as ServiceFacade;
+} as unknown as PagePinFacade;
 
 test('render page pin in initial state', async () => {
   const { root } = await render(<sc-page-pin facade={facade}></sc-page-pin>);

@@ -1,8 +1,8 @@
 import { Station } from "@smartcompanion/data";
-import { AudioPlayerUpdate, ServiceFacade } from "@smartcompanion/services";
+import { AudioPlayerFacade, AudioPlayerUpdate } from "../contracts";
 
 interface AudioPlayerPage {
-  facade: ServiceFacade;
+  facade: AudioPlayerFacade;
   earpiece: boolean;
   playing: boolean;
   position: number;
@@ -12,7 +12,7 @@ interface AudioPlayerPage {
 
 export class ReactiveAudioPlayer {
 
-  private facade: ServiceFacade;
+  private facade: AudioPlayerFacade;
   private earpiece: boolean = false;
   private playing: boolean = false
   private position: number = 0;

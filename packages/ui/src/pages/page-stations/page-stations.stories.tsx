@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
+import { Menu, PageStationFacade, StationSource } from '../../contracts';
 import { h } from '@stencil/core';
-import { AudioPlayerService, ServiceFacade, MenuService, CollectibleAudioPlayerService } from '@smartcompanion/services';
-import { StationService } from '@smartcompanion/data';
+import { AudioPlayerService, CollectibleAudioPlayerService } from '@smartcompanion/services';
 import { stations } from '../../../test/fixtures';
 import { PageStations } from './page-stations';
 
@@ -39,11 +39,11 @@ export const Example: Story = {
         getStations: () => {
           return Promise.resolve(stations);
         },
-      }) as StationService,      
+      }) as StationSource,      
       getMenuService: () => ({
         enable: () => Promise.resolve(),
-      }) as MenuService
-    } as ServiceFacade,
+      }) as Menu
+    } as unknown as PageStationFacade,
   },
 };
 

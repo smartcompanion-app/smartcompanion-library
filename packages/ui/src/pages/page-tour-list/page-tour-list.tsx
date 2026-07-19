@@ -1,5 +1,5 @@
 import { Component, Prop, State, h } from '@stencil/core';
-import { ServiceFacade } from '@smartcompanion/services';
+import { PageTourListFacade } from '../../contracts';
 import { Tour, Asset } from '@smartcompanion/data';
 
 @Component({
@@ -16,7 +16,7 @@ export class PageTourList {
   @Prop() headerBackgroundColor: 'primary' | 'secondary' = 'primary';
 
   /** The service facade instance */
-  @Prop() facade: ServiceFacade;
+  @Prop() facade: PageTourListFacade;
 
   async componentWillLoad() {
     this.tours = await this.facade.getTourService().getTours();

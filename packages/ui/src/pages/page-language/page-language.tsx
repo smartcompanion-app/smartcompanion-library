@@ -1,5 +1,5 @@
 import { Component, Prop, h } from '@stencil/core';
-import { ServiceFacade } from '@smartcompanion/services';
+import { PageLanguageFacade } from '../../contracts';
 
 @Component({
   tag: 'sc-page-language',
@@ -9,7 +9,7 @@ import { ServiceFacade } from '@smartcompanion/services';
 export class PageLanguage {
 
   /** The service facade instance */
-  @Prop() facade: ServiceFacade;
+  @Prop() facade: PageLanguageFacade;
 
   async componentDidLoad() {
     this.facade.getMenuService().disable();

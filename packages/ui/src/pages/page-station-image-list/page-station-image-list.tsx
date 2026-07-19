@@ -1,5 +1,5 @@
 import { Component, Prop, State, Host, h } from '@stencil/core';
-import { ServiceFacade } from '@smartcompanion/services';
+import { StationListFacade } from '../../contracts';
 import { Station, Asset } from '@smartcompanion/data';
 import { getMenuButton, getSortedStations, openStation } from '../../utils';
 
@@ -22,7 +22,7 @@ export class PageStationImageList {
   @Prop() tourId: string = null;
 
   /** The service facade instance */
-  @Prop() facade: ServiceFacade;
+  @Prop() facade: StationListFacade;
 
   async componentWillLoad() {
     this.stations = await getSortedStations(this.facade, this.tourId);

@@ -1,5 +1,5 @@
 import { Component, Prop, State, h } from '@stencil/core';
-import { ServiceFacade } from '@smartcompanion/services';
+import { StationListFacade } from '../../contracts';
 import { Station } from '@smartcompanion/data';
 import { getMenuButton, getSortedStations, openStation } from '../../utils';
 
@@ -22,7 +22,7 @@ export class PageStationList {
   @Prop() tourId: string = null;
 
   /** The service facade instance */
-  @Prop() facade: ServiceFacade;
+  @Prop() facade: StationListFacade;
 
   async componentWillLoad() {
     await this.facade.getMenuService().enable();

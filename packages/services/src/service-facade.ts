@@ -1,31 +1,71 @@
-import { LoadService, Language, ServiceLocator, Storage, BrowserStorage, OnlineLoadService, DataUpdater, OfflineLoadService, Asset } from '@smartcompanion/data';
+import {
+  Asset,
+  AssetService,
+  BrowserStorage,
+  DataUpdater,
+  Language,
+  LanguageService,
+  LoadService,
+  OfflineLoadService,
+  OnlineLoadService,
+  PinService,
+  ServerService,
+  ShareService,
+  StationService,
+  Storage,
+  TextService,
+  TourService,
+} from '@smartcompanion/data';
 import { RoutingService, MenuService, AudioPlayerService, CollectibleAudioPlayerService } from './services';
 
-export class ServiceFacade extends ServiceLocator {
+type ResolveUrl = (asset: Asset) => Promise<{ fileUrl: string; webUrl: string }>;
+
+/**
+ * ServiceFacade is the composition root for SmartCompanion apps:
+ * it wires up and provides all data and platform services as lazy singletons.
+ */
+export class ServiceFacade {
+  protected storage: Storage;
+  protected resolveUrl: ResolveUrl = async (asset: Asset) => {
+    return { webUrl: asset.externalUrl, fileUrl: asset.externalUrl };
+  };
+
+  protected languageService?: LanguageService;
+  protected pinService?: PinService;
+  protected assetService?: AssetService;
+  protected serverService?: ServerService;
+  protected shareService?: ShareService;
+  protected textService?: TextService;
+  protected stationService?: StationService;
+  protected tourService?: TourService;
+  protected routingService?: RoutingService;
+  protected menuService?: MenuService;
+
+  protected audioPlayerFactory?: () => AudioPlayerService;
+  protected audioPlayerService?: AudioPlayerService;
+  protected loadServiceFactory?: () => LoadService;
+  protected loadService?: LoadService;
+
   constructor(storage: Storage = new BrowserStorage()) {
-    super(storage);
+    this.storage = storage;
   }
 
-  registerDefaultServices(
-    resolveUrl: (asset: Asset) => Promise<{ fileUrl: string; webUrl: string }> = async (asset: Asset) => {
-      return { webUrl: asset.externalUrl, fileUrl: asset.externalUrl };
-    },
-  ) {
-    super.registerDefaultServices(resolveUrl);
-    this.register(RoutingService, (_: ServiceLocator) => new RoutingService());
-    this.register(MenuService, (_: ServiceLocator) => new MenuService());
+  registerDefaultServices(resolveUrl?: ResolveUrl): void {
+    if (resolveUrl) {
+      this.resolveUrl = resolveUrl;
+    }
   }
 
   registerDefaultAudioPlayerService(subtitle: string): void {
-    this.register(AudioPlayerService, (_: ServiceLocator) => new AudioPlayerService(subtitle));
+    this.audioPlayerFactory = () => new AudioPlayerService(subtitle);
   }
 
   registerCollectibleAudioPlayerService(subtitle: string): void {
-    this.register(AudioPlayerService, (_: ServiceLocator) => new CollectibleAudioPlayerService(subtitle));
+    this.audioPlayerFactory = () => new CollectibleAudioPlayerService(subtitle);
   }
 
   registerOnlineLoadService(downloadData: () => Promise<unknown>): void {
-    this.register(LoadService, (serviceLocator: ServiceLocator) => new OnlineLoadService(downloadData, new DataUpdater(serviceLocator.getStorage()), serviceLocator));
+    this.loadServiceFactory = () => new OnlineLoadService(downloadData, new DataUpdater(this.storage), this.getLanguageService(), this.getPinService());
   }
 
   registerOfflineLoadService(
@@ -35,22 +75,83 @@ export class ServiceFacade extends ServiceLocator {
     save: (filename: string, data: string) => Promise<void>,
     list: () => Promise<string[]>,
   ): void {
-    this.register(
-      LoadService,
-      (serviceLocator: ServiceLocator) => new OfflineLoadService(downloadData, downloadFile, remove, save, list, new DataUpdater(serviceLocator.getStorage()), serviceLocator),
-    );
+    this.loadServiceFactory = () =>
+      new OfflineLoadService(
+        downloadData,
+        downloadFile,
+        remove,
+        save,
+        list,
+        new DataUpdater(this.storage),
+        this.storage,
+        this.getLanguageService(),
+        this.getPinService(),
+        this.getAssetService(),
+      );
+  }
+
+  getStorage(): Storage {
+    return this.storage;
+  }
+
+  getLanguageService(): LanguageService {
+    return (this.languageService ??= new LanguageService(this.storage));
+  }
+
+  getPinService(): PinService {
+    return (this.pinService ??= new PinService(this.storage));
+  }
+
+  getAssetService(): AssetService {
+    return (this.assetService ??= new AssetService(this.storage, this.resolveUrl));
+  }
+
+  getServerService(): ServerService {
+    return (this.serverService ??= new ServerService(this.storage));
+  }
+
+  getShareService(): ShareService {
+    return (this.shareService ??= new ShareService(this.storage));
+  }
+
+  getTextService(): TextService {
+    return (this.textService ??= new TextService(this.storage));
+  }
+
+  getStationService(): StationService {
+    return (this.stationService ??= new StationService(this.storage, this.getAssetService()));
+  }
+
+  getTourService(): TourService {
+    return (this.tourService ??= new TourService(this.storage, this.getAssetService(), this.getStationService()));
   }
 
   getRoutingService(): RoutingService {
-    return this.get(RoutingService);
+    return (this.routingService ??= new RoutingService());
   }
 
   getMenuService(): MenuService {
-    return this.get(MenuService);
+    return (this.menuService ??= new MenuService());
   }
 
   getAudioPlayerService(): AudioPlayerService {
-    return this.get(AudioPlayerService);
+    if (!this.audioPlayerService) {
+      if (!this.audioPlayerFactory) {
+        throw new Error('No audio player service registered, call registerDefaultAudioPlayerService() or registerCollectibleAudioPlayerService() first.');
+      }
+      this.audioPlayerService = this.audioPlayerFactory();
+    }
+    return this.audioPlayerService;
+  }
+
+  getLoadService(): LoadService {
+    if (!this.loadService) {
+      if (!this.loadServiceFactory) {
+        throw new Error('No load service registered, call registerOnlineLoadService() or registerOfflineLoadService() first.');
+      }
+      this.loadService = this.loadServiceFactory();
+    }
+    return this.loadService;
   }
 
   changeLanguage(language: string): void {

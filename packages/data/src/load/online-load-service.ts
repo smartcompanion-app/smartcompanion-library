@@ -1,24 +1,24 @@
 import { LanguageService, PinService } from '../domain';
-import { ServiceLocator } from '../service-locator';
 import { Updater } from '../update';
+import { LoadService } from './load-service';
 import { autoSelectLanguage } from './utils';
 
 /**
  * This load service strategy assumes a constant internet connection,
  * Assets like audio files and images are downloaded on demand.
  */
-export class OnlineLoadService {
+export class OnlineLoadService implements LoadService {
   protected languageService: LanguageService;
   protected pinService: PinService;
   protected dataUpdater: Updater;
   protected downloadData: () => Promise<unknown>;
   protected progress: (progress: number) => void = (_: number) => {};
 
-  constructor(downloadData: () => Promise<unknown>, dataUpdater: Updater, serviceLocator: ServiceLocator) {
+  constructor(downloadData: () => Promise<unknown>, dataUpdater: Updater, languageService: LanguageService, pinService: PinService) {
     this.downloadData = downloadData;
     this.dataUpdater = dataUpdater;
-    this.languageService = serviceLocator.getLanguageService();
-    this.pinService = serviceLocator.getPinService();
+    this.languageService = languageService;
+    this.pinService = pinService;
   }
 
   setProgressListener(listener: (progress: number) => void) {

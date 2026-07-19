@@ -17,11 +17,16 @@
     "format:check": "npm run format:check -w packages/data -w packages/services -w packages/ui --if-present"
   },
   "license": "BSD-2-Clause",
+  "overrides": {
+    "eslint-plugin-react": {
+      "eslint": "$eslint"
+    }
+  },
   "devDependencies": {
     "@ionic/core": "^8.8.14",
     "@stencil/eslint-plugin": "~1.3.0",
     "@stencil/sass": "~3.2.3",
-    "eslint": "^9.39.5",
+    "eslint": "^10.7.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-storybook": "^10.5.2",
     "prettier": "^3.9.5",

@@ -35,7 +35,12 @@
     "leaflet": "^1.9.4",
     "swiper": "^12.1.2"
   },
+  "peerDependencies": {
+    "@smartcompanion/data": "*",
+    "@smartcompanion/services": "*"
+  },
   "devDependencies": {
+    "@smartcompanion/data": "*",
     "@smartcompanion/services": "*",
     "@stencil/core": "^4.43.3",
     "@stencil/storybook-plugin": "^0.6.1",

@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "leaflet": "^1.9.4",
-    "swiper": "^12.1.2"
+    "swiper": "^12.2.0"
   },
   "peerDependencies": {
     "@smartcompanion/data": "*",
@@ -43,10 +43,10 @@
     "@smartcompanion/data": "*",
     "@smartcompanion/services": "*",
     "@stencil/core": "^4.43.3",
-    "@stencil/storybook-plugin": "^0.6.1",
+    "@stencil/storybook-plugin": "^0.7.0",
     "@stencil/vitest": "^1.11.3",
-    "@types/node": "^25.5.0",
+    "@types/node": "^26.1.1",
     "@vitest/browser-playwright": "^4.1.4",
-    "storybook": "^10.4.0"
+    "storybook": "^10.5.2"
   }
 }

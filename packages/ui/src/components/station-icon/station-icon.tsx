@@ -3,6 +3,9 @@ import { Component, Prop, Host, h } from "@stencil/core";
 const SIZE_PX = { small: 20, normal: 30, large: 40 } as const;
 const STROKE_WIDTH = 3;
 
+/**
+ * @slot - The station number or label shown inside the icon
+ */
 @Component({
   tag: 'sc-station-icon',
   styleUrl: 'station-icon.scss',

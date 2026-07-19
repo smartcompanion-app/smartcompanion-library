@@ -1,5 +1,8 @@
 import { Component, Prop, Element, Host, h, State } from "@stencil/core";
 
+/**
+ * @slot - The text content to display, scrolled as a marquee when active
+ */
 @Component({
   tag: 'sc-marquee',
   styleUrl: 'marquee.scss',

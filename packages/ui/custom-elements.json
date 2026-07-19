@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-05-17T17:33:08",
+  "timestamp": "2026-07-19T10:53:49",
   "compiler": {
     "name": "@stencil/core",
-    "version": "4.43.4",
+    "version": "4.43.5",
     "typescriptVersion": "5.8.3"
   },
   "components": [
@@ -65,7 +65,12 @@
       "encapsulation": "shadow",
       "tag": "sc-marquee",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "slot",
+          "text": "- The text content to display, scrolled as a marquee when active"
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -102,7 +107,12 @@
       "events": [],
       "listeners": [],
       "styles": [],
-      "slots": [],
+      "slots": [
+        {
+          "name": "",
+          "docs": "The text content to display, scrolled as a marquee when active"
+        }
+      ],
       "parts": [],
       "states": [],
       "dependents": [
@@ -2227,7 +2237,12 @@
       "encapsulation": "shadow",
       "tag": "sc-station-icon",
       "docs": "",
-      "docsTags": [],
+      "docsTags": [
+        {
+          "name": "slot",
+          "text": "- The station number or label shown inside the icon"
+        }
+      ],
       "usage": {},
       "props": [
         {
@@ -2389,7 +2404,12 @@
       "events": [],
       "listeners": [],
       "styles": [],
-      "slots": [],
+      "slots": [
+        {
+          "name": "",
+          "docs": "The station number or label shown inside the icon"
+        }
+      ],
       "parts": [],
       "states": [],
       "dependents": [

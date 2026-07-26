@@ -1,4 +1,5 @@
-import { AssetService, Station } from '..';
+import { AssetService } from '../asset/asset-service';
+import { Station } from './station';
 import { Storage } from '../../storage';
 
 export class StationService {

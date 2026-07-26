@@ -3,8 +3,8 @@
   "forbidden": [
     {
       "name": "no-circular",
-      "comment": "Import cycles make module init order load-bearing and break tree shaking. Currently 'warn': packages/data has pre-existing barrel cycles (a module imports a type from its own directory's index.ts, which re-exports that module). They are type-only and erase at compile time. Raise to 'error' once those imports point at concrete files instead of the barrel.",
-      "severity": "warn",
+      "comment": "Import cycles make module init order load-bearing and break tree shaking. Keep intra-package imports pointed at concrete modules ('../update/updater'), not at a directory barrel ('../update') -- a barrel re-exports its whole directory, so importing one type from it drags in every sibling and closes cycles that do not otherwise exist.",
+      "severity": "error",
       "from": {},
       "to": { "circular": true }
     },

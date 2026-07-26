@@ -1,4 +1,7 @@
-import { AssetService, StationService, Tour, Station } from '..';
+import { AssetService } from '../asset/asset-service';
+import { StationService } from '../station/station-service';
+import { Station } from '../station/station';
+import { Tour } from './tour';
 import { Storage } from '../../storage';
 
 export class TourService {

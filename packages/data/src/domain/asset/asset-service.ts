@@ -1,5 +1,5 @@
 import { Storage } from '../../storage';
-import { Asset } from '.';
+import { Asset } from './asset';
 
 /**
  * Repository to retrieve assets.

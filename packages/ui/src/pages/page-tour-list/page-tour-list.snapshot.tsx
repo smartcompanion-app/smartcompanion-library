@@ -1,15 +1,14 @@
 import { render, expect, test, h } from '@stencil/vitest';
+import { Menu, PageTourListFacade, TourSource } from '../../contracts';
 import { tours } from '../../../test/fixtures';
-import { ServiceFacade, MenuService } from '@smartcompanion/services';
-import { TourService } from '@smartcompanion/data';
 
 const facade = {
   getMenuService: () => ({
     enable: () => Promise.resolve(),
-  }) as Partial<MenuService>,
+  }) as Partial<Menu>,
   getTourService: () => ({
     getTours: () => Promise.resolve(tours),
-  }) as Partial<TourService>,
+  }) as Partial<TourSource>,
   __: (key: string) => {
     switch (key) {
       case 'tour-list': return 'Tour Overview';
@@ -18,7 +17,7 @@ const facade = {
       default: return key;
     }
   },
-} as unknown as ServiceFacade;
+} as unknown as PageTourListFacade;
 
 test('render page tour list', async () => {
   const { root } = await render(<sc-page-tour-list facade={facade}></sc-page-tour-list>);

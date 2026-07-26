@@ -1,7 +1,7 @@
 import { Component, State, Prop, Host, h } from '@stencil/core';
 import { Station } from '@smartcompanion/data';
 import { formatSeconds, ReactiveAudioPlayer } from '../../utils';
-import { ServiceFacade } from '@smartcompanion/services';
+import { PageMultiAudioStationFacade } from '../../contracts';
 
 @Component({
   tag: 'sc-page-multi-audio-station',
@@ -43,7 +43,7 @@ export class PageMultiAudioStation {
   /**
    * Provides access to all services via the service facade
    */
-  @Prop() facade: ServiceFacade;
+  @Prop() facade: PageMultiAudioStationFacade;
 
   async componentWillLoad() {
     this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);

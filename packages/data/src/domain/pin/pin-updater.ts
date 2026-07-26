@@ -1,5 +1,5 @@
 import { Storage } from '../../storage';
-import { Updater } from '../../update';
+import { Updater } from '../../update/updater';
 
 export class PinUpdater implements Updater {
   protected storage: Storage;

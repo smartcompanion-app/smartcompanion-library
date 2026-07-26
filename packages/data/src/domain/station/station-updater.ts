@@ -1,5 +1,5 @@
 import { Storage } from '../../storage';
-import { Updater } from '../../update';
+import { Updater } from '../../update/updater';
 import { Station } from './station';
 
 export class StationUpdater implements Updater {

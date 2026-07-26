@@ -5,7 +5,6 @@ import { ServiceFacade } from '../src/service-facade';
 let serviceFacade: ServiceFacade;
 beforeEach(() => {
   serviceFacade = new ServiceFacade(new MemoryStorage());
-  serviceFacade.registerDefaultServices();
   serviceFacade.registerOnlineLoadService(async () => { return {}; });
 });
 

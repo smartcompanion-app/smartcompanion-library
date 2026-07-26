@@ -1,14 +1,13 @@
 import { render, h, describe, it, expect } from '@stencil/vitest';
-import { ServiceFacade, MenuService } from '@smartcompanion/services';
-import { StationService } from '@smartcompanion/data';
+import { Menu, StationListFacade, StationSource } from '../../contracts';
 
 const facade = {
   getMenuService: () => ({
     enable: () => Promise.resolve(),
-  }) as MenuService,
+  }) as Menu,
   getStationService: () => ({
     getStations: () => Promise.resolve([]),
-  }) as StationService,
+  }) as StationSource,
   __: (key: string) => {
     switch (key) {
       case 'menu-selection':
@@ -17,7 +16,7 @@ const facade = {
         return key;
     }
   },
-} as ServiceFacade;
+} as StationListFacade;
 
 const getNumpadButton = (root: HTMLElement, testId: string) => {
   return root.querySelector('sc-numpad').shadowRoot.querySelector(`[data-testid="${testId}"]`) as HTMLElement;

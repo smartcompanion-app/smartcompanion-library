@@ -1,7 +1,7 @@
 import { describe, test, beforeEach, expect, vi, Mock, Mocked } from 'vitest';
 import { OfflineLoadService } from '../../src/load/offline-load-service';
 import { MemoryStorage } from '../../src/storage';
-import { ServiceLocator } from '../../src/service-locator';
+import { AssetService, Asset, LanguageService, PinService } from '../../src/domain';
 import { Updater } from '../../src/update';
 
 describe('offline load service', () => {
@@ -12,9 +12,7 @@ describe('offline load service', () => {
   let listFn: Mock<() => Promise<string[]>>;
   let progressFn: Mock;
   let memoryStorage: MemoryStorage;
-  let serviceLocator: ServiceLocator;
   let dataUpdater: Mocked<Updater>;
-  let offlineLoadService: OfflineLoadService;
 
   beforeEach(() => {
     downloadDataFn = vi.fn();
@@ -29,25 +27,37 @@ describe('offline load service', () => {
     dataUpdater = {
       update: vi.fn(),
     };
+  });
 
-    // ServiceLocator needs to be constructed with storage
-    serviceLocator = new ServiceLocator(memoryStorage);
-    serviceLocator.registerDefaultServices();
+  // Create services after each test has prepared the storage,
+  // since LanguageService picks up a stored language in its constructor.
+  // Returns the collaborators instead of assigning shared state, so a test
+  // that forgets to call this has nothing to reference.
+  const createOfflineLoadService = () => {
+    const languageService = new LanguageService(memoryStorage);
+    const pinService = new PinService(memoryStorage);
+    const assetService = new AssetService(memoryStorage, async (asset: Asset) => ({ webUrl: asset.externalUrl, fileUrl: asset.externalUrl }));
 
-    offlineLoadService = new OfflineLoadService(
+    const offlineLoadService = new OfflineLoadService(
       downloadDataFn,
       downloadFileFn,
       removeFn,
       saveFn,
       listFn,
       dataUpdater,
-      serviceLocator
+      memoryStorage,
+      languageService,
+      pinService,
+      assetService
     );
 
     offlineLoadService.setProgressListener(progressFn);
-  });
+
+    return { offlineLoadService, languageService, pinService, assetService };
+  };
 
   test('should result in "error" when data download fails and memory is empty', async () => {
+    const { offlineLoadService } = createOfflineLoadService();
     downloadDataFn.mockImplementationOnce(() => { throw new Error("random error, whatever") });
     const result = await offlineLoadService.load();
     expect(downloadDataFn).toHaveBeenCalledTimes(1);
@@ -55,8 +65,9 @@ describe('offline load service', () => {
   });
 
   test('should load data and return "language" if more than one language is available', async () => {
+    const { offlineLoadService, languageService } = createOfflineLoadService();
     downloadDataFn.mockResolvedValue({ example: 'data' });
-    vi.spyOn(serviceLocator.getLanguageService(), 'getLanguages').mockReturnValue([
+    vi.spyOn(languageService, 'getLanguages').mockReturnValue([
       { language: 'en', title: 'English' }, { language: 'de', title: 'Deutsch' }
     ]);
     const result = await offlineLoadService.load();
@@ -65,10 +76,11 @@ describe('offline load service', () => {
   });
 
   test('should load data and return "home" if only one language is available', async () => {
+    const { offlineLoadService, languageService, assetService } = createOfflineLoadService();
     downloadDataFn.mockResolvedValue({ example: 'data' });
     listFn.mockResolvedValue([]);
-    vi.spyOn(serviceLocator.getLanguageService(), 'getLanguages').mockReturnValue([{ language: 'en', title: 'English' }]);
-    vi.spyOn(serviceLocator.getAssetService(), 'getUnresolvedAssets').mockReturnValue([]);
+    vi.spyOn(languageService, 'getLanguages').mockReturnValue([{ language: 'en', title: 'English' }]);
+    vi.spyOn(assetService, 'getUnresolvedAssets').mockReturnValue([]);
     const result = await offlineLoadService.load();
     expect(result).toBe('home');
     expect(memoryStorage.get('language')).toBe('en');
@@ -76,6 +88,7 @@ describe('offline load service', () => {
   });
 
   test('should result in "language" when data downloads and memory is empty', async () => {
+    const { offlineLoadService } = createOfflineLoadService();
     downloadDataFn.mockImplementationOnce(async () => ({ 'random': 'data', 'checksum': 'something' }));
     const result = await offlineLoadService.load();
     expect(downloadDataFn).toHaveBeenCalledTimes(1);
@@ -86,6 +99,7 @@ describe('offline load service', () => {
     memoryStorage.set('files-loaded', 'de');
     memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
     memoryStorage.set('language', 'de');
+    const { offlineLoadService } = createOfflineLoadService();
 
     downloadDataFn.mockImplementationOnce(() => { throw new Error("random error, whatever") });
 
@@ -98,11 +112,12 @@ describe('offline load service', () => {
     memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
     memoryStorage.set('language', 'de');
     memoryStorage.set('pins', ['1234']);
+    const { offlineLoadService, pinService } = createOfflineLoadService();
     downloadDataFn.mockImplementationOnce(async () => ({ 'random': 'data', 'checksum': 'something' }));
 
     // Mock pin service to require pin and be invalid
-    vi.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
-    vi.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(false);
+    vi.spyOn(pinService, 'isPinValidationRequired').mockReturnValue(true);
+    vi.spyOn(pinService, 'isValid').mockReturnValue(false);
 
     const result = await offlineLoadService.load();
     expect(downloadDataFn).toHaveBeenCalledTimes(1);
@@ -113,7 +128,8 @@ describe('offline load service', () => {
     memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
     memoryStorage.set('language', 'de');
     memoryStorage.set('files-loaded', 'de');
-    vi.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(false);
+    const { offlineLoadService, pinService } = createOfflineLoadService();
+    vi.spyOn(pinService, 'isPinValidationRequired').mockReturnValue(false);
     expect(offlineLoadService.isLoaded()).toBeTruthy();
   });
 
@@ -121,18 +137,21 @@ describe('offline load service', () => {
     memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
     memoryStorage.set('language', 'de');
     memoryStorage.set('files-loaded', 'de');
-    vi.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
-    vi.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(true);
+    const { offlineLoadService, pinService } = createOfflineLoadService();
+    vi.spyOn(pinService, 'isPinValidationRequired').mockReturnValue(true);
+    vi.spyOn(pinService, 'isValid').mockReturnValue(true);
     expect(offlineLoadService.isLoaded()).toBeTruthy();
   });
 
   test('isLoaded should return false when no language is set', () => {
+    const { offlineLoadService } = createOfflineLoadService();
     expect(offlineLoadService.isLoaded()).toBeFalsy();
   });
 
   test('isLoaded should return false when files are not loaded', () => {
     memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
     memoryStorage.set('language', 'de');
+    const { offlineLoadService } = createOfflineLoadService();
     expect(offlineLoadService.isLoaded()).toBeFalsy();
   });
 
@@ -140,8 +159,9 @@ describe('offline load service', () => {
     memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
     memoryStorage.set('language', 'de');
     memoryStorage.set('files-loaded', 'de');
-    vi.spyOn(serviceLocator.getPinService(), 'isPinValidationRequired').mockReturnValue(true);
-    vi.spyOn(serviceLocator.getPinService(), 'isValid').mockReturnValue(false);
+    const { offlineLoadService, pinService } = createOfflineLoadService();
+    vi.spyOn(pinService, 'isPinValidationRequired').mockReturnValue(true);
+    vi.spyOn(pinService, 'isValid').mockReturnValue(false);
     expect(offlineLoadService.isLoaded()).toBeFalsy();
   });
 });

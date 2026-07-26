@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { ServiceFacade } from '@smartcompanion/services';
+import { PageErrorFacade } from '../../contracts';
 
 @Component({
   tag: 'sc-page-error',
@@ -9,7 +9,7 @@ import { ServiceFacade } from '@smartcompanion/services';
 export class PageError {
 
   /** The service facade instance */
-  @Prop() facade: ServiceFacade;
+  @Prop() facade: PageErrorFacade;
 
   async componentDidLoad() {
     this.facade.getMenuService().disable();

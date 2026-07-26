@@ -1,6 +1,5 @@
 import { test, expect, vi } from 'vitest';
-import { getStations, getSortedStations } from './data-utils';
-import { ServiceFacade } from '@smartcompanion/services';
+import { getStations, getSortedStations, StationDataFacade } from './data-utils';
 import { Station } from '@smartcompanion/data';
 
 const stationA = { id: '1', number: '3' };
@@ -21,7 +20,7 @@ function createFacade(options: { defaultTourId?: string; tourStations?: Partial<
     facade: {
       getTourService: () => tourService,
       getStationService: () => stationService,
-    } as unknown as ServiceFacade,
+    } as unknown as StationDataFacade,
     tourService,
     stationService,
   };

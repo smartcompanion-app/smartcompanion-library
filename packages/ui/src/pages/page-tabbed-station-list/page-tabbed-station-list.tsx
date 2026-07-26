@@ -1,5 +1,5 @@
 import { Component, Host, Element, h, Prop } from '@stencil/core';
-import { ServiceFacade } from '@smartcompanion/services';
+import { StationListFacade } from '../../contracts';
 
 @Component({
   tag: 'sc-page-tabbed-station-list',
@@ -20,7 +20,7 @@ export class PageTabbedStationList {
   @Prop() tourId: string = null;
 
   /** The service facade instance */
-  @Prop() facade: ServiceFacade;
+  @Prop() facade: StationListFacade;
 
   async componentWillLoad() {
     await this.facade.getMenuService().enable();

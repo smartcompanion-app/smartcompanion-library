@@ -1,13 +1,15 @@
+import { AssetService, LanguageService, PinService } from '../domain';
 import { FileUpdater } from '../file';
-import { ServiceLocator } from '../service-locator';
+import { Storage } from '../storage';
 import { Updater } from '../update';
+import { LoadService } from './load-service';
 import { autoSelectLanguage } from './utils';
 
 /**
  * This load service strategy is designed for offline use,
  * Assets like audio files and images are downloaded for offline use.
  */
-export class OfflineLoadService {
+export class OfflineLoadService implements LoadService {
   protected downloadData: () => Promise<unknown>;
   protected downloadFile: (url: string) => Promise<string>;
   protected remove: (filename: string) => Promise<void>;
@@ -16,7 +18,10 @@ export class OfflineLoadService {
   protected progress: ((progress: number) => void) | undefined;
   protected dataUpdater: Updater;
   protected fileUpdater: FileUpdater;
-  protected serviceLocator: ServiceLocator;
+  protected storage: Storage;
+  protected languageService: LanguageService;
+  protected pinService: PinService;
+  protected assetService: AssetService;
 
   constructor(
     downloadData: () => Promise<unknown>,
@@ -25,7 +30,10 @@ export class OfflineLoadService {
     save: (filename: string, data: string) => Promise<void>,
     list: () => Promise<string[]>,
     dataUpdater: Updater,
-    serviceLocator: ServiceLocator,
+    storage: Storage,
+    languageService: LanguageService,
+    pinService: PinService,
+    assetService: AssetService,
   ) {
     this.downloadData = downloadData;
     this.downloadFile = downloadFile;
@@ -33,7 +41,10 @@ export class OfflineLoadService {
     this.save = save;
     this.list = list;
     this.dataUpdater = dataUpdater;
-    this.serviceLocator = serviceLocator;
+    this.storage = storage;
+    this.languageService = languageService;
+    this.pinService = pinService;
+    this.assetService = assetService;
 
     this.fileUpdater = new FileUpdater(this.downloadFile, this.remove, this.save, this.list, (progress: number) => {
       if (this.progress) this.progress(progress);
@@ -48,29 +59,25 @@ export class OfflineLoadService {
     try {
       const data = await this.downloadData();
       this.dataUpdater.update(data);
-      autoSelectLanguage(this.serviceLocator.getLanguageService());
+      autoSelectLanguage(this.languageService);
 
-      if (!this.serviceLocator.getLanguageService().hasLanguage()) {
+      if (!this.languageService.hasLanguage()) {
         return 'language';
-      } else if (this.serviceLocator.getPinService().isPinValidationRequired() && !this.serviceLocator.getPinService().isValid()) {
+      } else if (this.pinService.isPinValidationRequired() && !this.pinService.isValid()) {
         return 'pin';
       } else {
-        const assets = this.serviceLocator.getAssetService().getUnresolvedAssets({
-          language: this.serviceLocator.getLanguageService().getCurrentLanguage(),
+        const assets = this.assetService.getUnresolvedAssets({
+          language: this.languageService.getCurrentLanguage(),
         });
         await this.fileUpdater.update(assets);
-        this.serviceLocator.getStorage().set('files-loaded', this.serviceLocator.getLanguageService().getCurrentLanguage());
+        this.storage.set('files-loaded', this.languageService.getCurrentLanguage());
 
         return 'home';
       }
     } catch (e) {
       console.error('error loading data', e);
 
-      if (
-        this.serviceLocator.getLanguageService().hasLanguage() &&
-        this.serviceLocator.getPinService().isPinValidationRequired() &&
-        !this.serviceLocator.getPinService().isValid()
-      ) {
+      if (this.languageService.hasLanguage() && this.pinService.isPinValidationRequired() && !this.pinService.isValid()) {
         return 'pin';
       } else if (this.isLoaded()) {
         return 'home';
@@ -86,10 +93,10 @@ export class OfflineLoadService {
    */
   isLoaded(): boolean {
     return (
-      this.serviceLocator.getLanguageService().hasLanguage() &&
-      this.serviceLocator.getStorage().has('files-loaded') &&
-      this.serviceLocator.getStorage().get('files-loaded') == this.serviceLocator.getLanguageService().getCurrentLanguage() &&
-      (!this.serviceLocator.getPinService().isPinValidationRequired() || this.serviceLocator.getPinService().isValid())
+      this.languageService.hasLanguage() &&
+      this.storage.has('files-loaded') &&
+      this.storage.get('files-loaded') == this.languageService.getCurrentLanguage() &&
+      (!this.pinService.isPinValidationRequired() || this.pinService.isValid())
     );
   }
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
+import { Menu, PageLanguageFacade } from '../../contracts';
 import { h } from '@stencil/core';
-import { ServiceFacade, MenuService } from '@smartcompanion/services';
 import { PageLanguage } from './page-language';
 
 const meta = {
@@ -26,7 +26,7 @@ export const Example: Story = {
           console.log('Menu disabled');
           return Promise.resolve();
         },
-      }) as MenuService,
+      }) as Menu,
       getLanguages: () => ([
         { title: 'English', language: 'en' },
         { title: 'Deutsch', language: 'de' },
@@ -34,7 +34,7 @@ export const Example: Story = {
         { title: 'Français', language: 'fr' },
         { title: 'Italiano', language: 'it' },
       ]),
-    } as ServiceFacade,
+    } as PageLanguageFacade,
   },
 };
 

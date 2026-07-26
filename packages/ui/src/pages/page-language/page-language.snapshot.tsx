@@ -1,16 +1,16 @@
 import { render, expect, test, h } from '@stencil/vitest';
-import { ServiceFacade, MenuService } from '@smartcompanion/services';
+import { Menu, PageLanguageFacade } from '../../contracts';
 
 const facade = {
   getMenuService: () => ({
     disable: () => Promise.resolve(),
-  }) as Partial<MenuService>,
+  }) as Partial<Menu>,
   getLanguages: () => ([
     { title: 'English', language: 'en' },
     { title: 'Deutsch', language: 'de' },
     { title: 'Italiano', language: 'it' },
   ]),
-} as unknown as ServiceFacade;
+} as unknown as PageLanguageFacade;
 
 test('render page language with language list', async () => {
   const { root } = await render(<sc-page-language facade={facade}></sc-page-language>);

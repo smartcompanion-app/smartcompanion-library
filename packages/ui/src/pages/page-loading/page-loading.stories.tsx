@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
+import { Menu, PageLoadingFacade, Router } from '../../contracts';
 import { h } from '@stencil/core';
-import { ServiceFacade, MenuService, RoutingService } from '@smartcompanion/services';
 import { PageLoading } from './page-loading';
 
 const meta = {
@@ -50,14 +50,15 @@ const facadeMock = {
       console.log('Menu disabled');
       return Promise.resolve();
     },
-  }) as MenuService,
+  }) as Menu,
   getRoutingService: () => ({
     addRouteChangeListener: (route: string, callback: () => void) => {
       console.log(`Route change listener added for ${route}`);
       setTimeout(callback, 500); // Simulate route change after 500ms
     },
-  }) as RoutingService,
-} as ServiceFacade;
+  }) as unknown as Router,
+  getPendingRoute: () => null,
+} as PageLoadingFacade;
 
 export const Example: Story = {
   args: {

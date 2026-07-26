@@ -1,5 +1,5 @@
 import { Storage } from '../../storage';
-import { Updater } from '../../update';
+import { Updater } from '../../update/updater';
 
 export class ServerUpdater implements Updater {
   protected storage: Storage;

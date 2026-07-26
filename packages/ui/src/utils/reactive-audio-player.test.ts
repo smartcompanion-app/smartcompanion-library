@@ -1,6 +1,6 @@
 import { test, expect, vi, beforeEach } from 'vitest';
+import { AudioPlayerFacade } from '../contracts';
 import { ReactiveAudioPlayer } from './reactive-audio-player';
-import { ServiceFacade } from '@smartcompanion/services';
 
 const store: Record<string, string> = {};
 globalThis.localStorage = {
@@ -23,7 +23,7 @@ function createMocks() {
 
   const facade = {
     getAudioPlayerService: () => mockAudioPlayerService,
-  } as unknown as ServiceFacade;
+  } as unknown as AudioPlayerFacade;
 
   const page = {
     facade,

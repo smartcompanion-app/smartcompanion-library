@@ -1,21 +1,20 @@
 import { render, expect, test, h } from '@stencil/vitest';
-import { ServiceFacade, MenuService, RoutingService } from '@smartcompanion/services';
-import { LoadService } from '@smartcompanion/data';
+import { Loader, Menu, PageLoadingFacade, Router } from '../../contracts';
 
 const facade = {
   getLoadService: () => ({
     setProgressListener: () => {},
     load: () => new Promise(() => {}),
     isLoaded: () => true,
-  }) as Partial<LoadService>,
+  }) as Partial<Loader>,
   getMenuService: () => ({
     disable: () => Promise.resolve(),
-  }) as Partial<MenuService>,
+  }) as Partial<Menu>,
   getRoutingService: () => ({
     addRouteChangeListener: () => {},
-  }) as Partial<RoutingService>,
+  }) as Partial<Router>,
   getPendingRoute: () => null,
-} as unknown as ServiceFacade;
+} as unknown as PageLoadingFacade;
 
 test('render page loading with spinner', async () => {
   const { root } = await render(

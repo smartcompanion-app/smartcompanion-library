@@ -13,6 +13,7 @@
     "test": "npm run test -w packages/data -w packages/services -w packages/ui --if-present",
     "build": "npm run build -w packages/data -w packages/services -w packages/ui --if-present",
     "lint": "npm run lint -w packages/data -w packages/services -w packages/ui --if-present",
+    "depcruise": "depcruise --config .dependency-cruiser.json --output-type err-long \"packages/*/src/**/*.{ts,tsx}\"",
     "format": "npm run format -w packages/data -w packages/services -w packages/ui --if-present",
     "format:check": "npm run format:check -w packages/data -w packages/services -w packages/ui --if-present"
   },
@@ -26,6 +27,7 @@
     "@ionic/core": "^8.8.14",
     "@stencil/eslint-plugin": "~1.3.0",
     "@stencil/sass": "~3.2.3",
+    "dependency-cruiser": "^16.10.4",
     "eslint": "^10.7.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-storybook": "^10.5.2",

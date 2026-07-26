@@ -1,10 +1,10 @@
 import { render, expect, test, h } from '@stencil/vitest';
-import { ServiceFacade, MenuService } from '@smartcompanion/services';
+import { Menu, PageErrorFacade } from '../../contracts';
 
 const facade = {
   getMenuService: () => ({
     disable: () => Promise.resolve(),
-  }) as Partial<MenuService>,
+  }) as Partial<Menu>,
   __: (key: string) => {
     switch (key) {
       case 'no-internet': return 'No Internet Connection';
@@ -12,7 +12,7 @@ const facade = {
       default: return key;
     }
   },
-} as unknown as ServiceFacade;
+} as unknown as PageErrorFacade;
 
 test('render page error', async () => {
   const { root } = await render(<sc-page-error facade={facade}></sc-page-error>);

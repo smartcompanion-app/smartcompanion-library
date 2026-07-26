@@ -1,12 +1,17 @@
-import { ServiceFacade } from '@smartcompanion/services';
 import { Station } from '@smartcompanion/data';
+import { StationSource, TourSource } from '../contracts';
+
+export type StationDataFacade = {
+  getTourService(): TourSource;
+  getStationService(): StationSource;
+};
 
 /**
  * Get stations for a specific tour or all stations if no tour is specified.
  * The string "default" is treated as a placeholder for the default tour id.
  */
 export async function getStations(
-  facade: ServiceFacade,
+  facade: StationDataFacade,
   tourId: string = null
 ): Promise<Array<Station>> {
   if (tourId === "default") {
@@ -20,7 +25,7 @@ export async function getStations(
 }
 
 export async function getSortedStations(
-  facade: ServiceFacade,
+  facade: StationDataFacade,
   tourId: string = null
 ): Promise<Array<Station>> {
   const stations = await getStations(facade, tourId);

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sverweij/dependency-cruiser/main/src/schema/configuration.schema.json",
+  "forbidden": [
+    {
+      "name": "no-circular",
+      "comment": "Import cycles make module init order load-bearing and break tree shaking. Currently 'warn': packages/data has pre-existing barrel cycles (a module imports a type from its own directory's index.ts, which re-exports that module). They are type-only and erase at compile time. Raise to 'error' once those imports point at concrete files instead of the barrel.",
+      "severity": "warn",
+      "from": {},
+      "to": { "circular": true }
+    },
+    {
+      "name": "ui-shipped-no-services",
+      "comment": "Shipped UI code depends on src/contracts, never on @smartcompanion/services. Pages take a structural facade slice so apps can pass any object satisfying it. Tests and stories are exempt: contracts.test.ts imports ServiceFacade on purpose, to prove it still satisfies the contracts.",
+      "severity": "error",
+      "from": {
+        "path": "^packages/ui/src",
+        "pathNot": "\\.(test|spec|snapshot|browser|stories)\\.(ts|tsx)$"
+      },
+      "to": { "path": "^packages/services|^node_modules/@smartcompanion/services" }
+    },
+    {
+      "name": "data-is-a-leaf",
+      "comment": "@smartcompanion/data sits at the bottom of the stack and must not depend on any other workspace package.",
+      "severity": "error",
+      "from": { "path": "^packages/data/src" },
+      "to": { "path": "^packages/(services|ui)|^node_modules/@smartcompanion/(services|ui)" }
+    },
+    {
+      "name": "services-no-ui",
+      "comment": "@smartcompanion/services is consumed by the UI, never the other way round.",
+      "severity": "error",
+      "from": { "path": "^packages/services/src" },
+      "to": { "path": "^packages/ui|^node_modules/@smartcompanion/ui" }
+    }
+  ],
+  "options": {
+    "doNotFollow": { "path": "node_modules" },
+    "tsPreCompilationDeps": true
+  }
+}

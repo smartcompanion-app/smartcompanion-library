@@ -32,6 +32,9 @@ jobs:
       - name: Run lint
         run: npm run lint
 
+      - name: Check package boundaries
+        run: npm run depcruise
+
       - name: Run tests
         run: npm test
 

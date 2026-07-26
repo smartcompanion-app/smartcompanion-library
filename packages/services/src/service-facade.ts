@@ -26,9 +26,7 @@ type ResolveUrl = (asset: Asset) => Promise<{ fileUrl: string; webUrl: string }>
  */
 export class ServiceFacade {
   protected storage: Storage;
-  protected resolveUrl: ResolveUrl = async (asset: Asset) => {
-    return { webUrl: asset.externalUrl, fileUrl: asset.externalUrl };
-  };
+  protected resolveUrl: ResolveUrl;
 
   protected languageService?: LanguageService;
   protected pinService?: PinService;
@@ -46,14 +44,14 @@ export class ServiceFacade {
   protected loadServiceFactory?: () => LoadService;
   protected loadService?: LoadService;
 
-  constructor(storage: Storage = new BrowserStorage()) {
+  constructor(
+    storage: Storage = new BrowserStorage(),
+    resolveUrl: ResolveUrl = async (asset: Asset) => {
+      return { webUrl: asset.externalUrl, fileUrl: asset.externalUrl };
+    },
+  ) {
     this.storage = storage;
-  }
-
-  registerDefaultServices(resolveUrl?: ResolveUrl): void {
-    if (resolveUrl) {
-      this.resolveUrl = resolveUrl;
-    }
+    this.resolveUrl = resolveUrl;
   }
 
   registerDefaultAudioPlayerService(subtitle: string): void {

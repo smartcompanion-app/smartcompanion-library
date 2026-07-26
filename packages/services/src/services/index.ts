@@ -1,3 +1,3 @@
-export * from './audio-player-service';
-export * from './menu-service';
-export * from './routing-service';
+export * from './audio-player-service/index.js';
+export * from './menu-service.js';
+export * from './routing-service.js';

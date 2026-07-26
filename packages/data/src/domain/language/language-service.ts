@@ -1,5 +1,5 @@
-import { Storage } from '../../storage';
-import { Language } from './language';
+import { Storage } from '../../storage/index.js';
+import { Language } from './language.js';
 
 export class LanguageService {
   protected storage: Storage;

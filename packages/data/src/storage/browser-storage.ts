@@ -1,4 +1,4 @@
-import { Storage } from './storage';
+import { Storage } from './storage.js';
 
 export class BrowserStorage implements Storage {
   set(key: string, value: unknown): void {

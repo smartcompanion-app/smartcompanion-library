@@ -1,6 +1,6 @@
 import { Station } from '@smartcompanion/data';
-import { AudioPlayerService, AudioPlayerServiceItem } from './audio-player-service';
-import { AudioPlayerUpdate } from './audio-player-update';
+import { AudioPlayerService, AudioPlayerServiceItem } from './audio-player-service.js';
+import { AudioPlayerUpdate } from './audio-player-update.js';
 
 export class CollectibleAudioPlayerService extends AudioPlayerService {
   protected positions: number[] = [];

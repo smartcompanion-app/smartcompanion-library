@@ -7,6 +7,14 @@
     "url": "https://github.com/smartcompanion-app/smartcompanion-library.git",
     "directory": "packages/services"
   },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "sideEffects": false,

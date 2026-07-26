@@ -1,3 +1,3 @@
-export * from './audio-player-service';
-export * from './collectible-audio-player-service';
-export * from './audio-player-update';
+export * from './audio-player-service.js';
+export * from './collectible-audio-player-service.js';
+export * from './audio-player-update.js';

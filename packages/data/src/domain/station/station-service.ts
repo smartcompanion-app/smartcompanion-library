@@ -1,6 +1,6 @@
-import { AssetService } from '../asset/asset-service';
-import { Station } from './station';
-import { Storage } from '../../storage';
+import { AssetService } from '../asset/asset-service.js';
+import { Station } from './station.js';
+import { Storage } from '../../storage/index.js';
 
 export class StationService {
   protected storage: Storage;
@@ -16,7 +16,7 @@ export class StationService {
       return 'en'; // default set en for stations
     } else {
       return this.storage.get('language') as string;
-    }    
+    }
   }
 
   /**
@@ -86,7 +86,7 @@ export class StationService {
           stations.map((s: Station) => (s.id == stationId ? station : s)),
         );
       }
-    }    
+    }
 
     return this.getStation(stationId);
   }

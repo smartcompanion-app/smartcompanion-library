@@ -1,9 +1,9 @@
-import { AssetService, LanguageService, PinService } from '../domain';
-import { FileUpdater } from '../file';
-import { Storage } from '../storage';
-import { Updater } from '../update';
-import { LoadService } from './load-service';
-import { autoSelectLanguage } from './utils';
+import { AssetService, LanguageService, PinService } from '../domain/index.js';
+import { FileUpdater } from '../file/index.js';
+import { Storage } from '../storage/index.js';
+import { Updater } from '../update/index.js';
+import { LoadService } from './load-service.js';
+import { autoSelectLanguage } from './utils.js';
 
 /**
  * This load service strategy is designed for offline use,

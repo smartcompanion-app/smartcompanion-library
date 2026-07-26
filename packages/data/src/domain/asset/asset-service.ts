@@ -1,5 +1,5 @@
-import { Storage } from '../../storage';
-import { Asset } from './asset';
+import { Storage } from '../../storage/index.js';
+import { Asset } from './asset.js';
 
 /**
  * Repository to retrieve assets.

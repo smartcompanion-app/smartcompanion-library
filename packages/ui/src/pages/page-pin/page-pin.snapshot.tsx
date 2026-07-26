@@ -2,20 +2,26 @@ import { render, expect, test, h } from '@stencil/vitest';
 import { Menu, PagePinFacade, PinValidator, Router } from '../../contracts';
 
 const facade = {
-  getPinService: () => ({
-    validatePin: () => false,
-  }) as Partial<PinValidator>,
-  getMenuService: () => ({
-    disable: () => Promise.resolve(),
-  }) as Partial<Menu>,
-  getRoutingService: () => ({
-    pushReplaceCurrent: () => Promise.resolve(),
-  }) as Partial<Router>,
+  getPinService: () =>
+    ({
+      validatePin: () => false,
+    }) as Partial<PinValidator>,
+  getMenuService: () =>
+    ({
+      disable: () => Promise.resolve(),
+    }) as Partial<Menu>,
+  getRoutingService: () =>
+    ({
+      pushReplaceCurrent: () => Promise.resolve(),
+    }) as Partial<Router>,
   __: (key: string) => {
     switch (key) {
-      case 'enter-pin': return 'Enter PIN';
-      case 'pin-error': return 'PIN was incorrect, please try again';
-      default: return key;
+      case 'enter-pin':
+        return 'Enter PIN';
+      case 'pin-error':
+        return 'PIN was incorrect, please try again';
+      default:
+        return key;
     }
   },
 } as unknown as PagePinFacade;

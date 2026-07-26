@@ -16,7 +16,7 @@ import {
   TextService,
   TourService,
 } from '@smartcompanion/data';
-import { RoutingService, MenuService, AudioPlayerService, CollectibleAudioPlayerService } from './services';
+import { RoutingService, MenuService, AudioPlayerService, CollectibleAudioPlayerService } from './services/index.js';
 
 type ResolveUrl = (asset: Asset) => Promise<{ fileUrl: string; webUrl: string }>;
 

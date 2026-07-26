@@ -1,4 +1,4 @@
-import { Storage } from '../../storage';
+import { Storage } from '../../storage/index.js';
 
 export class ShareService {
   protected storage: Storage;

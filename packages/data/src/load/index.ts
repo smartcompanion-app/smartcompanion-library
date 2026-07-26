@@ -1,3 +1,3 @@
-export * from './load-service';
-export * from './online-load-service';
-export * from './offline-load-service';
+export * from './load-service.js';
+export * from './online-load-service.js';
+export * from './offline-load-service.js';

@@ -2,16 +2,20 @@ import { render, expect, test, h } from '@stencil/vitest';
 import { Menu, StationListFacade, StationSource } from '../../contracts';
 
 const facade = {
-  getMenuService: () => ({
-    enable: () => Promise.resolve(),
-  }) as Partial<Menu>,
-  getStationService: () => ({
-    getStations: () => Promise.resolve([]),
-  }) as Partial<StationSource>,
+  getMenuService: () =>
+    ({
+      enable: () => Promise.resolve(),
+    }) as Partial<Menu>,
+  getStationService: () =>
+    ({
+      getStations: () => Promise.resolve([]),
+    }) as Partial<StationSource>,
   __: (key: string) => {
     switch (key) {
-      case 'menu-selection': return 'Station Selection';
-      default: return key;
+      case 'menu-selection':
+        return 'Station Selection';
+      default:
+        return key;
     }
   },
 } as unknown as StationListFacade;

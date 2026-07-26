@@ -7,9 +7,10 @@
 ## Table of Contents
 
 - [Packages](#packages)
-- [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
 - [Local Development](#local-development)
+- [Contributing](#contributing)
+- [Releasing](#releasing)
 - [License](#license)
 - [Links](#links)
 
@@ -59,6 +60,20 @@ npm run test -w packages/ui        # Run Vitest and Playwright browser tests
 npm run watch -w packages/ui       # Stencil watch mode
 npm run storybook -w packages/ui   # Dev server at http://localhost:6006
 ```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the local setup, the test layout, and the package boundaries enforced by `npm run depcruise`. Security issues go through [SECURITY.md](SECURITY.md), not the issue tracker.
+
+## Releasing
+
+Releases are driven by [changesets](https://github.com/changesets/changesets):
+
+```bash
+npm run changeset   # describe your change; commit the generated file
+```
+
+Merging to `main` opens a `chore: release` pull request with the version bumps and changelogs. Merging *that* publishes all three packages — versioned in lockstep — to npm via [trusted publishing](https://docs.npmjs.com/trusted-publishers), with provenance and no stored npm token.
 
 ## License
 

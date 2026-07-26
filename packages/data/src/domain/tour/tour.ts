@@ -1,5 +1,5 @@
-import { Asset } from '../asset/asset';
-import { Station } from '../station/station';
+import { Asset } from '../asset/asset.js';
+import { Station } from '../station/station.js';
 
 export interface Tour {
   id: string;

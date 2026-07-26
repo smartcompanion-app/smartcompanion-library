@@ -9,7 +9,6 @@ import { getSortedStations, ReactiveAudioPlayer } from '../../utils';
   styleUrl: 'page-stations.scss',
 })
 export class PageStations {
-
   protected playerList: Swiper;
   protected reactiveAudioPlayer: ReactiveAudioPlayer;
   protected restartPlaying = false;
@@ -45,12 +44,12 @@ export class PageStations {
 
   async componentWillLoad() {
     this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
-   
+
     this.reactiveAudioPlayer.setOnCompletedListener(async (_: AudioPlayerUpdate) => {
       await this.reactiveAudioPlayer.next();
     });
     this.reactiveAudioPlayer.setOnCollectedListener(async (_: AudioPlayerUpdate, updatedStation: Station) => {
-      this.stations = this.stations.map(s => s.id === updatedStation.id ? updatedStation : s);
+      this.stations = this.stations.map(s => (s.id === updatedStation.id ? updatedStation : s));
     });
     this.reactiveAudioPlayer.setOnSkipListener(async (_: AudioPlayerUpdate) => {
       this.playerList?.slideTo(this.activeIndex);
@@ -127,10 +126,7 @@ export class PageStations {
           <ion-buttons slot="end">
             {this.enableSwitchAudioOutput && (
               <ion-fab-button color="light" size="small" onClick={this.handleToggleOutput}>
-                {this.earpiece ?
-                  <ion-icon color="primary" name="volume-medium-outline"></ion-icon> :
-                  <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>
-                }
+                {this.earpiece ? <ion-icon color="primary" name="volume-medium-outline"></ion-icon> : <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>}
               </ion-fab-button>
             )}
           </ion-buttons>
@@ -155,7 +151,7 @@ export class PageStations {
           </div>
           <div id="player-list" class="swiper">
             <div class="swiper-wrapper">
-              {this.stations.map((station, index) =>
+              {this.stations.map((station, index) => (
                 <div data-testid={`player-list-item-${index}`} class={this.activeIndex == index ? 'swiper-slide active' : 'swiper-slide'}>
                   <ion-card button data-index={index} onClick={this.handleSelect}>
                     <div class="card-content">
@@ -168,11 +164,11 @@ export class PageStations {
                     </div>
                   </ion-card>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         </div>
-      </ion-content>
+      </ion-content>,
     ];
   }
 }

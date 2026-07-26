@@ -1,3 +1,3 @@
-export * from './file-matcher';
-export * from './file-updater';
-export * from './file';
+export * from './file-matcher.js';
+export * from './file-updater.js';
+export * from './file.js';

@@ -12,8 +12,19 @@ TypeScript monorepo with npm workspaces containing reusable packages for SmartCo
 ## Git
 
 - Main branch: `main`
-- Releases triggered by tags matching `v[0-9]+.[0-9]+.[0-9]+`
 - Follows [Conventional Commits](https://www.conventionalcommits.org/) (e.g. `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`)
+- `npm install` installs a husky pre-commit hook that runs Prettier over staged files under `packages/*/src`
+
+## Releasing
+
+Driven by [changesets](https://github.com/changesets/changesets), not by tags — pushing a `vX.Y.Z` tag does nothing.
+
+1. Any change to published behaviour ships with a changeset (`npm run changeset`), committed alongside it. All three packages are versioned in lockstep (`fixed` in `.changeset/config.json`), so one changeset bumps all three.
+
+   The peer range on `@smartcompanion/data` in `services` and `ui` is deliberately `>=0.9.0`, not `^0.9.0`. Changesets escalates a peer *dependent* to a major bump whenever the new dependency version falls outside its declared range, and `^0.9.x` excludes `0.10.0` — with a caret there, every release would come out as a major. Do not tighten it while these packages are on 0.x.
+
+2. Merging to `main` opens a `chore: release` PR with the version bumps and changelogs.
+3. Merging that PR publishes to npm over trusted publishing (OIDC) with provenance. No npm token exists in this repo.
 
 ## Commands
 
@@ -58,14 +69,29 @@ npm run storybook -w packages/ui     # Dev server at http://localhost:6006
 
 ## Quality Gates
 
-Every change must pass lint and tests before committing. Run these after every change:
+Every change must pass these before committing:
 ```bash
 npm run lint           # Lint all packages (must pass with 0 errors, 0 warnings)
+npm run format:check   # Prettier check across all packages
+npm run depcruise      # Package boundaries (see .dependency-cruiser.json)
 npm test               # Run tests for all packages
+npm run check:publish  # publint + attw against each package's tarball
 ```
 
 ## CI/CD
 
-- CI runs on all PRs/pushes: install → build → lint → test (Ubuntu 24.04, Node 22)
-- Release publishes to NPM on version tags; requires `NPM_TOKEN` secret
-- Version is set across all packages simultaneously during release
+- `ci.yml` runs on PRs and pushes to `main` (Ubuntu 24.04, Node 22), in two parallel jobs:
+  - `lint` — lint, format:check, depcruise
+  - `test` — build, test (Playwright/Chromium), check:publish
+- `release.yml` runs on pushes to `main` and drives the changesets flow described above
+- `pages.yml` deploys Storybook to GitHub Pages on every push to `main`
+
+## Module Format
+
+`@smartcompanion/data` and `@smartcompanion/services` are **ESM-only**: `"type": "module"`, `module`/`moduleResolution` set to `nodenext`, and an `exports` map. Consequences to keep in mind when editing them:
+
+- Relative imports need explicit extensions — `'./updater.js'`, `'./update/index.js'`. Extensionless or directory specifiers compile but produce output Node cannot load.
+- The `.js` extension refers to the *emitted* file; the source is still `.ts`. This is normal NodeNext, not a mistake.
+- `require()` of these packages fails by design. Their `check:publish` passes `--ignore-rules cjs-resolves-to-esm` to attw for exactly this reason — do not "fix" that warning by reverting to CJS.
+
+`@smartcompanion/ui` is unaffected: Stencil produces its own CJS/ESM/custom-elements outputs.

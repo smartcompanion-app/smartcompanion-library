@@ -1,4 +1,4 @@
-@use "~swiper/swiper-bundle.css";
+@use '~swiper/swiper-bundle.css';
 
 ion-toolbar {
   --background: transparent;
@@ -47,11 +47,11 @@ ion-card {
     display: flex;
     justify-content: center;
     margin-top: -30px;
-  
+
     &-play {
       margin-left: 10px;
       margin-right: 10px;
-      width:70px;
+      width: 70px;
       height: 70px;
       margin-top: -5px;
     }
@@ -61,17 +61,17 @@ ion-card {
 #player-list {
   box-shadow: 0 -4px 7px -7px grey;
   background: var(--ion-background-color);
-  padding-top:10px;
+  padding-top: 10px;
   flex: 50vh 1 1;
 
   &.swiper {
     margin-left: 0;
-    margin-right: 0;    
+    margin-right: 0;
   }
 
   .swiper-slide {
     height: auto;
-    opacity: .5;
+    opacity: 0.5;
   }
 
   .active {
@@ -82,27 +82,27 @@ ion-card {
     display: flex;
     height: 80px;
     width: 100%;
-  
+
     &-text {
       flex: 100% 1 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-areas: "station subtitle" "title title";
+      grid-template-areas: 'station subtitle' 'title title';
       padding: 0 10px;
     }
-  
+
     img {
       flex: 80px 0 0;
       height: 80px;
       max-width: 80px;
-      object-fit: cover;      
+      object-fit: cover;
     }
 
     sc-station-icon {
       grid-area: station;
       align-self: end;
     }
-    
+
     .subtitle {
       margin: 0;
       padding: 0;
@@ -113,7 +113,7 @@ ion-card {
       border: 2px solid var(--sc-station-list-subtitle, var(--ion-color-primary));
       border-radius: 20px;
       padding: 2px 7px;
-      font-size:0.9em;
+      font-size: 0.9em;
       margin-bottom: 4px;
     }
 
@@ -122,7 +122,7 @@ ion-card {
       padding: 5px 0;
       grid-area: title;
       font-weight: bold;
-      
+
       @media (min-width: 375px) {
         font-size: 1.3em;
       }

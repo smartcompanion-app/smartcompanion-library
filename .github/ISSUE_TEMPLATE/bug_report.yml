@@ -1,0 +1,64 @@
+name: Bug report
+description: Report something that does not work as documented.
+labels: ['bug']
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happens, and what did you expect to happen instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: >
+        The smaller the reproduction, the faster this gets fixed. A failing test
+        against the affected package is ideal; a link to a minimal repository
+        works too.
+      placeholder: |
+        1. Load a tour with two stations
+        2. Call AudioPlayerService.play()
+        3. ...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: packages
+    attributes:
+      label: Affected packages
+      multiple: true
+      options:
+        - '@smartcompanion/data'
+        - '@smartcompanion/services'
+        - '@smartcompanion/ui'
+    validations:
+      required: true
+
+  - type: input
+    id: package-version
+    attributes:
+      label: Package version
+      placeholder: '0.9.0'
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: >
+        Node version, and the browser or Capacitor host the code runs in.
+        Component behaviour in particular differs between browsers.
+      placeholder: 'Node 22.14, Chrome 139, Capacitor 8 on iOS'
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Relevant console output or stack traces.
+      render: shell

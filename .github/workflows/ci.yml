@@ -4,35 +4,80 @@ on:
   pull_request:
   push:
     branches:
-      - '**'
-    tags-ignore:
-      - '**'
+      - main
+
+# Superseded runs on the same branch are pointless once a newer commit exists.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
 
-jobs:
+env:
+  NODE_VERSION: 22
 
-  tests:
+jobs:
+  # Static checks only — no Playwright download, so this reports back long
+  # before the test job finishes.
+  lint:
+    name: Lint
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v7
         with:
-          submodules: recursive
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
       - name: Install dependencies
         run: npm ci
-      - name: Install Playwright browsers
-        run: npx playwright install chromium
-      - name: Build packages
-        run: npm run build
+
       - name: Run lint
         run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+      # depcruise resolves `@smartcompanion/*` through each package's exports
+      # map, which points into dist, so those two have to exist first. This is
+      # tsc only — no Stencil, no Playwright — so the job stays fast.
+      - name: Build resolvable workspace packages
+        run: npm run build -w packages/data -w packages/services
+
       - name: Check package boundaries
         run: npm run depcruise
+
+  test:
+    name: Build and test
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Build packages
+        run: npm run build
+
+      # Must run against the production build, before the tests: `stencil-test`
+      # rebuilds packages/ui in dev mode and leaves that output in dist, which
+      # publint rejects. Moving this after `npm test` breaks the job.
+      - name: Check publishable packages
+        run: npm run check:publish
+
       - name: Run tests
         run: npm test

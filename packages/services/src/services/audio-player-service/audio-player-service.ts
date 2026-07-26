@@ -1,7 +1,7 @@
 import { PluginListenerHandle } from '@capacitor/core';
 import { NativeAudioPlayer, Item } from '@smartcompanion/native-audio-player';
 import { Station, Asset } from '@smartcompanion/data';
-import { AudioPlayerUpdate } from './audio-player-update';
+import { AudioPlayerUpdate } from './audio-player-update.js';
 
 export interface AudioPlayerServiceItem extends Item {
   stationId: string;

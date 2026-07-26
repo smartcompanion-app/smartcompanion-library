@@ -1,7 +1,7 @@
-import { LanguageService, PinService } from '../domain';
-import { Updater } from '../update';
-import { LoadService } from './load-service';
-import { autoSelectLanguage } from './utils';
+import { LanguageService, PinService } from '../domain/index.js';
+import { Updater } from '../update/index.js';
+import { LoadService } from './load-service.js';
+import { autoSelectLanguage } from './utils.js';
 
 /**
  * This load service strategy assumes a constant internet connection,

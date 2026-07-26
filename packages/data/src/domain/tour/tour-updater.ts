@@ -1,6 +1,6 @@
-import { Storage } from '../../storage';
-import { Updater } from '../../update/updater';
-import { Tour } from './tour';
+import { Storage } from '../../storage/index.js';
+import { Updater } from '../../update/updater.js';
+import { Tour } from './tour.js';
 
 export class TourUpdater implements Updater {
   protected storage: Storage;

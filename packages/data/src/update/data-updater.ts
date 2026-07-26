@@ -1,7 +1,7 @@
-import { Storage } from '../storage';
-import { Updater } from './updater';
+import { Storage } from '../storage/index.js';
+import { Updater } from './updater.js';
 
-import { AssetUpdater, StationUpdater, LanguageUpdater, TextUpdater, PinUpdater, TourUpdater, ServerUpdater, ShareUpdater } from '../domain';
+import { AssetUpdater, StationUpdater, LanguageUpdater, TextUpdater, PinUpdater, TourUpdater, ServerUpdater, ShareUpdater } from '../domain/index.js';
 
 /**
  * Based on the provided data, updates on the storage are processed.
@@ -30,7 +30,7 @@ export class DataUpdater implements Updater {
   }
 
   requiresUpdate(data: Record<string, unknown>): boolean {
-    return !this.storage.has('checksum') || (this.storage.get('checksum') !== data['checksum']);
+    return !this.storage.has('checksum') || this.storage.get('checksum') !== data['checksum'];
   }
 
   isPlainObject(data: unknown): data is Record<string, unknown> {
@@ -38,11 +38,7 @@ export class DataUpdater implements Updater {
   }
 
   isValidDataObject(data: unknown): data is Record<string, unknown> {
-    return (
-      this.isPlainObject(data) &&
-      typeof data['checksum'] === 'string' &&
-      ['assets', 'stations', 'languages', 'texts'].every(key => Array.isArray(data[key]))
-    );
+    return this.isPlainObject(data) && typeof data['checksum'] === 'string' && ['assets', 'stations', 'languages', 'texts'].every(key => Array.isArray(data[key]));
   }
 
   async update(data: unknown) {

@@ -5,10 +5,9 @@ import { getMenuButton, getSortedStations, openStation } from '../../utils';
 
 @Component({
   tag: 'sc-page-station-image-list',
-  styleUrl: 'page-station-image-list.scss'
+  styleUrl: 'page-station-image-list.scss',
 })
 export class PageStationImageList {
-
   @State() stations: Station[] = [];
 
   /**
@@ -43,10 +42,8 @@ export class PageStationImageList {
       <Host>
         <ion-header>
           <ion-toolbar color={this.headerBackgroundColor}>
-            <ion-buttons slot="start">
-              {getMenuButton(this.tourId !== null, "/tours")}
-            </ion-buttons>
-            <ion-title>{this.facade.__("station-list")}</ion-title>
+            <ion-buttons slot="start">{getMenuButton(this.tourId !== null, '/tours')}</ion-buttons>
+            <ion-title>{this.facade.__('station-list')}</ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content class="station-image-list">
@@ -62,12 +59,12 @@ export class PageStationImageList {
                     <p>{station.subtitle}</p>
                   </ion-label>
                 </ion-item>
-                <img 
-                  class="station-image-list-image" 
-                  src={(station.images[0] as Asset).internalWebUrl} />
+                <img class="station-image-list-image" src={(station.images[0] as Asset).internalWebUrl} />
                 <ion-card-content>
                   <p class="station-image-list-description">{station.description}</p>
-                  <ion-button data-station-id={station.id} onClick={this.handleOpenStation}>{this.facade.__('view')}</ion-button>
+                  <ion-button data-station-id={station.id} onClick={this.handleOpenStation}>
+                    {this.facade.__('view')}
+                  </ion-button>
                 </ion-card-content>
               </ion-card>
             ))}

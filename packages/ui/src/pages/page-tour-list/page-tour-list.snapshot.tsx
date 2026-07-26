@@ -3,18 +3,24 @@ import { Menu, PageTourListFacade, TourSource } from '../../contracts';
 import { tours } from '../../../test/fixtures';
 
 const facade = {
-  getMenuService: () => ({
-    enable: () => Promise.resolve(),
-  }) as Partial<Menu>,
-  getTourService: () => ({
-    getTours: () => Promise.resolve(tours),
-  }) as Partial<TourSource>,
+  getMenuService: () =>
+    ({
+      enable: () => Promise.resolve(),
+    }) as Partial<Menu>,
+  getTourService: () =>
+    ({
+      getTours: () => Promise.resolve(tours),
+    }) as Partial<TourSource>,
   __: (key: string) => {
     switch (key) {
-      case 'tour-list': return 'Tour Overview';
-      case 'start-tour': return 'Start Tour';
-      case 'menu-overview': return 'Tours';
-      default: return key;
+      case 'tour-list':
+        return 'Tour Overview';
+      case 'start-tour':
+        return 'Start Tour';
+      case 'menu-overview':
+        return 'Tours';
+      default:
+        return key;
     }
   },
 } as unknown as PageTourListFacade;

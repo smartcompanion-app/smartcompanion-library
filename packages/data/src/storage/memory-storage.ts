@@ -1,4 +1,4 @@
-import { Storage } from './storage';
+import { Storage } from './storage.js';
 
 export class MemoryStorage implements Storage {
   protected storage: Record<string, unknown> = {};

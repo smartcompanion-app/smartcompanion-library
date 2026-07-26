@@ -1,4 +1,4 @@
-import { Storage } from '../../storage';
+import { Storage } from '../../storage/index.js';
 
 export class PinService {
   protected storage: Storage;
@@ -47,6 +47,6 @@ export class PinService {
       return Array.isArray(pins) && pins.length > 0;
     } else {
       return false;
-    }    
+    }
   }
 }

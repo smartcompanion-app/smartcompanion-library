@@ -1,4 +1,4 @@
-import { LanguageService } from '../domain';
+import { LanguageService } from '../domain/index.js';
 
 /**
  * If no language is set, try to auto-select one:
@@ -13,7 +13,7 @@ export const autoSelectLanguage = (languageService: LanguageService) => {
   const search = globalThis?.location?.search ?? '';
   const params = new URLSearchParams(search);
   const languageParam = params.get('language');
-  if (languageParam && languages.some((l) => l.language === languageParam)) {
+  if (languageParam && languages.some(l => l.language === languageParam)) {
     languageService.changeLanguage(languageParam);
     return;
   }

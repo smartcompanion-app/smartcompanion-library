@@ -10,7 +10,7 @@ const meta = {
   tags: ['autodocs'],
   component: PageStations,
   render: args => (
-    <div style={{width: "100vw", height: "100vh"}}>
+    <div style={{ width: '100vw', height: '100vh' }}>
       <sc-page-stations {...args} />
     </div>
   ),
@@ -20,30 +20,31 @@ export default meta;
 
 type Story = StoryObj<PageStations>;
 
-const audioPlayerService: AudioPlayerService = new CollectibleAudioPlayerService("");
+const audioPlayerService: AudioPlayerService = new CollectibleAudioPlayerService('');
 
 export const Example: Story = {
   args: {
-    stationId: "default",
+    stationId: 'default',
     enableSwitchAudioOutput: false,
     facade: {
       getAudioPlayerService: () => audioPlayerService,
-      getStationService: () => ({
-        updateCollectedPercentage: (stationId: string, _: string, collectedPercentage: number) => {
-          console.log(`Station ${stationId} collected percentage updated to ${collectedPercentage}`);
-          return Promise.resolve({
-            ...stations.find(station => station.id === stationId),
-            collectedPercentage: collectedPercentage,
-          });
-        },
-        getStations: () => {
-          return Promise.resolve(stations);
-        },
-      }) as StationSource,      
-      getMenuService: () => ({
-        enable: () => Promise.resolve(),
-      }) as Menu
+      getStationService: () =>
+        ({
+          updateCollectedPercentage: (stationId: string, _: string, collectedPercentage: number) => {
+            console.log(`Station ${stationId} collected percentage updated to ${collectedPercentage}`);
+            return Promise.resolve({
+              ...stations.find(station => station.id === stationId),
+              collectedPercentage: collectedPercentage,
+            });
+          },
+          getStations: () => {
+            return Promise.resolve(stations);
+          },
+        }) as StationSource,
+      getMenuService: () =>
+        ({
+          enable: () => Promise.resolve(),
+        }) as Menu,
     } as unknown as PageStationFacade,
   },
 };
-

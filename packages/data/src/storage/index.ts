@@ -1,3 +1,3 @@
-export * from './storage';
-export * from './memory-storage';
-export * from './browser-storage';
+export * from './storage.js';
+export * from './memory-storage.js';
+export * from './browser-storage.js';

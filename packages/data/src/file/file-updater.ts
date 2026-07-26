@@ -1,5 +1,5 @@
-import { FileMatcher } from './file-matcher';
-import { File } from './file';
+import { FileMatcher } from './file-matcher.js';
+import { File } from './file.js';
 
 export class FileUpdater {
   protected fileMatcher = new FileMatcher();

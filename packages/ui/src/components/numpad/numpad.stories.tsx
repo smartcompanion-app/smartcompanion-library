@@ -6,9 +6,11 @@ const meta = {
   title: 'Components/Numpad',
   tags: ['autodocs'],
   component: Numpad,
-  render: args => <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}>
-    <sc-numpad {...args} />
-  </div>,
+  render: args => (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100vw' }}>
+      <sc-numpad {...args} />
+    </div>
+  ),
 } satisfies Meta<Numpad>;
 
 export default meta;

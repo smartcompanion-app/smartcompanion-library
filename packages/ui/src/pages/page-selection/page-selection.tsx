@@ -5,11 +5,10 @@ import { openStation, getStations } from '../../utils';
 
 @Component({
   tag: 'sc-page-selection',
-  styleUrl: 'page-selection.scss'
+  styleUrl: 'page-selection.scss',
 })
 export class PageSelection {
-
-  @State() input: string = "";
+  @State() input: string = '';
 
   @State() stations: Station[] = [];
 
@@ -56,7 +55,7 @@ export class PageSelection {
 
   private checkStation = async () => {
     const station = this.stations.find(station => station.number == this.input);
-    this.input = "";
+    this.input = '';
 
     if (station !== undefined) {
       this.openStation(station.id);
@@ -74,7 +73,7 @@ export class PageSelection {
           <ion-buttons slot="start">
             <ion-menu-button />
           </ion-buttons>
-          <ion-title>{this.facade.__("menu-selection")}</ion-title>
+          <ion-title>{this.facade.__('menu-selection')}</ion-title>
         </ion-toolbar>
       </ion-header>,
       <ion-content fullscreen={true}>
@@ -82,14 +81,9 @@ export class PageSelection {
           <div data-testid="numpad-input" class="numpad-input">
             {this.input}
           </div>
-          <sc-numpad
-            full
-            onConfirm={this.checkStation}
-            onDelete={this.clearLastInput}
-            onNumber={this.handleNumber}
-          />
+          <sc-numpad full onConfirm={this.checkStation} onDelete={this.clearLastInput} onNumber={this.handleNumber} />
         </div>
-      </ion-content>
+      </ion-content>,
     ];
   }
 }

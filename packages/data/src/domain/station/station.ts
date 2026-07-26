@@ -1,4 +1,4 @@
-import { Asset } from '../asset/asset';
+import { Asset } from '../asset/asset.js';
 
 export interface Station {
   id: string;

@@ -3,19 +3,24 @@ import { Menu, StationListFacade, StationSource, TourSource } from '../../contra
 import { stations } from '../../../test/fixtures';
 
 const facade = {
-  getMenuService: () => ({
-    enable: () => Promise.resolve(),
-  }) as Partial<Menu>,
-  getTourService: () => ({
-    getStations: () => Promise.resolve(stations),
-  }) as Partial<TourSource>,
-  getStationService: () => ({
-    getStations: () => Promise.resolve(stations),
-  }) as Partial<StationSource>,
+  getMenuService: () =>
+    ({
+      enable: () => Promise.resolve(),
+    }) as Partial<Menu>,
+  getTourService: () =>
+    ({
+      getStations: () => Promise.resolve(stations),
+    }) as Partial<TourSource>,
+  getStationService: () =>
+    ({
+      getStations: () => Promise.resolve(stations),
+    }) as Partial<StationSource>,
   __: (key: string) => {
     switch (key) {
-      case 'station-list': return 'Station Overview';
-      default: return key;
+      case 'station-list':
+        return 'Station Overview';
+      default:
+        return key;
     }
   },
 } as unknown as StationListFacade;

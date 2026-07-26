@@ -1,6 +1,5 @@
 import { render, expect, test, h } from '@stencil/vitest';
 
-
 test('render normal station icon 13', async () => {
   const { root } = await render(<sc-station-icon>13</sc-station-icon>);
   expect(root).toMatchSnapshot();
@@ -42,12 +41,20 @@ test('render station icon just above lower limit starts showing progress', async
 });
 
 test('render station icon with custom lowerLimitPercent at boundary shows 0% progress', async () => {
-  const { root } = await render(<sc-station-icon collectedPercent={10} lowerLimitPercent={10}>13</sc-station-icon>);
+  const { root } = await render(
+    <sc-station-icon collectedPercent={10} lowerLimitPercent={10}>
+      13
+    </sc-station-icon>,
+  );
   expect(root).toMatchSnapshot();
 });
 
 test('render station icon with custom lowerLimitPercent above boundary shows progress', async () => {
-  const { root } = await render(<sc-station-icon collectedPercent={15} lowerLimitPercent={10}>13</sc-station-icon>);
+  const { root } = await render(
+    <sc-station-icon collectedPercent={15} lowerLimitPercent={10}>
+      13
+    </sc-station-icon>,
+  );
   expect(root).toMatchSnapshot();
 });
 

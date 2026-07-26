@@ -48,7 +48,7 @@ export namespace Components {
         "facade": PageLoadingFacade;
         /**
           * The default or home route, when loading is successfully completed
-          * @default "/stations/default"
+          * @default '/stations/default'
          */
         "homeRoute": string;
         /**
@@ -551,7 +551,7 @@ declare namespace LocalJSX {
         "facade"?: PageLoadingFacade;
         /**
           * The default or home route, when loading is successfully completed
-          * @default "/stations/default"
+          * @default '/stations/default'
          */
         "homeRoute"?: string;
         /**

@@ -5,10 +5,9 @@ import { getMenuButton, getSortedStations, openStation } from '../../utils';
 
 @Component({
   tag: 'sc-page-station-list',
-  styleUrl: 'page-station-list.scss'
+  styleUrl: 'page-station-list.scss',
 })
 export class PageStationList {
-
   @State() stations: Station[] = [];
 
   /**
@@ -42,15 +41,13 @@ export class PageStationList {
     return [
       <ion-header>
         <ion-toolbar color={this.headerBackgroundColor}>
-          <ion-buttons slot="start">
-            {getMenuButton(this.tourId !== null, "/tours")}
-          </ion-buttons>
-          <ion-title>{this.facade.__("station-list")}</ion-title>
+          <ion-buttons slot="start">{getMenuButton(this.tourId !== null, '/tours')}</ion-buttons>
+          <ion-title>{this.facade.__('station-list')}</ion-title>
         </ion-toolbar>
       </ion-header>,
       <ion-content>
         <ion-list lines="full" class="station-list">
-          {this.stations.map(station =>
+          {this.stations.map(station => (
             <ion-item button data-station-id={station.id} onClick={this.handleOpenStation}>
               <ion-avatar slot="start">
                 <sc-station-icon>{station.number}</sc-station-icon>
@@ -60,9 +57,9 @@ export class PageStationList {
                 <p>{station.subtitle}</p>
               </ion-label>
             </ion-item>
-          )}
+          ))}
         </ion-list>
-      </ion-content>
+      </ion-content>,
     ];
   }
-}   
+}

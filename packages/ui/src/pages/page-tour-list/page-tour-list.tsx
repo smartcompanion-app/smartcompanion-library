@@ -4,10 +4,9 @@ import { Tour, Asset } from '@smartcompanion/data';
 
 @Component({
   tag: 'sc-page-tour-list',
-  styleUrl: 'page-tour-list.scss'
+  styleUrl: 'page-tour-list.scss',
 })
 export class PageTourList {
-
   @State() tours: Tour[] = [];
 
   /**
@@ -25,7 +24,7 @@ export class PageTourList {
 
   private getTourStyle(tour: Tour) {
     return {
-      'background-image': "url('" + (tour.images[0] as Asset).internalWebUrl + "')"
+      'background-image': "url('" + (tour.images[0] as Asset).internalWebUrl + "')",
     };
   }
 
@@ -49,7 +48,7 @@ export class PageTourList {
         </ion-toolbar>
       </ion-header>,
       <ion-content>
-        {this.tours.map(tour =>
+        {this.tours.map(tour => (
           <div style={this.getTourStyle(tour)} class="tour-card">
             <div class="tour-card-transparency"></div>
             <div class="tour-details">
@@ -62,13 +61,15 @@ export class PageTourList {
                   </span>
                 </div>
                 <div class="right">
-                  <ion-button data-tour-id={tour.id} onClick={this.handleStartTour} color="primary" >{this.facade.__('start-tour')}</ion-button>
+                  <ion-button data-tour-id={tour.id} onClick={this.handleStartTour} color="primary">
+                    {this.facade.__('start-tour')}
+                  </ion-button>
                 </div>
               </div>
             </div>
           </div>
-        )}
-      </ion-content>
+        ))}
+      </ion-content>,
     ];
   }
-}   
+}

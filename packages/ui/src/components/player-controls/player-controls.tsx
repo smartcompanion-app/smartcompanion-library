@@ -1,5 +1,5 @@
-import { Component, Event, EventEmitter, Host, h, Prop } from "@stencil/core";
-import { formatSeconds } from "../../utils";
+import { Component, Event, EventEmitter, Host, h, Prop } from '@stencil/core';
+import { formatSeconds } from '../../utils';
 
 @Component({
   tag: 'sc-player-controls',
@@ -7,7 +7,6 @@ import { formatSeconds } from "../../utils";
   shadow: true,
 })
 export class PlayerControls {
-
   /** Whether audio is currently playing */
   @Prop() playing: boolean = false;
   /** Current playback position in seconds */
@@ -61,12 +60,8 @@ export class PlayerControls {
           <ion-fab-button data-testid="player-prev-button" onClick={this.handlePrev}>
             <ion-icon name="play-skip-back"></ion-icon>
           </ion-fab-button>
-          <ion-fab-button
-            id="player-controls-play"
-            data-testid="player-play-button"
-            disabled={this.disabled}
-            onClick={this.handlePlayPause}>
-            <ion-icon name={this.playing ? "pause" : "play"}></ion-icon>
+          <ion-fab-button id="player-controls-play" data-testid="player-play-button" disabled={this.disabled} onClick={this.handlePlayPause}>
+            <ion-icon name={this.playing ? 'pause' : 'play'}></ion-icon>
           </ion-fab-button>
           <ion-fab-button data-testid="player-next-button" onClick={this.handleNext}>
             <ion-icon name="play-skip-forward"></ion-icon>
@@ -81,13 +76,14 @@ export class PlayerControls {
             value={this.position}
             disabled={this.duration <= 0}
             min={0}
-            max={this.duration}>
-              <ion-text
-                data-testid="player-position"
-                slot="start">{formatSeconds(this.position)}</ion-text>
-              <ion-text
-                data-testid="player-duration"
-                slot="end">{formatSeconds(this.duration)}</ion-text>
+            max={this.duration}
+          >
+            <ion-text data-testid="player-position" slot="start">
+              {formatSeconds(this.position)}
+            </ion-text>
+            <ion-text data-testid="player-duration" slot="end">
+              {formatSeconds(this.duration)}
+            </ion-text>
           </ion-range>
         </div>
       </Host>

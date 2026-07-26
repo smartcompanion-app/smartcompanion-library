@@ -2,14 +2,18 @@ import { render, expect, test, h } from '@stencil/vitest';
 import { Menu, PageErrorFacade } from '../../contracts';
 
 const facade = {
-  getMenuService: () => ({
-    disable: () => Promise.resolve(),
-  }) as Partial<Menu>,
+  getMenuService: () =>
+    ({
+      disable: () => Promise.resolve(),
+    }) as Partial<Menu>,
   __: (key: string) => {
     switch (key) {
-      case 'no-internet': return 'No Internet Connection';
-      case 'try-again': return 'Try Again';
-      default: return key;
+      case 'no-internet':
+        return 'No Internet Connection';
+      case 'try-again':
+        return 'Try Again';
+      default:
+        return key;
     }
   },
 } as unknown as PageErrorFacade;

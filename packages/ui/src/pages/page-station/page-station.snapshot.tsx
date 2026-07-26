@@ -13,20 +13,21 @@ const stations: Station[] = fixtureStations.map(station => ({
 
 const facade = {
   getAudioPlayerService: () => new AudioPlayerService(''),
-  getTourService: () => ({
-    getStations: () => Promise.resolve(stations),
-  }) as Partial<TourSource>,
-  getStationService: () => ({
-    getStations: () => Promise.resolve(stations),
-  }) as Partial<StationSource>,
-  getMenuService: () => ({
-    enable: () => Promise.resolve(),
-  }) as Partial<Menu>,
+  getTourService: () =>
+    ({
+      getStations: () => Promise.resolve(stations),
+    }) as Partial<TourSource>,
+  getStationService: () =>
+    ({
+      getStations: () => Promise.resolve(stations),
+    }) as Partial<StationSource>,
+  getMenuService: () =>
+    ({
+      enable: () => Promise.resolve(),
+    }) as Partial<Menu>,
 } as unknown as PageStationFacade;
 
 test('render page station', async () => {
-  const { root } = await render(
-    <sc-page-station stationId="1" facade={facade}></sc-page-station>
-  );
+  const { root } = await render(<sc-page-station stationId="1" facade={facade}></sc-page-station>);
   expect(root).toMatchSnapshot();
 });

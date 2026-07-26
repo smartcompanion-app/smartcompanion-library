@@ -6,17 +6,15 @@ import { getMenuButton, getStations, openStation } from '../../utils';
 
 @Component({
   styleUrl: 'page-map.scss',
-  tag: 'sc-page-map'
+  tag: 'sc-page-map',
 })
 export class PageMap {
-
   protected map: L.Map;
 
   /**
    * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
    */
   @Prop() headerBackgroundColor: 'primary' | 'secondary' = 'primary';
-  
 
   /**
    * Enable Back Button instead of Menu Button
@@ -89,17 +87,18 @@ export class PageMap {
       if (station.latitude !== undefined && station.longitude !== undefined) {
         const icon = L.divIcon({
           className: 'station-map-icon',
-          html: '<sc-station-icon>' + station.number + '</sc-station-icon>'
+          html: '<sc-station-icon>' + station.number + '</sc-station-icon>',
         });
 
         const markerOptions: L.MarkerOptions = {
-          icon: icon
+          icon: icon,
         };
 
         L.marker([station.latitude, station.longitude], markerOptions)
           .on('click', () => {
             openStation(this.facade, station.id, this.tourId);
-          }).addTo(this.map);
+          })
+          .addTo(this.map);
       }
     }
   }
@@ -108,15 +107,13 @@ export class PageMap {
     return [
       <ion-header>
         <ion-toolbar color={this.headerBackgroundColor}>
-          <ion-buttons slot="start">
-            {getMenuButton(this.enableBackButton, this.defaultBackButtonHref)}
-          </ion-buttons>
-          <ion-title>{this.facade.__("menu-map")}</ion-title>
+          <ion-buttons slot="start">{getMenuButton(this.enableBackButton, this.defaultBackButtonHref)}</ion-buttons>
+          <ion-title>{this.facade.__('menu-map')}</ion-title>
         </ion-toolbar>
       </ion-header>,
       <ion-content>
         <div slot="fixed" id="map"></div>
-      </ion-content>
+      </ion-content>,
     ];
   }
 }

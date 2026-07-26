@@ -5,10 +5,9 @@ import { PageMultiAudioStationFacade } from '../../contracts';
 
 @Component({
   tag: 'sc-page-multi-audio-station',
-  styleUrl: 'page-multi-audio-station.scss'
+  styleUrl: 'page-multi-audio-station.scss',
 })
 export class PageMultiAudioStation {
-
   protected reactiveAudioPlayer: ReactiveAudioPlayer;
 
   @State() station: Station;
@@ -49,7 +48,7 @@ export class PageMultiAudioStation {
     this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
     await this.facade.getMenuService().enable();
     this.station = await this.facade.getStationService().getStation(this.stationId);
-   }
+  }
 
   async componentDidLoad() {
     await this.reactiveAudioPlayer.initAudioPlayer([this.station]);
@@ -121,10 +120,7 @@ export class PageMultiAudioStation {
           {this.enableSwitchAudioOutput && (
             <ion-fab vertical="top" horizontal="end" slot="fixed">
               <ion-fab-button color="primary" size="small" onClick={this.handleToggleOutput}>
-                {this.earpiece ?
-                  <ion-icon name="volume-medium-outline"></ion-icon> :
-                  <ion-icon src="assets/earpiece.svg"></ion-icon>
-                }
+                {this.earpiece ? <ion-icon name="volume-medium-outline"></ion-icon> : <ion-icon src="assets/earpiece.svg"></ion-icon>}
               </ion-fab-button>
             </ion-fab>
           )}
@@ -153,7 +149,8 @@ export class PageMultiAudioStation {
                       data-audio-index={audioIndex}
                       onClick={this.handleSelectAudio}
                       lines="none"
-                      class={this.activeIndex == audioIndex ? 'active' : ''}>
+                      class={this.activeIndex == audioIndex ? 'active' : ''}
+                    >
                       <ion-icon slot="start" name="play"></ion-icon>
                       <ion-label>
                         <sc-marquee active={this.playing && this.activeIndex == audioIndex}>{audio.title}</sc-marquee>

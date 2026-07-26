@@ -13,17 +13,17 @@ const stations: Station[] = fixtureStations.map(station => ({
 
 const facade = {
   getAudioPlayerService: () => new CollectibleAudioPlayerService(''),
-  getStationService: () => ({
-    getStations: () => Promise.resolve(stations),
-  }) as Partial<StationSource>,
-  getMenuService: () => ({
-    enable: () => Promise.resolve(),
-  }) as Partial<Menu>,
+  getStationService: () =>
+    ({
+      getStations: () => Promise.resolve(stations),
+    }) as Partial<StationSource>,
+  getMenuService: () =>
+    ({
+      enable: () => Promise.resolve(),
+    }) as Partial<Menu>,
 } as unknown as PageStationFacade;
 
 test('render page stations', async () => {
-  const { root } = await render(
-    <sc-page-stations stationId="default" facade={facade}></sc-page-stations>
-  );
+  const { root } = await render(<sc-page-stations stationId="default" facade={facade}></sc-page-stations>);
   expect(root).toMatchSnapshot();
 });

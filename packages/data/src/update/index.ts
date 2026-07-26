@@ -1,2 +1,2 @@
-export * from './updater';
-export * from './data-updater';
+export * from './updater.js';
+export * from './data-updater.js';

@@ -9,7 +9,7 @@ const meta = {
   tags: ['autodocs'],
   component: PageTourList,
   render: args => (
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div style={{ width: '100vw', height: '100vh' }}>
       <sc-page-tour-list {...args} />
     </div>
   ),
@@ -22,14 +22,16 @@ type Story = StoryObj<PageTourList>;
 export const Example: Story = {
   args: {
     facade: {
-      getMenuService: () => ({
-        enable: () => Promise.resolve(),
-      }) as Menu,
-      getTourService: () => ({
-        getTours: () => {
-          return Promise.resolve(tours);
-        },
-      }) as TourSource,
+      getMenuService: () =>
+        ({
+          enable: () => Promise.resolve(),
+        }) as Menu,
+      getTourService: () =>
+        ({
+          getTours: () => {
+            return Promise.resolve(tours);
+          },
+        }) as TourSource,
       __: (key: string) => {
         switch (key) {
           case 'menu-overview':

@@ -1,5 +1,5 @@
-import { Storage } from '../../storage';
-import { Updater } from '../../update/updater';
+import { Storage } from '../../storage/index.js';
+import { Updater } from '../../update/updater.js';
 
 export class TextUpdater implements Updater {
   protected storage: Storage;

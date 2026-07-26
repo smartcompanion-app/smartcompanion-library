@@ -8,7 +8,7 @@ const meta = {
   tags: ['autodocs'],
   component: PageLoading,
   render: args => (
-    <div style={{width: "100vw", height: "100vh"}}>
+    <div style={{ width: '100vw', height: '100vh' }}>
       <sc-page-loading {...args} />
     </div>
   ),
@@ -33,7 +33,7 @@ const facadeMock = {
         }, 100); // Simulate progress every 100ms
       },
       load: () => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           const interval = setInterval(() => {
             if (progress >= 100) {
               clearInterval(interval);
@@ -45,33 +45,34 @@ const facadeMock = {
       isLoaded: () => true,
     };
   },
-  getMenuService: () => ({
-    disable: () => {
-      console.log('Menu disabled');
-      return Promise.resolve();
-    },
-  }) as Menu,
-  getRoutingService: () => ({
-    addRouteChangeListener: (route: string, callback: () => void) => {
-      console.log(`Route change listener added for ${route}`);
-      setTimeout(callback, 500); // Simulate route change after 500ms
-    },
-  }) as unknown as Router,
+  getMenuService: () =>
+    ({
+      disable: () => {
+        console.log('Menu disabled');
+        return Promise.resolve();
+      },
+    }) as Menu,
+  getRoutingService: () =>
+    ({
+      addRouteChangeListener: (route: string, callback: () => void) => {
+        console.log(`Route change listener added for ${route}`);
+        setTimeout(callback, 500); // Simulate route change after 500ms
+      },
+    }) as unknown as Router,
   getPendingRoute: () => null,
 } as PageLoadingFacade;
 
 export const Example: Story = {
   args: {
-    image: "assets/example-loading.png",
+    image: 'assets/example-loading.png',
     facade: facadeMock,
   },
 };
 
 export const DarkImageExample: Story = {
   args: {
-    image: "assets/example-loading.png",
-    imageDark: "assets/example-loading-dark.png",
+    image: 'assets/example-loading.png',
+    imageDark: 'assets/example-loading-dark.png',
     facade: facadeMock,
   },
 };
-

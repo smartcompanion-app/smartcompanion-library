@@ -1,6 +1,6 @@
-import { Storage } from '../../storage';
-import { Updater } from '../../update/updater';
-import { Station } from './station';
+import { Storage } from '../../storage/index.js';
+import { Updater } from '../../update/updater.js';
+import { Station } from './station.js';
 
 export class StationUpdater implements Updater {
   protected storage: Storage;

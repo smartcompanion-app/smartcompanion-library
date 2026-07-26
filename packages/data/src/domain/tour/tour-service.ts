@@ -1,8 +1,8 @@
-import { AssetService } from '../asset/asset-service';
-import { StationService } from '../station/station-service';
-import { Station } from '../station/station';
-import { Tour } from './tour';
-import { Storage } from '../../storage';
+import { AssetService } from '../asset/asset-service.js';
+import { StationService } from '../station/station-service.js';
+import { Station } from '../station/station.js';
+import { Tour } from './tour.js';
+import { Storage } from '../../storage/index.js';
 
 export class TourService {
   protected storage: Storage;

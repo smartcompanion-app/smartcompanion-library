@@ -1,5 +1,5 @@
-import { Station } from "@smartcompanion/data";
-import { AudioPlayerFacade, AudioPlayerUpdate } from "../contracts";
+import { Station } from '@smartcompanion/data';
+import { AudioPlayerFacade, AudioPlayerUpdate } from '../contracts';
 
 interface AudioPlayerPage {
   facade: AudioPlayerFacade;
@@ -11,10 +11,9 @@ interface AudioPlayerPage {
 }
 
 export class ReactiveAudioPlayer {
-
   private facade: AudioPlayerFacade;
   private earpiece: boolean = false;
-  private playing: boolean = false
+  private playing: boolean = false;
   private position: number = 0;
   private duration: number = 0;
   private activeIndex: number = 0;
@@ -28,7 +27,7 @@ export class ReactiveAudioPlayer {
     await this.facade.getAudioPlayerService().pause();
     await this.facade.getAudioPlayerService().seek(0);
     this.updatePosition(0);
-  }
+  };
   private collectedListener: ((update: AudioPlayerUpdate, station: Station) => Promise<void>) | null = null;
   private skipListener: ((update: AudioPlayerUpdate) => Promise<void>) | null = null;
 
@@ -43,13 +42,7 @@ export class ReactiveAudioPlayer {
     this.initEarpiece();
   }
 
-  setDefaultUpdateListeners(page: {
-    earpiece: boolean,
-    playing: boolean,
-    position: number,
-    duration: number,
-    activeIndex: number
-  }) {
+  setDefaultUpdateListeners(page: { earpiece: boolean; playing: boolean; position: number; duration: number; activeIndex: number }) {
     this.setOnEarpieceUpdateListener((earpiece: boolean) => {
       page.earpiece = earpiece;
     });
@@ -144,7 +137,7 @@ export class ReactiveAudioPlayer {
   readEarpiece(): boolean {
     return globalThis.localStorage.getItem('audio-earpiece') == 'yes' ? true : false;
   }
-  
+
   /**
    * Initialize earpiece/speaker state from local storage
    * Should be called in componentWillLoad() lifecycle method
@@ -176,22 +169,15 @@ export class ReactiveAudioPlayer {
         this.updateActiveIndex(update.index);
         await this.onSkip(update);
         await this.resetAudioPlayer();
-      } else if (update.state == "completed") {
+      } else if (update.state == 'completed') {
         await this.onCompleted(update);
-      } else if (update.state == "collected") {
+      } else if (update.state == 'collected') {
         try {
           const stationId = this.facade.getAudioPlayerService().getStationId(update.index);
-          const station = await this
-            .facade
-            .getStationService()
-            .updateCollectedPercentage(
-              stationId,
-              update.id,
-              update.percentage
-            );
+          const station = await this.facade.getStationService().updateCollectedPercentage(stationId, update.id, update.percentage);
           await this.onCollected(update, station);
         } catch (e) {
-          console.error("Error updating collected percentage for station", e);
+          console.error('Error updating collected percentage for station', e);
         }
       }
     });
@@ -278,7 +264,7 @@ export class ReactiveAudioPlayer {
       await this.skipListener(update);
     }
   }
-  
+
   async onCompleted(update: AudioPlayerUpdate) {
     if (this.completedListener !== null) {
       await this.completedListener(update);

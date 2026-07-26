@@ -42,6 +42,12 @@ jobs:
       - name: Check formatting
         run: npm run format:check
 
+      # depcruise resolves `@smartcompanion/*` through each package's exports
+      # map, which points into dist, so those two have to exist first. This is
+      # tsc only — no Stencil, no Playwright — so the job stays fast.
+      - name: Build resolvable workspace packages
+        run: npm run build -w packages/data -w packages/services
+
       - name: Check package boundaries
         run: npm run depcruise
 
@@ -67,10 +73,11 @@ jobs:
       - name: Build packages
         run: npm run build
 
-      - name: Run tests
-        run: npm test
-
-      # Validates the tarball that would actually be published: entry points
-      # resolve, types match the runtime exports, nothing is missing from files.
+      # Must run against the production build, before the tests: `stencil-test`
+      # rebuilds packages/ui in dev mode and leaves that output in dist, which
+      # publint rejects. Moving this after `npm test` breaks the job.
       - name: Check publishable packages
         run: npm run check:publish
+
+      - name: Run tests
+        run: npm test

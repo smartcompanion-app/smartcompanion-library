@@ -2,12 +2,9 @@
 
 ## Supported versions
 
-All three packages are released in lockstep. Security fixes are released for the latest minor version. Older versions are not patched.
+All three packages are released in lockstep, so they always share a version number.
 
-| Version | Supported |
-| ------- | --------- |
-| 0.9.x   | Yes       |
-| < 0.9   | No        |
+Security fixes land in the **latest published minor**, and are not backported. If you are on an older minor, upgrading is the fix. The current version is whatever [`@smartcompanion/data`](https://www.npmjs.com/package/@smartcompanion/data) shows on npm — deliberately not restated here, so this page cannot fall out of date.
 
 ## Reporting a vulnerability
 

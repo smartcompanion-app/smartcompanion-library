@@ -10,11 +10,8 @@ export type StationDataFacade = {
  * Get stations for a specific tour or all stations if no tour is specified.
  * The string "default" is treated as a placeholder for the default tour id.
  */
-export async function getStations(
-  facade: StationDataFacade,
-  tourId: string = null
-): Promise<Array<Station>> {
-  if (tourId === "default") {
+export async function getStations(facade: StationDataFacade, tourId: string = null): Promise<Array<Station>> {
+  if (tourId === 'default') {
     const defaultTour = await facade.getTourService().getDefaultTour();
     return await facade.getTourService().getStations(defaultTour.id);
   } else if (tourId !== null && tourId !== undefined && tourId !== '') {
@@ -24,10 +21,7 @@ export async function getStations(
   }
 }
 
-export async function getSortedStations(
-  facade: StationDataFacade,
-  tourId: string = null
-): Promise<Array<Station>> {
+export async function getSortedStations(facade: StationDataFacade, tourId: string = null): Promise<Array<Station>> {
   const stations = await getStations(facade, tourId);
   return stations.sort((a, b) => {
     const v1 = parseInt(a.number) || 0;

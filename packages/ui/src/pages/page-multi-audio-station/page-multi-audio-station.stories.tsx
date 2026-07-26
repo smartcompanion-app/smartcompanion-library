@@ -10,7 +10,7 @@ const meta = {
   tags: ['autodocs'],
   component: PageMultiAudioStation,
   render: args => (
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div style={{ width: '100vw', height: '100vh' }}>
       <sc-page-multi-audio-station {...args} />
     </div>
   ),
@@ -20,22 +20,24 @@ export default meta;
 
 type Story = StoryObj<PageMultiAudioStation>;
 
-const audioPlayerService: AudioPlayerService = new AudioPlayerService("");
+const audioPlayerService: AudioPlayerService = new AudioPlayerService('');
 
 export const Example: Story = {
   args: {
     enableSwitchAudioOutput: true,
-    stationId: "123",
+    stationId: '123',
     facade: {
       getAudioPlayerService: () => audioPlayerService,
-      getMenuService: () => ({
-        enable: () => Promise.resolve(),
-      }) as Menu,
-      getStationService: () => ({
-        getStation: (_: string) => {
-          return Promise.resolve(getMultiAudioStation());
-        },
-      }) as StationSource,
+      getMenuService: () =>
+        ({
+          enable: () => Promise.resolve(),
+        }) as Menu,
+      getStationService: () =>
+        ({
+          getStation: (_: string) => {
+            return Promise.resolve(getMultiAudioStation());
+          },
+        }) as StationSource,
       __: (key: string) => {
         switch (key) {
           case 'station-list':
@@ -47,4 +49,3 @@ export const Example: Story = {
     } as PageMultiAudioStationFacade,
   },
 };
-

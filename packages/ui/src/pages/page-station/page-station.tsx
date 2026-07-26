@@ -8,7 +8,6 @@ import { PageStationFacade } from '../../contracts';
   styleUrl: 'page-station.scss',
 })
 export class PageStation {
-
   protected reactiveAudioPlayer: ReactiveAudioPlayer;
 
   @State() stations: Array<Station> = [];
@@ -49,7 +48,7 @@ export class PageStation {
    * Provides access to all services via the service facade
    */
   @Prop() facade: PageStationFacade;
- 
+
   async componentWillLoad() {
     this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
     await this.facade.getMenuService().enable();
@@ -95,16 +94,11 @@ export class PageStation {
       <Host id="station">
         <ion-header class="ion-no-border">
           <ion-toolbar>
-            <ion-buttons slot="start">
-              {getMenuButton(this.enableBackButton, this.defaultBackButtonHref, {"color": "secondary"})}
-            </ion-buttons>
+            <ion-buttons slot="start">{getMenuButton(this.enableBackButton, this.defaultBackButtonHref, { color: 'secondary' })}</ion-buttons>
             <ion-buttons slot="end">
               {this.enableSwitchAudioOutput && (
                 <ion-fab-button color="light" size="small" onClick={this.handleToggleOutput}>
-                  {this.earpiece ?
-                    <ion-icon color="primary" name="volume-medium-outline"></ion-icon> :
-                    <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>
-                  }
+                  {this.earpiece ? <ion-icon color="primary" name="volume-medium-outline"></ion-icon> : <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>}
                 </ion-fab-button>
               )}
             </ion-buttons>
@@ -132,7 +126,7 @@ export class PageStation {
                 <sc-station-icon size="large">{this.stations[this.activeIndex].number}</sc-station-icon>
               </ion-col>
               <ion-col size="10">
-                <div style={{ "padding-right": "25px" }}>
+                <div style={{ 'padding-right': '25px' }}>
                   <h1>{this.stations[this.activeIndex].title}</h1>
                   <p class="subtitle">{this.stations[this.activeIndex].subtitle}</p>
                   <p class="description">{this.stations[this.activeIndex].description}</p>

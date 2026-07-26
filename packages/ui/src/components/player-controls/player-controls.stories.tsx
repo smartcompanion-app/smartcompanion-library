@@ -6,9 +6,11 @@ const meta = {
   title: 'Components/Player Controls',
   tags: ['autodocs'],
   component: PlayerControls,
-  render: args => <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh", width: "100vw" }}>
-    <sc-player-controls {...args} />
-  </div>,
+  render: args => (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100vw' }}>
+      <sc-player-controls {...args} />
+    </div>
+  ),
 } satisfies Meta<PlayerControls>;
 
 export default meta;

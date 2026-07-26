@@ -6,7 +6,6 @@ import { PagePinFacade } from '../../contracts';
   styleUrl: 'page-pin.scss',
 })
 export class PagePin {
-
   /** The service facade instance */
   @Prop() facade: PagePinFacade;
 
@@ -15,7 +14,7 @@ export class PagePin {
    */
   @Prop() validHours: number = 6;
 
-  @State() pin: string = "";
+  @State() pin: string = '';
   @State() error: boolean = false;
 
   async componentDidLoad() {
@@ -23,7 +22,7 @@ export class PagePin {
   }
 
   private isActivePinPosition(position: number): boolean {
-    return this.pin.length == (position - 1);
+    return this.pin.length == position - 1;
   }
 
   private hasPinPosition(position: number): boolean {
@@ -34,7 +33,7 @@ export class PagePin {
     if (this.hasPinPosition(position)) {
       return this.pin[position - 1];
     }
-    return "";
+    return '';
   }
 
   private delete = () => {
@@ -56,7 +55,7 @@ export class PagePin {
       if (this.facade.getPinService().validatePin(this.pin, this.validHours)) {
         this.facade.getRoutingService().pushReplaceCurrent('/');
       } else {
-        this.pin = "";
+        this.pin = '';
         this.error = true;
       }
     }
@@ -70,17 +69,19 @@ export class PagePin {
             <p>{this.facade.__('enter-pin')}</p>
             <p class="error">{this.error ? this.facade.__('pin-error') : ''}</p>
           </div>
-          <div id="pin-entry" class={{ "shake": this.error }}>
-            {[1, 2, 3, 4].map(position =>
-              <div class={{ 
-                "active": this.isActivePinPosition(position), 
-                "filled": this.hasPinPosition(position) 
-              }}>{this.getPinPosition(position)}</div>
-            )}
+          <div id="pin-entry" class={{ shake: this.error }}>
+            {[1, 2, 3, 4].map(position => (
+              <div
+                class={{
+                  active: this.isActivePinPosition(position),
+                  filled: this.hasPinPosition(position),
+                }}
+              >
+                {this.getPinPosition(position)}
+              </div>
+            ))}
           </div>
-          <sc-numpad
-            onNumber={this.handleNumber}
-            onDelete={this.delete} />
+          <sc-numpad onNumber={this.handleNumber} onDelete={this.delete} />
         </div>
       </ion-content>
     );

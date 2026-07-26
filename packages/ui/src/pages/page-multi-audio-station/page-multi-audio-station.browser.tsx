@@ -17,12 +17,14 @@ const audioPlayerService: AudioPlayerService = new AudioPlayerService('');
 
 const facade = {
   getAudioPlayerService: () => audioPlayerService,
-  getMenuService: () => ({
-    enable: () => Promise.resolve(),
-  }) as Menu,
-  getStationService: () => ({
-    getStation: (_: string) => Promise.resolve(createStation()),
-  }) as StationSource,
+  getMenuService: () =>
+    ({
+      enable: () => Promise.resolve(),
+    }) as Menu,
+  getStationService: () =>
+    ({
+      getStation: (_: string) => Promise.resolve(createStation()),
+    }) as StationSource,
   __: (key: string) => {
     switch (key) {
       case 'station-list':
@@ -39,37 +41,39 @@ const getPlayerButton = (root: HTMLElement, testId: string) => {
 
 describe('sc-page-multi-audio-station', () => {
   it('should activate last audio item when clicking prev from first item', async () => {
-    const { root, waitForChanges } = await render(
-      <sc-page-multi-audio-station enableSwitchAudioOutput={true} stationId="123" facade={facade}></sc-page-multi-audio-station>
-    );
+    const { root, waitForChanges } = await render(<sc-page-multi-audio-station enableSwitchAudioOutput={true} stationId="123" facade={facade}></sc-page-multi-audio-station>);
     await waitForChanges();
 
     getPlayerButton(root, 'player-prev-button').click();
 
-    await expect.poll(() => {
-      const lastItem = root.querySelector('[data-testid="audio-item-2"]');
-      return lastItem?.classList.contains('active');
-    }).toBe(true);
+    await expect
+      .poll(() => {
+        const lastItem = root.querySelector('[data-testid="audio-item-2"]');
+        return lastItem?.classList.contains('active');
+      })
+      .toBe(true);
   });
 
   it('should activate first audio item when clicking next from last item', async () => {
-    const { root, waitForChanges } = await render(
-      <sc-page-multi-audio-station enableSwitchAudioOutput={true} stationId="123" facade={facade}></sc-page-multi-audio-station>
-    );
+    const { root, waitForChanges } = await render(<sc-page-multi-audio-station enableSwitchAudioOutput={true} stationId="123" facade={facade}></sc-page-multi-audio-station>);
     await waitForChanges();
 
     // Navigate to last item first
     getPlayerButton(root, 'player-prev-button').click();
-    await expect.poll(() => {
-      const lastItem = root.querySelector('[data-testid="audio-item-2"]');
-      return lastItem?.classList.contains('active');
-    }).toBe(true);
+    await expect
+      .poll(() => {
+        const lastItem = root.querySelector('[data-testid="audio-item-2"]');
+        return lastItem?.classList.contains('active');
+      })
+      .toBe(true);
 
     // Then click next to wrap to first
     getPlayerButton(root, 'player-next-button').click();
-    await expect.poll(() => {
-      const firstItem = root.querySelector('[data-testid="audio-item-0"]');
-      return firstItem?.classList.contains('active');
-    }).toBe(true);
+    await expect
+      .poll(() => {
+        const firstItem = root.querySelector('[data-testid="audio-item-0"]');
+        return firstItem?.classList.contains('active');
+      })
+      .toBe(true);
   });
 });

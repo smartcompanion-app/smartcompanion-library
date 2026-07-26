@@ -7,7 +7,6 @@ import { PageLanguageFacade } from '../../contracts';
   shadow: true,
 })
 export class PageLanguage {
-
   /** The service facade instance */
   @Prop() facade: PageLanguageFacade;
 
@@ -33,12 +32,12 @@ export class PageLanguage {
         <ion-toolbar></ion-toolbar>
       </ion-header>,
       <ion-content>
-        { languages.map((language =>
+        {languages.map(language => (
           <ion-button data-language={language.language} onClick={this.handleChangeLanguage} expand="block" size="large">
-            { language.title }
+            {language.title}
           </ion-button>
-        )) }
-      </ion-content>
+        ))}
+      </ion-content>,
     ];
   }
 }

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-19T22:19:59",
+  "timestamp": "2026-07-26T18:54:16",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.43.5",
@@ -377,10 +377,10 @@
           "docsTags": [
             {
               "name": "default",
-              "text": "\"/stations/default\""
+              "text": "'/stations/default'"
             }
           ],
-          "default": "\"/stations/default\"",
+          "default": "'/stations/default'",
           "values": [
             {
               "type": "string"

@@ -8,7 +8,7 @@ const meta = {
   tags: ['autodocs'],
   component: PageLanguage,
   render: args => (
-    <div style={{width: "100vw", height: "100vh"}}>
+    <div style={{ width: '100vw', height: '100vh' }}>
       <sc-page-language {...args} />
     </div>
   ),
@@ -20,21 +20,21 @@ type Story = StoryObj<PageLanguage>;
 
 export const Example: Story = {
   args: {
-    facade: {      
-      getMenuService: () => ({
-        disable: () => {
-          console.log('Menu disabled');
-          return Promise.resolve();
-        },
-      }) as Menu,
-      getLanguages: () => ([
+    facade: {
+      getMenuService: () =>
+        ({
+          disable: () => {
+            console.log('Menu disabled');
+            return Promise.resolve();
+          },
+        }) as Menu,
+      getLanguages: () => [
         { title: 'English', language: 'en' },
         { title: 'Deutsch', language: 'de' },
         { title: 'Español', language: 'es' },
         { title: 'Français', language: 'fr' },
         { title: 'Italiano', language: 'it' },
-      ]),
+      ],
     } as PageLanguageFacade,
   },
 };
-

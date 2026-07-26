@@ -9,7 +9,7 @@ const meta = {
   tags: ['autodocs'],
   component: PageMap,
   render: args => (
-    <div style={{width: "100vw", height: "100vh"}}>
+    <div style={{ width: '100vw', height: '100vh' }}>
       <sc-page-map {...args} />
     </div>
   ),
@@ -25,18 +25,18 @@ export const Example: Story = {
     tileUrlTemplate: 'map-assets/{z}/{y}/{x}.jpeg',
     mapAttribution: '&copy; basemap.at',
     facade: {
-      getStationService: () => ({
-        getStations: () => Promise.resolve([
-          { id: '1', number: '1', latitude: 47.580, longitude: 12.168 } as Station,
-          { id: '2', number: '2', latitude: 47.579, longitude: 12.169 } as Station,
-        ]),
-      }) as StationSource,
-      getMenuService: () => ({
-        enable: () => {
-          console.log('Menu enabled');
-          return Promise.resolve();
-        },
-      }) as Menu,
+      getStationService: () =>
+        ({
+          getStations: () =>
+            Promise.resolve([{ id: '1', number: '1', latitude: 47.58, longitude: 12.168 } as Station, { id: '2', number: '2', latitude: 47.579, longitude: 12.169 } as Station]),
+        }) as StationSource,
+      getMenuService: () =>
+        ({
+          enable: () => {
+            console.log('Menu enabled');
+            return Promise.resolve();
+          },
+        }) as Menu,
       __: (key: string) => {
         switch (key) {
           case 'page-map':
@@ -48,4 +48,3 @@ export const Example: Story = {
     } as StationListFacade,
   },
 };
-

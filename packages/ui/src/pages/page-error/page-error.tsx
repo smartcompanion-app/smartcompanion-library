@@ -4,10 +4,9 @@ import { PageErrorFacade } from '../../contracts';
 @Component({
   tag: 'sc-page-error',
   styleUrl: 'page-error.scss',
-  shadow: true,  
+  shadow: true,
 })
 export class PageError {
-
   /** The service facade instance */
   @Prop() facade: PageErrorFacade;
 
@@ -16,10 +15,7 @@ export class PageError {
   }
 
   private tryAgain = () => {
-    this
-      .facade
-      .getRoutingService()
-      .pushReplaceCurrent('/');
+    this.facade.getRoutingService().pushReplaceCurrent('/');
   };
 
   render() {

@@ -3,19 +3,21 @@ import { Menu, StationListFacade, StationSource } from '../../contracts';
 import { Station } from '@smartcompanion/data';
 
 const facade = {
-  getStationService: () => ({
-    getStations: () => Promise.resolve([
-      { id: '1', number: '1', latitude: 47.580, longitude: 12.168 } as Station,
-      { id: '2', number: '2', latitude: 47.579, longitude: 12.169 } as Station,
-    ]),
-  }) as Partial<StationSource>,
-  getMenuService: () => ({
-    enable: () => Promise.resolve(),
-  }) as Partial<Menu>,
+  getStationService: () =>
+    ({
+      getStations: () =>
+        Promise.resolve([{ id: '1', number: '1', latitude: 47.58, longitude: 12.168 } as Station, { id: '2', number: '2', latitude: 47.579, longitude: 12.169 } as Station]),
+    }) as Partial<StationSource>,
+  getMenuService: () =>
+    ({
+      enable: () => Promise.resolve(),
+    }) as Partial<Menu>,
   __: (key: string) => {
     switch (key) {
-      case 'page-map': return 'Map';
-      default: return key;
+      case 'page-map':
+        return 'Map';
+      default:
+        return key;
     }
   },
 } as unknown as StationListFacade;
@@ -28,7 +30,7 @@ test.skip('render page map', async () => {
       tileUrlTemplate="map-assets/{z}/{y}/{x}.jpeg"
       mapAttribution="&copy; basemap.at"
       facade={facade}
-    ></sc-page-map>
+    ></sc-page-map>,
   );
   expect(root).toMatchSnapshot();
 });

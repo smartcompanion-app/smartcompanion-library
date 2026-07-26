@@ -34,7 +34,7 @@
   align-content: center;
   background: var(--sc-station-icon-color, var(--ion-color-primary));
   color: var(--sc-station-icon-text-color, var(--ion-color-primary-contrast));
-  font-size: .8em;
+  font-size: 0.8em;
   font-weight: bold;
   z-index: 1;
 }
@@ -82,7 +82,7 @@
 .animate-pop-appearance {
   animation-duration: 0.5s;
   animation-name: animate-pop;
-  animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
+  animation-timing-function: cubic-bezier(0.26, 0.53, 0.74, 1.48);
 }
 
 @keyframes animate-pop {

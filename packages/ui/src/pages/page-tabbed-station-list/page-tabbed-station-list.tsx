@@ -6,7 +6,6 @@ import { StationListFacade } from '../../contracts';
   styleUrl: 'page-tabbed-station-list.scss',
 })
 export class PageTabbedStationList {
-
   @Element() element: HTMLElement;
 
   /**
@@ -36,20 +35,12 @@ export class PageTabbedStationList {
   render() {
     return (
       <Host>
-        <ion-tabs>          
+        <ion-tabs>
           <ion-tab tab="tab-images">
-            <sc-page-station-image-list
-              class="ion-page"
-              facade={this.facade}
-              tourId={this.tourId}
-              headerBackgroundColor={this.headerBackgroundColor} />
+            <sc-page-station-image-list class="ion-page" facade={this.facade} tourId={this.tourId} headerBackgroundColor={this.headerBackgroundColor} />
           </ion-tab>
           <ion-tab tab="tab-list">
-            <sc-page-station-list
-              class="ion-page"
-              facade={this.facade}
-              tourId={this.tourId}
-              headerBackgroundColor={this.headerBackgroundColor} />
+            <sc-page-station-list class="ion-page" facade={this.facade} tourId={this.tourId} headerBackgroundColor={this.headerBackgroundColor} />
           </ion-tab>
           <ion-tab-bar slot="bottom">
             <ion-tab-button selected tab="tab-images">

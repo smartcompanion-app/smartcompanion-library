@@ -16,18 +16,20 @@ const audioPlayerService: AudioPlayerService = new CollectibleAudioPlayerService
 
 const facade = {
   getAudioPlayerService: () => audioPlayerService,
-  getStationService: () => ({
-    updateCollectedPercentage: (stationId: string, _: string, collectedPercentage: number) => {
-      return Promise.resolve({
-        ...stations.find(station => station.id === stationId),
-        collectedPercentage,
-      });
-    },
-    getStations: () => Promise.resolve(stations),
-  }) as StationSource,
-  getMenuService: () => ({
-    enable: () => Promise.resolve(),
-  }) as Menu,
+  getStationService: () =>
+    ({
+      updateCollectedPercentage: (stationId: string, _: string, collectedPercentage: number) => {
+        return Promise.resolve({
+          ...stations.find(station => station.id === stationId),
+          collectedPercentage,
+        });
+      },
+      getStations: () => Promise.resolve(stations),
+    }) as StationSource,
+  getMenuService: () =>
+    ({
+      enable: () => Promise.resolve(),
+    }) as Menu,
 } as unknown as PageStationFacade;
 
 const getPlayerButton = (root: HTMLElement, testId: string) => {
@@ -41,49 +43,55 @@ describe('sc-page-stations', () => {
   const waitForAudioReady = () => expect.poll(() => document.querySelector('#web-audio') !== null).toBe(true);
 
   it('should activate last item when clicking prev from first item', async () => {
-    const { root, waitForChanges } = await render(
-      <sc-page-stations stationId="default" enableSwitchAudioOutput={false} facade={facade}></sc-page-stations>
-    );
+    const { root, waitForChanges } = await render(<sc-page-stations stationId="default" enableSwitchAudioOutput={false} facade={facade}></sc-page-stations>);
     await waitForChanges();
     await waitForAudioReady();
     // Confirm initial select(0) + listener wiring landed before interacting
-    await expect.poll(() => {
-      const firstItem = root.querySelector('[data-testid="player-list-item-0"]');
-      return firstItem?.classList.contains('active');
-    }).toBe(true);
+    await expect
+      .poll(() => {
+        const firstItem = root.querySelector('[data-testid="player-list-item-0"]');
+        return firstItem?.classList.contains('active');
+      })
+      .toBe(true);
 
     getPlayerButton(root, 'player-prev-button').click();
 
-    await expect.poll(() => {
-      const lastItem = root.querySelector('[data-testid="player-list-item-2"]');
-      return lastItem?.classList.contains('active');
-    }).toBe(true);
+    await expect
+      .poll(() => {
+        const lastItem = root.querySelector('[data-testid="player-list-item-2"]');
+        return lastItem?.classList.contains('active');
+      })
+      .toBe(true);
   });
 
   it('should activate first item when clicking next from last item', async () => {
-    const { root, waitForChanges } = await render(
-      <sc-page-stations stationId="default" enableSwitchAudioOutput={false} facade={facade}></sc-page-stations>
-    );
+    const { root, waitForChanges } = await render(<sc-page-stations stationId="default" enableSwitchAudioOutput={false} facade={facade}></sc-page-stations>);
     await waitForChanges();
     await waitForAudioReady();
     // Confirm initial select(0) + listener wiring landed before interacting
-    await expect.poll(() => {
-      const firstItem = root.querySelector('[data-testid="player-list-item-0"]');
-      return firstItem?.classList.contains('active');
-    }).toBe(true);
+    await expect
+      .poll(() => {
+        const firstItem = root.querySelector('[data-testid="player-list-item-0"]');
+        return firstItem?.classList.contains('active');
+      })
+      .toBe(true);
 
     // Navigate to last item first
     getPlayerButton(root, 'player-prev-button').click();
-    await expect.poll(() => {
-      const lastItem = root.querySelector('[data-testid="player-list-item-2"]');
-      return lastItem?.classList.contains('active');
-    }).toBe(true);
+    await expect
+      .poll(() => {
+        const lastItem = root.querySelector('[data-testid="player-list-item-2"]');
+        return lastItem?.classList.contains('active');
+      })
+      .toBe(true);
 
     // Then click next to wrap to first
     getPlayerButton(root, 'player-next-button').click();
-    await expect.poll(() => {
-      const firstItem = root.querySelector('[data-testid="player-list-item-0"]');
-      return firstItem?.classList.contains('active');
-    }).toBe(true);
+    await expect
+      .poll(() => {
+        const firstItem = root.querySelector('[data-testid="player-list-item-0"]');
+        return firstItem?.classList.contains('active');
+      })
+      .toBe(true);
   });
 });

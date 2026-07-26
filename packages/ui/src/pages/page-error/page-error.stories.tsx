@@ -7,7 +7,11 @@ const meta = {
   title: 'Pages/Page Error',
   tags: ['autodocs'],
   component: PageError,
-  render: args => (<div style={{width: '100vw', height: '100vh'}}><sc-page-error {...args} /></div>),
+  render: args => (
+    <div style={{ width: '100vw', height: '100vh' }}>
+      <sc-page-error {...args} />
+    </div>
+  ),
 } satisfies Meta<PageError>;
 
 export default meta;
@@ -16,7 +20,7 @@ type Story = StoryObj<PageError>;
 
 export const Example: Story = {
   args: {
-    facade: {      
+    facade: {
       __: (key: string) => {
         switch (key) {
           case 'no-internet':
@@ -30,4 +34,3 @@ export const Example: Story = {
     } as PageErrorFacade,
   },
 };
-

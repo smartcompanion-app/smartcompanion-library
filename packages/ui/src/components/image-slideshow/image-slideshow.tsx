@@ -8,7 +8,6 @@ import { Navigation } from 'swiper/modules';
   shadow: true,
 })
 export class ImageSlideshow {
-
   protected imagesList: Swiper;
 
   @Element() el: HTMLElement;
@@ -25,7 +24,7 @@ export class ImageSlideshow {
       navigation: {
         nextEl: this.el.shadowRoot.querySelector('#slideshow-next') as HTMLElement,
         prevEl: this.el.shadowRoot.querySelector('#slideshow-prev') as HTMLElement,
-      }
+      },
     });
   }
 
@@ -35,7 +34,7 @@ export class ImageSlideshow {
         <Host>
           <div id="slideshow" class="swiper">
             <div class="swiper-wrapper">
-              {this.images.map((image) => (
+              {this.images.map(image => (
                 <div class="swiper-slide">
                   <img class="slideshow-image" src={image} />
                 </div>

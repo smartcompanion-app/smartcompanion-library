@@ -8,9 +8,11 @@ const meta = {
   title: 'Components/Image Slideshow',
   tags: ['autodocs'],
   component: ImageSlideshow,
-  render: args => <div style={{ width: "100vw" }}>
-    <sc-image-slideshow {...args} />
-  </div>,
+  render: args => (
+    <div style={{ width: '100vw' }}>
+      <sc-image-slideshow {...args} />
+    </div>
+  ),
 } satisfies Meta<ImageSlideshow>;
 
 export default meta;
@@ -19,11 +21,7 @@ type Story = StoryObj<ImageSlideshow>;
 
 export const MultiImageExample: Story = {
   args: {
-    images: [
-      (stations[0].images[0] as Asset).internalWebUrl,
-      (stations[1].images[0] as Asset).internalWebUrl,
-      (stations[2].images[0] as Asset).internalWebUrl,
-    ],
+    images: [(stations[0].images[0] as Asset).internalWebUrl, (stations[1].images[0] as Asset).internalWebUrl, (stations[2].images[0] as Asset).internalWebUrl],
   },
 };
 
@@ -32,4 +30,3 @@ export const SingleImageExample: Story = {
     images: [(stations[0].images[0] as Asset).internalWebUrl],
   },
 };
-

@@ -1,10 +1,6 @@
 import { h } from '@stencil/core';
 
-export function getMenuButton(
-  enableBackButton: boolean = false,
-  defaultBackButtonHref: string = null,
-  additionalProps = {}
-) {
+export function getMenuButton(enableBackButton: boolean = false, defaultBackButtonHref: string = null, additionalProps = {}) {
   if (enableBackButton && defaultBackButtonHref !== null && defaultBackButtonHref !== undefined && defaultBackButtonHref !== '') {
     return <ion-back-button text="" default-href={defaultBackButtonHref} {...additionalProps}></ion-back-button>;
   } else if (enableBackButton) {

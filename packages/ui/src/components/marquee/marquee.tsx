@@ -1,4 +1,4 @@
-import { Component, Prop, Element, Host, h, State } from "@stencil/core";
+import { Component, Prop, Element, Host, h, State } from '@stencil/core';
 
 /**
  * @slot - The text content to display, scrolled as a marquee when active
@@ -9,19 +9,18 @@ import { Component, Prop, Element, Host, h, State } from "@stencil/core";
   shadow: true,
 })
 export class Marquee {
-
-  private originalText: string = "";
+  private originalText: string = '';
 
   /** Whether the marquee animation is active */
   @Prop({ mutable: true, reflect: true }) active: boolean = false;
 
-  @State() marqueeText: string = "";
+  @State() marqueeText: string = '';
 
   @Element() element: HTMLElement;
 
   componentWillLoad() {
     this.originalText = this.element.textContent;
-    this.marqueeText = this.originalText + "   ";
+    this.marqueeText = this.originalText + '   ';
   }
 
   componentDidRender() {
@@ -40,10 +39,13 @@ export class Marquee {
   render() {
     return (
       <Host>
-        {this.active
-          ? <div>{this.marqueeText}</div>
-          : <div class="ellipsis"><slot /></div>
-        }
+        {this.active ? (
+          <div>{this.marqueeText}</div>
+        ) : (
+          <div class="ellipsis">
+            <slot />
+          </div>
+        )}
       </Host>
     );
   }

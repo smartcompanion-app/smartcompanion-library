@@ -6,14 +6,13 @@ import { PageLoadingFacade } from '../../contracts';
   styleUrl: 'page-loading.scss',
 })
 export class PageLoading {
-
   @State() progress: number = 1;
 
   /**
    * Loading Spinner Color 'primary' or 'secondary' (default: 'primary')
    */
   @Prop() spinnerColor: 'primary' | 'secondary' = 'primary';
- 
+
   /**
    * Loading Progress Bar Color 'primary' or 'secondary' (default: 'primary')
    */
@@ -37,7 +36,7 @@ export class PageLoading {
   /**
    * The default or home route, when loading is successfully completed
    */
-  @Prop() homeRoute: string = "/stations/default";
+  @Prop() homeRoute: string = '/stations/default';
 
   /** The service facade instance */
   @Prop() facade: PageLoadingFacade;
@@ -50,12 +49,12 @@ export class PageLoading {
     this.facade.getMenuService().disable();
     this.progress = 1;
 
-    this.facade.getLoadService().setProgressListener((progress) => {
+    this.facade.getLoadService().setProgressListener(progress => {
       this.progress = progress / 100;
     });
 
     const result = await this.facade.getLoadService().load();
-    console.log("loading result", result);
+    console.log('loading result', result);
 
     if (result == 'language') {
       this.facade.getRoutingService().pushReplace('/language');
@@ -73,25 +72,24 @@ export class PageLoading {
     return (
       <ion-content>
         <div id="loading">
-          <div id="loading-image" >
-            {this.imageDark !== undefined && this.imageDark !== ''
-              ? [
-                <img class="loading-image-light" src={this.image} />,
-                <img class="loading-image-dark" src={this.imageDark} />,
-              ]
-              : <img src={this.image} />
-            }
+          <div id="loading-image">
+            {this.imageDark !== undefined && this.imageDark !== '' ? (
+              [<img class="loading-image-light" src={this.image} />, <img class="loading-image-dark" src={this.imageDark} />]
+            ) : (
+              <img src={this.image} />
+            )}
           </div>
           <div id="loading-info">
-            {this.progress >= 1
-              ? <ion-spinner color={this.spinnerColor}></ion-spinner>
-              : [
+            {this.progress >= 1 ? (
+              <ion-spinner color={this.spinnerColor}></ion-spinner>
+            ) : (
+              [
                 <ion-text color={this.loadingTextColor}>
-                  <h4>Loading {this.progress >= 1 ? '' : ((Math.trunc(this.progress * 100)) + '%')}</h4>
+                  <h4>Loading {this.progress >= 1 ? '' : Math.trunc(this.progress * 100) + '%'}</h4>
                 </ion-text>,
-                <ion-progress-bar color={this.progressBarColor} value={this.progress}></ion-progress-bar>
+                <ion-progress-bar color={this.progressBarColor} value={this.progress}></ion-progress-bar>,
               ]
-            }
+            )}
           </div>
         </div>
       </ion-content>

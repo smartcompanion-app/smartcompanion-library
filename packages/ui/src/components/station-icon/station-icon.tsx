@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h } from "@stencil/core";
+import { Component, Prop, Host, h } from '@stencil/core';
 
 const SIZE_PX = { small: 20, normal: 30, large: 40 } as const;
 const STROKE_WIDTH = 3;
@@ -12,7 +12,6 @@ const STROKE_WIDTH = 3;
   shadow: true,
 })
 export class StationIcon {
-
   /** Upper limit percentage threshold for showing the collected icon */
   @Prop() upperLimitPercent: number = 97;
 
@@ -70,15 +69,12 @@ export class StationIcon {
             aria-valuenow={percent}
             focusable="false"
           >
-            <circle
-              class="progress-ring-track"
-              cx={center} cy={center} r={radius}
-              stroke-width={STROKE_WIDTH}
-              fill="none"
-            />
+            <circle class="progress-ring-track" cx={center} cy={center} r={radius} stroke-width={STROKE_WIDTH} fill="none" />
             <circle
               class="progress-ring-fill"
-              cx={center} cy={center} r={radius}
+              cx={center}
+              cy={center}
+              r={radius}
               stroke-width={STROKE_WIDTH}
               fill="none"
               stroke-linecap="round"
@@ -89,11 +85,11 @@ export class StationIcon {
           </svg>
           <div class="station-icon">
             <slot />
-            { (this.collected === true || this.collectedPercent >= this.upperLimitPercent) &&
+            {(this.collected === true || this.collectedPercent >= this.upperLimitPercent) && (
               <div class="collected-icon animate-pop-appearance">
                 <ion-icon name="checkmark"></ion-icon>
               </div>
-            }
+            )}
           </div>
         </div>
       </Host>

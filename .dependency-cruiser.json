@@ -9,6 +9,13 @@
       "to": { "circular": true }
     },
     {
+      "name": "not-to-unresolvable",
+      "comment": "An import that does not resolve is reported with the bare specifier as its path, so it slips past every path-based rule below. Without this, importing a workspace package that is not a declared dependency would pass silently.",
+      "severity": "error",
+      "from": {},
+      "to": { "couldNotResolve": true }
+    },
+    {
       "name": "ui-shipped-no-services",
       "comment": "Shipped UI code depends on src/contracts, never on @smartcompanion/services. Pages take a structural facade slice so apps can pass any object satisfying it. Tests and stories are exempt: contracts.test.ts imports ServiceFacade on purpose, to prove it still satisfies the contracts.",
       "severity": "error",

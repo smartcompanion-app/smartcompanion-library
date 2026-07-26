@@ -1,0 +1,40 @@
+name: Feature request
+description: Suggest a capability the library does not have yet.
+labels: ['enhancement']
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What are you trying to do that the library does not let you do today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: >
+        If you have an API in mind, sketch it here. Note that these packages are
+        published and consumed by more than one app, so anything added becomes
+        public surface.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: packages
+    attributes:
+      label: Packages this would touch
+      multiple: true
+      options:
+        - '@smartcompanion/data'
+        - '@smartcompanion/services'
+        - '@smartcompanion/ui'
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Workarounds you have tried, or libraries that already solve this.

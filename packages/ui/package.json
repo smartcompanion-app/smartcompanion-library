@@ -4,7 +4,7 @@
   "author": "SmartCompanion Team <hello@smartcompanion.app> (https://smartcompanion.app) ",
   "repository": {
     "type": "git",
-    "url": "https://github.com/smartcompanion-app/smartcompanion-library.git",
+    "url": "git+https://github.com/smartcompanion-app/smartcompanion-library.git",
     "directory": "packages/ui"
   },
   "main": "dist/index.cjs.js",
@@ -26,26 +26,33 @@
     "!**/*.spec.*"
   ],
   "license": "BSD-2-Clause",
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "stencil build",
     "lint": "eslint src",
     "format": "prettier --write src",
+    "format:check": "prettier --check src",
+    "check:publish": "publint . && attw --pack .",
     "test": "stencil-test",
     "watch": "stencil build --watch",
     "storybook": "rm -rf dist/components && STORYBOOK=true storybook dev -p 6006 --no-open",
-    "build-storybook": "rm -rf dist/components && STORYBOOK=true storybook build",
-    "test:ci": "stencil-test"
+    "build-storybook": "rm -rf dist/components && STORYBOOK=true storybook build"
   },
   "dependencies": {
     "leaflet": "^1.9.4",
     "swiper": "^12.2.0"
   },
   "peerDependencies": {
-    "@smartcompanion/data": "*"
+    "@smartcompanion/data": ">=0.9.0"
   },
   "devDependencies": {
-    "@smartcompanion/data": "*",
-    "@smartcompanion/services": "*",
+    "@smartcompanion/data": "^0.9.0",
+    "@smartcompanion/services": "^0.9.0",
     "@stencil/core": "^4.43.3",
     "@stencil/storybook-plugin": "^0.7.0",
     "@stencil/vitest": "^1.11.3",

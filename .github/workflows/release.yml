@@ -2,129 +2,73 @@ name: release
 
 on:
   push:
-    tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
+    branches:
+      - main
+
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
+  # Required for npm trusted publishing: npm exchanges this workflow's OIDC
+  # token for a short-lived publish token, so no npm token is stored anywhere.
+  # The same OIDC identity is what signs the provenance attestation.
+  id-token: write
+
+env:
+  NODE_VERSION: 22
 
 jobs:
-  test:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Playwright browsers
-        run: npx playwright install chromium
-
-      - name: Build packages
-        run: npm run build
-
-      - name: Run lint
-        run: npm run lint
-
-      - name: Check package boundaries
-        run: npm run depcruise
-
-      - name: Run tests
-        run: npm test
-
   release:
-    needs: test
+    name: Release
     runs-on: ubuntu-24.04
-    permissions:
-      contents: write
-      id-token: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v7
         with:
-          node-version: '22'
-          registry-url: 'https://registry.npmjs.org'
+          fetch-depth: 0
 
-      - name: Set version from tag in all packages
-        run: |
-          TAG_VERSION="${GITHUB_REF#refs/tags/v}"
-          for pkg in packages/*; do
-            if [ -f "$pkg/package.json" ]; then
-              npm version --no-git-tag-version --workspace="$pkg" "$TAG_VERSION"
-            fi
-          done
+      # No registry-url on purpose: it writes an .npmrc pinning the auth token
+      # to NODE_AUTH_TOKEN, and trusted publishing authenticates over OIDC
+      # instead. Leaving it would point npm at an unset variable.
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      # Trusted publishing landed in npm 11.5.1 and Node 22 still bundles
+      # npm 10, so upgrade npm rather than the Node version — the release job
+      # then builds on the same runtime CI tests against.
+      - name: Update npm
+        run: npm install -g npm@latest
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build packages
-        run: npm run build
-
-      - name: Publish all packages
+      # Opens (or updates) a "chore: release" pull request collecting the
+      # pending changesets. Merging that pull request runs this workflow again,
+      # at which point there are no changesets left and `publish` runs instead.
+      #
+      # RELEASE_TOKEN is a personal access token with contents and pull request
+      # write access. It is optional but recommended: pull requests opened with
+      # the default GITHUB_TOKEN do not trigger workflows, so the release pull
+      # request would sit with no CI checks and main's required checks could
+      # never pass on it. Falls back to GITHUB_TOKEN when the secret is absent.
+      - name: Create release pull request or publish
+        uses: changesets/action@v1
+        with:
+          github-token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          version: npm run version
+          publish: npm run release
+          title: 'chore: release'
+          commit: 'chore: release'
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          for pkg in packages/*; do
-            if [ -f "$pkg/package.json" ]; then
-              cd "$pkg"
-              npm publish --access public --provenance
-              cd -
-            fi
-          done
-
-      - name: Commit and push version bump
-        run: |
-          TAG_VERSION="${GITHUB_REF#refs/tags/v}"
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add packages/*/package.json
-          git commit -m "chore: set version to $TAG_VERSION"
-          git tag -f "v$TAG_VERSION"
-          git push origin HEAD:refs/heads/main --follow-tags
-          git push origin -f "v$TAG_VERSION"
-
-  storybook:
-    needs: release
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build packages
-        run: npm run build
-
-      - name: Build Storybook
-        run: npm run build-storybook -w packages/ui
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: packages/ui/storybook-static
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
+          # npm authenticates over OIDC against the trusted publisher
+          # configured for each package (this repository, this workflow file),
+          # so there is deliberately no npm token here. Provenance is implied by
+          # trusted publishing; the flag is kept so the intent stays explicit.
+          NPM_CONFIG_PROVENANCE: true

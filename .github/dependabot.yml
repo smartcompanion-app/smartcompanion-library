@@ -1,0 +1,28 @@
+version: 2
+
+updates:
+  # The root manifest covers every workspace, so one entry keeps all three
+  # packages up to date. Grouped so a routine sweep arrives as one pull request
+  # rather than one per package -- they are built and tested together anyway.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      library-dependencies:
+        patterns:
+          - '*'
+    ignore:
+      # Stencil majors change the component build output and the published
+      # entry points, so they need a deliberate migration rather than a bump.
+      - dependency-name: '@stencil/core'
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      github-actions:
+        patterns:
+          - '*'

@@ -4,35 +4,73 @@ on:
   pull_request:
   push:
     branches:
-      - '**'
-    tags-ignore:
-      - '**'
+      - main
+
+# Superseded runs on the same branch are pointless once a newer commit exists.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
 
-jobs:
+env:
+  NODE_VERSION: 22
 
-  tests:
+jobs:
+  # Static checks only — no Playwright download, so this reports back long
+  # before the test job finishes.
+  lint:
+    name: Lint
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v7
         with:
-          submodules: recursive
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
       - name: Install dependencies
         run: npm ci
-      - name: Install Playwright browsers
-        run: npx playwright install chromium
-      - name: Build packages
-        run: npm run build
+
       - name: Run lint
         run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
       - name: Check package boundaries
         run: npm run depcruise
+
+  test:
+    name: Build and test
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Build packages
+        run: npm run build
+
       - name: Run tests
         run: npm test
+
+      # Validates the tarball that would actually be published: entry points
+      # resolve, types match the runtime exports, nothing is missing from files.
+      - name: Check publishable packages
+        run: npm run check:publish

@@ -2,6 +2,7 @@ import { render, h, describe, it, expect } from '@stencil/vitest';
 import { Menu, PageStationFacade, StationSource } from '../../contracts';
 import { AudioPlayerService, AudioPlayerUpdate, CollectibleAudioPlayerService } from '@smartcompanion/services';
 import { Station } from '@smartcompanion/data';
+import type { Swiper } from 'swiper';
 import { stations as fixtureStations } from '../../../test/fixtures';
 
 // Use silent audio data URI so loadAudio resolves without needing real files
@@ -11,6 +12,22 @@ const stations: Station[] = fixtureStations.map(station => ({
   ...station,
   audios: station.audios.map(audio => ({ ...audio, internalFileUrl: SILENT_AUDIO, internalWebUrl: SILENT_AUDIO })),
 }));
+
+// The three fixture stations fit inside the list without overflowing it, which
+// leaves swiper locked -- slideTo() is a no-op by design in that state. Repeating
+// them gives a list long enough to actually scroll. The audio ids have to be made
+// unique along with the station ids: the player identifies items by audio id and
+// getIndex() returns the first match, so repeated ids would resolve a skip to the
+// wrong index and quietly weaken what this test proves.
+const scrollingStations: Station[] = Array.from({ length: 12 }, (_, index) => {
+  const station = stations[index % stations.length];
+  return {
+    ...station,
+    id: `${index + 1}`,
+    number: `${index + 1}`,
+    audios: station.audios.map(audio => ({ ...audio, id: `${audio.id}-${index + 1}` })),
+  };
+});
 
 // initAudioPlayer() is kicked off from componentDidLoad() and is still in
 // flight when waitForChanges() resolves: it awaits start() and setSpeaker(),
@@ -34,23 +51,26 @@ audioPlayerService.registerUpdateListener = (callback: (update: AudioPlayerUpdat
     pageReceivedUpdate = true;
   });
 
-const facade = {
-  getAudioPlayerService: () => audioPlayerService,
-  getStationService: () =>
-    ({
-      updateCollectedPercentage: (stationId: string, _: string, collectedPercentage: number) => {
-        return Promise.resolve({
-          ...stations.find(station => station.id === stationId),
-          collectedPercentage,
-        });
-      },
-      getStations: () => Promise.resolve(stations),
-    }) as StationSource,
-  getMenuService: () =>
-    ({
-      enable: () => Promise.resolve(),
-    }) as Menu,
-} as unknown as PageStationFacade;
+const createFacade = (availableStations: Station[]) =>
+  ({
+    getAudioPlayerService: () => audioPlayerService,
+    getStationService: () =>
+      ({
+        updateCollectedPercentage: (stationId: string, _: string, collectedPercentage: number) => {
+          return Promise.resolve({
+            ...availableStations.find(station => station.id === stationId),
+            collectedPercentage,
+          });
+        },
+        getStations: () => Promise.resolve(availableStations),
+      }) as StationSource,
+    getMenuService: () =>
+      ({
+        enable: () => Promise.resolve(),
+      }) as Menu,
+  }) as unknown as PageStationFacade;
+
+const facade = createFacade(stations);
 
 const getPlayerButton = (root: HTMLElement, testId: string) => {
   return root.querySelector('sc-player-controls').shadowRoot.querySelector(`[data-testid="${testId}"]`) as HTMLElement;
@@ -60,15 +80,51 @@ const getPlayerButton = (root: HTMLElement, testId: string) => {
 // The flag is reset per render because the service instance is shared across
 // tests -- without the reset the second render would pass the gate on the first
 // render's initialization.
-const renderPage = async (): Promise<HTMLElement> => {
+const renderPage = async (pageFacade: PageStationFacade = facade): Promise<HTMLElement> => {
   pageReceivedUpdate = false;
-  const { root, waitForChanges } = await render(<sc-page-stations stationId="default" enableSwitchAudioOutput={false} facade={facade}></sc-page-stations>);
+  const { root, waitForChanges } = await render(<sc-page-stations stationId="default" enableSwitchAudioOutput={false} facade={pageFacade}></sc-page-stations>);
   await waitForChanges();
   await expect.poll(() => pageReceivedUpdate).toBe(true);
   return root;
 };
 
 describe('sc-page-stations', () => {
+  const item = (root: HTMLElement, index: number) => root.querySelector(`[data-testid="player-list-item-${index}"]`);
+
+  // Swiper only initializes against a real DOM, so its own state is asserted here
+  // rather than in the mock-doc snapshot.
+  const list = (root: HTMLElement) => root.querySelector('#player-list') as HTMLElement & { swiper?: Swiper };
+  const swiperOf = (root: HTMLElement) => list(root).swiper;
+  const isInitialized = (root: HTMLElement) => list(root).classList.contains('swiper-initialized');
+
+  it('should initialize a vertical swiper over the station list', async () => {
+    const root = await renderPage();
+
+    await expect.poll(() => isInitialized(root)).toBe(true);
+    expect(list(root).classList.contains('swiper-vertical')).toBe(true);
+    expect(swiperOf(root).slides.length).toBe(stations.length);
+    expect(item(root, 0).classList.contains('swiper-slide-active')).toBe(true);
+  });
+
+  it('should scroll the list to a station that skipping put out of view', async () => {
+    const root = await renderPage(createFacade(scrollingStations));
+
+    await expect.poll(() => isInitialized(root)).toBe(true);
+    expect(swiperOf(root).slides.length).toBe(scrollingStations.length);
+    // A locked swiper ignores slideTo, which would make the assertion below vacuous.
+    expect(swiperOf(root).isLocked).toBe(false);
+    expect(swiperOf(root).translate).toBe(0);
+
+    // Skipping back from the first station wraps to the last one, far enough down
+    // the list that swiper has to scroll it into view.
+    getPlayerButton(root, 'player-prev-button').click();
+
+    const last = scrollingStations.length - 1;
+    await expect.poll(() => item(root, last).classList.contains('active')).toBe(true);
+    expect(swiperOf(root).translate).toBeLessThan(0);
+    expect(item(root, 0).classList.contains('swiper-slide-active')).toBe(false);
+  });
+
   it('should activate last item when clicking prev from first item', async () => {
     const root = await renderPage();
 

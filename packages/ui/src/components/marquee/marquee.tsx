@@ -16,7 +16,7 @@ export class Marquee {
 
   @State() marqueeText: string = '';
 
-  @Element() element: HTMLElement;
+  @Element() element: HTMLScMarqueeElement;
 
   componentWillLoad() {
     this.originalText = this.element.textContent;

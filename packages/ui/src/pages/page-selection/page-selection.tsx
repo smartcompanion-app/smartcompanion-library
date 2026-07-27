@@ -1,4 +1,4 @@
-import { Component, State, Prop, h } from '@stencil/core';
+import { Component, State, Prop, Host, h } from '@stencil/core';
 import { StationListFacade } from '../../contracts';
 import { Station } from '@smartcompanion/data';
 import { openStation, getStations } from '../../utils';
@@ -67,23 +67,25 @@ export class PageSelection {
   }
 
   render() {
-    return [
-      <ion-header>
-        <ion-toolbar color={this.headerBackgroundColor}>
-          <ion-buttons slot="start">
-            <ion-menu-button />
-          </ion-buttons>
-          <ion-title>{this.facade.__('menu-selection')}</ion-title>
-        </ion-toolbar>
-      </ion-header>,
-      <ion-content fullscreen={true}>
-        <div slot="fixed" class="station-selection-content">
-          <div data-testid="numpad-input" class="numpad-input">
-            {this.input}
+    return (
+      <Host>
+        <ion-header>
+          <ion-toolbar color={this.headerBackgroundColor}>
+            <ion-buttons slot="start">
+              <ion-menu-button />
+            </ion-buttons>
+            <ion-title>{this.facade.__('menu-selection')}</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content fullscreen={true}>
+          <div slot="fixed" class="station-selection-content">
+            <div data-testid="numpad-input" class="numpad-input">
+              {this.input}
+            </div>
+            <sc-numpad full onConfirm={this.checkStation} onDelete={this.clearLastInput} onNumber={this.handleNumber} />
           </div>
-          <sc-numpad full onConfirm={this.checkStation} onDelete={this.clearLastInput} onNumber={this.handleNumber} />
-        </div>
-      </ion-content>,
-    ];
+        </ion-content>
+      </Host>
+    );
   }
 }

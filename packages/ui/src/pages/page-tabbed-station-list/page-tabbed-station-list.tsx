@@ -6,7 +6,7 @@ import { StationListFacade } from '../../contracts';
   styleUrl: 'page-tabbed-station-list.scss',
 })
 export class PageTabbedStationList {
-  @Element() element: HTMLElement;
+  @Element() element: HTMLScPageTabbedStationListElement;
 
   /**
    * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')

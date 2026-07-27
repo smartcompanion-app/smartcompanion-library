@@ -1,4 +1,4 @@
-import { Component, Prop, State, h } from '@stencil/core';
+import { Component, Prop, State, Host, h } from '@stencil/core';
 import { StationListFacade } from '../../contracts';
 import { Station } from '@smartcompanion/data';
 import { getMenuButton, getSortedStations, openStation } from '../../utils';
@@ -38,28 +38,30 @@ export class PageStationList {
   };
 
   render() {
-    return [
-      <ion-header>
-        <ion-toolbar color={this.headerBackgroundColor}>
-          <ion-buttons slot="start">{getMenuButton(this.tourId !== null, '/tours')}</ion-buttons>
-          <ion-title>{this.facade.__('station-list')}</ion-title>
-        </ion-toolbar>
-      </ion-header>,
-      <ion-content>
-        <ion-list lines="full" class="station-list">
-          {this.stations.map(station => (
-            <ion-item button data-station-id={station.id} onClick={this.handleOpenStation}>
-              <ion-avatar slot="start">
-                <sc-station-icon>{station.number}</sc-station-icon>
-              </ion-avatar>
-              <ion-label>
-                <h2>{station.title}</h2>
-                <p>{station.subtitle}</p>
-              </ion-label>
-            </ion-item>
-          ))}
-        </ion-list>
-      </ion-content>,
-    ];
+    return (
+      <Host>
+        <ion-header>
+          <ion-toolbar color={this.headerBackgroundColor}>
+            <ion-buttons slot="start">{getMenuButton(this.tourId !== null, '/tours')}</ion-buttons>
+            <ion-title>{this.facade.__('station-list')}</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-list lines="full" class="station-list">
+            {this.stations.map(station => (
+              <ion-item button data-station-id={station.id} onClick={this.handleOpenStation}>
+                <ion-avatar slot="start">
+                  <sc-station-icon>{station.number}</sc-station-icon>
+                </ion-avatar>
+                <ion-label>
+                  <h2>{station.title}</h2>
+                  <p>{station.subtitle}</p>
+                </ion-label>
+              </ion-item>
+            ))}
+          </ion-list>
+        </ion-content>
+      </Host>
+    );
   }
 }

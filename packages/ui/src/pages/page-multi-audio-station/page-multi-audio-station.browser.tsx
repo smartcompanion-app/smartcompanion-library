@@ -1,6 +1,6 @@
 import { render, h, describe, it, expect } from '@stencil/vitest';
 import { Menu, PageMultiAudioStationFacade, StationSource } from '../../contracts';
-import { AudioPlayerService } from '@smartcompanion/services';
+import { AudioPlayerService, AudioPlayerUpdate } from '@smartcompanion/services';
 import { Station } from '@smartcompanion/data';
 import { getMultiAudioStation } from '../../../test/fixtures';
 
@@ -14,21 +14,26 @@ const createStation = (): Station => {
 };
 
 // initAudioPlayer() is kicked off from componentDidLoad() and is still in
-// flight when waitForChanges() resolves -- it awaits start(), setSpeaker() and
-// registerUpdateListener() before its closing select(). A prev/next click that
-// lands before that listener is wired notifies nobody: the 'skip' update is
-// dropped, activeIndex never moves, and the polls below can never succeed no
-// matter how long they wait. That is how this suite failed on a cold CI runner
-// while passing locally. select() resolving is the last step of the chain, so
-// it is the signal that the page is safe to click.
-let audioPlayerReady = false;
+// flight when waitForChanges() resolves: it awaits start() and setSpeaker(),
+// fires registerUpdateListener() *without* awaiting it, then awaits select(). A
+// prev/next click landing before that listener is wired notifies nobody -- the
+// 'skip' update is dropped, activeIndex never moves, and the polls below can
+// never succeed no matter how long they wait. That is how this suite failed on
+// a cold CI runner while passing locally.
+//
+// Neither registration completing nor select() resolving is a trustworthy gate
+// on its own, since initAudioPlayer() does not await the former. So gate on the
+// page's own listener actually receiving an update -- the 'skip' emitted by the
+// initial select() -- which proves the whole chain end to end.
+let pageReceivedUpdate = false;
 
 const audioPlayerService: AudioPlayerService = new AudioPlayerService('');
-const selectAudio = audioPlayerService.select.bind(audioPlayerService);
-audioPlayerService.select = async (index: number) => {
-  await selectAudio(index);
-  audioPlayerReady = true;
-};
+const registerUpdateListener = audioPlayerService.registerUpdateListener.bind(audioPlayerService);
+audioPlayerService.registerUpdateListener = (callback: (update: AudioPlayerUpdate) => void) =>
+  registerUpdateListener((update: AudioPlayerUpdate) => {
+    callback(update);
+    pageReceivedUpdate = true;
+  });
 
 const facade = {
   getAudioPlayerService: () => audioPlayerService,
@@ -59,10 +64,10 @@ const getPlayerButton = (root: HTMLElement, testId: string) => {
 // tests -- without the reset the second render would pass the gate on the first
 // render's initialization.
 const renderPage = async (): Promise<HTMLElement> => {
-  audioPlayerReady = false;
+  pageReceivedUpdate = false;
   const { root, waitForChanges } = await render(<sc-page-multi-audio-station enableSwitchAudioOutput={true} stationId="123" facade={facade}></sc-page-multi-audio-station>);
   await waitForChanges();
-  await expect.poll(() => audioPlayerReady).toBe(true);
+  await expect.poll(() => pageReceivedUpdate).toBe(true);
   return root;
 };
 

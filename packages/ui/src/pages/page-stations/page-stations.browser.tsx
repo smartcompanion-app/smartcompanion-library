@@ -1,6 +1,6 @@
 import { render, h, describe, it, expect } from '@stencil/vitest';
 import { Menu, PageStationFacade, StationSource } from '../../contracts';
-import { AudioPlayerService, CollectibleAudioPlayerService } from '@smartcompanion/services';
+import { AudioPlayerService, AudioPlayerUpdate, CollectibleAudioPlayerService } from '@smartcompanion/services';
 import { Station } from '@smartcompanion/data';
 import { stations as fixtureStations } from '../../../test/fixtures';
 
@@ -12,7 +12,27 @@ const stations: Station[] = fixtureStations.map(station => ({
   audios: station.audios.map(audio => ({ ...audio, internalFileUrl: SILENT_AUDIO, internalWebUrl: SILENT_AUDIO })),
 }));
 
+// initAudioPlayer() is kicked off from componentDidLoad() and is still in
+// flight when waitForChanges() resolves: it awaits start() and setSpeaker(),
+// fires registerUpdateListener() *without* awaiting it, then awaits select(). A
+// prev/next click landing before that listener is wired notifies nobody -- the
+// 'skip' update is dropped, activeIndex never moves, and the polls below can
+// never succeed no matter how long they wait.
+//
+// Neither registration completing nor select() resolving is a trustworthy gate
+// on its own: initAudioPlayer() does not await the former, and
+// CollectibleAudioPlayerService in turn does not await super. So gate on the
+// page's own listener actually receiving an update -- the 'skip' emitted by the
+// initial select() -- which proves the whole chain end to end.
+let pageReceivedUpdate = false;
+
 const audioPlayerService: AudioPlayerService = new CollectibleAudioPlayerService('');
+const registerUpdateListener = audioPlayerService.registerUpdateListener.bind(audioPlayerService);
+audioPlayerService.registerUpdateListener = (callback: (update: AudioPlayerUpdate) => void) =>
+  registerUpdateListener((update: AudioPlayerUpdate) => {
+    callback(update);
+    pageReceivedUpdate = true;
+  });
 
 const facade = {
   getAudioPlayerService: () => audioPlayerService,
@@ -36,23 +56,21 @@ const getPlayerButton = (root: HTMLElement, testId: string) => {
   return root.querySelector('sc-player-controls').shadowRoot.querySelector(`[data-testid="${testId}"]`) as HTMLElement;
 };
 
-describe('sc-page-stations', () => {
-  // The native audio player appends `<audio id="web-audio">` to document.body
-  // once start() has populated its items list. Wait for it before any prev/next
-  // click, otherwise the player throws when accessing items[-1].
-  const waitForAudioReady = () => expect.poll(() => document.querySelector('#web-audio') !== null).toBe(true);
+// Renders the page and waits until its audio player has finished initializing.
+// The flag is reset per render because the service instance is shared across
+// tests -- without the reset the second render would pass the gate on the first
+// render's initialization.
+const renderPage = async (): Promise<HTMLElement> => {
+  pageReceivedUpdate = false;
+  const { root, waitForChanges } = await render(<sc-page-stations stationId="default" enableSwitchAudioOutput={false} facade={facade}></sc-page-stations>);
+  await waitForChanges();
+  await expect.poll(() => pageReceivedUpdate).toBe(true);
+  return root;
+};
 
+describe('sc-page-stations', () => {
   it('should activate last item when clicking prev from first item', async () => {
-    const { root, waitForChanges } = await render(<sc-page-stations stationId="default" enableSwitchAudioOutput={false} facade={facade}></sc-page-stations>);
-    await waitForChanges();
-    await waitForAudioReady();
-    // Confirm initial select(0) + listener wiring landed before interacting
-    await expect
-      .poll(() => {
-        const firstItem = root.querySelector('[data-testid="player-list-item-0"]');
-        return firstItem?.classList.contains('active');
-      })
-      .toBe(true);
+    const root = await renderPage();
 
     getPlayerButton(root, 'player-prev-button').click();
 
@@ -65,16 +83,7 @@ describe('sc-page-stations', () => {
   });
 
   it('should activate first item when clicking next from last item', async () => {
-    const { root, waitForChanges } = await render(<sc-page-stations stationId="default" enableSwitchAudioOutput={false} facade={facade}></sc-page-stations>);
-    await waitForChanges();
-    await waitForAudioReady();
-    // Confirm initial select(0) + listener wiring landed before interacting
-    await expect
-      .poll(() => {
-        const firstItem = root.querySelector('[data-testid="player-list-item-0"]');
-        return firstItem?.classList.contains('active');
-      })
-      .toBe(true);
+    const root = await renderPage();
 
     // Navigate to last item first
     getPlayerButton(root, 'player-prev-button').click();

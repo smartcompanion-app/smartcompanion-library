@@ -39,11 +39,12 @@ export default defineVitestConfig({
           include: ['src/**/*.browser.{ts,tsx}'],
           setupFiles: ['./vitest.setup.ts'],
           // These specs poll for state that lands only after the audio player
-          // has loaded a track, which takes ~135ms locally but blows Vitest's
-          // 1000ms default on a CI runner -- the suite passed or failed on the
-          // same commit depending on runner load. Raising the ceiling only
+          // has loaded a track, which takes ~135ms locally but can blow Vitest's
+          // 1000ms default on a loaded CI runner. Raising the ceiling only
           // extends how long a failing poll waits; a passing one still returns
-          // on its first check.
+          // on its first check. Note this is a headroom setting, not a fix for
+          // lost player events -- the specs gate their clicks on the player
+          // being initialized, see page-stations.browser.tsx.
           expect: { poll: { timeout: 10000 } },
           browser: {
             enabled: true,

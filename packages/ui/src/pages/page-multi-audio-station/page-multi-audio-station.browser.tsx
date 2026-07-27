@@ -13,7 +13,22 @@ const createStation = (): Station => {
   return station;
 };
 
+// initAudioPlayer() is kicked off from componentDidLoad() and is still in
+// flight when waitForChanges() resolves -- it awaits start(), setSpeaker() and
+// registerUpdateListener() before its closing select(). A prev/next click that
+// lands before that listener is wired notifies nobody: the 'skip' update is
+// dropped, activeIndex never moves, and the polls below can never succeed no
+// matter how long they wait. That is how this suite failed on a cold CI runner
+// while passing locally. select() resolving is the last step of the chain, so
+// it is the signal that the page is safe to click.
+let audioPlayerReady = false;
+
 const audioPlayerService: AudioPlayerService = new AudioPlayerService('');
+const selectAudio = audioPlayerService.select.bind(audioPlayerService);
+audioPlayerService.select = async (index: number) => {
+  await selectAudio(index);
+  audioPlayerReady = true;
+};
 
 const facade = {
   getAudioPlayerService: () => audioPlayerService,
@@ -39,10 +54,21 @@ const getPlayerButton = (root: HTMLElement, testId: string) => {
   return root.querySelector('sc-player-controls').shadowRoot.querySelector(`[data-testid="${testId}"]`) as HTMLElement;
 };
 
+// Renders the page and waits until its audio player has finished initializing.
+// The flag is reset per render because the service instance is shared across
+// tests -- without the reset the second render would pass the gate on the first
+// render's initialization.
+const renderPage = async (): Promise<HTMLElement> => {
+  audioPlayerReady = false;
+  const { root, waitForChanges } = await render(<sc-page-multi-audio-station enableSwitchAudioOutput={true} stationId="123" facade={facade}></sc-page-multi-audio-station>);
+  await waitForChanges();
+  await expect.poll(() => audioPlayerReady).toBe(true);
+  return root;
+};
+
 describe('sc-page-multi-audio-station', () => {
   it('should activate last audio item when clicking prev from first item', async () => {
-    const { root, waitForChanges } = await render(<sc-page-multi-audio-station enableSwitchAudioOutput={true} stationId="123" facade={facade}></sc-page-multi-audio-station>);
-    await waitForChanges();
+    const root = await renderPage();
 
     getPlayerButton(root, 'player-prev-button').click();
 
@@ -55,8 +81,7 @@ describe('sc-page-multi-audio-station', () => {
   });
 
   it('should activate first audio item when clicking next from last item', async () => {
-    const { root, waitForChanges } = await render(<sc-page-multi-audio-station enableSwitchAudioOutput={true} stationId="123" facade={facade}></sc-page-multi-audio-station>);
-    await waitForChanges();
+    const root = await renderPage();
 
     // Navigate to last item first
     getPlayerButton(root, 'player-prev-button').click();

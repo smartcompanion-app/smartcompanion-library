@@ -1,4 +1,4 @@
-import { Component, h, State, Prop } from '@stencil/core';
+import { Component, h, State, Prop, Host } from '@stencil/core';
 import { Swiper } from 'swiper';
 import { Asset, Station } from '@smartcompanion/data';
 import { AudioPlayerUpdate, PageStationFacade } from '../../contracts';
@@ -115,60 +115,62 @@ export class PageStations {
   };
 
   render() {
-    return [
-      <ion-header class="ion-no-border">
-        <ion-toolbar class="ion-hide-md-up">
-          <ion-buttons slot="start">
-            <ion-fab-button color="light" size="small" onClick={this.openMenu}>
-              <ion-icon color="primary" name="menu-outline"></ion-icon>
-            </ion-fab-button>
-          </ion-buttons>
-          <ion-buttons slot="end">
-            {this.enableSwitchAudioOutput && (
-              <ion-fab-button color="light" size="small" onClick={this.handleToggleOutput}>
-                {this.earpiece ? <ion-icon color="primary" name="volume-medium-outline"></ion-icon> : <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>}
+    return (
+      <Host>
+        <ion-header class="ion-no-border">
+          <ion-toolbar class="ion-hide-md-up">
+            <ion-buttons slot="start">
+              <ion-fab-button color="light" size="small" onClick={this.openMenu}>
+                <ion-icon color="primary" name="menu-outline"></ion-icon>
               </ion-fab-button>
-            )}
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>,
-      <ion-content id="home" fullscreen={true}>
-        <div id="player-main">
-          <div id="player-image">
-            <img src={this.getImageUri(this.activeIndex)} />
-          </div>
-          <div id="player">
-            <sc-player-controls
-              playing={this.playing}
-              position={this.position}
-              duration={this.duration}
-              onNext={this.handleNext}
-              onPrev={this.handlePrev}
-              onPlayPause={this.handlePlayPause}
-              onStartPositionChange={this.handleStartPositionChange}
-              onEndPositionChange={this.handleEndPositionChange}
-            />
-          </div>
-          <div id="player-list" class="swiper">
-            <div class="swiper-wrapper">
-              {this.stations.map((station, index) => (
-                <div data-testid={`player-list-item-${index}`} class={this.activeIndex == index ? 'swiper-slide active' : 'swiper-slide'}>
-                  <ion-card button data-index={index} onClick={this.handleSelect}>
-                    <div class="card-content">
-                      <img src={this.getImageUri(index, 1)} />
-                      <div class="card-content-text">
-                        <sc-station-icon collectedPercent={station.collectedPercentage * 100}>{station.number}</sc-station-icon>
-                        {station.subtitle && <p class="subtitle">{station.subtitle}</p>}
-                        <p class="title">{station.title}</p>
+            </ion-buttons>
+            <ion-buttons slot="end">
+              {this.enableSwitchAudioOutput && (
+                <ion-fab-button color="light" size="small" onClick={this.handleToggleOutput}>
+                  {this.earpiece ? <ion-icon color="primary" name="volume-medium-outline"></ion-icon> : <ion-icon color="primary" src="assets/earpiece.svg"></ion-icon>}
+                </ion-fab-button>
+              )}
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content id="home" fullscreen={true}>
+          <div id="player-main">
+            <div id="player-image">
+              <img src={this.getImageUri(this.activeIndex)} />
+            </div>
+            <div id="player">
+              <sc-player-controls
+                playing={this.playing}
+                position={this.position}
+                duration={this.duration}
+                onNext={this.handleNext}
+                onPrev={this.handlePrev}
+                onPlayPause={this.handlePlayPause}
+                onStartPositionChange={this.handleStartPositionChange}
+                onEndPositionChange={this.handleEndPositionChange}
+              />
+            </div>
+            <div id="player-list" class="swiper">
+              <div class="swiper-wrapper">
+                {this.stations.map((station, index) => (
+                  <div data-testid={`player-list-item-${index}`} class={this.activeIndex == index ? 'swiper-slide active' : 'swiper-slide'}>
+                    <ion-card button data-index={index} onClick={this.handleSelect}>
+                      <div class="card-content">
+                        <img src={this.getImageUri(index, 1)} />
+                        <div class="card-content-text">
+                          <sc-station-icon collectedPercent={station.collectedPercentage * 100}>{station.number}</sc-station-icon>
+                          {station.subtitle && <p class="subtitle">{station.subtitle}</p>}
+                          <p class="title">{station.title}</p>
+                        </div>
                       </div>
-                    </div>
-                  </ion-card>
-                </div>
-              ))}
+                    </ion-card>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </ion-content>,
-    ];
+        </ion-content>
+      </Host>
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, Host, h } from '@stencil/core';
 import { PageLanguageFacade } from '../../contracts';
 
 @Component({
@@ -27,17 +27,19 @@ export class PageLanguage {
   render() {
     const languages = this.facade.getLanguages();
 
-    return [
-      <ion-header class="ion-no-border">
-        <ion-toolbar></ion-toolbar>
-      </ion-header>,
-      <ion-content>
-        {languages.map(language => (
-          <ion-button data-language={language.language} onClick={this.handleChangeLanguage} expand="block" size="large">
-            {language.title}
-          </ion-button>
-        ))}
-      </ion-content>,
-    ];
+    return (
+      <Host>
+        <ion-header class="ion-no-border">
+          <ion-toolbar></ion-toolbar>
+        </ion-header>
+        <ion-content>
+          {languages.map(language => (
+            <ion-button data-language={language.language} onClick={this.handleChangeLanguage} expand="block" size="large">
+              {language.title}
+            </ion-button>
+          ))}
+        </ion-content>
+      </Host>
+    );
   }
 }

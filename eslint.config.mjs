@@ -14,8 +14,8 @@ export default tseslint.config(
     },
   },
   {
-    files: ['packages/ui/src/**/*.{ts,tsx}'],
     ...stencil.configs.flat.recommended,
+    files: ['packages/ui/src/**/*.{ts,tsx}'],
     languageOptions: {
       ...stencil.configs.flat.recommended.languageOptions,
       parserOptions: {

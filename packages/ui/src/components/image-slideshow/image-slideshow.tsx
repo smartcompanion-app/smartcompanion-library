@@ -10,7 +10,7 @@ import { Navigation } from 'swiper/modules';
 export class ImageSlideshow {
   protected imagesList: Swiper;
 
-  @Element() el: HTMLElement;
+  @Element() el: HTMLScImageSlideshowElement;
 
   /**
    * List of image URLs to display in the slideshow

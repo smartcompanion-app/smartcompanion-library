@@ -1,4 +1,4 @@
-import { Component, Prop, h } from '@stencil/core';
+import { Component, Prop, Host, h } from '@stencil/core';
 import L from 'leaflet';
 import { StationListFacade } from '../../contracts';
 import { Station } from '@smartcompanion/data';
@@ -104,16 +104,18 @@ export class PageMap {
   }
 
   render() {
-    return [
-      <ion-header>
-        <ion-toolbar color={this.headerBackgroundColor}>
-          <ion-buttons slot="start">{getMenuButton(this.enableBackButton, this.defaultBackButtonHref)}</ion-buttons>
-          <ion-title>{this.facade.__('menu-map')}</ion-title>
-        </ion-toolbar>
-      </ion-header>,
-      <ion-content>
-        <div slot="fixed" id="map"></div>
-      </ion-content>,
-    ];
+    return (
+      <Host>
+        <ion-header>
+          <ion-toolbar color={this.headerBackgroundColor}>
+            <ion-buttons slot="start">{getMenuButton(this.enableBackButton, this.defaultBackButtonHref)}</ion-buttons>
+            <ion-title>{this.facade.__('menu-map')}</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <div slot="fixed" id="map"></div>
+        </ion-content>
+      </Host>
+    );
   }
 }

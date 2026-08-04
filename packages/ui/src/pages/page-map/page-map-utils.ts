@@ -22,11 +22,11 @@ export function getMapBounds(mapBounds: Array<number>): [[number, number], [numb
 }
 
 export function getMapStyle(mapStyleUrl: string | null, tileUrlTemplate: string | null, mapAttribution: string): string | StyleSpecification {
-  if (mapStyleUrl) {
+  if (mapStyleUrl !== null) {
     return mapStyleUrl;
   }
 
-  if (!tileUrlTemplate) {
+  if (tileUrlTemplate === null) {
     throw new Error('PageMap requires either mapStyleUrl or tileUrlTemplate');
   }
 

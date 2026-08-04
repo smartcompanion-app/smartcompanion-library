@@ -1,15 +1,18 @@
 import { Component, Prop, Host, h } from '@stencil/core';
-import L from 'leaflet';
+import maplibregl from 'maplibre-gl';
+import type { Map as MapLibreMap, Marker as MapLibreMarker } from 'maplibre-gl';
 import { StationListFacade } from '../../contracts';
 import { Station } from '@smartcompanion/data';
 import { getMenuButton, getStations, openStation } from '../../utils';
+import { createStationMarkerElement, getMapBounds, getMapCenter, getMapStyle, shouldUseCustomAttribution } from './page-map-utils.js';
 
 @Component({
   styleUrl: 'page-map.scss',
   tag: 'sc-page-map',
 })
 export class PageMap {
-  protected map: L.Map;
+  protected map!: MapLibreMap;
+  private markers: MapLibreMarker[] = [];
 
   /**
    * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -24,81 +27,85 @@ export class PageMap {
   /**
    * Define default back button href, only used if enableBackButton is true
    */
-  @Prop() defaultBackButtonHref: string = null;
+  @Prop() defaultBackButtonHref: string | null = null;
 
   /**
    * If tour id is given, stations only for the tour are shown.
    * Tour id 'default' is a placeholder for the default tour id.
    */
-  @Prop() tourId: string = null;
+  @Prop() tourId: string | null = null;
 
   /**
-   * Map bounds for the leaflet map in top left Lat/Lng, bottom right Lat/Lng
+   * Map bounds for the map in top left Lat/Lng, bottom right Lat/Lng
    */
-  @Prop() mapBounds: Array<number>;
+  @Prop() mapBounds!: Array<number>;
 
   /**
-   * Map tiles URL for the leaflet map, e.g., 'assets/map/{z}/{y}/{x}.jpeg'
+   * Map style URL for vector maps, e.g., 'https://demotiles.maplibre.org/style.json'
    */
-  @Prop() tileUrlTemplate: string;
+  @Prop() mapStyleUrl: string | null = null;
 
   /**
-   * Map tiles attribution for the leaflet map
+   * Raster map tiles URL fallback, e.g., 'assets/map/{z}/{y}/{x}.jpeg'
+   */
+  @Prop() tileUrlTemplate: string | null = null;
+
+  /**
+   * Map attribution for the map
    */
   @Prop() mapAttribution: string = '';
 
   /** The service facade instance */
-  @Prop() facade: StationListFacade;
+  @Prop() facade!: StationListFacade;
 
   async componentWillLoad() {
     await this.facade.getMenuService().enable();
   }
 
   async componentDidLoad() {
-    const topLeft = L.latLng(this.mapBounds[0], this.mapBounds[1]);
-    const bottomRight = L.latLng(this.mapBounds[2], this.mapBounds[3]);
-    const bounds = L.latLngBounds(topLeft, bottomRight);
-    const centerLag = (this.mapBounds[0] + this.mapBounds[2]) / 2.0;
-    const centerLng = (this.mapBounds[1] + this.mapBounds[3]) / 2.0;
-
-    this.map = L.map('map', {
-      center: L.latLng(centerLag, centerLng),
-      zoom: 17,
-      zoomControl: false,
-      maxBounds: bounds,
-      maxBoundsViscosity: 0.5,
+    this.map = new maplibregl.Map({
+      attributionControl: shouldUseCustomAttribution(this.mapStyleUrl, this.mapAttribution) ? false : undefined,
+      center: getMapCenter(this.mapBounds),
+      container: 'map',
+      maxBounds: getMapBounds(this.mapBounds),
       maxZoom: 18,
       minZoom: 17,
+      style: getMapStyle(this.mapStyleUrl, this.tileUrlTemplate, this.mapAttribution),
+      zoom: 17,
     });
 
-    this.map['attributionControl'].setPrefix('');
-
-    L.tileLayer(this.tileUrlTemplate, {
-      attribution: this.mapAttribution,
-    }).addTo(this.map);
+    if (shouldUseCustomAttribution(this.mapStyleUrl, this.mapAttribution)) {
+      this.map.addControl(new maplibregl.AttributionControl({ customAttribution: this.mapAttribution }));
+    }
 
     await this.stationMarkers();
   }
 
+  disconnectedCallback() {
+    for (const marker of this.markers) {
+      marker.remove();
+    }
+
+    this.markers = [];
+    this.map?.remove();
+  }
+
   private async stationMarkers() {
-    const stations: Station[] = await getStations(this.facade, this.tourId);
+    const stations: Station[] = await getStations(this.facade, this.tourId ?? undefined);
 
     for (const station of stations) {
       if (station.latitude !== undefined && station.longitude !== undefined) {
-        const icon = L.divIcon({
-          className: 'station-map-icon',
-          html: '<sc-station-icon>' + station.number + '</sc-station-icon>',
+        const markerElement = createStationMarkerElement(station.number ?? '');
+
+        const marker = new maplibregl.Marker({ anchor: 'bottom', element: markerElement });
+
+        marker.setLngLat([station.longitude, station.latitude]);
+        marker.on('click', () => {
+          openStation(this.facade, station.id, this.tourId ?? undefined);
         });
+        marker.addTo(this.map);
 
-        const markerOptions: L.MarkerOptions = {
-          icon: icon,
-        };
-
-        L.marker([station.latitude, station.longitude], markerOptions)
-          .on('click', () => {
-            openStation(this.facade, station.id, this.tourId);
-          })
-          .addTo(this.map);
+        this.markers.push(marker);
       }
     }
   }
@@ -108,7 +115,7 @@ export class PageMap {
       <Host>
         <ion-header>
           <ion-toolbar color={this.headerBackgroundColor}>
-            <ion-buttons slot="start">{getMenuButton(this.enableBackButton, this.defaultBackButtonHref)}</ion-buttons>
+            <ion-buttons slot="start">{getMenuButton(this.enableBackButton, this.defaultBackButtonHref ?? undefined)}</ion-buttons>
             <ion-title>{this.facade.__('menu-map')}</ion-title>
           </ion-toolbar>
         </ion-header>

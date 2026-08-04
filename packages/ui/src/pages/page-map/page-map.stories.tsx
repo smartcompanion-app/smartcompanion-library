@@ -24,6 +24,7 @@ export const Example: Story = {
     mapBounds: [47.58308, 12.166456, 47.578141, 12.171476],
     tileUrlTemplate: 'map-assets/{z}/{y}/{x}.jpeg',
     mapAttribution: '&copy; basemap.at',
+
     facade: {
       getStationService: () =>
         ({
@@ -46,5 +47,8 @@ export const Example: Story = {
         }
       },
     } as StationListFacade,
+
+    enableBackButton: true,
+    headerBackgroundColor: 'secondary',
   },
 };

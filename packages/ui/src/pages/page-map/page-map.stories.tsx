@@ -47,8 +47,5 @@ export const Example: Story = {
         }
       },
     } as StationListFacade,
-
-    enableBackButton: true,
-    headerBackgroundColor: 'secondary',
   },
 };

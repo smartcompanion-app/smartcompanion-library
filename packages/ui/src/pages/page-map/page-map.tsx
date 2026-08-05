@@ -4,7 +4,7 @@ import type { Map as MapLibreMap, Marker as MapLibreMarker } from 'maplibre-gl';
 import { StationListFacade } from '../../contracts';
 import { Station } from '@smartcompanion/data';
 import { getMenuButton, getStations, openStation } from '../../utils';
-import { createStationMarkerElement, getMapBounds, getMapCenter, getMapStyle, shouldUseCustomAttribution } from './page-map-utils.js';
+import { createStationMarkerElement, getMapBounds, getMapCenter, getMapStyle } from './page-map-utils.js';
 
 @Component({
   styleUrl: 'page-map.scss',
@@ -41,12 +41,14 @@ export class PageMap {
   @Prop() mapBounds!: Array<number>;
 
   /**
-   * Map style URL for vector maps, e.g., 'https://demotiles.maplibre.org/style.json'
+   * Map style URL for vector maps, e.g., 'https://demotiles.maplibre.org/style.json'.
+   * Provide either this or tileUrlTemplate; one of the two must be set.
    */
   @Prop() mapStyleUrl: string | null = null;
 
   /**
-   * Raster map tiles URL fallback, e.g., 'assets/map/{z}/{y}/{x}.jpeg'
+   * Raster map tiles URL fallback, e.g., 'assets/map/{z}/{y}/{x}.jpeg'.
+   * Provide either this or mapStyleUrl; one of the two must be set.
    */
   @Prop() tileUrlTemplate: string | null = null;
 
@@ -64,7 +66,7 @@ export class PageMap {
 
   async componentDidLoad() {
     this.map = new maplibregl.Map({
-      attributionControl: shouldUseCustomAttribution(this.mapStyleUrl, this.mapAttribution) ? false : undefined,
+      attributionControl: false,
       center: getMapCenter(this.mapBounds),
       container: 'map',
       maxBounds: getMapBounds(this.mapBounds),
@@ -72,11 +74,13 @@ export class PageMap {
       minZoom: 17,
       style: getMapStyle(this.mapStyleUrl, this.tileUrlTemplate, this.mapAttribution),
       zoom: 17,
+      dragRotate: false,
+      pitchWithRotate: false,
+      touchPitch: false,
     });
 
-    if (shouldUseCustomAttribution(this.mapStyleUrl, this.mapAttribution)) {
-      this.map.addControl(new maplibregl.AttributionControl({ customAttribution: this.mapAttribution }));
-    }
+    this.map.touchZoomRotate.disableRotation();
+    this.map.addControl(new maplibregl.AttributionControl({ customAttribution: this.mapAttribution, compact: false }));
 
     await this.stationMarkers();
   }

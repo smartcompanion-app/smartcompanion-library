@@ -50,10 +50,6 @@ export function getMapStyle(mapStyleUrl: string | null, tileUrlTemplate: string 
   };
 }
 
-export function shouldUseCustomAttribution(mapStyleUrl: string | null, mapAttribution: string): boolean {
-  return Boolean(mapStyleUrl && mapAttribution);
-}
-
 export function createStationMarkerElement(stationNumber: string): HTMLElement {
   const markerElement = document.createElement('div');
   markerElement.className = 'station-map-marker';

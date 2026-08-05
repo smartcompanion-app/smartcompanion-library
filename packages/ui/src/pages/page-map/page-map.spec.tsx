@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { createStationMarkerElement, getMapBounds, getMapCenter, getMapStyle, shouldUseCustomAttribution } from './page-map-utils.js';
+import { createStationMarkerElement, getMapBounds, getMapCenter, getMapStyle } from './page-map-utils.js';
 
 beforeEach(() => {
   document.body.innerHTML = '';
@@ -20,7 +20,6 @@ describe('page-map helpers', () => {
 
   it('builds a vector style URL or raster fallback style as needed', () => {
     expect(getMapStyle('https://example.com/style.json', null, 'Custom attribution')).toBe('https://example.com/style.json');
-    expect(shouldUseCustomAttribution('https://example.com/style.json', 'Custom attribution')).toBe(true);
 
     expect(getMapStyle(null, 'map-assets/{z}/{y}/{x}.jpeg', '&copy; basemap.at')).toMatchObject({
       layers: [{ id: 'map-raster-layer', source: 'map-raster-source', type: 'raster' }],

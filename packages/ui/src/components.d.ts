@@ -105,12 +105,12 @@ export namespace Components {
          */
         "mapBounds": Array<number>;
         /**
-          * Map style URL for vector maps, e.g., 'https://demotiles.maplibre.org/style.json'
+          * Map style URL for vector maps, e.g., 'https://demotiles.maplibre.org/style.json'. Provide either this or tileUrlTemplate; one of the two must be set.
           * @default null
          */
         "mapStyleUrl": string | null;
         /**
-          * Raster map tiles URL fallback, e.g., 'assets/map/{z}/{y}/{x}.jpeg'
+          * Raster map tiles URL fallback, e.g., 'assets/map/{z}/{y}/{x}.jpeg'. Provide either this or mapStyleUrl; one of the two must be set.
           * @default null
          */
         "tileUrlTemplate": string | null;
@@ -614,12 +614,12 @@ declare namespace LocalJSX {
          */
         "mapBounds": Array<number>;
         /**
-          * Map style URL for vector maps, e.g., 'https://demotiles.maplibre.org/style.json'
+          * Map style URL for vector maps, e.g., 'https://demotiles.maplibre.org/style.json'. Provide either this or tileUrlTemplate; one of the two must be set.
           * @default null
          */
         "mapStyleUrl"?: string | null;
         /**
-          * Raster map tiles URL fallback, e.g., 'assets/map/{z}/{y}/{x}.jpeg'
+          * Raster map tiles URL fallback, e.g., 'assets/map/{z}/{y}/{x}.jpeg'. Provide either this or mapStyleUrl; one of the two must be set.
           * @default null
          */
         "tileUrlTemplate"?: string | null;

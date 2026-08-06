@@ -1,0 +1,24 @@
+# Check every text file out with LF, on every platform. This mirrors
+# `end_of_line = lf` in .editorconfig, which only editors honour -- git needs
+# telling separately, or a Windows clone gets CRLF in the working tree.
+#
+# That matters here beyond tidiness: Stencil reads component sources from the
+# working tree and embeds their text verbatim into the JSON string values of
+# custom-elements.json. A CRLF checkout therefore produces `\r\n` escapes
+# inside a generated, committed file, which every other contributor's build
+# then flips back -- an endless diff nobody introduced on purpose.
+* text=auto eol=lf
+
+# Binary assets. `text=auto` already detects these, but saying so explicitly
+# keeps a mis-detection from ever corrupting them.
+*.jpeg binary
+*.jpg  binary
+*.png  binary
+*.mp3  binary
+
+# SVG is text despite sitting alongside the images above.
+*.svg text eol=lf
+
+# Generated, committed, and reviewed only for drift -- collapse it by default
+# in GitHub diffs so it stops burying the hand-written changes in a PR.
+package-lock.json linguist-generated=true

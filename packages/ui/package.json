@@ -1,6 +1,20 @@
 {
   "name": "@smartcompanion/ui",
+  "description": "Stencil web components for SmartCompanion audio-guide apps — station lists, player controls, maps and more.",
   "version": "0.10.0",
+  "keywords": [
+    "smartcompanion",
+    "audioguide",
+    "museum",
+    "stencil",
+    "web-components",
+    "ionic",
+    "maplibre"
+  ],
+  "homepage": "https://github.com/smartcompanion-app/smartcompanion-library/tree/main/packages/ui#readme",
+  "bugs": {
+    "url": "https://github.com/smartcompanion-app/smartcompanion-library/issues"
+  },
   "author": "SmartCompanion Team <hello@smartcompanion.app> (https://smartcompanion.app) ",
   "repository": {
     "type": "git",

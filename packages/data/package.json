@@ -1,6 +1,20 @@
 {
   "name": "@smartcompanion/data",
+  "description": "Domain models and data layer for SmartCompanion apps — tours, stations, assets, languages, storage, loading and updates.",
   "version": "0.10.0",
+  "keywords": [
+    "smartcompanion",
+    "audioguide",
+    "museum",
+    "tours",
+    "stations",
+    "offline",
+    "data-layer"
+  ],
+  "homepage": "https://github.com/smartcompanion-app/smartcompanion-library/tree/main/packages/data#readme",
+  "bugs": {
+    "url": "https://github.com/smartcompanion-app/smartcompanion-library/issues"
+  },
   "author": "SmartCompanion Team <hello@smartcompanion.app> (https://smartcompanion.app) ",
   "repository": {
     "type": "git",

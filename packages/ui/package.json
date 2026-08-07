@@ -16,18 +16,19 @@
   "exports": {
     ".": {
       "types": "./dist/types/index.d.ts",
-      "module": "./dist/index.js",
-      "import": "./dist/index.cjs.js",
+      "node": "./dist/index.cjs.js",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs.js",
-      "default": "./dist/index.cjs.js"
+      "default": "./dist/index.js"
     },
     "./loader": {
       "types": "./loader/index.d.ts",
-      "module": "./loader/index.js",
-      "import": "./loader/index.cjs.js",
+      "node": "./loader/index.cjs.js",
+      "import": "./loader/index.js",
       "require": "./loader/index.cjs.js",
-      "default": "./loader/index.cjs.js"
+      "default": "./loader/index.js"
     },
+    "./dist/collection/*": "./dist/collection/*",
     "./package.json": "./package.json"
   },
   "sideEffects": [

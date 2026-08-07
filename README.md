@@ -4,9 +4,12 @@
 ![License](https://img.shields.io/github/license/smartcompanion-app/smartcompanion-library)
 [![Storybook](https://img.shields.io/badge/Storybook-UI%20Components-ff4785)](https://smartcompanion-app.github.io/smartcompanion-library/)
 
+The building blocks behind the SmartCompanion audio-guide apps: the data layer, the services that drive it, and the web components users actually see. Published as three npm packages, versioned in lockstep.
+
 ## Table of Contents
 
 - [Packages](#packages)
+- [Using the Packages](#using-the-packages)
 - [Getting Started](#getting-started)
 - [Local Development](#local-development)
 - [Contributing](#contributing)
@@ -18,11 +21,45 @@
 
 | Package | Description |
 | --- | --- |
-| `@smartcompanion/ui` | Stencil v4 web components — `image-slideshow`, `marquee`, `numpad`, `player-controls`, `station-icon` |
-| `@smartcompanion/data` | Domain models and data layer — assets, languages, pins, servers, stations, text, tours |
-| `@smartcompanion/services` | Service layer — `AudioPlayerService`, `MenuService`, `RoutingService` |
+| [`@smartcompanion/ui`](https://www.npmjs.com/package/@smartcompanion/ui) [![npm](https://img.shields.io/npm/v/@smartcompanion/ui)](https://www.npmjs.com/package/@smartcompanion/ui) | Stencil v4 web components — five building blocks (`sc-image-slideshow`, `sc-marquee`, `sc-numpad`, `sc-player-controls`, `sc-station-icon`) and thirteen ready-made `sc-page-*` pages |
+| [`@smartcompanion/data`](https://www.npmjs.com/package/@smartcompanion/data) [![npm](https://img.shields.io/npm/v/@smartcompanion/data)](https://www.npmjs.com/package/@smartcompanion/data) | Domain models and data layer — assets, languages, pins, servers, stations, text, tours, plus storage, loading and updates |
+| [`@smartcompanion/services`](https://www.npmjs.com/package/@smartcompanion/services) [![npm](https://img.shields.io/npm/v/@smartcompanion/services)](https://www.npmjs.com/package/@smartcompanion/services) | Service layer — `ServiceFacade` over the data layer, plus `AudioPlayerService`, `MenuService`, `RoutingService` |
+
+Each package has its own README with installation details and usage: [ui](packages/ui/README.md) · [data](packages/data/README.md) · [services](packages/services/README.md).
+
+## Using the Packages
+
+Building an app *with* the library, rather than working on the library itself:
+
+```bash
+npm install @smartcompanion/ui @smartcompanion/services @smartcompanion/data
+```
+
+Importing `@smartcompanion/ui` registers every custom element; pages take a `ServiceFacade` as their `facade` prop.
+
+```ts
+import '@smartcompanion/ui';
+import { ServiceFacade } from '@smartcompanion/services';
+
+const facade = new ServiceFacade();
+facade.registerCollectibleAudioPlayerService('My Audio Guide');
+facade.registerOnlineLoadService(() => fetch('/data.json').then(r => r.json()));
+```
+
+```tsx
+<sc-page-stations facade={facade} />
+```
+
+Two constraints worth knowing before you start:
+
+- **Node 20 or newer**, and `@smartcompanion/services` expects `@capacitor/core`, `@ionic/core` and `@smartcompanion/native-audio-player` as peers alongside `@smartcompanion/data`.
+- **`data` and `services` are ESM-only.** They declare `"type": "module"` and ship an `exports` map, so `import` works from Node and from bundlers, but `require()` is not supported. `ui` is unaffected — Stencil emits its own CommonJS, ESM and custom-elements builds.
+
+The [audioguide app](https://github.com/smartcompanion-app/audioguide-app) is a complete worked example.
 
 ## Getting Started
+
+Working on the library itself:
 
 ```bash
 npm install        # Install all workspace dependencies

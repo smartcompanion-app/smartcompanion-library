@@ -80,7 +80,7 @@ export namespace Components {
           * Define default back button href, only used if enableBackButton is true
           * @default null
          */
-        "defaultBackButtonHref": string;
+        "defaultBackButtonHref": string | null;
         /**
           * Enable Back Button instead of Menu Button
           * @default false
@@ -96,23 +96,29 @@ export namespace Components {
          */
         "headerBackgroundColor": 'primary' | 'secondary';
         /**
-          * Map tiles attribution for the leaflet map
+          * Map attribution for the map
           * @default ''
          */
         "mapAttribution": string;
         /**
-          * Map bounds for the leaflet map in top left Lat/Lng, bottom right Lat/Lng
+          * Map bounds for the map in top left Lat/Lng, bottom right Lat/Lng
          */
         "mapBounds": Array<number>;
         /**
-          * Map tiles URL for the leaflet map, e.g., 'assets/map/{z}/{y}/{x}.jpeg'
+          * Map style URL for vector maps, e.g., 'https://demotiles.maplibre.org/style.json'. Provide either this or tileUrlTemplate; one of the two must be set.
+          * @default null
          */
-        "tileUrlTemplate": string;
+        "mapStyleUrl": string | null;
+        /**
+          * Raster map tiles URL fallback, e.g., 'assets/map/{z}/{y}/{x}.jpeg'. Provide either this or mapStyleUrl; one of the two must be set.
+          * @default null
+         */
+        "tileUrlTemplate": string | null;
         /**
           * If tour id is given, stations only for the tour are shown. Tour id 'default' is a placeholder for the default tour id.
           * @default null
          */
-        "tourId": string;
+        "tourId": string | null;
     }
     interface ScPageMultiAudioStation {
         /**
@@ -583,7 +589,7 @@ declare namespace LocalJSX {
           * Define default back button href, only used if enableBackButton is true
           * @default null
          */
-        "defaultBackButtonHref"?: string;
+        "defaultBackButtonHref"?: string | null;
         /**
           * Enable Back Button instead of Menu Button
           * @default false
@@ -592,30 +598,36 @@ declare namespace LocalJSX {
         /**
           * The service facade instance
          */
-        "facade"?: StationListFacade;
+        "facade": StationListFacade;
         /**
           * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
           * @default 'primary'
          */
         "headerBackgroundColor"?: 'primary' | 'secondary';
         /**
-          * Map tiles attribution for the leaflet map
+          * Map attribution for the map
           * @default ''
          */
         "mapAttribution"?: string;
         /**
-          * Map bounds for the leaflet map in top left Lat/Lng, bottom right Lat/Lng
+          * Map bounds for the map in top left Lat/Lng, bottom right Lat/Lng
          */
-        "mapBounds"?: Array<number>;
+        "mapBounds": Array<number>;
         /**
-          * Map tiles URL for the leaflet map, e.g., 'assets/map/{z}/{y}/{x}.jpeg'
+          * Map style URL for vector maps, e.g., 'https://demotiles.maplibre.org/style.json'. Provide either this or tileUrlTemplate; one of the two must be set.
+          * @default null
          */
-        "tileUrlTemplate"?: string;
+        "mapStyleUrl"?: string | null;
+        /**
+          * Raster map tiles URL fallback, e.g., 'assets/map/{z}/{y}/{x}.jpeg'. Provide either this or mapStyleUrl; one of the two must be set.
+          * @default null
+         */
+        "tileUrlTemplate"?: string | null;
         /**
           * If tour id is given, stations only for the tour are shown. Tour id 'default' is a placeholder for the default tour id.
           * @default null
          */
-        "tourId"?: string;
+        "tourId"?: string | null;
     }
     interface ScPageMultiAudioStation {
         /**
@@ -875,9 +887,10 @@ declare namespace LocalJSX {
     interface ScPageMapAttributes {
         "headerBackgroundColor": 'primary' | 'secondary';
         "enableBackButton": boolean;
-        "defaultBackButtonHref": string;
-        "tourId": string;
-        "tileUrlTemplate": string;
+        "defaultBackButtonHref": string | null;
+        "tourId": string | null;
+        "mapStyleUrl": string | null;
+        "tileUrlTemplate": string | null;
         "mapAttribution": string;
     }
     interface ScPageMultiAudioStationAttributes {

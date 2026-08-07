@@ -95,3 +95,12 @@ npm run check:publish  # publint + attw against each package's tarball
 - `require()` of these packages fails by design. Their `check:publish` passes `--ignore-rules cjs-resolves-to-esm` to attw for exactly this reason — do not "fix" that warning by reverting to CJS.
 
 `@smartcompanion/ui` is unaffected: Stencil produces its own CJS/ESM/custom-elements outputs.
+
+### The `exports` map on `@smartcompanion/ui`
+
+Two entry points are public — the root and `./loader` — and nothing else. Adding an `exports` map to a package that already has one is breaking, so this landed before 1.0 deliberately. Two details there look wrong and are not:
+
+- The `import` condition points at the **CommonJS** build, not the ESM one. Stencil emits its ESM as `.js` inside a package that is not `"type": "module"`, and produces no `.mjs`, so Node's ESM loader cannot parse those files at all — `import` resolving to ESM yields *"Unexpected module syntax"*. Node therefore gets CJS (which is what it already got via `main`), while bundlers get the real ESM through the `module` condition listed above `import`. Do not "fix" this by pointing `import` at `dist/index.js`.
+- `check:publish` passes `--ignore-rules named-exports` to attw. `loader/index.cjs.js` is a bare re-export, so `cjs-module-lexer` cannot statically see `defineCustomElements`, and attw flags the subpath. This is a pre-existing limit of Stencil's loader output that the `exports` map merely made visible — the subpath was unusable from Node ESM before too.
+
+The `es2015` and `es2017` fields still point at `dist/esm/index.mjs`, which Stencil does not emit. They are dead and predate the `exports` map.

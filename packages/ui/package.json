@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "maplibre-gl": "^5.24.0",
-    "swiper": "^14.0.6"
+    "swiper": "^14.0.7"
   },
   "peerDependencies": {
     "@smartcompanion/data": ">=0.9.0"

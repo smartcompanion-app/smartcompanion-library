@@ -40,7 +40,7 @@
   "license": "BSD-2-Clause",
   "devDependencies": {
     "@faker-js/faker": "^10.5.0",
-    "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3"
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4"
   }
 }

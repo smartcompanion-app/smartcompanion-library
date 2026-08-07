@@ -9,12 +9,38 @@
   },
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
-  "es2015": "dist/esm/index.mjs",
-  "es2017": "dist/esm/index.mjs",
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/smartcompanion-ui/smartcompanion-ui.esm.js",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "node": "./dist/index.cjs.js",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs.js",
+      "default": "./dist/index.js"
+    },
+    "./loader": {
+      "types": "./loader/index.d.ts",
+      "node": "./loader/index.cjs.js",
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs.js",
+      "default": "./loader/index.js"
+    },
+    "./dist/collection/*": "./dist/collection/*",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "./dist/index.js",
+    "./dist/index.cjs.js",
+    "./dist/esm/*",
+    "./dist/cjs/*",
+    "./dist/components/*",
+    "./loader/*",
+    "**/*.css",
+    "**/*.scss"
+  ],
   "files": [
     "src/",
     "dist/",
@@ -37,7 +63,7 @@
     "lint": "eslint src",
     "format": "prettier --write src",
     "format:check": "prettier --check src",
-    "check:publish": "publint . && attw --pack .",
+    "check:publish": "publint . && attw --pack . --ignore-rules named-exports",
     "test": "stencil-test",
     "watch": "stencil build --watch",
     "storybook": "rm -rf dist/components && STORYBOOK=true storybook dev -p 6006 --no-open",

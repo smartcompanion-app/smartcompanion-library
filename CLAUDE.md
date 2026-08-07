@@ -95,3 +95,11 @@ npm run check:publish  # publint + attw against each package's tarball
 - `require()` of these packages fails by design. Their `check:publish` passes `--ignore-rules cjs-resolves-to-esm` to attw for exactly this reason — do not "fix" that warning by reverting to CJS.
 
 `@smartcompanion/ui` is unaffected: Stencil produces its own CJS/ESM/custom-elements outputs.
+
+### The `exports` map on `@smartcompanion/ui`
+
+Public entry points: the root, `./loader`, and `./dist/collection/*`. Adding an `exports` map to a package that already has one is breaking, so this landed before 1.0 deliberately. Three details there look wrong and are not:
+
+- The `node` condition is listed **before** `import` and points at the CommonJS build. Stencil emits its ESM as `.js` inside a package that is not `"type": "module"`, and produces no `.mjs`, so Node's ESM loader cannot parse those files — resolving Node's `import` to `dist/index.js` yields *"Unexpected module syntax"*. `node` therefore captures both of Node's modes and hands them CJS, exactly what `main` did before, while bundlers skip `node`, match `import`, and get the real ESM. Do not remove the `node` condition.
+- `./dist/collection/*` is exposed because that is how a **Stencil app actually consumes this package**. The `collection` field points there, and the compiler builds components from that source rather than from the JS entry — verified against audioguide-app, whose bundle contains no trace of `dist/index.js`. Stencil currently reads those files by path, so `exports` does not gate them today, but declaring them keeps the real consumption path from breaking if that ever changes.
+- `check:publish` passes `--ignore-rules named-exports` to attw. `loader/index.cjs.js` is a bare re-export, so `cjs-module-lexer` cannot statically see `defineCustomElements`, and attw flags the subpath. This is a pre-existing limit of Stencil's loader output that the `exports` map merely made visible — the subpath was unusable from Node ESM before too.

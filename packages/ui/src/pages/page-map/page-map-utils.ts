@@ -1,19 +1,22 @@
 import type { StyleSpecification } from 'maplibre-gl';
 
-export function getMapCenter(mapBounds: Array<number>): [number, number] {
+function getBounds(mapBounds: Array<number>) {
   const south = Math.min(mapBounds[0], mapBounds[2]);
   const north = Math.max(mapBounds[0], mapBounds[2]);
   const west = Math.min(mapBounds[1], mapBounds[3]);
   const east = Math.max(mapBounds[1], mapBounds[3]);
+
+  return [north, south, west, east];
+}
+
+export function getMapCenter(mapBounds: Array<number>): [number, number] {
+  const [north, south, west, east] = getBounds(mapBounds);
 
   return [(west + east) / 2.0, (south + north) / 2.0];
 }
 
 export function getMapBounds(mapBounds: Array<number>): [[number, number], [number, number]] {
-  const south = Math.min(mapBounds[0], mapBounds[2]);
-  const north = Math.max(mapBounds[0], mapBounds[2]);
-  const west = Math.min(mapBounds[1], mapBounds[3]);
-  const east = Math.max(mapBounds[1], mapBounds[3]);
+  const [north, south, west, east] = getBounds(mapBounds);
 
   return [
     [west, south],
@@ -53,6 +56,9 @@ export function getMapStyle(mapStyleUrl: string | null, tileUrlTemplate: string 
 export function createStationMarkerElement(stationNumber: string): HTMLElement {
   const markerElement = document.createElement('div');
   markerElement.className = 'station-map-marker';
-  markerElement.innerHTML = '<sc-station-icon>' + stationNumber + '</sc-station-icon>';
+
+  const icon = document.createElement('sc-station-icon');
+  icon.textContent = stationNumber;
+  markerElement.appendChild(icon);
   return markerElement;
 }

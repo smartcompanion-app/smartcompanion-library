@@ -13,6 +13,7 @@ import { createStationMarkerElement, getMapBounds, getMapCenter, getMapStyle } f
 export class PageMap {
   protected map!: MapLibreMap;
   private markers: MapLibreMarker[] = [];
+  private mapContainer!: HTMLDivElement;
 
   /**
    * Background color of the header toolbar, either 'primary' or 'secondary' (default: 'primary')
@@ -68,7 +69,7 @@ export class PageMap {
     this.map = new maplibregl.Map({
       attributionControl: false,
       center: getMapCenter(this.mapBounds),
-      container: 'map',
+      container: this.mapContainer,
       maxBounds: getMapBounds(this.mapBounds),
       maxZoom: 18,
       minZoom: 17,
@@ -95,7 +96,7 @@ export class PageMap {
   }
 
   private async stationMarkers() {
-    const stations: Station[] = await getStations(this.facade, this.tourId ?? undefined);
+    const stations: Station[] = await getStations(this.facade, this.tourId);
 
     for (const station of stations) {
       if (station.latitude !== undefined && station.longitude !== undefined) {
@@ -105,7 +106,7 @@ export class PageMap {
 
         marker.setLngLat([station.longitude, station.latitude]);
         marker.on('click', () => {
-          openStation(this.facade, station.id, this.tourId ?? undefined);
+          openStation(this.facade, station.id, this.tourId);
         });
         marker.addTo(this.map);
 
@@ -119,12 +120,12 @@ export class PageMap {
       <Host>
         <ion-header>
           <ion-toolbar color={this.headerBackgroundColor}>
-            <ion-buttons slot="start">{getMenuButton(this.enableBackButton, this.defaultBackButtonHref ?? undefined)}</ion-buttons>
+            <ion-buttons slot="start">{getMenuButton(this.enableBackButton, this.defaultBackButtonHref)}</ion-buttons>
             <ion-title>{this.facade.__('menu-map')}</ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
-          <div slot="fixed" id="map"></div>
+          <div class="map" slot="fixed" ref={el => (this.mapContainer = el!)}></div>
         </ion-content>
       </Host>
     );

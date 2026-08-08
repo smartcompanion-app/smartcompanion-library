@@ -101,7 +101,7 @@ npm run storybook -w packages/ui   # Dev server at http://localhost:6006
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the local setup, the test layout, and the package boundaries enforced by `npm run depcruise`. Security issues go through [SECURITY.md](SECURITY.md), not the issue tracker.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the local setup, the test layout, and the package boundaries enforced by `npm run depcruise`. Everyone taking part is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md). Security issues go through [SECURITY.md](SECURITY.md), not the issue tracker.
 
 ## Releasing
 

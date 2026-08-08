@@ -1,5 +1,7 @@
 {
   "name": "smartcompanion",
+  "private": true,
+  "description": "Monorepo for the SmartCompanion library packages: data, services and UI components for audio-guide apps.",
   "author": "SmartCompanion Team <hello@smartcompanion.app> (https://smartcompanion.app) ",
   "repository": {
     "type": "git",

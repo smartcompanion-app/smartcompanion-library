@@ -21,7 +21,7 @@ Driven by [changesets](https://github.com/changesets/changesets), not by tags �
 
 1. Any change to published behaviour ships with a changeset (`npm run changeset`), committed alongside it. All three packages are versioned in lockstep (`fixed` in `.changeset/config.json`), so one changeset bumps all three.
 
-   The peer range on `@smartcompanion/data` in `services` and `ui` is `^1.0.0`. Changesets escalates a peer *dependent* to a major bump whenever the new dependency version falls outside its declared range. On 0.x that made a caret unusable — `^0.9.x` excludes `0.10.0`, so every release came out a major, and the range was a `>=0.9.0` floor to avoid it. A caret is correct now that these packages are on 1.x: minors stay in range, and only a 2.0.0 escalates, which is what should happen when all three go major together.
+   The peer range on `@smartcompanion/data` in `services` and `ui` is `^1.0.0`. Changesets escalates a peer *dependent* to a major bump whenever the new dependency version falls outside its declared range. On 0.x that made a caret unusable — `^0.9.x` excludes `0.10.0`, so every release came out a major, and the range was a `>=0.9.0` floor to avoid it. From 1.0.0 onward a caret is the right form: minors stay in range, and only a 2.0.0 escalates, which is what should happen when all three go major together. Keep the caret.
 
 2. Merging to `main` opens a `chore: release` PR with the version bumps and changelogs.
 3. Merging that PR publishes to npm over trusted publishing (OIDC) with provenance. No npm token exists in this repo.

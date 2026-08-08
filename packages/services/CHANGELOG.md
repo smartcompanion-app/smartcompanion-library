@@ -1,5 +1,83 @@
 # @smartcompanion/services
 
+## 1.0.0
+
+### Major Changes
+
+- [#94](https://github.com/smartcompanion-app/smartcompanion-library/pull/94) [`52ca6f2`](https://github.com/smartcompanion-app/smartcompanion-library/commit/52ca6f23697e8576483b775e5b8cb155ddd698e3) Thanks [@stefanhuber](https://github.com/stefanhuber)! - First stable release.
+
+  The three packages have been usable together for a while; what changes here is
+  the promise. From 1.0.0 the public surface is settled and semver applies to it:
+  a breaking change needs a major, and the entry points a package exposes are the
+  ones it will keep exposing.
+
+  What that surface is, per package:
+
+  - **`@smartcompanion/data`** — the domain services and their updaters, the
+    `Storage` interface with its browser and in-memory implementations, and the
+    online and offline load services.
+  - **`@smartcompanion/services`** — `ServiceFacade` and its accessors, plus
+    `AudioPlayerService`, `MenuService` and `RoutingService`.
+  - **`@smartcompanion/ui`** — the custom elements, and the entry points named in
+    the package's `exports` map: the root, `./loader`, and `./dist/collection/*`.
+    Deep imports into anything else were never intended as API and no longer
+    resolve.
+
+  Two requirements moved in this release and need attention when upgrading from
+  0.10.x:
+
+  - **`@smartcompanion/native-audio-player` 1.0 is now required** by
+    `@smartcompanion/services`. The plugin renamed its player event, which this
+    package handles internally, but the peer range no longer accepts 0.5.x.
+  - **`sc-page-map` renders with maplibre-gl 6.** The component's own props are
+    unchanged; an app that pinned maplibre 5 itself will need to move.
+
+  Nothing else about using these packages changes. Most of the work leading here
+  went into things that leave no trace in the API — the entry points are declared
+  rather than implied, every component has a rendering test, the packages carry
+  READMEs, and one API removal that shipped undocumented in 0.10.0 is now on the
+  record.
+
+### Minor Changes
+
+- [#88](https://github.com/smartcompanion-app/smartcompanion-library/pull/88) [`9c5e4d4`](https://github.com/smartcompanion-app/smartcompanion-library/commit/9c5e4d409e3a3a9c9ed27841e30d53bd5876874c) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Move to `@smartcompanion/native-audio-player` 1.0, its first stable release.
+  The peer range is now `^1.0.0`; 0.5.x is no longer accepted, so an app has to
+  upgrade the plugin alongside this package.
+
+  The plugin renamed its player event from `update` to `audioPlayerChange`, and
+  `AudioPlayerService` follows. The payload is unchanged — the same `state` of
+  `playing`, `paused`, `skip` or `completed`, and the same `id` — so
+  `registerUpdateListener` still reports exactly what it did before, and nothing
+  in this package's own API changes.
+
+  Three behaviour changes come from the plugin itself and are worth knowing
+  about, since an app sees them without calling anything:
+
+  - **iOS now starts on the speaker** rather than the earpiece, matching Android.
+    An app that relied on the earpiece default has to call `setEarpiece()` after
+    `start()` to keep it.
+  - **Playback stopped by the system** — an incoming call, Siri, or another app
+    taking the audio — is now reported as `paused`. Previously it stopped
+    silently, leaving an app's own UI showing the wrong control.
+  - **`getPosition()` and `getDuration()` report fractional seconds** on every
+    platform, rather than truncating to whole seconds on iOS and Android. Both
+    still return a `number`, and `formatSeconds` in `@smartcompanion/ui` already
+    truncates, so displayed times are unaffected; a progress bar simply moves
+    smoothly on the two platforms where it previously stepped.
+
+### Patch Changes
+
+- [#84](https://github.com/smartcompanion-app/smartcompanion-library/pull/84) [`69d718a`](https://github.com/smartcompanion-app/smartcompanion-library/commit/69d718a81cad89a98440673b2193e2c5b2b36e77) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Document an API removal that shipped undocumented in 0.10.0.
+
+  [#63](https://github.com/smartcompanion-app/smartcompanion-library/pull/63) removed `ServiceLocator` from `@smartcompanion/data` and `ServiceFacade.registerDefaultServices()` from `@smartcompanion/services`, replacing the service-locator indirection with direct accessors on the facade and narrow role contracts (`StationListFacade` and friends) on the UI pages. It went out in 0.10.0 without a changeset, so the changelog for that release does not mention it — code calling `registerDefaultServices()` fails on upgrade with nothing to explain why. Nothing changes in this release; this entry exists so the removal is on the record.
+
+  To migrate from 0.9.x:
+
+  - Delete the `registerDefaultServices()` call. The domain services, routing and menu are available directly from the facade — `getStationService()`, `getRoutingService()`, `getMenuService()` and the rest — with no registration step.
+  - If you passed a custom `resolveUrl` to it, pass it as the second constructor argument instead: `new ServiceFacade(storage, resolveUrl)`. The signature and the default are unchanged.
+  - Registering an audio player and a load service is still required, and still works exactly as before.
+  - Imports of `ServiceLocator` from `@smartcompanion/data` need removing. UI page components now declare the narrow contract they need rather than taking a locator.
+
 ## 0.10.0
 
 ### Minor Changes

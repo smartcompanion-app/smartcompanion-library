@@ -1,7 +1,7 @@
 {
   "name": "@smartcompanion/data",
   "description": "Domain models and data layer for SmartCompanion apps — tours, stations, assets, languages, storage, loading and updates.",
-  "version": "0.10.0",
+  "version": "1.0.0",
   "keywords": [
     "smartcompanion",
     "audioguide",

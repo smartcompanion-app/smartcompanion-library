@@ -73,7 +73,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "stencil build",
+    "build": "stencil build && node scripts/pin-docs-timestamp.mjs",
     "lint": "eslint src",
     "format": "prettier --write src",
     "format:check": "prettier --check src",

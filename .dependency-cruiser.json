@@ -42,6 +42,10 @@
   ],
   "options": {
     "doNotFollow": { "path": "node_modules" },
-    "tsPreCompilationDeps": true
+    "tsPreCompilationDeps": true,
+    "enhancedResolveOptions": {
+      "conditionNames": ["import", "require", "node", "default", "types"],
+      "mainFields": ["module", "main", "types"]
+    }
   }
 }

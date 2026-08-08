@@ -1,6 +1,7 @@
 import { Component, Prop, Host, h } from '@stencil/core';
-import maplibregl from 'maplibre-gl';
-import type { Map as MapLibreMap, Marker as MapLibreMarker } from 'maplibre-gl';
+// maplibre-gl 6 dropped its default export, so the classes are named imports.
+// They double as the types, which is why there is no separate `import type`.
+import { AttributionControl, Map as MapLibreMap, Marker as MapLibreMarker } from 'maplibre-gl';
 import { StationListFacade } from '../../contracts';
 import { Station } from '@smartcompanion/data';
 import { getMenuButton, getStations, openStation } from '../../utils';
@@ -66,7 +67,7 @@ export class PageMap {
   }
 
   async componentDidLoad() {
-    this.map = new maplibregl.Map({
+    this.map = new MapLibreMap({
       attributionControl: false,
       center: getMapCenter(this.mapBounds),
       container: this.mapContainer,
@@ -81,7 +82,7 @@ export class PageMap {
     });
 
     this.map.touchZoomRotate.disableRotation();
-    this.map.addControl(new maplibregl.AttributionControl({ customAttribution: this.mapAttribution, compact: false }));
+    this.map.addControl(new AttributionControl({ customAttribution: this.mapAttribution, compact: false }));
 
     await this.stationMarkers();
   }
@@ -102,7 +103,7 @@ export class PageMap {
       if (station.latitude !== undefined && station.longitude !== undefined) {
         const markerElement = createStationMarkerElement(station.number ?? '');
 
-        const marker = new maplibregl.Marker({ anchor: 'bottom', element: markerElement });
+        const marker = new MapLibreMarker({ anchor: 'bottom', element: markerElement });
 
         marker.setLngLat([station.longitude, station.latitude]);
         marker.on('click', () => {

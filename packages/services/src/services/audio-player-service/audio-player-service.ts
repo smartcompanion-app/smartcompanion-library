@@ -52,7 +52,7 @@ export class AudioPlayerService {
   }
 
   async registerUpdateListener(callback: (update: AudioPlayerUpdate) => void) {
-    this.updateListenerHandle = await NativeAudioPlayer.addListener('update', async result => {
+    this.updateListenerHandle = await NativeAudioPlayer.addListener('audioPlayerChange', async result => {
       callback({
         state: result.state,
         id: result.id,

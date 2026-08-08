@@ -2,6 +2,8 @@
 
 This guide covers working on the three packages in this monorepo: `@smartcompanion/data`, `@smartcompanion/services`, and `@smartcompanion/ui`.
 
+Taking part in this project — issues, discussions, pull requests — means following our [Code of Conduct](CODE_OF_CONDUCT.md).
+
 ## Developing
 
 ### Local setup

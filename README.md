@@ -1,7 +1,8 @@
 # SmartCompanion Library
 
 [![Build](https://github.com/smartcompanion-app/smartcompanion-library/actions/workflows/ci.yml/badge.svg)](https://github.com/smartcompanion-app/smartcompanion-library/actions/workflows/ci.yml)
-![License](https://img.shields.io/github/license/smartcompanion-app/smartcompanion-library)
+[![License](https://img.shields.io/github/license/smartcompanion-app/smartcompanion-library)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](CONTRIBUTING.md)
 [![Storybook](https://img.shields.io/badge/Storybook-UI%20Components-ff4785)](https://smartcompanion-app.github.io/smartcompanion-library/)
 
 The building blocks behind the SmartCompanion audio-guide apps: the data layer, the services that drive it, and the web components users actually see. Published as three npm packages, versioned in lockstep.
@@ -19,11 +20,11 @@ The building blocks behind the SmartCompanion audio-guide apps: the data layer, 
 
 ## Packages
 
-| Package | Description |
-| --- | --- |
-| [`@smartcompanion/ui`](https://www.npmjs.com/package/@smartcompanion/ui) [![npm](https://img.shields.io/npm/v/@smartcompanion/ui)](https://www.npmjs.com/package/@smartcompanion/ui) | Stencil v4 web components — five building blocks (`sc-image-slideshow`, `sc-marquee`, `sc-numpad`, `sc-player-controls`, `sc-station-icon`) and thirteen ready-made `sc-page-*` pages |
-| [`@smartcompanion/data`](https://www.npmjs.com/package/@smartcompanion/data) [![npm](https://img.shields.io/npm/v/@smartcompanion/data)](https://www.npmjs.com/package/@smartcompanion/data) | Domain models and data layer — assets, languages, pins, servers, stations, text, tours, plus storage, loading and updates |
-| [`@smartcompanion/services`](https://www.npmjs.com/package/@smartcompanion/services) [![npm](https://img.shields.io/npm/v/@smartcompanion/services)](https://www.npmjs.com/package/@smartcompanion/services) | Service layer — `ServiceFacade` over the data layer, plus `AudioPlayerService`, `MenuService`, `RoutingService` |
+| Package | Version | Description |
+| --- | --- | --- |
+| [`@smartcompanion/ui`](https://www.npmjs.com/package/@smartcompanion/ui) | [![npm](https://img.shields.io/npm/v/@smartcompanion/ui)](https://www.npmjs.com/package/@smartcompanion/ui) | Stencil v4 web components — five building blocks (`sc-image-slideshow`, `sc-marquee`, `sc-numpad`, `sc-player-controls`, `sc-station-icon`) and thirteen ready-made `sc-page-*` pages |
+| [`@smartcompanion/data`](https://www.npmjs.com/package/@smartcompanion/data) | [![npm](https://img.shields.io/npm/v/@smartcompanion/data)](https://www.npmjs.com/package/@smartcompanion/data) | Domain models and data layer — assets, languages, pins, servers, stations, text, tours, plus storage, loading and updates |
+| [`@smartcompanion/services`](https://www.npmjs.com/package/@smartcompanion/services) | [![npm](https://img.shields.io/npm/v/@smartcompanion/services)](https://www.npmjs.com/package/@smartcompanion/services) | Service layer — `ServiceFacade` over the data layer, plus `AudioPlayerService`, `MenuService`, `RoutingService` |
 
 Each package has its own README with installation details and usage: [ui](packages/ui/README.md) · [data](packages/data/README.md) · [services](packages/services/README.md).
 

@@ -185,6 +185,9 @@ describe('sc-page-stations', () => {
     const root = await renderPage();
 
     const own = root.querySelector('ion-header');
-    expect(getComputedStyle(own).position).toBe('absolute');
+    // Without this, a markup change that drops the header surfaces as a
+    // getComputedStyle TypeError rather than as this test failing.
+    expect(own, 'sc-page-stations should render an ion-header').not.toBeNull();
+    expect(getComputedStyle(own!).position).toBe('absolute');
   });
 });

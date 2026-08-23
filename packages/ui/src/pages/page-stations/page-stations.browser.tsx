@@ -159,4 +159,35 @@ describe('sc-page-stations', () => {
       })
       .toBe(true);
   });
+
+  // Regression test for #95. These page components declare neither `shadow` nor
+  // `scoped`, so this stylesheet is injected as global CSS. While its rules were
+  // written as bare element selectors, rendering this page restyled `ion-header`
+  // for the whole app -- which pushed the number input on sc-page-selection
+  // behind the toolbar wherever the status bar contributes a safe-area inset.
+  //
+  // Asserting on a header outside the page is the point: a header *inside* it is
+  // meant to be absolute, and would pass either way.
+  it('should not restyle ion-header outside the page', async () => {
+    await renderPage();
+
+    const outside = document.createElement('ion-header');
+    document.body.appendChild(outside);
+
+    try {
+      expect(getComputedStyle(outside).position).not.toBe('absolute');
+    } finally {
+      outside.remove();
+    }
+  });
+
+  it('should still position its own header absolutely', async () => {
+    const root = await renderPage();
+
+    const own = root.querySelector('ion-header');
+    // Without this, a markup change that drops the header surfaces as a
+    // getComputedStyle TypeError rather than as this test failing.
+    expect(own, 'sc-page-stations should render an ion-header').not.toBeNull();
+    expect(getComputedStyle(own!).position).toBe('absolute');
+  });
 });

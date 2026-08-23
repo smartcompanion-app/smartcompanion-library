@@ -181,6 +181,40 @@ describe('sc-page-stations', () => {
     }
   });
 
+  // Regression test for #96. `ion-content` is `fullscreen`, so it spans the whole
+  // screen and Ionic applies no bottom safe-area inset outside a modal -- the
+  // list ran under the Android navigation bar and its last card was permanently
+  // obscured, scrolled to the end or not.
+  //
+  // The margin has to stay a *margin*: swiper sizes its viewport from the
+  // container's `clientHeight`, which includes padding, so `padding-bottom` lets
+  // the slides extend into the padded region and the container still reaches the
+  // bottom of the screen. Asserting on `marginBottom` is what pins that down.
+  describe('bottom safe-area inset', () => {
+    const listMarginBottom = async (inset?: string) => {
+      const root = await renderPage();
+
+      if (inset !== undefined) {
+        document.documentElement.style.setProperty('--ion-safe-area-bottom', inset);
+      }
+
+      try {
+        return getComputedStyle(list(root)).marginBottom;
+      } finally {
+        document.documentElement.style.removeProperty('--ion-safe-area-bottom');
+      }
+    };
+
+    it('should keep the list clear of the navigation bar', async () => {
+      expect(await listMarginBottom('48px')).toBe('48px');
+    });
+
+    // Browsers and Storybook report no inset, where the rule has to be inert.
+    it('should not reserve space where there is no inset', async () => {
+      expect(await listMarginBottom()).toBe('0px');
+    });
+  });
+
   it('should still position its own header absolutely', async () => {
     const root = await renderPage();
 

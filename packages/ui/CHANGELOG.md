@@ -1,5 +1,52 @@
 # @smartcompanion/ui
 
+## 1.0.1
+
+### Patch Changes
+
+- [#97](https://github.com/smartcompanion-app/smartcompanion-library/pull/97) [`70a2c05`](https://github.com/smartcompanion-app/smartcompanion-library/commit/70a2c052cef4b7dbb708cc61dd6b4eb9d24f36f0) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Stop `sc-page-stations` from restyling the rest of the app. Its stylesheet
+  selected `ion-header`, `ion-toolbar` and `ion-card` by bare element name, and
+  the page components declare neither `shadow` nor `scoped`, so those rules were
+  injected as global CSS and applied everywhere once the page had rendered.
+
+  The visible symptom was on `sc-page-selection`: `ion-header { position:
+absolute }` took the header out of flow, so Ionic computed no offset for the
+  fullscreen content and the number input sat behind the toolbar wherever the
+  status bar contributes a safe-area inset. Browsers and Storybook were fine,
+  Android with edge-to-edge was not.
+
+  Every rule now lives under `sc-page-stations`, matching what `page-station.scss`
+  already does with `#station`. The page looks the same.
+
+  One knock-on worth knowing: `ion-card` on `sc-page-multi-audio-station` and
+  `sc-page-station-image-list` was picking up `margin-top: 0` and
+  `margin-bottom: 10px` from this leak, so those cards go back to Ionic's default
+  margins. Their spacing previously depended on whether the stations page had been
+  visited first.
+
+  `sc-page-selection` also drops the `margin-top: 50px` on its fixed-slot
+  wrapper. That offset existed to push the number input clear of the leaked
+  absolute header; with the header back in normal flow the content area already
+  starts below it, and the input keeps its own 50px top margin. The input sits
+  50px lower than the toolbar rather than 100px.
+
+- [#100](https://github.com/smartcompanion-app/smartcompanion-library/pull/100) [`19fe62a`](https://github.com/smartcompanion-app/smartcompanion-library/commit/19fe62acf461c7e242b2676f504e8bdfc186688b) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Keep the `sc-page-stations` list clear of the Android navigation bar. The page
+  renders `<ion-content fullscreen>`, so it spans the whole screen, and Ionic
+  applies the bottom safe-area inset only to content inside a modal. The station
+  list therefore ran to the bottom of the screen and its last card sat under the
+  navigation bar — permanently, since the list is a vertical swiper whose viewport
+  ended there too, so scrolling could not bring the card into view.
+
+  `#player-list` now carries `margin-bottom: var(--ion-safe-area-bottom, 0px)`.
+  This has to be a margin rather than padding: swiper sizes its viewport from the
+  container's `clientHeight`, which includes padding, so `padding-bottom` would
+  leave the container reaching the bottom of the screen and the slides would
+  simply extend into the padded region.
+
+  Consumers carrying the `sc-page-stations #player-list { margin-bottom: ... }`
+  workaround can drop it. Where the inset is zero — browsers, Storybook, devices
+  without a visible navigation bar — the rule is inert and the page is unchanged.
+
 ## 1.0.0
 
 ### Major Changes

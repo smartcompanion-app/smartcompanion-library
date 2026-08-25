@@ -1,3 +1,5 @@
+@use '../../styles/safe-area';
+
 #multi-audio-station {
   display: flex;
   flex-flow: column;
@@ -5,6 +7,14 @@
 
   ion-content {
     --background: var(--ion-background-color-step-50);
+  }
+
+  // Keeps the content clear of the Android navigation bar. See #101.
+  // The class has to be in the selector: `.ion-no-padding` sets
+  // `--padding-bottom: 0` at (0,1,0) and a bare `ion-content` would lose. It
+  // also keeps this off the `ion-content.ion-padding` inside the popover.
+  ion-content.ion-no-padding {
+    @include safe-area.content-bottom-inset;
   }
 
   .station-subtitle {

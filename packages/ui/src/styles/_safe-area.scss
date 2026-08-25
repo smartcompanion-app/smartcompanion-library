@@ -1,0 +1,46 @@
+// Bottom safe-area inset for routed pages.
+//
+// Under an edge-to-edge WebView (Capacitor 8) Ionic applies the bottom
+// safe-area inset only in the components that own the bottom edge -- in
+// @ionic/core 8.8 exactly `ion-footer`, `ion-tab-bar`, `ion-toast` and
+// `ion-picker-legacy`. `ion-content` has the hook but nothing fills it: its
+// `.inner-scroll` adds `--internal-content-safe-area-padding-bottom`, and only
+// `ion-modal.applyFullscreenSafeAreaTo()` ever sets that. A routed page's
+// content therefore runs under the Android navigation bar, `fullscreen` or not,
+// and its lowest element is obscured. See #101, and #96 for the first sighting.
+//
+// Include this on the `ion-content` of every page whose content scrolls to the
+// bottom edge, passing whatever bottom padding the page already wanted as
+// `$base`. Where the inset is zero -- browsers, Storybook, devices without a
+// visible navigation bar -- the rule is inert.
+//
+// Four things are easy to get wrong and are not visible at the call sites:
+//
+//  1. Ionic's utility classes out-specify a page rule. `.ion-no-padding` sets
+//     `--padding-bottom: 0` at specificity (0,1,0), while `sc-page-x
+//     ion-content` is (0,0,2) and loses silently -- match the class too, as
+//     page-multi-audio-station does. A page that later gains `.ion-padding`
+//     has to pass `var(--ion-padding, 16px)` as `$base`.
+//  2. The two mechanisms sum: `.inner-scroll` adds `--padding-bottom` *and*
+//     `--internal-content-safe-area-padding-bottom`. Should Ionic ever set the
+//     internal variable outside modals, every page doing both would get the
+//     inset twice. Re-check on Ionic upgrades.
+//  3. Page stylesheets are global (#95), so each rule has to be nested under
+//     its host tag. `page-language` and `page-error` are `shadow: true`, where
+//     a bare `ion-content` selector is already scoped.
+//  4. Do not also shorten the element inside the content. `sc-page-stations`
+//     carried a one-off `#player-list { margin-bottom: ... }` for #96; it is
+//     gone, because the two would apply the inset twice.
+//
+// The `@if` is not just tidiness: without a base the computed value of the
+// custom property is exactly the inset, which is what the specs assert. An
+// unconditional `calc()` would compute to the literal `calc(0px + 48px)`, since
+// an unregistered custom property computes to its substituted token stream
+// rather than to an evaluated length.
+@mixin content-bottom-inset($base: null) {
+  @if $base == null {
+    --padding-bottom: var(--ion-safe-area-bottom, 0px);
+  } @else {
+    --padding-bottom: calc(#{$base} + var(--ion-safe-area-bottom, 0px));
+  }
+}

@@ -1,4 +1,11 @@
+@use '../../styles/safe-area';
+
 #station {
+  // Keeps the content clear of the Android navigation bar. See #101.
+  ion-content {
+    @include safe-area.content-bottom-inset;
+  }
+
   ion-toolbar {
     --background: linear-gradient(to bottom, rgba(37, 37, 37, 0.2), rgba(37, 37, 37, 0));
   }

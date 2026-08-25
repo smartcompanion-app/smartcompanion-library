@@ -1,3 +1,5 @@
+@use '../../styles/safe-area';
+
 .station-list {
   h2 {
     font-size: 15px !important;
@@ -7,4 +9,9 @@
     font-size: 13px !important;
     font-weight: normal;
   }
+}
+
+// Keeps the content clear of the Android navigation bar. See #101.
+sc-page-station-list ion-content {
+  @include safe-area.content-bottom-inset;
 }

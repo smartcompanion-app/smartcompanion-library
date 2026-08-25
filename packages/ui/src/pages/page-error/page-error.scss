@@ -1,3 +1,5 @@
+@use '../../styles/safe-area';
+
 #error-page {
   display: flex;
   flex-flow: column;
@@ -11,4 +13,9 @@
   width: 150px;
   height: 150px;
   margin-bottom: 45px;
+}
+
+// Keeps the content clear of the Android navigation bar. See #101.
+ion-content {
+  @include safe-area.content-bottom-inset;
 }

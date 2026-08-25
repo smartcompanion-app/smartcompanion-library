@@ -1,4 +1,5 @@
 @use '~swiper/swiper-bundle.css';
+@use '../../styles/safe-area';
 
 // Every rule below is scoped to the host element. These page components declare
 // neither `shadow` nor `scoped`, so their stylesheets are injected as global
@@ -6,6 +7,16 @@
 // the consuming app, not just this one. See #95. page-station.scss scopes the
 // same rules under `#station` for the same reason.
 sc-page-stations {
+  // Keeps the content clear of the Android navigation bar. See #101.
+  // This replaces the `#player-list { margin-bottom: ... }` of #96: on device
+  // both measured identically (list bottom at 875 on a 923px screen), because
+  // `--padding-bottom` shortens `.inner-scroll`'s content box and `#player-main`
+  // is sized from it. The swiper caveat in #96 was about `padding-bottom` on
+  // `#player-list` itself, which swiper counts into its own viewport height.
+  ion-content {
+    @include safe-area.content-bottom-inset;
+  }
+
   ion-toolbar {
     --background: transparent;
   }
@@ -69,13 +80,6 @@ sc-page-stations {
     background: var(--ion-background-color);
     padding-top: 10px;
     flex: 50vh 1 1;
-    // The content is `fullscreen`, so it spans the whole screen and nothing
-    // applies the bottom safe-area inset -- the list ran under the Android
-    // navigation bar, hiding its last card. See #96. This has to be a margin:
-    // swiper sizes its viewport from the container's `clientHeight`, which
-    // includes padding, so `padding-bottom` leaves the container reaching the
-    // bottom of the screen and the slides simply extend into the padded region.
-    margin-bottom: var(--ion-safe-area-bottom, 0px);
 
     &.swiper {
       margin-left: 0;

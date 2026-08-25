@@ -1,0 +1,10 @@
+@use '../../styles/safe-area';
+
+ion-content {
+  --padding-top: 12px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  // Keeps the content clear of the Android navigation bar. See #101. The page's
+  // own 12px is the base the inset is added to, not replaced by.
+  @include safe-area.content-bottom-inset(12px);
+}

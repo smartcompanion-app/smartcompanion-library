@@ -181,17 +181,26 @@ describe('sc-page-stations', () => {
     }
   });
 
-  // Regression test for #96. `ion-content` is `fullscreen`, so it spans the whole
-  // screen and Ionic applies no bottom safe-area inset outside a modal -- the
-  // list ran under the Android navigation bar and its last card was permanently
-  // obscured, scrolled to the end or not.
+  // Regression test for #96, generalized in #101 -- the sibling cases for the
+  // other pages live in ../bottom-safe-area.browser.tsx.
   //
-  // The margin has to stay a *margin*: swiper sizes its viewport from the
-  // container's `clientHeight`, which includes padding, so `padding-bottom` lets
-  // the slides extend into the padded region and the container still reaches the
-  // bottom of the screen. Asserting on `marginBottom` is what pins that down.
+  // `ion-content` is `fullscreen` here, so the page spans the whole screen and
+  // Ionic applies no bottom safe-area inset outside a modal: the list ran under
+  // the Android navigation bar and its last card was permanently obscured,
+  // scrolled to the end or not.
+  //
+  // #96 shortened `#player-list` with a margin, because swiper sizes its viewport
+  // from the container's `clientHeight` and a `padding-bottom` there would have
+  // let the slides extend into the padded region. `--padding-bottom` on the
+  // content is a different lever -- it shortens `.inner-scroll`'s content box, so
+  // `#player-main`, sized from it at `height: 100%`, ends above the navigation bar
+  // and takes the list with it. Both measured identically on device (list bottom
+  // at 875 on a 923px screen), so the page now uses the general form.
+  //
+  // The margin assertion is what keeps the two from being applied at once: with
+  // the general rule in place, restoring #96's margin would inset twice.
   describe('bottom safe-area inset', () => {
-    const listMarginBottom = async (inset?: string) => {
+    const withInset = async <T,>(inset: string | undefined, read: (root: HTMLElement) => T): Promise<T> => {
       const root = await renderPage();
 
       if (inset !== undefined) {
@@ -199,19 +208,30 @@ describe('sc-page-stations', () => {
       }
 
       try {
-        return getComputedStyle(list(root)).marginBottom;
+        return read(root);
       } finally {
         document.documentElement.style.removeProperty('--ion-safe-area-bottom');
       }
     };
 
+    // @ionic/core is not loaded into the browser project, so `ion-content` is an
+    // undefined element with no `.inner-scroll` to measure. `getComputedStyle`
+    // still substitutes `var()` for custom properties, which is the assertion.
+    const contentPaddingBottom = (inset?: string) => withInset(inset, root => getComputedStyle(root.querySelector('ion-content')!).getPropertyValue('--padding-bottom').trim());
+
+    const listMarginBottom = (inset?: string) => withInset(inset, root => getComputedStyle(list(root)).marginBottom);
+
     it('should keep the list clear of the navigation bar', async () => {
-      expect(await listMarginBottom('48px')).toBe('48px');
+      expect(await contentPaddingBottom('48px')).toBe('48px');
     });
 
     // Browsers and Storybook report no inset, where the rule has to be inert.
     it('should not reserve space where there is no inset', async () => {
-      expect(await listMarginBottom()).toBe('0px');
+      expect(await contentPaddingBottom()).toBe('0px');
+    });
+
+    it('should not also shorten the list itself', async () => {
+      expect(await listMarginBottom('48px')).toBe('0px');
     });
   });
 

@@ -3,7 +3,7 @@ import { PageLanguageFacade } from '../../contracts';
 
 @Component({
   tag: 'sc-page-language',
-  styleUrl: 'page-language.css',
+  styleUrl: 'page-language.scss',
   shadow: true,
 })
 export class PageLanguage {

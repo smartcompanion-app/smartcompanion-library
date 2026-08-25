@@ -106,4 +106,40 @@ describe('sc-page-multi-audio-station', () => {
       })
       .toBe(true);
   });
+
+  // Regression test for #101 -- the sibling cases for the other pages live in
+  // ../bottom-safe-area.browser.tsx. This page gets its own because it is the one
+  // that trips the specificity trap: its content carries `.ion-no-padding`, which
+  // sets `--padding-bottom: 0` at (0,1,0), so a bare `#multi-audio-station
+  // ion-content` selector would lose to it silently and the inset would never
+  // reach the page. The selector has to name the class -- see
+  // src/styles/_safe-area.scss.
+  //
+  // @ionic/core is not loaded into the browser project, so `ion-content` is an
+  // undefined element with no `.inner-scroll` to measure. `getComputedStyle`
+  // still substitutes `var()` for custom properties, which is the assertion.
+  describe('bottom safe-area inset', () => {
+    const contentPaddingBottom = async (inset?: string) => {
+      const root = await renderPage();
+
+      if (inset !== undefined) {
+        document.documentElement.style.setProperty('--ion-safe-area-bottom', inset);
+      }
+
+      try {
+        return getComputedStyle(root.querySelector('ion-content.ion-no-padding')!).getPropertyValue('--padding-bottom').trim();
+      } finally {
+        document.documentElement.style.removeProperty('--ion-safe-area-bottom');
+      }
+    };
+
+    it('should keep the content clear of the navigation bar', async () => {
+      expect(await contentPaddingBottom('48px')).toBe('48px');
+    });
+
+    // Browsers and Storybook report no inset, where the rule has to be inert.
+    it('should not reserve space where there is no inset', async () => {
+      expect(await contentPaddingBottom()).toBe('0px');
+    });
+  });
 });

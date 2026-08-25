@@ -1,3 +1,5 @@
+@use '../../styles/safe-area';
+
 .station-image-list {
   ion-list {
     --ion-item-background: var(--ion-background-color-step-50);
@@ -19,4 +21,9 @@
   &-description {
     padding-bottom: 10px;
   }
+}
+
+// Keeps the content clear of the Android navigation bar. See #101.
+sc-page-station-image-list ion-content {
+  @include safe-area.content-bottom-inset;
 }

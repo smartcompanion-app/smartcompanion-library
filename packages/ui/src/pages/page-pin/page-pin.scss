@@ -1,3 +1,5 @@
+@use '../../styles/safe-area';
+
 #pin {
   display: flex;
   flex-direction: column;
@@ -98,4 +100,9 @@
 
 .shake {
   animation: shake 0.5s 1;
+}
+
+// Keeps the content clear of the Android navigation bar. See #101.
+sc-page-pin ion-content {
+  @include safe-area.content-bottom-inset;
 }

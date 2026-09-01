@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@capacitor/core": "^8.5.0",
-    "@ionic/core": "^8.8.17",
+    "@ionic/core": "^9.0.1",
     "@smartcompanion/data": "^1.0.2",
     "@smartcompanion/native-audio-player": "^1.0.0"
   }

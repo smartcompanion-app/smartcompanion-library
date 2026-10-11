@@ -13,10 +13,10 @@ npm install @smartcompanion/services
 Requires Node 20 or newer, and these peers:
 
 ```
-@smartcompanion/data                >=0.9.0
-@smartcompanion/native-audio-player ^0.5.0
+@smartcompanion/data                ^1.0.0
+@smartcompanion/native-audio-player ^1.0.0
 @capacitor/core                     ^8.3.1
-@ionic/core                         ^8.7.2
+@ionic/core                         ^9.0.0
 ```
 
 > **ESM only.** This package declares `"type": "module"` and ships an `exports` map. `import` works from Node and from bundlers; `require()` is not supported.
@@ -50,6 +50,28 @@ The facade is then handed to the page components from [`@smartcompanion/ui`](htt
 - **Routing guards** — `canLoadRoute()`, `getPendingRoute()`
 
 `AudioPlayerService`, `MenuService` and `RoutingService` are also exported directly if you need them outside the facade.
+
+## Routing
+
+`RoutingService` drives an `ion-router` that renders into an `ion-router-outlet`:
+
+```html
+<ion-router use-hash="true">
+  <ion-route url="/" component="sc-page-loading" />
+  <!-- ... -->
+</ion-router>
+<ion-router-outlet id="main" />
+```
+
+Ionic 9 no longer lets `ion-router` drive an `ion-nav` — an app still built that way renders an empty page. The outlet holds only the current page, so the page stack is the browser history:
+
+- `push(uri)` — new history entry, forward transition
+- `replace(uri)` — replaces the current entry, no transition; for pages that must not be returned to (loading, language, pin, error)
+- `back(fallbackUri = '/')` — back to the previous page with a back transition, or to `fallbackUri` when there is none, e.g. after opening a deep link
+- `canGoBack()` — whether `back()` has a previous page to return to
+- `addRouteChangeListener(to, callback)` — `to` is a route, or a prefix ending in `*`
+
+1.x's `pushReplace()` and `pushReplaceCurrent()` are both `replace()` now, and `pop()` is `back()`.
 
 ## License
 

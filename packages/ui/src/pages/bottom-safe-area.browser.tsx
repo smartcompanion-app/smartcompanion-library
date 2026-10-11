@@ -26,8 +26,8 @@ import { stations as fixtureStations, tours } from '../../test/fixtures';
 // `ion-content` -- see src/styles/_safe-area.scss.
 //
 // The assertion is on the computed custom property rather than on the padding of
-// `.inner-scroll`: this project does not load @ionic/core into the browser
-// project (see vitest.setup.ts), so `ion-content` is an undefined element with no
+// `.inner-scroll`: this spec does not load @ionic/core (only the
+// *.ionic.browser.tsx specs do, see vitest.config.ts), so `ion-content` is an undefined element with no
 // shadow root. `getComputedStyle` still substitutes `var()` for custom
 // properties, which is what makes the two halves below meaningful.
 
@@ -72,13 +72,13 @@ const stationFacade = {
 const pinFacade = {
   getPinService: () => ({ validatePin: () => false }) as Partial<PinValidator>,
   getMenuService: menu,
-  getRoutingService: () => ({ pushReplaceCurrent: () => Promise.resolve() }) as Partial<Router>,
+  getRoutingService: () => ({ replace: () => Promise.resolve() }) as Partial<Router>,
   __: translate,
 } as unknown as PagePinFacade;
 
 const errorFacade = {
   getMenuService: menu,
-  getRoutingService: () => ({ pushReplaceCurrent: () => Promise.resolve() }) as Partial<Router>,
+  getRoutingService: () => ({ replace: () => Promise.resolve() }) as Partial<Router>,
   __: translate,
 } as unknown as PageErrorFacade;
 

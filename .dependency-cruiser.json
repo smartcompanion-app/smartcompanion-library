@@ -26,6 +26,13 @@
       "to": { "path": "^packages/services|^node_modules/@smartcompanion/services" }
     },
     {
+      "name": "ui-src-no-ionic",
+      "comment": "Stencil compiles every file under packages/ui/src, tests included, and treats an imported component collection as part of this library: one import of @ionic/core bundles all of Ionic into the ui build. Specs that need a real Ionic are named *.ionic.browser.tsx and get it from vitest.setup.ionic.ts.",
+      "severity": "error",
+      "from": { "path": "^packages/ui/src" },
+      "to": { "path": "^node_modules/@ionic/core" }
+    },
+    {
       "name": "data-is-a-leaf",
       "comment": "@smartcompanion/data sits at the bottom of the stack and must not depend on any other workspace package.",
       "severity": "error",

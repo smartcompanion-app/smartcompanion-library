@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
-import { Menu, PageStationFacade, StationSource, TourSource } from '../../contracts';
+import { Menu, Router, PageStationFacade, StationSource, TourSource } from '../../contracts';
 import { h } from '@stencil/core';
 import { AudioPlayerService } from '@smartcompanion/services';
 import { stations } from '../../../test/fixtures';
@@ -43,6 +43,13 @@ export const Example: Story = {
         ({
           enable: () => Promise.resolve(),
         }) as Menu,
+      getRoutingService: () =>
+        ({
+          back: (fallbackUri?: string) => {
+            console.log(`Go back, or to ${fallbackUri ?? '/'}`);
+            return Promise.resolve();
+          },
+        }) as Router,
     } as PageStationFacade,
   },
 };

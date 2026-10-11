@@ -53,7 +53,7 @@ export class PagePin {
     }
     if (this.pin.length == 4) {
       if (this.facade.getPinService().validatePin(this.pin, this.validHours)) {
-        this.facade.getRoutingService().pushReplaceCurrent('/');
+        this.facade.getRoutingService().replace('/');
       } else {
         this.pin = '';
         this.error = true;

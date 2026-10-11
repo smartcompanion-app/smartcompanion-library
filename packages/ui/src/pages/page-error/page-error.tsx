@@ -15,7 +15,7 @@ export class PageError {
   }
 
   private tryAgain = () => {
-    this.facade.getRoutingService().pushReplaceCurrent('/');
+    this.facade.getRoutingService().replace('/');
   };
 
   render() {

@@ -27,7 +27,9 @@ export class PageMap {
   @Prop() enableBackButton: boolean = false;
 
   /**
-   * Define default back button href, only used if enableBackButton is true
+   * Where the back button goes when there is no previous page to return to,
+   * e.g. after opening a deep link. Defaults to `/`. Only used if
+   * enableBackButton is true
    */
   @Prop() defaultBackButtonHref: string | null = null;
 
@@ -116,12 +118,16 @@ export class PageMap {
     }
   }
 
+  private handleBack = () => {
+    this.facade.getRoutingService().back(this.defaultBackButtonHref || undefined);
+  };
+
   render() {
     return (
       <Host>
         <ion-header>
           <ion-toolbar color={this.headerBackgroundColor}>
-            <ion-buttons slot="start">{getMenuButton(this.enableBackButton, this.defaultBackButtonHref)}</ion-buttons>
+            <ion-buttons slot="start">{getMenuButton(this.enableBackButton, this.handleBack)}</ion-buttons>
             <ion-title>{this.facade.__('menu-map')}</ion-title>
           </ion-toolbar>
         </ion-header>

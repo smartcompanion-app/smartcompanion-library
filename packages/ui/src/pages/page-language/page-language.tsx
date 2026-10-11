@@ -16,7 +16,7 @@ export class PageLanguage {
 
   private changeLanguage(languageCode: string) {
     this.facade.changeLanguage(languageCode);
-    this.facade.getRoutingService().pushReplaceCurrent('/');
+    this.facade.getRoutingService().replace('/');
   }
 
   private handleChangeLanguage = (e: Event) => {

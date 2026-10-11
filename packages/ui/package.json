@@ -85,7 +85,7 @@
   },
   "dependencies": {
     "maplibre-gl": "^6.4.1",
-    "swiper": "^14.1.0"
+    "swiper": "^14.3.0"
   },
   "peerDependencies": {
     "@smartcompanion/data": "^1.0.0"
@@ -93,11 +93,11 @@
   "devDependencies": {
     "@smartcompanion/data": "^1.0.2",
     "@smartcompanion/services": "^1.0.2",
-    "@stencil/core": "^4.43.3",
-    "@stencil/storybook-plugin": "^0.7.0",
+    "@stencil/core": "^4.45.2",
+    "@stencil/storybook-plugin": "^0.7.1",
     "@stencil/vitest": "^1.11.3",
-    "@types/node": "^26.2.0",
+    "@types/node": "^26.6.5",
     "@vitest/browser-playwright": "^4.1.4",
-    "storybook": "^10.5.7"
+    "storybook": "^10.6.1"
   }
 }

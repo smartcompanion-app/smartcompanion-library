@@ -60,7 +60,7 @@
     "@smartcompanion/native-audio-player": "^1.0.0"
   },
   "devDependencies": {
-    "@capacitor/core": "^8.5.0",
+    "@capacitor/core": "^8.5.3",
     "@ionic/core": "^8.8.17",
     "@smartcompanion/data": "^1.0.2",
     "@smartcompanion/native-audio-player": "^1.0.0"

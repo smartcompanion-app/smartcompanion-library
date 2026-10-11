@@ -57,16 +57,23 @@ jobs:
       # the default GITHUB_TOKEN do not trigger workflows, so the release pull
       # request would sit with no CI checks and main's required checks could
       # never pass on it. Falls back to GITHUB_TOKEN when the secret is absent.
+      #
+      # v2 reads the token only from the `github-token` input and pushes the
+      # release commit through the GitHub API. It hands that token to the
+      # version and publish scripts as GITHUB_TOKEN, which is what
+      # @changesets/changelog-github reads, so no env entry is needed -- one
+      # that differs from the input makes the action fail. npm passes the
+      # action's CHANGESETS_OUTPUT through to the changeset CLI, so published
+      # packages are still detected for tags and GitHub releases.
       - name: Create release pull request or publish
-        uses: changesets/action@v1
+        uses: changesets/action@v2
         with:
           github-token: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
-          version: npm run version
-          publish: npm run release
-          title: 'chore: release'
-          commit: 'chore: release'
+          version-script: npm run version
+          publish-script: npm run release
+          pr-title: 'chore: release'
+          commit-message: 'chore: release'
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN || secrets.GITHUB_TOKEN }}
           # npm authenticates over OIDC against the trusted publisher
           # configured for each package (this repository, this workflow file),
           # so there is deliberately no npm token here. Provenance is implied by

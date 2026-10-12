@@ -129,6 +129,40 @@ describe('routing on ion-router-outlet', () => {
     await showing('test-page-map', '/map');
   });
 
+  it('replaces the history entry with a forward transition, as under ion-nav', async () => {
+    // The outlet is told the direction; `root`, the only one ion-router itself
+    // replaces the entry for, renders without a transition.
+    const outlet = document.querySelector('ion-router-outlet') as HTMLElement & { setRouteId(...args: unknown[]): Promise<unknown> };
+    const setRouteId = outlet.setRouteId;
+    const directions: unknown[] = [];
+    // Stencil defines the method read-only on the prototype, so it is
+    // shadowed on the instance rather than assigned
+    Object.defineProperty(outlet, 'setRouteId', {
+      configurable: true,
+      value: (...args: unknown[]) => {
+        directions.push(args[2]);
+        return setRouteId.apply(outlet, args);
+      },
+    });
+
+    try {
+      const length = history.length;
+      await routing.replace('/map');
+      await showing('test-page-map', '/map');
+
+      expect(directions).toEqual(['forward']);
+      expect(history.length).toBe(length);
+      expect(Object.prototype.hasOwnProperty.call(history, 'pushState')).toBe(false);
+    } finally {
+      delete (outlet as { setRouteId?: unknown }).setRouteId;
+    }
+
+    // and a push right after it adds an entry again
+    await routing.push('/tours/1');
+    await routing.back();
+    await showing('test-page-map', '/map');
+  });
+
   it('follows a back navigation it did not start, like the Android back button', async () => {
     await routing.push('/map');
     await showing('test-page-map', '/map');

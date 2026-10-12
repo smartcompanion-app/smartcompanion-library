@@ -45,13 +45,23 @@ export class RoutingService {
   }
 
   /**
-   * Navigate to `uri` in place of the current history entry, without a
-   * transition. For pages that must not be returned to: the loading page,
-   * language selection, pin entry and error page.
+   * Navigate to `uri` in place of the current history entry, with a forward
+   * transition. For the menu, and for pages that must not be returned to: the
+   * loading page, language selection, pin entry and error page.
    */
   async replace(uri: string) {
     this.listen();
-    await this.getRouter().push(uri, 'root');
+    // ion-router replaces the entry only for the `root` direction, which it
+    // always renders without a transition (the outlet sets its duration to 0,
+    // and Ionic skips any animation of duration 0). Under ion-nav these
+    // navigations animated, so this one goes `forward` and has the entry that
+    // ion-router pushes for it written in place of the current one instead.
+    const restore = this.replaceNextPushState();
+    try {
+      await this.getRouter().push(uri, 'forward');
+    } finally {
+      restore();
+    }
     this.lastState = history.state;
   }
 
@@ -102,6 +112,28 @@ export class RoutingService {
         callback();
       }
     });
+  }
+
+  /**
+   * Turns the next `history.pushState()` into a `replaceState()`, once, and
+   * returns a function undoing it when no push came (a guard cancelled). Only
+   * the one write is redirected, so a navigation started while replace() still
+   * awaits the transition pushes its entry as usual.
+   */
+  private replaceNextPushState() {
+    const own = Object.getOwnPropertyDescriptor(history, 'pushState');
+    const restore = () => {
+      if (own) {
+        Object.defineProperty(history, 'pushState', own);
+      } else {
+        delete (history as { pushState?: unknown }).pushState;
+      }
+    };
+    history.pushState = (data: unknown, unused: string, url?: string | URL | null) => {
+      restore();
+      history.replaceState(data, unused, url);
+    };
+    return restore;
   }
 
   private getRouter() {

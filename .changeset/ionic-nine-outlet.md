@@ -18,7 +18,7 @@ Migrating an app:
 - Update `@ionic/core` to `^9.0.0` (the peer range of `@smartcompanion/services`).
 - `RoutingService.pushReplace()` and `pushReplaceCurrent()` are both
   `replace()`, and `pop()` is `back()`. `replace()` overwrites the current
-  history entry without a transition, so back never returns to the loading,
+  history entry, so back never returns to the loading,
   language, pin or error page.
 - Code that asked `ion-nav` for the active page, e.g. an Android `backButton`
   listener calling `document.querySelector('ion-nav').getActive()`, asks the
@@ -36,10 +36,8 @@ button at all in that case.
 
 What changes for users: going back rebuilds the previous page, because the
 outlet does not keep it, so a list returns to its top and a tabbed list to its
-first tab. Navigation by `replace()` -- the menu, and leaving the loading,
-language, pin and error pages -- switches without a transition; menu
-navigation had none under `ion-nav` either. Pushing a page and going back
-keep their transitions.
+first tab. Page transitions stay as they were: pushing a page, going back,
+and the menu, language selection and leaving the loading page all animate.
 
 `MenuService` now drives the `ion-menu` element instead of importing Ionic's
 `menuController`. Under Ionic 9 that import resolved to a second controller

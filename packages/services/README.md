@@ -66,7 +66,7 @@ The facade is then handed to the page components from [`@smartcompanion/ui`](htt
 Ionic 9 no longer lets `ion-router` drive an `ion-nav` — an app still built that way renders an empty page. The outlet holds only the current page, so the page stack is the browser history:
 
 - `push(uri)` — new history entry, forward transition
-- `replace(uri)` — replaces the current entry, no transition; for pages that must not be returned to (loading, language, pin, error)
+- `replace(uri)` — replaces the current entry, with a forward transition; for pages that must not be returned to (loading, language, pin, error)
 - `back(fallbackUri = '/')` — back to the previous page with a back transition, or to `fallbackUri` when there is none, e.g. after opening a deep link
 - `canGoBack()` — whether `back()` has a previous page to return to
 - `addRouteChangeListener(to, callback)` — `to` is a route, or a prefix ending in `*`

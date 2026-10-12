@@ -1,5 +1,28 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { defineVitestConfig } from '@stencil/vitest/config';
 import { playwright } from '@vitest/browser-playwright';
+import type { Plugin } from 'vite';
+
+// The specs run against the lazy build in dist, so coverage reaches src only
+// through that build's source maps (emitted by the --dev build stencil-test
+// does). Stencil writes their `sources` relative to the package root, but a map
+// is read relative to its own directory, so they resolve into dist, to files
+// that do not exist, and every component drops out of the report. This loads
+// the build with its sources made absolute.
+const lazyBuild = resolve(__dirname, 'dist/smartcompanion-ui');
+const lazyBuildSourceMaps = (): Plugin => ({
+  name: 'lazy-build-source-maps',
+  load(id) {
+    const file = id.split('?')[0];
+    if (!file.startsWith(`${lazyBuild}/`) || !file.endsWith('.js') || !existsSync(`${file}.map`)) {
+      return null;
+    }
+    const map = JSON.parse(readFileSync(`${file}.map`, 'utf8'));
+    map.sources = map.sources.map((source: string) => resolve(__dirname, source));
+    return { code: readFileSync(file, 'utf8'), map };
+  },
+});
 
 // A function rather than a shared object: Vitest names the browser instances in
 // place, and two projects sharing one instance collide on that name.
@@ -14,6 +37,16 @@ const browser = () => ({
 export default defineVitestConfig({
   stencilConfig: './stencil.config.ts',
   test: {
+    coverage: {
+      provider: 'v8',
+      // The lazy build is included only to be remapped to src; what it bundles
+      // from node_modules is dropped after the remap.
+      include: ['src/**/*.{ts,tsx}', 'dist/smartcompanion-ui/*.js'],
+      exclude: ['src/**/*.{test,spec,snapshot,browser,stories}.{ts,tsx}', 'src/components.d.ts', 'dist/smartcompanion-ui/index.esm.js', '**/node_modules/**'],
+      excludeAfterRemap: true,
+      reporter: ['text', 'html', 'lcov', 'json-summary'],
+      reportsDirectory: './coverage',
+    },
     projects: [
       {
         test: {
@@ -23,6 +56,7 @@ export default defineVitestConfig({
         },
       },
       {
+        plugins: [lazyBuildSourceMaps()],
         test: {
           name: 'snapshot',
           include: ['src/**/*.snapshot.{ts,tsx}'],
@@ -31,6 +65,7 @@ export default defineVitestConfig({
         },
       },
       {
+        plugins: [lazyBuildSourceMaps()],
         test: {
           name: 'spec',
           include: ['src/**/*.spec.{ts,tsx}'],
@@ -44,6 +79,7 @@ export default defineVitestConfig({
         },
       },
       {
+        plugins: [lazyBuildSourceMaps()],
         test: {
           name: 'browser',
           include: ['src/**/*.browser.{ts,tsx}'],
@@ -61,6 +97,7 @@ export default defineVitestConfig({
         },
       },
       {
+        plugins: [lazyBuildSourceMaps()],
         // Browser specs against a real Ionic, loaded by vitest.setup.ionic.ts
         // so that no file under src imports @ionic/core -- see there.
         test: {

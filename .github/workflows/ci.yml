@@ -79,5 +79,20 @@ jobs:
       - name: Check publishable packages
         run: npm run check:publish
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests with coverage
+        run: npm run coverage
+
+      # Report only, no thresholds: the table goes to the job summary and the
+      # HTML reports to an artifact.
+      - name: Summarize coverage
+        if: ${{ !cancelled() }}
+        run: node scripts/coverage-summary.mjs
+
+      - name: Upload coverage reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage
+          path: packages/*/coverage/
+          retention-days: 14
+          if-no-files-found: ignore

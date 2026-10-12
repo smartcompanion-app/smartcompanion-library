@@ -46,6 +46,7 @@
     "clean": "rimraf ./dist",
     "build": "npm run clean && tsc",
     "test": "vitest run",
+    "coverage": "vitest run --coverage",
     "lint": "eslint src",
     "format": "prettier --write src",
     "format:check": "prettier --check src",

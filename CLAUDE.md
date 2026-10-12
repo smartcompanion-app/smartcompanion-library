@@ -33,6 +33,7 @@ Driven by [changesets](https://github.com/changesets/changesets), not by tags â€
 npm install        # Install all workspace dependencies
 npm run build      # Build all packages
 npm test           # Run tests for all packages
+npm run coverage   # Run tests with v8 coverage; reports in packages/*/coverage
 ```
 
 ### Per package (use `-w packages/<name>`)
@@ -49,6 +50,7 @@ npm run format -w packages/services
 
 npm run build -w packages/ui
 npm run test -w packages/ui
+npm run coverage -w packages/ui      # Tests with coverage (any package)
 npm run watch -w packages/ui         # Stencil watch mode
 npm run storybook -w packages/ui     # Dev server at http://localhost:6006
 ```
@@ -59,6 +61,12 @@ npm run storybook -w packages/ui     # Dev server at http://localhost:6006
 - **UI**: Stencil v4 web components compiled to CJS, ESM, and custom-elements distributions
 - **Testing**: Vitest across all packages; Playwright for UI browser tests via @vitest/browser-playwright
 - **Pattern**: Domain-driven (data), Service/Facade (services), Web Components (ui)
+
+### Coverage
+
+Report only, no thresholds. CI runs `npm run coverage` in place of `npm test`, writes a table to the job summary (`scripts/coverage-summary.mjs`) and uploads the HTML reports as the `coverage` artifact.
+
+`ui` tests run against the lazy build in `dist`, not `src`, so its coverage is that build remapped through the source maps Stencil emits for the `--dev` build `stencil-test` does. Run it through the `coverage` script (`stencil-test --coverage`): plain `vitest` would run against whatever build is in `dist`, and a production build has no maps. Stencil writes the maps' `sources` relative to the package root, which breaks the remap; the `lazyBuildSourceMaps` plugin in `vitest.config.ts` corrects them on load. `coverage.include` therefore lists `dist/smartcompanion-ui/*.js`, and `excludeAfterRemap` drops whatever that build bundles from `node_modules`.
 
 ### Routing
 

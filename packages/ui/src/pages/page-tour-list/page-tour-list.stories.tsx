@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
-import { Menu, PageTourListFacade, TourSource } from '../../contracts';
+import { Menu, PageTourListFacade, TourSource, TranslationKey } from '../../contracts';
 import { h } from '@stencil/core';
 import { PageTourList } from './page-tour-list';
 import { tours } from '../../../test/fixtures';
@@ -32,7 +32,7 @@ export const Example: Story = {
             return Promise.resolve(tours);
           },
         }) as TourSource,
-      __: (key: string) => {
+      __: (key: TranslationKey) => {
         switch (key) {
           case 'menu-overview':
             return 'Tour Overview';

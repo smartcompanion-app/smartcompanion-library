@@ -1,5 +1,5 @@
 import { render, expect, test, h } from '@stencil/vitest';
-import { Menu, PageTourListFacade, TourSource } from '../../contracts';
+import { Menu, PageTourListFacade, TourSource, TranslationKey } from '../../contracts';
 import { tours } from '../../../test/fixtures';
 
 const facade = {
@@ -11,10 +11,8 @@ const facade = {
     ({
       getTours: () => Promise.resolve(tours),
     }) as Partial<TourSource>,
-  __: (key: string) => {
+  __: (key: TranslationKey) => {
     switch (key) {
-      case 'tour-list':
-        return 'Tour Overview';
       case 'start-tour':
         return 'Start Tour';
       case 'menu-overview':

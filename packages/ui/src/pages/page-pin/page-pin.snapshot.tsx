@@ -1,5 +1,5 @@
 import { render, expect, test, h } from '@stencil/vitest';
-import { Menu, PagePinFacade, PinValidator, Router } from '../../contracts';
+import { Menu, PagePinFacade, PinValidator, Router, TranslationKey } from '../../contracts';
 
 const facade = {
   getPinService: () =>
@@ -14,7 +14,7 @@ const facade = {
     ({
       replace: () => Promise.resolve(),
     }) as Partial<Router>,
-  __: (key: string) => {
+  __: (key: TranslationKey) => {
     switch (key) {
       case 'enter-pin':
         return 'Enter PIN';

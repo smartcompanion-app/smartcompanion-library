@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
-import { Menu, StationListFacade, StationSource } from '../../contracts';
+import { Menu, StationListFacade, StationSource, TranslationKey } from '../../contracts';
 import { h } from '@stencil/core';
 import { PageSelection } from './page-selection';
 
@@ -34,7 +34,7 @@ export const Example: Story = {
             return Promise.resolve([]);
           },
         }) as StationSource,
-      __: (key: string) => {
+      __: (key: TranslationKey) => {
         switch (key) {
           case 'menu-selection':
             return 'Station Selection';

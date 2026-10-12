@@ -42,6 +42,22 @@ Pages:
 
 Props and events for each are documented in [Storybook](https://smartcompanion-app.github.io/smartcompanion-library/).
 
+## Texts
+
+Pages look up their interface texts through the facade's `__()`, which reads the texts loaded from the server. Provide a text for each of these keys, in every language the app offers:
+
+| Key | Page |
+| --- | --- |
+| `no-internet`, `try-again` | `sc-page-error` |
+| `enter-pin`, `pin-error` | `sc-page-pin` |
+| `menu-selection` | `sc-page-selection` |
+| `menu-overview`, `start-tour` | `sc-page-tour-list` |
+| `station-list` | `sc-page-station-list`, `sc-page-station-image-list` |
+| `view` | `sc-page-station-image-list` |
+| `menu-map` | `sc-page-map` |
+
+A missing key falls back to the key itself, with separators replaced by spaces. The list is exported as the `TranslationKey` type. Keys an app uses in its own components are not restricted by it.
+
 ## Maps
 
 `sc-page-map` renders with [MapLibre GL](https://maplibre.org/). Give it either `mapStyleUrl` for vector tiles or `tileUrlTemplate` for a raster `{z}/{y}/{x}` template — exactly one of the two is required.

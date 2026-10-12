@@ -1,5 +1,5 @@
 import { render, expect, test, h } from '@stencil/vitest';
-import { Menu, StationListFacade, StationSource, TourSource } from '../../contracts';
+import { Menu, StationListFacade, StationSource, TourSource, TranslationKey } from '../../contracts';
 import { stations } from '../../../test/fixtures';
 
 const facade = {
@@ -15,7 +15,7 @@ const facade = {
     ({
       getStations: () => Promise.resolve(stations),
     }) as Partial<StationSource>,
-  __: (key: string) => {
+  __: (key: TranslationKey) => {
     switch (key) {
       case 'station-list':
         return 'Station Overview';

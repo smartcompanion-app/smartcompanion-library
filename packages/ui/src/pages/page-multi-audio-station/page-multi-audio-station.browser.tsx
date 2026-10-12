@@ -46,14 +46,6 @@ const facade = {
       getStation: (_: string) => Promise.resolve(createStation()),
     }) as StationSource,
   getRoutingService: () => ({ back: () => Promise.resolve() }) as Partial<Router> as Router,
-  __: (key: string) => {
-    switch (key) {
-      case 'station-list':
-        return 'Station Overview';
-      default:
-        return key;
-    }
-  },
 } as PageMultiAudioStationFacade;
 
 const getPlayerButton = (root: HTMLElement, testId: string) => {

@@ -19,6 +19,10 @@ Migrating an app:
   `replace()`, and `pop()` is `back()`. `replace()` overwrites the current
   history entry without a transition, so back never returns to the loading,
   language, pin or error page.
+- Code that asked `ion-nav` for the active page, e.g. an Android `backButton`
+  listener calling `document.querySelector('ion-nav').getActive()`, asks the
+  outlet instead: `(await document.querySelector('ion-router-outlet').getRouteId())?.element.localName`
+  is the tag of the page on screen.
 - Custom facades passed to `sc-page-station`, `sc-page-stations` or
   `sc-page-multi-audio-station` need `getRoutingService()`; `ServiceFacade`
   already has it.
@@ -32,4 +36,10 @@ button at all in that case.
 What changes for users: going back rebuilds the previous page, because the
 outlet does not keep it, so a list returns to its top and a tabbed list to its
 first tab. Navigation by `replace()` -- the menu, and leaving the loading,
-language, pin and error pages -- switches without a transition.
+language, pin and error pages -- switches without a transition; menu
+navigation had none under `ion-nav` either. Pushing a page and going back
+keep their transitions.
+
+`MenuService` now drives the `ion-menu` element instead of importing Ionic's
+`menuController`. Under Ionic 9 that import resolved to a second controller
+that no menu registers with, so the menu stayed open after choosing an entry.

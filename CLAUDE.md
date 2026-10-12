@@ -64,6 +64,8 @@ npm run storybook -w packages/ui     # Dev server at http://localhost:6006
 
 Apps render pages into `ion-router-outlet`. Ionic 9 removed `ion-router` driving `ion-nav` — that setup now renders an empty page — so `RoutingService` keeps no stack of its own: the stack is the browser history. `push()` adds an entry, `replace()` overwrites it, `back()` steps back or goes to a fallback, and `canGoBack()` tracks how far back the app's own entries reach. Back buttons use `ion-back-button` with `default-href="#"`: Ionic shows a back button only if it has an `ion-nav` or a `default-href`, and ignores hrefs that start with `#`, so the click is left to the page's `handleBack`.
 
+`MenuService` and `RoutingService` talk to Ionic's elements (`ion-menu`, `ion-router`), never to its JS exports. A Stencil app compiles Ionic's components from `@ionic/core/dist/collection`, but Ionic 9's `exports` map resolves `import { menuController } from '@ionic/core'` to its standalone build — a second controller no menu registers with. `services` imports Ionic for types only.
+
 `src/pages/routing.ionic.browser.tsx` tests this against a real Ionic, loaded by `vitest.setup.ionic.ts` for `*.ionic.browser.tsx` specs only. **Nothing under `packages/ui/src` may import `@ionic/core`, tests included**: Stencil compiles every file there and treats an imported component collection as part of this library, which bundles all of Ionic into the `ui` build. The `ui-src-no-ionic` rule in `.dependency-cruiser.json` enforces this.
 
 ## Code Style

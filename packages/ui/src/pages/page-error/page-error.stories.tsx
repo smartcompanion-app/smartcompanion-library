@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
-import { PageErrorFacade } from '../../contracts';
+import { PageErrorFacade, TranslationKey } from '../../contracts';
 import { h } from '@stencil/core';
 import { PageError } from './page-error';
 
@@ -21,7 +21,7 @@ type Story = StoryObj<PageError>;
 export const Example: Story = {
   args: {
     facade: {
-      __: (key: string) => {
+      __: (key: TranslationKey) => {
         switch (key) {
           case 'no-internet':
             return 'No Internet Connection';

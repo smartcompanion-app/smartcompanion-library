@@ -1,5 +1,5 @@
 import { render, h, describe, it, expect } from '@stencil/vitest';
-import { Menu, StationListFacade, StationSource } from '../../contracts';
+import { Menu, StationListFacade, StationSource, TranslationKey } from '../../contracts';
 
 const facade = {
   getMenuService: () =>
@@ -10,7 +10,7 @@ const facade = {
     ({
       getStations: () => Promise.resolve([]),
     }) as StationSource,
-  __: (key: string) => {
+  __: (key: TranslationKey) => {
     switch (key) {
       case 'menu-selection':
         return 'Station Selection';

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
-import { Menu, PagePinFacade, PinValidator, Router } from '../../contracts';
+import { Menu, PagePinFacade, PinValidator, Router, TranslationKey } from '../../contracts';
 import { h } from '@stencil/core';
 import { PagePin } from './page-pin';
 
@@ -42,7 +42,7 @@ export const Example: Story = {
             return Promise.resolve();
           },
         }) as Router,
-      __: (key: string) => {
+      __: (key: TranslationKey) => {
         switch (key) {
           case 'enter-pin':
             return 'Enter PIN';

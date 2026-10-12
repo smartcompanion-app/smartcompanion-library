@@ -1,12 +1,12 @@
 import { render, expect, test, h } from '@stencil/vitest';
-import { Menu, PageErrorFacade } from '../../contracts';
+import { Menu, PageErrorFacade, TranslationKey } from '../../contracts';
 
 const facade = {
   getMenuService: () =>
     ({
       disable: () => Promise.resolve(),
     }) as Partial<Menu>,
-  __: (key: string) => {
+  __: (key: TranslationKey) => {
     switch (key) {
       case 'no-internet':
         return 'No Internet Connection';

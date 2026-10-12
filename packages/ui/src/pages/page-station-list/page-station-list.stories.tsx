@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
-import { Menu, StationListFacade, StationSource, TourSource } from '../../contracts';
+import { Menu, StationListFacade, StationSource, TourSource, TranslationKey } from '../../contracts';
 import { h } from '@stencil/core';
 import { PageStationList } from './page-station-list';
 import { stations } from '../../../test/fixtures';
@@ -38,7 +38,7 @@ export const Example: Story = {
             return Promise.resolve(stations);
           },
         }) as StationSource,
-      __: (key: string) => {
+      __: (key: TranslationKey) => {
         switch (key) {
           case 'station-list':
             return 'Station Overview';

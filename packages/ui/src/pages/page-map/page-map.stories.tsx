@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
-import { Menu, StationListFacade, StationSource } from '../../contracts';
+import { Menu, StationListFacade, StationSource, TranslationKey } from '../../contracts';
 import { h } from '@stencil/core';
 import { PageMap } from './page-map';
 import { Station } from '@smartcompanion/data';
@@ -38,9 +38,9 @@ export const Example: Story = {
             return Promise.resolve();
           },
         }) as Menu,
-      __: (key: string) => {
+      __: (key: TranslationKey) => {
         switch (key) {
-          case 'page-map':
+          case 'menu-map':
             return 'Map';
           default:
             return key;

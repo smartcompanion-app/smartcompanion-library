@@ -22,14 +22,6 @@ const facade = {
     ({
       getStation: () => Promise.resolve(createStation()),
     }) as Partial<StationSource>,
-  __: (key: string) => {
-    switch (key) {
-      case 'station-list':
-        return 'Station Overview';
-      default:
-        return key;
-    }
-  },
 } as unknown as PageMultiAudioStationFacade;
 
 // Swiper in image-slideshow requires real DOM (element.children iteration), skip in mock-doc

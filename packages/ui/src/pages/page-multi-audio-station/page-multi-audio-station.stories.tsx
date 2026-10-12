@@ -45,14 +45,6 @@ export const Example: Story = {
             return Promise.resolve();
           },
         }) as Router,
-      __: (key: string) => {
-        switch (key) {
-          case 'station-list':
-            return 'Station Overview';
-          default:
-            return key;
-        }
-      },
     } as PageMultiAudioStationFacade,
   },
 };

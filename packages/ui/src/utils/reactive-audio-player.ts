@@ -31,6 +31,12 @@ export class ReactiveAudioPlayer {
   private collectedListener: ((update: AudioPlayerUpdate, station: Station) => Promise<void>) | null = null;
   private skipListener: ((update: AudioPlayerUpdate) => Promise<void>) | null = null;
 
+  /**
+   * Set by destroyAudioPlayer(), which can run while initAudioPlayer() still
+   * awaits the player: a page left right after opening it.
+   */
+  private destroyed = false;
+
   constructor(page: AudioPlayerPage) {
     this.facade = page.facade;
     this.earpiece = page.earpiece;
@@ -153,10 +159,23 @@ export class ReactiveAudioPlayer {
   async initAudioPlayer(stations: Array<Station>) {
     await this.facade.getAudioPlayerService().start(stations);
 
+    if (this.destroyed) {
+      // The page was left while the player started. Its stop() may have come
+      // first, so stop again; selecting now would ask for an item the stopped
+      // player no longer has, and a listener registered now would outlive the
+      // page.
+      await this.facade.getAudioPlayerService().stop();
+      return;
+    }
+
     if (this.earpiece) {
       await this.facade.getAudioPlayerService().setEarpiece();
     } else {
       await this.facade.getAudioPlayerService().setSpeaker();
+    }
+
+    if (this.destroyed) {
+      return;
     }
 
     this.facade.getAudioPlayerService().registerUpdateListener(async (update: AudioPlayerUpdate) => {
@@ -191,6 +210,7 @@ export class ReactiveAudioPlayer {
    * Should be called in disconnectedCallback() lifecycle method
    */
   async destroyAudioPlayer() {
+    this.destroyed = true;
     this.updatePlaying(false);
     await this.facade.getAudioPlayerService().stop();
     this.facade.getAudioPlayerService().unregisterUpdateListener();

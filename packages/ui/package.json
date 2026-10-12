@@ -79,6 +79,7 @@
     "format:check": "prettier --check src",
     "check:publish": "publint . && attw --pack . --ignore-rules named-exports",
     "test": "stencil-test",
+    "coverage": "stencil-test --coverage",
     "watch": "stencil build --watch",
     "storybook": "rm -rf dist/components && STORYBOOK=true storybook dev -p 6006 --no-open",
     "build-storybook": "rm -rf dist/components && STORYBOOK=true storybook build"

@@ -1,15 +1,36 @@
-import { Component, Prop, Host, h } from '@stencil/core';
+import { Component, Prop, Host, getAssetPath, h } from '@stencil/core';
 // maplibre-gl 6 dropped its default export, so the classes are named imports.
 // They double as the types, which is why there is no separate `import type`.
-import { AttributionControl, Map as MapLibreMap, Marker as MapLibreMarker } from 'maplibre-gl';
+import { AttributionControl, Map as MapLibreMap, Marker as MapLibreMarker, getWorkerUrl, setWorkerUrl } from 'maplibre-gl';
 import { StationListFacade } from '../../contracts';
 import { Station } from '@smartcompanion/data';
 import { getMenuButton, getStations, openStation } from '../../utils';
 import { createStationMarkerElement, getMapBounds, getMapCenter, getMapStyle } from './page-map-utils.js';
 
+/**
+ * Points maplibre at the worker shipped with this component.
+ *
+ * maplibre looks for its worker next to its own module, which bundling into a
+ * Stencil chunk leaves without it, so every map logged "Worker failed to load".
+ * An app that serves the worker itself and set the URL keeps its own.
+ */
+function useBundledWorker() {
+  if (getWorkerUrl() !== '') {
+    return;
+  }
+  try {
+    setWorkerUrl(getAssetPath('./assets/maplibre-gl-worker.mjs'));
+  } catch {
+    // The custom-elements build has no asset path until the app calls
+    // setAssetPath(); maplibre then falls back to its own lookup.
+  }
+}
+
 @Component({
   styleUrl: 'page-map.scss',
   tag: 'sc-page-map',
+  // maplibre-gl-worker.mjs, copied in by scripts/copy-maplibre-worker.mjs
+  assetsDirs: ['assets'],
 })
 export class PageMap {
   protected map!: MapLibreMap;
@@ -67,6 +88,8 @@ export class PageMap {
   }
 
   async componentDidLoad() {
+    useBundledWorker();
+
     this.map = new MapLibreMap({
       attributionControl: false,
       center: getMapCenter(this.mapBounds),

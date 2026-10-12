@@ -63,7 +63,8 @@
     "!**/*.snapshot.*",
     "!**/*.browser.*",
     "!**/*.test.*",
-    "!**/*.spec.*"
+    "!**/*.spec.*",
+    "!src/pages/page-map/assets/"
   ],
   "license": "BSD-2-Clause",
   "engines": {
@@ -73,18 +74,23 @@
     "access": "public"
   },
   "scripts": {
+    "prebuild": "node scripts/copy-maplibre-worker.mjs",
     "build": "stencil build",
     "lint": "eslint src",
     "format": "prettier --write src",
     "format:check": "prettier --check src",
     "check:publish": "publint . && attw --pack . --ignore-rules named-exports",
+    "pretest": "node scripts/copy-maplibre-worker.mjs",
     "test": "stencil-test",
+    "prewatch": "node scripts/copy-maplibre-worker.mjs",
     "watch": "stencil build --watch",
+    "prestorybook": "node scripts/copy-maplibre-worker.mjs",
     "storybook": "rm -rf dist/components && STORYBOOK=true storybook dev -p 6006 --no-open",
+    "prebuild-storybook": "node scripts/copy-maplibre-worker.mjs",
     "build-storybook": "rm -rf dist/components && STORYBOOK=true storybook build"
   },
   "dependencies": {
-    "maplibre-gl": "^6.4.1",
+    "maplibre-gl": "6.14.0",
     "swiper": "^14.3.0"
   },
   "peerDependencies": {

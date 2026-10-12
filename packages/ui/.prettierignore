@@ -5,3 +5,6 @@
 # Formatting them means the next build reintroduces a format:check failure.
 src/components.d.ts
 custom-elements.json
+
+# maplibre-gl's worker, copied in by scripts/copy-maplibre-worker.mjs
+src/pages/page-map/assets/

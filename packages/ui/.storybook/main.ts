@@ -9,7 +9,8 @@ const config = {
   framework: {
     name: getAbsolutePath("@stencil/storybook-plugin")
   },
-  staticDirs: ["./public"],
+  // The map's worker, at the asset path preview.ts sets
+  staticDirs: ["./public", { from: "../src/pages/page-map/assets", to: "/page-map/assets" }],
 };
 
 export default config;

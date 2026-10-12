@@ -84,7 +84,7 @@
     "build-storybook": "rm -rf dist/components && STORYBOOK=true storybook build"
   },
   "dependencies": {
-    "maplibre-gl": "^6.4.1",
+    "maplibre-gl": "6.14.0",
     "swiper": "^14.3.0"
   },
   "peerDependencies": {

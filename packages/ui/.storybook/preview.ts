@@ -1,8 +1,14 @@
 import { Preview, setCustomElementsManifest } from '@stencil/storybook-plugin';
+import { setAssetPath } from '@stencil/core';
 import customElements from '../custom-elements.json';
 import './style.css';
 
 setCustomElementsManifest(customElements);
+
+// Where getAssetPath() resolves component assets -- sc-page-map's worker, which
+// main.ts serves from page-map/assets. Relative to the page, as GitHub Pages
+// serves Storybook from a subpath.
+setAssetPath(new URL('page-map/', document.baseURI).href);
 
 const preview: Preview = {
 

@@ -16,13 +16,6 @@ updates:
       library-dependencies:
         patterns:
           - '*'
-        # maplibre-gl starts its worker pool eagerly from 6.11 on, and the
-        # worker is a separate file resolved next to the bundle chunk, which a
-        # Stencil build does not emit. Until page-map sets the worker URL, a
-        # bump fails the real-map browser test, so it arrives on its own rather
-        # than blocking this group, as it did in #115 and #118.
-        exclude-patterns:
-          - maplibre-gl
         update-types:
           - minor
           - patch

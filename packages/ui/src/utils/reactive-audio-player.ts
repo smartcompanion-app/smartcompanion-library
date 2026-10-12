@@ -10,6 +10,17 @@ interface AudioPlayerPage {
   activeIndex: number;
 }
 
+/**
+ * The page whose player the app's single audio player currently plays.
+ *
+ * Every audio page drives the same player and the same update listener. With
+ * ion-router-outlet the next page is created, and starts the player, before
+ * the page it replaces is removed, so the removed page must not stop the
+ * player or unregister the listener any more: they are the new page's. The
+ * same goes for a page left while still starting, once another has started.
+ */
+let owner: symbol | null = null;
+
 export class ReactiveAudioPlayer {
   private facade: AudioPlayerFacade;
   private earpiece: boolean = false;
@@ -36,6 +47,14 @@ export class ReactiveAudioPlayer {
    * awaits the player: a page left right after opening it.
    */
   private destroyed = false;
+
+  /** Identifies this page's player as the `owner` */
+  private readonly ownerToken = Symbol('ReactiveAudioPlayer');
+
+  /** Whether this page's player is the one the app's single player now plays */
+  private get isOwner() {
+    return owner === this.ownerToken;
+  }
 
   constructor(page: AudioPlayerPage) {
     this.facade = page.facade;
@@ -157,14 +176,17 @@ export class ReactiveAudioPlayer {
    * Should be called in componentDidLoad() lifecycle method
    */
   async initAudioPlayer(stations: Array<Station>) {
+    owner = this.ownerToken;
     await this.facade.getAudioPlayerService().start(stations);
 
-    if (this.destroyed) {
-      // The page was left while the player started. Its stop() may have come
-      // first, so stop again; selecting now would ask for an item the stopped
-      // player no longer has, and a listener registered now would outlive the
-      // page.
-      await this.facade.getAudioPlayerService().stop();
+    if (this.destroyed || !this.isOwner) {
+      // Left while the player started. Selecting now would ask for an item a
+      // stopped player no longer has, and a listener registered now would
+      // outlive the page. The page's own stop() may have come before start()
+      // finished, so stop again -- unless another page has started since.
+      if (owner === null) {
+        await this.stopLeftoverPlayer();
+      }
       return;
     }
 
@@ -174,7 +196,7 @@ export class ReactiveAudioPlayer {
       await this.facade.getAudioPlayerService().setSpeaker();
     }
 
-    if (this.destroyed) {
+    if (this.destroyed || !this.isOwner) {
       return;
     }
 
@@ -212,9 +234,28 @@ export class ReactiveAudioPlayer {
   async destroyAudioPlayer() {
     this.destroyed = true;
     this.updatePlaying(false);
-    await this.facade.getAudioPlayerService().stop();
-    this.facade.getAudioPlayerService().unregisterUpdateListener();
     this.removeAllListeners();
+    // The player and its listener belong to the next page once it started
+    if (this.isOwner) {
+      owner = null;
+      await this.facade.getAudioPlayerService().stop();
+      this.facade.getAudioPlayerService().unregisterUpdateListener();
+    }
+  }
+
+  /**
+   * Stops what a start() that finished after the page's own stop() left
+   * behind. The web player then has an audio element but an emptied playlist,
+   * and its stop() throws on reading the current item. Nothing is playing at
+   * that point, so the cleanup is best effort rather than a rejection nobody
+   * handles.
+   */
+  private async stopLeftoverPlayer() {
+    try {
+      await this.facade.getAudioPlayerService().stop();
+    } catch (e) {
+      console.warn('Could not stop the audio player of a page left while it started', e);
+    }
   }
 
   async resetAudioPlayer() {

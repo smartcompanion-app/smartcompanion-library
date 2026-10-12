@@ -1,5 +1,81 @@
 # @smartcompanion/ui
 
+## 2.0.0
+
+### Major Changes
+
+- [#127](https://github.com/smartcompanion-app/smartcompanion-library/pull/127) [`c0ff89f`](https://github.com/smartcompanion-app/smartcompanion-library/commit/c0ff89f755e3e81892264efada5f69623b16c56a) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Move to Ionic 9. Ionic 9 no longer lets `ion-router` drive an `ion-nav`, so an app
+  built that way renders an empty page. Routing now goes through
+  `ion-router-outlet`, which holds only the current page; the page stack is the
+  browser history.
+  
+  Migrating an app:
+  
+  - Replace `<ion-nav id="main" />` with
+    `<ion-router-outlet swipeGesture={false} id="main" />`. The `<ion-route>`
+    definitions stay as they are. Swipe-to-go-back is gone either way: in a
+    Stencil app nothing hands the outlet a swipe handler. `swipeGesture={false}`
+    states that, and keeps it off should Ionic ever wire one up.
+  - Update `@ionic/core` to `^9.0.0` (the peer range of `@smartcompanion/services`).
+  - `RoutingService.pushReplace()` and `pushReplaceCurrent()` are both
+    `replace()`, and `pop()` is `back()`. `replace()` overwrites the current
+    history entry, so back never returns to the loading,
+    language, pin or error page.
+  - Code that asked `ion-nav` for the active page, e.g. an Android `backButton`
+    listener calling `document.querySelector('ion-nav').getActive()`, asks the
+    outlet instead: `(await document.querySelector('ion-router-outlet').getRouteId())?.element.localName`
+    is the tag of the page on screen.
+  - Custom facades passed to `sc-page-station`, `sc-page-stations` or
+    `sc-page-multi-audio-station` need `getRoutingService()`; `ServiceFacade`
+    already has it.
+  
+  Back buttons now follow the history: a station opened from the map returns to
+  the map, one opened from a list returns to the list. Where there is nothing to
+  go back to, e.g. after a deep link, they go to `defaultBackButtonHref`, or to
+  `/`. Before, `sc-page-station` and `sc-page-multi-audio-station` showed no back
+  button at all in that case.
+  
+  What changes for users: going back rebuilds the previous page, because the
+  outlet does not keep it, so a list returns to its top and a tabbed list to its
+  first tab. Page transitions stay as they were: pushing a page, going back,
+  and the menu, language selection and leaving the loading page all animate.
+  
+  `MenuService` now drives the `ion-menu` element instead of importing Ionic's
+  `menuController`. Under Ionic 9 that import resolved to a second controller
+  that no menu registers with, so the menu stayed open after choosing an entry.
+
+### Patch Changes
+
+- [#119](https://github.com/smartcompanion-app/smartcompanion-library/pull/119) [`39db409`](https://github.com/smartcompanion-app/smartcompanion-library/commit/39db40923342e08c17453fd2ee654a516f77ac33) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Update the bundled swiper to 14.3.0, a minor release. The image slideshow and
+  station list tests pass unchanged.
+
+- [#129](https://github.com/smartcompanion-app/smartcompanion-library/pull/129) [`5e34c2e`](https://github.com/smartcompanion-app/smartcompanion-library/commit/5e34c2e6c475e994ee7ff44194ea6328b5361e8f) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Update maplibre-gl to 6.14.0 and ship its worker with `sc-page-map`. From 6.11
+  maplibre loads the worker from a file next to its own module, which a Stencil
+  build does not have, so every map logged "Worker failed to load". The worker
+  now comes along as a component asset that Stencil copies into the app's build,
+  and the map points maplibre at it -- no change needed in the apps.
+  
+  maplibre-gl is pinned to an exact version, so the map code an app bundles is
+  always the version its worker was copied from.
+  
+  An app with a service worker that should show the map offline has to precache
+  the worker too: it is `build/assets/maplibre-gl-worker.mjs`, which a glob like
+  `**/*.{js,css,...}` does not match.
+
+- [#127](https://github.com/smartcompanion-app/smartcompanion-library/pull/127) [`c0ff89f`](https://github.com/smartcompanion-app/smartcompanion-library/commit/c0ff89f755e3e81892264efada5f69623b16c56a) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Audio pages no longer stop each other's player. All of them drive the app's
+  single audio player, and leaving one stopped it -- even after the next page had
+  started it, which with `ion-router-outlet` is always the case, as the next page
+  is created before the previous one is removed. Only the page whose audio is
+  playing stops it now. Leaving a station page right after opening it also no
+  longer fails with "Item with id … doesn't exist".
+
+- [#132](https://github.com/smartcompanion-app/smartcompanion-library/pull/132) [`af9d133`](https://github.com/smartcompanion-app/smartcompanion-library/commit/af9d1335976efb455fd3d427d5b1bfdb9cc27007) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Export `TranslationKey`, the text keys the pages look up, and type
+  `Translator.__` with it. The README lists which page needs which key. The
+  `ServiceFacade` still satisfies the contract and accepts any key for an app's
+  own texts.
+- Updated dependencies []:
+  - @smartcompanion/data@2.0.0
+
 ## 1.0.2
 
 ### Patch Changes

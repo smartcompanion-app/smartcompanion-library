@@ -1,7 +1,7 @@
 {
   "name": "@smartcompanion/ui",
   "description": "Stencil web components for SmartCompanion audio-guide apps — station lists, player controls, maps and more.",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "keywords": [
     "smartcompanion",
     "audioguide",
@@ -89,12 +89,12 @@
     "swiper": "^14.3.0"
   },
   "peerDependencies": {
-    "@smartcompanion/data": "^1.0.0"
+    "@smartcompanion/data": "^2.0.0"
   },
   "devDependencies": {
     "@ionic/core": "^9.0.7",
-    "@smartcompanion/data": "^1.0.2",
-    "@smartcompanion/services": "^1.0.2",
+    "@smartcompanion/data": "^2.0.0",
+    "@smartcompanion/services": "^2.0.0",
     "@stencil/core": "^4.45.2",
     "@stencil/storybook-plugin": "^0.7.1",
     "@stencil/vitest": "^1.11.3",

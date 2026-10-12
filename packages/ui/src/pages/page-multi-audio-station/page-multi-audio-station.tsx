@@ -1,6 +1,6 @@
 import { Component, State, Prop, Host, h } from '@stencil/core';
 import { Station } from '@smartcompanion/data';
-import { formatSeconds, ReactiveAudioPlayer } from '../../utils';
+import { formatSeconds, getMenuButton, ReactiveAudioPlayer } from '../../utils';
 import { PageMultiAudioStationFacade } from '../../contracts';
 
 @Component({
@@ -18,7 +18,8 @@ export class PageMultiAudioStation {
   @State() earpiece = false;
 
   /**
-   * Define default back button href, only used if enableBackButton is true
+   * Where the back button goes when there is no previous page to return to,
+   * e.g. after opening a deep link. Defaults to `/`
    */
   @Prop() defaultBackButtonHref: string = null;
 
@@ -88,14 +89,16 @@ export class PageMultiAudioStation {
     this.reactiveAudioPlayer.select(audioIndex);
   };
 
+  private handleBack = () => {
+    this.facade.getRoutingService().back(this.defaultBackButtonHref || undefined);
+  };
+
   render() {
     return (
       <Host id="multi-audio-station">
         <ion-header>
           <ion-toolbar>
-            <ion-buttons slot="start">
-              <ion-back-button text="" defaultHref={this.defaultBackButtonHref}></ion-back-button>
-            </ion-buttons>
+            <ion-buttons slot="start">{getMenuButton(true, this.handleBack)}</ion-buttons>
             <ion-title>
               <div class="station-title">
                 <sc-station-icon size="small">{this.station.number}</sc-station-icon>

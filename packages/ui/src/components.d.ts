@@ -77,7 +77,7 @@ export namespace Components {
     }
     interface ScPageMap {
         /**
-          * Define default back button href, only used if enableBackButton is true
+          * Where the back button goes when there is no previous page to return to, e.g. after opening a deep link. Defaults to `/`. Only used if enableBackButton is true
           * @default null
          */
         "defaultBackButtonHref": string | null;
@@ -122,7 +122,7 @@ export namespace Components {
     }
     interface ScPageMultiAudioStation {
         /**
-          * Define default back button href, only used if enableBackButton is true
+          * Where the back button goes when there is no previous page to return to, e.g. after opening a deep link. Defaults to `/`
           * @default null
          */
         "defaultBackButtonHref": string;
@@ -179,7 +179,7 @@ export namespace Components {
     }
     interface ScPageStation {
         /**
-          * Define default back button href, only used if enableBackButton is true
+          * Where the back button goes when there is no previous page to return to, e.g. after opening a deep link. Defaults to `/`. Only used if enableBackButton is true
           * @default null
          */
         "defaultBackButtonHref": string;
@@ -586,7 +586,7 @@ declare namespace LocalJSX {
     }
     interface ScPageMap {
         /**
-          * Define default back button href, only used if enableBackButton is true
+          * Where the back button goes when there is no previous page to return to, e.g. after opening a deep link. Defaults to `/`. Only used if enableBackButton is true
           * @default null
          */
         "defaultBackButtonHref"?: string | null;
@@ -631,7 +631,7 @@ declare namespace LocalJSX {
     }
     interface ScPageMultiAudioStation {
         /**
-          * Define default back button href, only used if enableBackButton is true
+          * Where the back button goes when there is no previous page to return to, e.g. after opening a deep link. Defaults to `/`
           * @default null
          */
         "defaultBackButtonHref"?: string;
@@ -688,7 +688,7 @@ declare namespace LocalJSX {
     }
     interface ScPageStation {
         /**
-          * Define default back button href, only used if enableBackButton is true
+          * Where the back button goes when there is no previous page to return to, e.g. after opening a deep link. Defaults to `/`. Only used if enableBackButton is true
           * @default null
          */
         "defaultBackButtonHref"?: string;

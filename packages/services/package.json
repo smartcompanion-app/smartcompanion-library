@@ -55,13 +55,13 @@
   "license": "BSD-2-Clause",
   "peerDependencies": {
     "@capacitor/core": "^8.3.1",
-    "@ionic/core": "^8.7.2",
+    "@ionic/core": "^9.0.0",
     "@smartcompanion/data": "^1.0.0",
     "@smartcompanion/native-audio-player": "^1.0.0"
   },
   "devDependencies": {
     "@capacitor/core": "^8.5.3",
-    "@ionic/core": "^8.8.17",
+    "@ionic/core": "^9.0.7",
     "@smartcompanion/data": "^1.0.2",
     "@smartcompanion/native-audio-player": "^1.0.0",
     "@types/react": "^19.3.0"

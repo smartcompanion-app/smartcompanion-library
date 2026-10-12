@@ -1,6 +1,16 @@
 import { defineVitestConfig } from '@stencil/vitest/config';
 import { playwright } from '@vitest/browser-playwright';
 
+// A function rather than a shared object: Vitest names the browser instances in
+// place, and two projects sharing one instance collide on that name.
+const browser = () => ({
+  enabled: true,
+  provider: playwright(),
+  headless: true,
+  screenshotFailures: false,
+  instances: [{ browser: 'chromium' as const }],
+});
+
 export default defineVitestConfig({
   stencilConfig: './stencil.config.ts',
   test: {
@@ -37,6 +47,7 @@ export default defineVitestConfig({
         test: {
           name: 'browser',
           include: ['src/**/*.browser.{ts,tsx}'],
+          exclude: ['src/**/*.ionic.browser.{ts,tsx}'],
           setupFiles: ['./vitest.setup.ts'],
           // These specs poll for state that lands only after the audio player
           // has loaded a track, which takes ~135ms locally but can blow Vitest's
@@ -46,13 +57,18 @@ export default defineVitestConfig({
           // lost player events -- the specs gate their clicks on the player
           // being initialized, see page-stations.browser.tsx.
           expect: { poll: { timeout: 10000 } },
-          browser: {
-            enabled: true,
-            provider: playwright(),
-            headless: true,
-            screenshotFailures: false,
-            instances: [{ browser: 'chromium' }],
-          },
+          browser: browser(),
+        },
+      },
+      {
+        // Browser specs against a real Ionic, loaded by vitest.setup.ionic.ts
+        // so that no file under src imports @ionic/core -- see there.
+        test: {
+          name: 'browser-ionic',
+          include: ['src/**/*.ionic.browser.{ts,tsx}'],
+          setupFiles: ['./vitest.setup.ts', './vitest.setup.ionic.ts'],
+          expect: { poll: { timeout: 10000 } },
+          browser: browser(),
         },
       },
     ],

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@stencil/storybook-plugin';
-import { Menu, PageMultiAudioStationFacade, StationSource } from '../../contracts';
+import { Menu, Router, PageMultiAudioStationFacade, StationSource } from '../../contracts';
 import { h } from '@stencil/core';
 import { AudioPlayerService } from '@smartcompanion/services';
 import { PageMultiAudioStation } from './page-multi-audio-station';
@@ -38,6 +38,13 @@ export const Example: Story = {
             return Promise.resolve(getMultiAudioStation());
           },
         }) as StationSource,
+      getRoutingService: () =>
+        ({
+          back: (fallbackUri?: string) => {
+            console.log(`Go back, or to ${fallbackUri ?? '/'}`);
+            return Promise.resolve();
+          },
+        }) as Router,
       __: (key: string) => {
         switch (key) {
           case 'station-list':

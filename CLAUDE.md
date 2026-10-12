@@ -60,6 +60,14 @@ npm run storybook -w packages/ui     # Dev server at http://localhost:6006
 - **Testing**: Vitest across all packages; Playwright for UI browser tests via @vitest/browser-playwright
 - **Pattern**: Domain-driven (data), Service/Facade (services), Web Components (ui)
 
+### Routing
+
+Apps render pages into `ion-router-outlet`. Ionic 9 removed `ion-router` driving `ion-nav` — that setup now renders an empty page — so `RoutingService` keeps no stack of its own: the stack is the browser history. `push()` adds an entry, `replace()` overwrites it, `back()` steps back or goes to a fallback, and `canGoBack()` tracks how far back the app's own entries reach. Back buttons use `ion-back-button` with `default-href="#"`: Ionic shows a back button only if it has an `ion-nav` or a `default-href`, and ignores hrefs that start with `#`, so the click is left to the page's `handleBack`.
+
+`MenuService` and `RoutingService` talk to Ionic's elements (`ion-menu`, `ion-router`), never to its JS exports. A Stencil app compiles Ionic's components from `@ionic/core/dist/collection`, but Ionic 9's `exports` map resolves `import { menuController } from '@ionic/core'` to its standalone build — a second controller no menu registers with. `services` imports Ionic for types only.
+
+`src/pages/routing.ionic.browser.tsx` tests this against a real Ionic, loaded by `vitest.setup.ionic.ts` for `*.ionic.browser.tsx` specs only. **Nothing under `packages/ui/src` may import `@ionic/core`, tests included**: Stencil compiles every file there and treats an imported component collection as part of this library, which bundles all of Ionic into the `ui` build. The `ui-src-no-ionic` rule in `.dependency-cruiser.json` enforces this.
+
 ### Map worker
 
 maplibre-gl (from 6.11) loads its worker from a file next to its own module. Bundled into a Stencil chunk that file is missing, and every map logs *"Worker failed to load"*. `sc-page-map` therefore ships the worker as a component asset (`assetsDirs`), which Stencil copies into a consuming app's `build/assets/`, and points `setWorkerUrl()` at it. The file never enters `src/`: a `copy` task on the `dist` output target in `stencil.config.ts` copies it from the installed maplibre-gl into `dist/collection/pages/page-map/assets/` (and the lazy build's `assets/`), and Storybook serves maplibre-gl's `dist` as a static dir. `assetsDirs: ['assets']` still has to be declared on the component even though `src` has no such folder — it is what makes a consuming app copy the folder from the collection. maplibre-gl is pinned to an **exact** version so the app bundles the same map code the shipped worker was copied from — keep it exact when bumping.

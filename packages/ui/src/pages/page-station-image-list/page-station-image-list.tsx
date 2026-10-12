@@ -37,12 +37,16 @@ export class PageStationImageList {
     this.openStation(stationId);
   };
 
+  private handleBack = () => {
+    this.facade.getRoutingService().back('/tours');
+  };
+
   render() {
     return (
       <Host>
         <ion-header>
           <ion-toolbar color={this.headerBackgroundColor}>
-            <ion-buttons slot="start">{getMenuButton(this.tourId !== null, '/tours')}</ion-buttons>
+            <ion-buttons slot="start">{getMenuButton(this.tourId !== null, this.handleBack)}</ion-buttons>
             <ion-title>{this.facade.__('station-list')}</ion-title>
           </ion-toolbar>
         </ion-header>

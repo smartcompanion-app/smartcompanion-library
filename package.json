@@ -37,7 +37,7 @@
     "@arethetypeswrong/cli": "^0.18.5",
     "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.3",
-    "@ionic/core": "^8.8.17",
+    "@ionic/core": "^9.0.7",
     "@stencil/eslint-plugin": "~1.4.0",
     "@stencil/sass": "~3.3.2",
     "dependency-cruiser": "^18.5.0",

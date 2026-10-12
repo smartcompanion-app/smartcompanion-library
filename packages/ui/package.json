@@ -91,6 +91,7 @@
     "@smartcompanion/data": "^1.0.0"
   },
   "devDependencies": {
+    "@ionic/core": "^9.0.7",
     "@smartcompanion/data": "^1.0.2",
     "@smartcompanion/services": "^1.0.2",
     "@stencil/core": "^4.45.2",

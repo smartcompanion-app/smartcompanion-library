@@ -71,9 +71,11 @@ export type AudioPlayerFacade = {
 /** Shared by page-station and page-stations */
 export type PageStationFacade = AudioPlayerFacade & {
   getMenuService(): Menu;
+  getRoutingService(): Router;
   getTourService(): TourSource;
 };
 
 export type PageMultiAudioStationFacade = AudioPlayerFacade & {
   getMenuService(): Menu;
+  getRoutingService(): Router;
 };

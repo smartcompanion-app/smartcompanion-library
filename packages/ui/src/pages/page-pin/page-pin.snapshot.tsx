@@ -12,7 +12,7 @@ const facade = {
     }) as Partial<Menu>,
   getRoutingService: () =>
     ({
-      pushReplaceCurrent: () => Promise.resolve(),
+      replace: () => Promise.resolve(),
     }) as Partial<Router>,
   __: (key: string) => {
     switch (key) {

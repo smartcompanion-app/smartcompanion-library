@@ -57,14 +57,14 @@ export class PageLoading {
     console.log('loading result', result);
 
     if (result == 'language') {
-      this.facade.getRoutingService().pushReplace('/language');
+      this.facade.getRoutingService().replace('/language');
     } else if (result == 'home') {
       const pendingRoute = this.facade.getPendingRoute();
-      this.facade.getRoutingService().pushReplace(pendingRoute || this.homeRoute);
+      this.facade.getRoutingService().replace(pendingRoute || this.homeRoute);
     } else if (result == 'pin') {
-      this.facade.getRoutingService().pushReplace('/pin');
+      this.facade.getRoutingService().replace('/pin');
     } else {
-      this.facade.getRoutingService().pushReplace('/error');
+      this.facade.getRoutingService().replace('/error');
     }
   }
 

@@ -1,5 +1,5 @@
 import { render, h, describe, it, expect } from '@stencil/vitest';
-import { Menu, PageMultiAudioStationFacade, StationSource } from '../../contracts';
+import { Menu, PageMultiAudioStationFacade, Router, StationSource } from '../../contracts';
 import { AudioPlayerService, AudioPlayerUpdate } from '@smartcompanion/services';
 import { Station } from '@smartcompanion/data';
 import { getMultiAudioStation } from '../../../test/fixtures';
@@ -45,6 +45,7 @@ const facade = {
     ({
       getStation: (_: string) => Promise.resolve(createStation()),
     }) as StationSource,
+  getRoutingService: () => ({ back: () => Promise.resolve() }) as Partial<Router> as Router,
   __: (key: string) => {
     switch (key) {
       case 'station-list':

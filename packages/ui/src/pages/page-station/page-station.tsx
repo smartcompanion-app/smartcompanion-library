@@ -23,7 +23,9 @@ export class PageStation {
   @Prop() enableBackButton: boolean = false;
 
   /**
-   * Define default back button href, only used if enableBackButton is true
+   * Where the back button goes when there is no previous page to return to,
+   * e.g. after opening a deep link. Defaults to `/`. Only used if
+   * enableBackButton is true
    */
   @Prop() defaultBackButtonHref: string = null;
 
@@ -89,12 +91,16 @@ export class PageStation {
     this.reactiveAudioPlayer.changePosition(e.detail);
   };
 
+  private handleBack = () => {
+    this.facade.getRoutingService().back(this.defaultBackButtonHref || undefined);
+  };
+
   render() {
     return (
       <Host id="station">
         <ion-header class="ion-no-border">
           <ion-toolbar>
-            <ion-buttons slot="start">{getMenuButton(this.enableBackButton, this.defaultBackButtonHref, { color: 'secondary' })}</ion-buttons>
+            <ion-buttons slot="start">{getMenuButton(this.enableBackButton, this.handleBack, { color: 'secondary' })}</ion-buttons>
             <ion-buttons slot="end">
               {this.enableSwitchAudioOutput && (
                 <ion-fab-button color="light" size="small" onClick={this.handleToggleOutput}>

@@ -12,7 +12,7 @@ Part of the [SmartCompanion Library](https://github.com/smartcompanion-app/smart
 npm install @smartcompanion/ui
 ```
 
-Requires Node 20 or newer, and [`@smartcompanion/data`](https://www.npmjs.com/package/@smartcompanion/data) `>=0.9.0` as a peer. Pages are driven by a `ServiceFacade` from [`@smartcompanion/services`](https://www.npmjs.com/package/@smartcompanion/services).
+Requires Node 20 or newer, [`@smartcompanion/data`](https://www.npmjs.com/package/@smartcompanion/data) `^1.0.0` as a peer, and Ionic 9 in the app. Pages are driven by a `ServiceFacade` from [`@smartcompanion/services`](https://www.npmjs.com/package/@smartcompanion/services).
 
 ## Usage
 
@@ -28,7 +28,7 @@ Pages take the service facade as a prop:
 <sc-page-stations facade={serviceFacade} />
 ```
 
-In a Stencil app that is typically passed via `componentProps` on the router route. `defineCustomElements` is also available from `@smartcompanion/ui/loader` if you need to control registration yourself.
+In a Stencil app that is typically passed via `componentProps` on the router route. Routes render into an `ion-router-outlet`, not an `ion-nav` — see [Routing](https://www.npmjs.com/package/@smartcompanion/services#routing) in `@smartcompanion/services`. `defineCustomElements` is also available from `@smartcompanion/ui/loader` if you need to control registration yourself.
 
 ## Components
 

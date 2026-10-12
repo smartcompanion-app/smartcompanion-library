@@ -209,3 +209,97 @@ test('constructor initializes earpiece from localStorage', () => {
 
   expect(page.earpiece).toBe(true);
 });
+
+// A page left right after opening it is destroyed while initAudioPlayer() still
+// awaits start(). The page's stop() clears the player's items, so the select()
+// that init went on to make rejected with "Item with id ... doesn't exist".
+function createPlayerMocks() {
+  const { page, mockAudioPlayerService } = createMocks();
+  let started: () => void = () => {};
+  const service = Object.assign(mockAudioPlayerService, {
+    start: vi.fn(() => new Promise<void>(resolve => (started = resolve))),
+    stop: vi.fn().mockResolvedValue(undefined),
+    select: vi.fn().mockResolvedValue(undefined),
+    registerUpdateListener: vi.fn(),
+    unregisterUpdateListener: vi.fn(),
+    getDuration: vi.fn().mockResolvedValue(0),
+  });
+  return { page, service, started: () => started() };
+}
+
+test('initAudioPlayer stops instead of selecting when the page is destroyed while starting', async () => {
+  const { page, service, started } = createPlayerMocks();
+  const player = new ReactiveAudioPlayer(page);
+
+  const init = player.initAudioPlayer([]);
+  await player.destroyAudioPlayer();
+  started();
+  await init;
+
+  expect(service.select).not.toHaveBeenCalled();
+  expect(service.registerUpdateListener).not.toHaveBeenCalled();
+  // once by destroy, once more after the late start
+  expect(service.stop).toHaveBeenCalledTimes(2);
+});
+
+test('initAudioPlayer selects the active audio when the page stays', async () => {
+  const { page, service, started } = createPlayerMocks();
+  const player = new ReactiveAudioPlayer(page);
+
+  const init = player.initAudioPlayer([]);
+  started();
+  await init;
+
+  expect(service.registerUpdateListener).toHaveBeenCalledTimes(1);
+  expect(service.select).toHaveBeenCalledWith(0);
+  expect(service.stop).not.toHaveBeenCalled();
+});
+
+// With ion-router-outlet the next page starts the shared player before the
+// page it replaces is removed. The removed page's stop() then stopped the new
+// page's player, whose select() failed in turn.
+test('destroyAudioPlayer leaves the player to a page that started after it', async () => {
+  const { page, mockAudioPlayerService } = createMocks();
+  const starts: Array<() => void> = [];
+  const service = Object.assign(mockAudioPlayerService, {
+    start: vi.fn(() => new Promise<void>(resolve => starts.push(resolve))),
+    stop: vi.fn().mockResolvedValue(undefined),
+    select: vi.fn().mockResolvedValue(undefined),
+    registerUpdateListener: vi.fn(),
+    unregisterUpdateListener: vi.fn(),
+    getDuration: vi.fn().mockResolvedValue(0),
+  });
+  const leaving = new ReactiveAudioPlayer({ ...page });
+  const entering = new ReactiveAudioPlayer({ ...page });
+
+  const leavingInit = leaving.initAudioPlayer([]);
+  const enteringInit = entering.initAudioPlayer([]);
+  await leaving.destroyAudioPlayer();
+  starts.forEach(started => started());
+  await Promise.all([leavingInit, enteringInit]);
+
+  expect(service.stop).not.toHaveBeenCalled();
+  expect(service.unregisterUpdateListener).not.toHaveBeenCalled();
+  expect(service.registerUpdateListener).toHaveBeenCalledTimes(1);
+  expect(service.select).toHaveBeenCalledTimes(1);
+
+  // and the entering page, now the one playing, stops it when it is left
+  await entering.destroyAudioPlayer();
+  expect(service.stop).toHaveBeenCalledTimes(1);
+  expect(service.unregisterUpdateListener).toHaveBeenCalledTimes(1);
+});
+
+test('initAudioPlayer does not reject when stopping a player left half-started fails', async () => {
+  const { page, service, started } = createPlayerMocks();
+  service.stop.mockResolvedValueOnce(undefined).mockRejectedValueOnce(new TypeError("Cannot read properties of undefined (reading 'id')"));
+  const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+  const player = new ReactiveAudioPlayer(page);
+
+  const init = player.initAudioPlayer([]);
+  await player.destroyAudioPlayer();
+  started();
+
+  await expect(init).resolves.toBeUndefined();
+  expect(warn).toHaveBeenCalledTimes(1);
+  warn.mockRestore();
+});

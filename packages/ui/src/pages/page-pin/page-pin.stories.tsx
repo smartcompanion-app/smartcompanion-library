@@ -37,7 +37,7 @@ export const Example: Story = {
         }) as Menu,
       getRoutingService: () =>
         ({
-          pushReplaceCurrent: (route: string) => {
+          replace: (route: string) => {
             console.log(`Move to route ${route}`);
             return Promise.resolve();
           },

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-12T07:14:10",
+  "timestamp": "2026-10-12T07:55:41",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.45.2",
@@ -570,7 +570,7 @@
           "mutable": false,
           "attr": "default-back-button-href",
           "reflectToAttr": false,
-          "docs": "Define default back button href, only used if enableBackButton is true",
+          "docs": "Where the back button goes when there is no previous page to return to,\ne.g. after opening a deep link. Defaults to `/`. Only used if\nenableBackButton is true",
           "docsTags": [
             {
               "name": "default",
@@ -854,7 +854,7 @@
           "mutable": false,
           "attr": "default-back-button-href",
           "reflectToAttr": false,
-          "docs": "Define default back button href, only used if enableBackButton is true",
+          "docs": "Where the back button goes when there is no previous page to return to,\ne.g. after opening a deep link. Defaults to `/`",
           "docsTags": [
             {
               "name": "default",
@@ -903,10 +903,10 @@
         },
         {
           "name": "facade",
-          "type": "AudioPlayerFacade & { getMenuService(): Menu; }",
+          "type": "AudioPlayerFacade & { getMenuService(): Menu; getRoutingService(): Router; }",
           "complexType": {
             "original": "PageMultiAudioStationFacade",
-            "resolved": "AudioPlayerFacade & { getMenuService(): Menu; }",
+            "resolved": "AudioPlayerFacade & { getMenuService(): Menu; getRoutingService(): Router; }",
             "references": {
               "PageMultiAudioStationFacade": {
                 "location": "import",
@@ -922,7 +922,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "AudioPlayerFacade & { getMenuService(): Menu; }"
+              "type": "AudioPlayerFacade & { getMenuService(): Menu; getRoutingService(): Router; }"
             }
           ],
           "optional": false,
@@ -1256,7 +1256,7 @@
           "mutable": false,
           "attr": "default-back-button-href",
           "reflectToAttr": false,
-          "docs": "Define default back button href, only used if enableBackButton is true",
+          "docs": "Where the back button goes when there is no previous page to return to,\ne.g. after opening a deep link. Defaults to `/`. Only used if\nenableBackButton is true",
           "docsTags": [
             {
               "name": "default",
@@ -1334,10 +1334,10 @@
         },
         {
           "name": "facade",
-          "type": "AudioPlayerFacade & { getMenuService(): Menu; getTourService(): TourSource; }",
+          "type": "AudioPlayerFacade & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; }",
           "complexType": {
             "original": "PageStationFacade",
-            "resolved": "AudioPlayerFacade & { getMenuService(): Menu; getTourService(): TourSource; }",
+            "resolved": "AudioPlayerFacade & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; }",
             "references": {
               "PageStationFacade": {
                 "location": "import",
@@ -1353,7 +1353,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "AudioPlayerFacade & { getMenuService(): Menu; getTourService(): TourSource; }"
+              "type": "AudioPlayerFacade & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; }"
             }
           ],
           "optional": false,
@@ -1718,10 +1718,10 @@
         },
         {
           "name": "facade",
-          "type": "AudioPlayerFacade & { getMenuService(): Menu; getTourService(): TourSource; }",
+          "type": "AudioPlayerFacade & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; }",
           "complexType": {
             "original": "PageStationFacade",
-            "resolved": "AudioPlayerFacade & { getMenuService(): Menu; getTourService(): TourSource; }",
+            "resolved": "AudioPlayerFacade & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; }",
             "references": {
               "PageStationFacade": {
                 "location": "import",
@@ -1737,7 +1737,7 @@
           "docsTags": [],
           "values": [
             {
-              "type": "AudioPlayerFacade & { getMenuService(): Menu; getTourService(): TourSource; }"
+              "type": "AudioPlayerFacade & { getMenuService(): Menu; getRoutingService(): Router; getTourService(): TourSource; }"
             }
           ],
           "optional": false,
@@ -2496,7 +2496,7 @@
       "path": "src/contracts/index.ts"
     },
     "src/contracts/index.ts::PageMultiAudioStationFacade": {
-      "declaration": "export type PageMultiAudioStationFacade = AudioPlayerFacade & {\n  getMenuService(): Menu;\n};",
+      "declaration": "export type PageMultiAudioStationFacade = AudioPlayerFacade & {\n  getMenuService(): Menu;\n  getRoutingService(): Router;\n};",
       "docstring": "",
       "path": "src/contracts/index.ts"
     },
@@ -2506,7 +2506,7 @@
       "path": "src/contracts/index.ts"
     },
     "src/contracts/index.ts::PageStationFacade": {
-      "declaration": "export type PageStationFacade = AudioPlayerFacade & {\n  getMenuService(): Menu;\n  getTourService(): TourSource;\n};",
+      "declaration": "export type PageStationFacade = AudioPlayerFacade & {\n  getMenuService(): Menu;\n  getRoutingService(): Router;\n  getTourService(): TourSource;\n};",
       "docstring": "",
       "path": "src/contracts/index.ts"
     },

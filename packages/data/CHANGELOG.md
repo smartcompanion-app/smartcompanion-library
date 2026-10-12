@@ -1,5 +1,9 @@
 # @smartcompanion/data
 
+## 2.0.0
+
+No changes in this release.
+
 ## 1.0.2
 
 ## 1.0.1

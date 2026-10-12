@@ -4,8 +4,7 @@ import prettierConfig from 'eslint-config-prettier';
 import stencil from '@stencil/eslint-plugin';
 
 export default tseslint.config(
-  // page-map/assets: maplibre-gl's worker, copied in by packages/ui/scripts/copy-maplibre-worker.mjs
-  { ignores: ['**/dist/**', '**/node_modules/**', '**/loader/**', 'packages/ui/src/pages/page-map/assets/**'] },
+  { ignores: ['**/dist/**', '**/node_modules/**', '**/loader/**'] },
   tseslint.configs.recommended,
   prettierConfig,
   {

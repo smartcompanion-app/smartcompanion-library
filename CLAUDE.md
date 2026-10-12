@@ -62,7 +62,7 @@ npm run storybook -w packages/ui     # Dev server at http://localhost:6006
 
 ### Map worker
 
-maplibre-gl (from 6.11) loads its worker from a file next to its own module. Bundled into a Stencil chunk that file is missing, and every map logs *"Worker failed to load"*. `sc-page-map` therefore ships the worker as a component asset (`assetsDirs`), which Stencil copies into a consuming app's `build/assets/`, and points `setWorkerUrl()` at it. `scripts/copy-maplibre-worker.mjs` copies the file in from the installed maplibre-gl before every build, test, watch and Storybook run (the `pre*` scripts); it is gitignored. maplibre-gl is pinned to an **exact** version so the app bundles the same map code the shipped worker was copied from — keep it exact when bumping.
+maplibre-gl (from 6.11) loads its worker from a file next to its own module. Bundled into a Stencil chunk that file is missing, and every map logs *"Worker failed to load"*. `sc-page-map` therefore ships the worker as a component asset (`assetsDirs`), which Stencil copies into a consuming app's `build/assets/`, and points `setWorkerUrl()` at it. The file never enters `src/`: a `copy` task on the `dist` output target in `stencil.config.ts` copies it from the installed maplibre-gl into `dist/collection/pages/page-map/assets/` (and the lazy build's `assets/`), and Storybook serves maplibre-gl's `dist` as a static dir. `assetsDirs: ['assets']` still has to be declared on the component even though `src` has no such folder — it is what makes a consuming app copy the folder from the collection. maplibre-gl is pinned to an **exact** version so the app bundles the same map code the shipped worker was copied from — keep it exact when bumping.
 
 ## Code Style
 

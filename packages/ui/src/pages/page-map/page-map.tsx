@@ -29,7 +29,8 @@ function useBundledWorker() {
 @Component({
   styleUrl: 'page-map.scss',
   tag: 'sc-page-map',
-  // maplibre-gl-worker.mjs, copied in by scripts/copy-maplibre-worker.mjs
+  // Only in the build output: stencil.config.ts copies maplibre-gl's worker
+  // in. Declared so that an app's build copies the folder from the collection.
   assetsDirs: ['assets'],
 })
 export class PageMap {

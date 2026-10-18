@@ -245,10 +245,8 @@ export class ReactiveAudioPlayer {
 
   /**
    * Stops what a start() that finished after the page's own stop() left
-   * behind. The web player then has an audio element but an emptied playlist,
-   * and its stop() throws on reading the current item. Nothing is playing at
-   * that point, so the cleanup is best effort rather than a rejection nobody
-   * handles.
+   * behind. Nothing is playing at that point, so the cleanup is best effort
+   * rather than a rejection nobody handles.
    */
   private async stopLeftoverPlayer() {
     try {

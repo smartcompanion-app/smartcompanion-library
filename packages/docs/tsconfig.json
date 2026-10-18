@@ -1,0 +1,9 @@
+{
+  // Only the config files are type-checked; the site itself is Markdown and CSS.
+  // TypeScript comes from the repository root.
+  "extends": "@docusaurus/tsconfig",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["docusaurus.config.ts", "sidebars.ts"]
+}

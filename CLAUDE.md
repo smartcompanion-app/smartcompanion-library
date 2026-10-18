@@ -8,6 +8,7 @@ TypeScript monorepo with npm workspaces containing reusable packages for SmartCo
 - `@smartcompanion/data` — Domain models and data layer (assets, languages, pins, servers, stations, text, tours)
 - `@smartcompanion/services` — Service layer (AudioPlayerService, MenuService, RoutingService)
 - `@smartcompanion/ui` — Stencil web components (image-slideshow, marquee, numpad, player-controls, station-icon)
+- `packages/docs` (`smartcompanion-docs`, private) — the Docusaurus site at https://docs.smartcompanion.app, see [Documentation site](#documentation-site)
 
 ## Git
 
@@ -21,7 +22,7 @@ Driven by [changesets](https://github.com/changesets/changesets), not by tags �
 
 1. Any change to published behaviour ships with a changeset (`npm run changeset`), committed alongside it. All three packages are versioned in lockstep (`fixed` in `.changeset/config.json`), so one changeset bumps all three.
 
-   The peer range on `@smartcompanion/data` in `services` and `ui` is `^1.0.0`. Changesets escalates a peer *dependent* to a major bump whenever the new dependency version falls outside its declared range. On 0.x that made a caret unusable — `^0.9.x` excludes `0.10.0`, so every release came out a major, and the range was a `>=0.9.0` floor to avoid it. From 1.0.0 onward a caret is the right form: minors stay in range, and only a 2.0.0 escalates, which is what should happen when all three go major together. Keep the caret.
+   The peer range on `@smartcompanion/data` in `services` and `ui` is a caret on the current major (`^2.0.0`). Changesets escalates a peer *dependent* to a major bump whenever the new dependency version falls outside its declared range. On 0.x that made a caret unusable — `^0.9.x` excludes `0.10.0`, so every release came out a major, and the range was a `>=0.9.0` floor to avoid it. From 1.0.0 onward a caret is the right form: minors stay in range, and only a 2.0.0 escalates, which is what should happen when all three go major together. Keep the caret.
 
 2. Merging to `main` opens a `chore: release` PR with the version bumps and changelogs.
 3. Merging that PR publishes to npm over trusted publishing (OIDC) with provenance. No npm token exists in this repo.
@@ -34,6 +35,8 @@ npm install        # Install all workspace dependencies
 npm run build      # Build all packages
 npm test           # Run tests for all packages
 npm run coverage   # Run tests with v8 coverage; reports in packages/*/coverage
+npm run docs:start # Docs site with live reload
+npm run docs:build # Docs site → packages/docs/build; fails on a broken link or anchor
 ```
 
 ### Per package (use `-w packages/<name>`)
@@ -84,6 +87,17 @@ maplibre-gl (from 6.11) loads its worker from a file next to its own module. Bun
 
 `src/a11y.ionic.browser.tsx` runs axe-core over every component and page in a real Ionic (without it an `ion-fab-button` is no button, and axe has nothing to judge) and snapshots the violations each has today. A new violation fails the test; a fixed one fails it too, until the snapshot is updated with `-u` — the snapshot is the list of known issues, and a fix's diff shows what it removed. Contrast is judged against Ionic's default palette only; apps set their own colours.
 
+## Documentation site
+
+`packages/docs` is Docusaurus, published at https://docs.smartcompanion.app. It covers more than this repo: setting up and running the [audioguide app](https://github.com/smartcompanion-app/audioguide-app) (content, customization, deployment) as well as the library. Contributing, security and the code of conduct stay in the repo's own files and are only linked.
+
+- Pages are Markdown under `packages/docs/docs/`, parsed as CommonMark (`format: 'detect'`), so `<` and `{` in prose stay text. Admonitions (`:::note`), `<details>`, raw HTML and ```` ```mermaid ```` blocks all work in `.md`; only a page needing JSX — tabs, say — would be `.mdx`.
+- Sidebar order is listed by hand in `sidebars.ts` — two sidebars, `guide` (the audioguide) and `library`. A new page needs a line there.
+- Write what the code does, checked against the code, not against the schema or older docs: several schema descriptions disagree with the library (tour `stations` are ids, the server list key is `servers`, there is no default language).
+- Link to Storybook as `pathname:///storybook/`. It is not a page of the site, so a plain link fails the broken-link check; `pages.yml` copies `packages/ui/storybook-static` into the build under `/storybook/`.
+- `@mermaid-js/layout-elk` is a dependency only because `@docusaurus/theme-mermaid` imports it optionally and the build fails to resolve it otherwise. Its version follows that theme's peer range (`^0.1.x`), not npm's latest.
+- The package is unscoped on purpose: a `@smartcompanion/*` name would fall into the changesets `fixed` group and be versioned with every release.
+
 ## Code Style
 
 - Prettier: single quotes, 2-space indent, print width 180, trailing commas
@@ -104,11 +118,12 @@ npm run check:publish  # publint + attw against each package's tarball
 
 ## CI/CD
 
-- `ci.yml` runs on PRs and pushes to `main` (Ubuntu 24.04, Node 22), in two parallel jobs:
+- `ci.yml` runs on PRs and pushes to `main` (Ubuntu 24.04, Node 22), in three parallel jobs:
   - `lint` — lint, format:check, depcruise
+  - `docs` — type-checks the site config and builds the docs site
   - `test` — build, test (Playwright/Chromium), check:publish
 - `release.yml` runs on pushes to `main` and drives the changesets flow described above
-- `pages.yml` deploys Storybook to GitHub Pages on every push to `main`
+- `pages.yml` deploys the docs site, with Storybook under `/storybook/`, to GitHub Pages on every push to `main`. The custom domain comes from `packages/docs/static/CNAME`.
 
 ## Module Format
 

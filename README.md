@@ -3,7 +3,7 @@
 [![Build](https://github.com/smartcompanion-app/smartcompanion-library/actions/workflows/ci.yml/badge.svg)](https://github.com/smartcompanion-app/smartcompanion-library/actions/workflows/ci.yml)
 [![License](https://img.shields.io/github/license/smartcompanion-app/smartcompanion-library)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](CONTRIBUTING.md)
-[![Storybook](https://img.shields.io/badge/Storybook-UI%20Components-ff4785)](https://smartcompanion-app.github.io/smartcompanion-library/)
+[![Storybook](https://img.shields.io/badge/Storybook-UI%20Components-ff4785)](https://docs.smartcompanion.app/storybook/)
 
 The building blocks behind the SmartCompanion audio-guide apps: the data layer, the services that drive it, and the web components users actually see. Published as three npm packages, versioned in lockstep.
 
@@ -120,6 +120,7 @@ The SmartCompanion Library Packages are licensed under the terms of the BSD 2-Cl
 ## Links
 
 - [Web site](https://www.smartcompanion.app)
-- [Storybook](https://smartcompanion-app.github.io/smartcompanion-library/)
+- [Documentation](https://docs.smartcompanion.app)
+- [Storybook](https://docs.smartcompanion.app/storybook/)
 - [SmartCompanion Audioguide App](https://github.com/smartcompanion-app/audioguide-app)
 - [Native Audio Capacitor Plugin](https://github.com/smartcompanion-app/native-audio-player)

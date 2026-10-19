@@ -35,9 +35,11 @@ Shown on first launch when you offer more than one language, and reachable later
 
 ## Stations
 
-The main screen. `sc-page-stations` is the station list and the player in one: a vertical, swipeable list of the stations, sorted by number, with the player docked at the bottom.
+The main screen. `sc-page-stations` is the station picture, the player and the station list in one. From the top: the active station's first image, large; the player controls; then every station as a card in a swipeable list, sorted by number. Swiping the list or tapping a card changes the active station.
 
-Each station shows its number, title and a progress ring that fills as the audio is listened to, so a visitor can see at a glance what they have already heard. The selected station shows its image slideshow and the player controls.
+Each card shows the station's second image, its number, title and a progress ring that fills as the audio is listened to, so a visitor can see at a glance what they have already heard.
+
+The screen needs two images and exactly one audio per station — see [Stations](../content/stations.md#what-the-default-app-expects).
 
 `/stations/default` is the entry the menu uses: all stations, starting at the first.
 
@@ -80,10 +82,10 @@ On tablets and desktops the menu becomes a permanent side pane, from Ionic's `md
 | --- | --- |
 | `sc-page-tour-list` | A chooser showing each tour with its cover image and description |
 | `sc-page-map` | Stations on a map, from their `latitude` and `longitude` |
-| `sc-page-multi-audio-station` | A station with several audio tracks to choose from |
+| `sc-page-multi-audio-station` | A station with several audio tracks to choose from, and its images as a slideshow |
 | `sc-page-station` | A single station on a page of its own |
 | `sc-page-station-list` | A plain list of stations |
-| `sc-page-tabbed-station-list` | A station list split into tabs |
+| `sc-page-tabbed-station-list` | The image list and the plain list as two tabs |
 | `sc-page-station-image-list` | A station list laid out as images |
 
 Using one is a route in your fork's `app-root.tsx`, plus a menu item that leads to it:

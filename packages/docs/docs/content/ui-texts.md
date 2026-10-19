@@ -1,6 +1,8 @@
 # UI texts
 
-Every piece of interface text — menu items, error messages, button labels — comes from the `texts` array in your data file. The app ships no strings of its own, so it has no language to leak through, and **every text you leave out shows as its key**.
+Every piece of interface text — menu items, error messages, button labels — comes from the `texts` array in your data file, and **every text you leave out shows as its key**.
+
+Two texts are outside your control. The loading screen shows a fixed English `Loading` with the progress percentage. And until the data file has loaded and a language is chosen, there are no texts to look up: if the very first load fails, the error screen shows the raw keys, `no-internet` and `try-again`.
 
 ## Shape
 
@@ -43,11 +45,11 @@ The library exports this list as the `TranslationKey` type, see [UI components](
 
 ### When a text is missing
 
-A missing key does not break the page. The app shows the key instead, lower-cased and with its first hyphen turned into a space — `try-again` reads `try again`. Readable enough to notice in testing, which is the point: check every screen in every language before you publish.
+A missing key does not break the page. The app first tries the key with `-` and `_` swapped, then falls back to the key itself, lower-cased and with its first hyphen and first underscore each turned into a space — `try-again` reads `try again`. Readable enough to notice in testing, which is the point: check every screen in every language before you publish.
 
 ## A complete starting set
 
-Copy this and translate it. The two demo files ([Animals](https://smartcompanion-app.github.io/data-format/v1.1/animals/data.json), [Leon](https://smartcompanion-app.github.io/data-format/v1.1/leon/data.json)) are real-world versions of the same thing.
+Copy this and translate it. The two demo files ([Animals](https://smartcompanion-app.github.io/data-format/animals/data.json), [Leon](https://smartcompanion-app.github.io/data-format/leon/data.json)) are real-world versions of the same thing.
 
 ```json
 "texts": [

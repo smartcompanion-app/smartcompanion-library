@@ -48,7 +48,15 @@ The Android back button and the browser's own back navigation are history naviga
 
 Pages with a back button use `ion-back-button` with `default-href="#"`. Ionic only shows a back button when there is an `ion-nav` or a `default-href`, and ignores an href starting with `#` — so the button is shown, and its click is left to the page, which calls `back()`.
 
-`sc-page-station` and `sc-page-map` offer one, with `enableBackButton` and, for the fallback, `defaultBackButtonHref`:
+Which pages show one, and where `back()` falls back to:
+
+| Page | Back button | Fallback |
+| --- | --- | --- |
+| `sc-page-station`, `sc-page-map` | With `enableBackButton`; the menu button otherwise | `defaultBackButtonHref`, `/` unless set |
+| `sc-page-multi-audio-station` | Always | `defaultBackButtonHref`, `/` unless set |
+| `sc-page-station-list`, `sc-page-station-image-list` | When `tourId` is set; the menu button otherwise | `/tours` |
+
+The other pages show the menu button, or no button at all.
 
 ```tsx
 <ion-route

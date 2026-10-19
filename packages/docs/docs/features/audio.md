@@ -51,17 +51,17 @@ Progress is stored per station in the device's storage. It survives closing the 
 
 ## Earpiece and speaker
 
-In a native app, `sc-page-stations` and `sc-page-station` can offer a switch between the phone's earpiece and its loudspeaker, with the `enableSwitchAudioOutput` property. Browsers choose the output themselves, so the default web app does not show it.
+In a native app, `sc-page-stations`, `sc-page-station` and `sc-page-multi-audio-station` can offer a switch between the phone's earpiece and its loudspeaker, with the `enableSwitchAudioOutput` property. Browsers choose the output themselves, so the default web app does not show it.
 
 ## Several tracks per station
 
-`audios` is an array. Several assets on one station are the data side of alternative narrations — a short and a long version, an expert commentary, a children's track. The library's `sc-page-multi-audio-station` lets the visitor choose between them; the default app routes to the single-track page, so using it means adding the route in your fork. See [Screens](./screens.md#pages-the-default-app-does-not-use).
+`audios` is an array. Several assets on one station are the data side of alternative narrations — a short and a long version, an expert commentary, a children's track. The library's `sc-page-multi-audio-station` lets the visitor choose between them. The default app does not use it, and its main screen expects exactly one track per station, so using several means adding that page's route in your fork. See [Screens](./screens.md#pages-the-default-app-does-not-use).
 
 Give each asset a `title`; that is what the chooser shows.
 
 ## Stations without audio
 
-Leave `audios` out, or set it to `[]`. The station shows its images and title with no player.
+The schema allows them, the default app does not. Its main screen plays a station's position in the list as its track, so a station without audio shifts every later station onto the wrong recording. Give such a station a short placeholder track instead — see [Stations](../content/stations.md#stations-without-audio).
 
 ## Preparing the files
 
@@ -70,7 +70,6 @@ The full treatment is in [Media](../content/media.md#audio). The short version:
 - **MP3**, mono, around **64 kbps** for speech
 - **Loudness-normalised** to about −16 LUFS, so visitors do not adjust the volume at every station
 - **Two to four minutes** per station
-- **`duration`** filled in on the asset
 - **Metadata** stripped or set correctly
 
 ## Headphones

@@ -32,8 +32,14 @@ The content could not be loaded. In order of likelihood:
 2. **CORS.** The console says so explicitly. See [Media](../content/media.md#2-cors).
 3. **Mixed content.** The app is on HTTPS and the data URL is HTTP. The browser blocks it.
 4. **Invalid JSON.** A trailing comma is enough. Run it through a validator.
-5. **A required key is missing** — `checksum`, `assets`, `stations`, `languages` or `texts`. The app ignores a file without them.
-6. **The content host is down.**
+5. **The content host is down.**
+
+</details>
+
+<details>
+<summary>The language screen is empty, or the content never updates</summary>
+
+A required key is missing from `data.json` — `checksum`, `assets`, `stations`, `languages` or `texts`. The app ignores such a file without an error: a fresh device has no languages to offer and shows an empty language screen, and a device that loaded the guide before keeps its old content. Validate against the [schema](../content/data-format.md).
 
 </details>
 
@@ -70,7 +76,7 @@ Then:
 <summary>A new station does not show up</summary>
 
 - It is missing in one or more languages
-- Its `number` duplicates another station's
+- Its `id` duplicates another station's — both entries then show whichever comes later in the file. A duplicate `number` hides nothing; it only makes the keypad open one of the two.
 - The `checksum` did not change
 
 </details>
@@ -78,7 +84,8 @@ Then:
 <details>
 <summary>Images do not load</summary>
 
-- An id in `stations.images` does not exist in `assets` — a typo gives an empty slideshow rather than an error
+- An id in `stations.images` does not exist in `assets` — the page then fails to render, with an error in the console
+- On the main screen, a station has only one image; it needs two, see [Stations](../content/stations.md#what-the-default-app-expects)
 - The `externalUrl` returns 404. Open it directly.
 - CORS, or mixed content
 
@@ -189,7 +196,7 @@ Node 22 or newer — check with `node --version`.
 </details>
 
 <details>
-<summary>The build stops with an error about <code>DATA_URL</code> or <code>ICON_SOURCE</code></summary>
+<summary>The build stops with an error about <code>DATA_URL</code>, <code>FONT_DIR</code> or <code>ICON_SOURCE</code></summary>
 
 A repository path has to sit inside a folder, stay inside the repository and use forward slashes, and the icon source has to exist. The message names the path it got.
 
@@ -199,7 +206,7 @@ A repository path has to sit inside a folder, stay inside the repository and use
 <summary>engraft did not change anything</summary>
 
 - A misspelled variable — engraft does not warn about values the template does not declare
-- `logo` and `logo_dark` are relative to the **values file**; `icon_source` and `data_url` to the **repository root**
+- `logo`, `logo_dark` and `font_stylesheet` are relative to the **values file**; `icon_source`, `data_url` and `font_dir` to the **repository root**
 - Check with `git diff --stat` after the apply
 
 </details>

@@ -22,7 +22,7 @@ Sharing needs the Web Share API and [offline support](../features/offline.md) ne
 
 ## Older devices
 
-Library releases before Swiper 14 support older browsers, but they are an unmaintained line and older than the Ionic 9 app — pinning one means staying on an old app too. Worth it only if you know your audience is on old hardware, such as a lending pool of ageing devices. Check your website's analytics for the share of old iOS versions before deciding.
+Library releases before Swiper 14 — `@smartcompanion/ui` 0.9.x and earlier; Swiper 14 arrived in 0.10.0 — support older browsers, but they are an unmaintained line and older than the Ionic 9 app — pinning one means staying on an old app too. Worth it only if you know your audience is on old hardware, such as a lending pool of ageing devices. Check your website's analytics for the share of old iOS versions before deciding.
 
 ## Devices the venue lends out
 

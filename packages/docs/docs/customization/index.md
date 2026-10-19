@@ -1,6 +1,6 @@
 # Customization
 
-The app ships as the *Animals* demo. Turning it into your institution's guide means changing a title, a data URL, two colours, a logo and an icon — in a way that survives pulling updates from upstream.
+The app ships as the *Animals* demo. Turning it into your institution's guide means changing a title, a data URL, two colours, a logo, an icon and perhaps the font — in a way that survives pulling updates from upstream.
 
 ## The problem with editing files directly
 
@@ -39,10 +39,11 @@ A ready-made example lives in [`customization/leon/`](https://github.com/smartco
 
 | File | What changes |
 | --- | --- |
-| `stencil.config.ts` | Title, data URL, offline and messaging switches |
+| `stencil.config.ts` | Title, data URL, offline and messaging switches, font folder (`FONT_DIR`) |
 | `src/index.html` | Page title, description, `theme-color` metas, `lang` attribute |
 | `src/manifest.json` | Name, short name, description, language, background and theme colour |
-| `src/global/app.scss` | The colour variables |
+| `src/global/app.scss` | The colour variables and `$font-family` |
+| `src/global/_fonts.scss` | Replaced by your font stylesheet |
 | `src/assets/logo.png`, `logo-dark.png` | Replaced by your logo files |
 | `scripts/generate-icons.mjs` | The icon source image and its background colour |
 
@@ -61,6 +62,7 @@ After an apply, your working tree is *modified*. That is intentional: you build 
 | [Variables](./variables.md) | Every variable you can set, and what it affects |
 | [Colors](./colors.md) | How two colours become a whole palette, in light and dark mode |
 | [Logos and icons](./logos-and-icons.md) | The logo, the dark-mode logo, and the icon set generated from one image |
+| [Fonts](./fonts.md) | Your own typeface, self-hosted or from a font service |
 | [Variants](./variants.md) | Several branded builds in one repository |
 
 ## Beyond engraft

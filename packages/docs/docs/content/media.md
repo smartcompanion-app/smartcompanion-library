@@ -80,7 +80,7 @@ The app is served over HTTPS, so it cannot fetch anything over plain HTTP — br
 
 ### 2. CORS
 
-Media on another host is fetched from a **different origin** than the app. Without a permissive CORS header the browser blocks the request, and you get an empty slideshow or a silent player, with an error only in the console.
+Media on another host is fetched from a **different origin** than the app. Without a permissive CORS header the browser blocks the request, and you get missing pictures or a silent player, with an error only in the console.
 
 Your media responses need this header:
 
@@ -142,7 +142,11 @@ curl -sI -H "Range: bytes=0-99" https://example.org/assets/a1en.mp3 | head -1
 
 ### 4. Stable URLs
 
-Once a guide is published, a URL that changes breaks it for everyone who has cached it. Treat `externalUrl` values as permanent. If you must replace a file's content, keep the URL, or issue a new asset id with a new URL — and change the `checksum` either way.
+Treat a published `externalUrl` as belonging to one version of one file.
+
+To **replace** a file — a re-recorded narration, a better photo — give the new version a new file name and URL, update the asset entry, and change the `checksum`. Do not overwrite the file in place: with [offline support](../features/offline.md#what-gets-cached) the service worker keeps media it has cached and never asks the server again, so visitors who already have the old file go on hearing it.
+
+To **retire** a file, leave it on the server until visitors have picked up the new `data.json`; a device with the old content still requests it.
 
 ## Audio
 
@@ -186,12 +190,6 @@ ffmpeg -i in.wav -af loudnorm=I=-16:TP=-1.5:LRA=11 -ac 1 -b:a 64k out.mp3
 ffmpeg -i in.mp3 -map_metadata -1 -metadata title="1 – The Great Hall" -codec copy out.mp3
 ```
 
-**Record the duration** in the asset entry. `ffprobe` tells you:
-
-```bash
-ffprobe -v error -show_entries format=duration -of csv=p=0 station-01-en.mp3
-```
-
 ### Length
 
 Two to four minutes per station works. Under a minute feels like it was not worth stopping for; over five and visitors walk away mid-sentence. A station that needs ten minutes is probably two stations.
@@ -200,11 +198,14 @@ Two to four minutes per station works. Under a minute feels like it was not wort
 
 **Format.** JPEG for photographs, PNG for diagrams, logos and anything with flat colour or transparency. WebP works in every supported browser and is 25–35 % smaller.
 
-**Size.** The slideshow is a phone-width element. Beyond about 1600 px on the long edge you pay for pixels nobody sees:
+**Which image goes where.** On the default main screen a station's first image is the large picture at the top and its second is the picture on its card in the list — see [Stations](./stations.md#images). The slideshow exists only on the multi-track station page.
+
+**Size.** Every picture is at most phone-width. Beyond about 1600 px on the long edge you pay for pixels nobody sees:
 
 | Use | Long edge | Target file size |
 | --- | --- | --- |
-| Station slideshow | 1200–1600 px | 150–300 KB |
+| Large station picture (first image) | 1200–1600 px | 150–300 KB |
+| Card picture (second image) | 600–800 px | 50–100 KB |
 | Tour cover | 1200 px | 150–250 KB |
 
 Resize and compress:
@@ -219,9 +220,9 @@ ffmpeg -i input.jpg -vf "scale='min(1600,iw)':-1" -q:v 4 station-01.jpg
 
 `-strip` removes EXIF data — smaller files, and no GPS coordinates of your storage room shipped to visitors.
 
-**Orientation.** Landscape reads better in the slideshow. Portrait images work but leave large margins on a phone held upright.
+**Orientation.** Landscape reads better. Portrait images work but leave large margins on a phone held upright.
 
-**Two to four images per station** is a good ceiling. A visitor swiping through twelve photographs is not listening.
+**Two images per station** is what the default app uses. On the multi-track page, which shows them all, two to four is a good ceiling: a visitor swiping through twelve photographs is not listening.
 
 ## Naming files
 

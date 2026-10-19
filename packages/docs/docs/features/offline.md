@@ -26,7 +26,7 @@ Two mechanisms work together, and it helps to keep them apart.
 
 ### The service worker caches what is fetched
 
-[Workbox](https://developer.chrome.com/docs/workbox/) precaches the app itself — its JavaScript, CSS, HTML, the manifest, the icons and the Ionic icons the menu and the player use. On top of that, [`src/sw.js`](https://github.com/smartcompanion-app/audioguide-app/blob/main/src/sw.js) adds two routes:
+[Workbox](https://developer.chrome.com/docs/workbox/) precaches the app itself — its JavaScript, CSS, HTML, the manifest, the icons, self-hosted [fonts](../customization/fonts.md), the Ionic icons the menu and the player use, and every JSON and PNG file in the build, so [bundled content](../content/media.md#bundling-the-content-with-the-app)'s `data.json` too. On top of that, [`src/sw.js`](https://github.com/smartcompanion-app/audioguide-app/blob/main/src/sw.js) adds four routes:
 
 ```js title="src/sw.js"
 // data.json: fresh when online, cached when not
@@ -40,11 +40,23 @@ routing.registerRoute(
   ({ request }) => request.url.match(/assets\/.+\..{2,}/),
   new strategies.CacheFirst({ cacheName: 'assets-cache' }),
 );
+
+// Google Fonts, for a font stylesheet that links them
+routing.registerRoute(
+  ({ url }) => url.origin === 'https://fonts.googleapis.com',
+  new strategies.StaleWhileRevalidate({ cacheName: 'google-fonts-stylesheets' }),
+);
+routing.registerRoute(
+  ({ url }) => url.origin === 'https://fonts.gstatic.com',
+  new strategies.CacheFirst({ cacheName: 'google-fonts-webfonts' }),
+);
 ```
 
 **NetworkFirst for `data.json`**: online, the visitor gets your latest file; offline, the last one they loaded.
 
-**CacheFirst for media**: a file is fetched once and then comes from the device — fast, and no repeat bandwidth for you.
+**CacheFirst for media**: a file is fetched once and then comes from the device — fast, and no repeat bandwidth for you. The cache has no expiry, so a file replaced on the server under the **same URL** is never fetched again on a device that has it. Give a new version a new file name — see [Media](../content/media.md#4-stable-urls).
+
+**Google Fonts** are cached once loaded, for an app whose [font stylesheet](../customization/fonts.md#a-font-from-a-font-service) links them.
 
 The worker takes control of the page as soon as it is installed rather than waiting for every tab to close.
 
@@ -72,7 +84,9 @@ Size the download deliberately: see [Budgeting an offline download](../content/m
 
 ## Updating content on cached devices
 
-**`checksum` is the mechanism.** The app compares the checksum of the `data.json` it just fetched with the one it stored. Only when they differ does it take over the new content and fetch the media again. Change it on every content edit, or devices keep the old guide indefinitely — with no error.
+**`checksum` is the mechanism.** The app compares the checksum of the `data.json` it just fetched with the one it stored. Only when they differ does it take over the new content. Change it on every content edit, or devices keep the old guide indefinitely — with no error.
+
+The media download, by contrast, runs on every start: the app requests every asset it needs again, and the service worker answers from its cache. So a start with everything cached is quick, and only new files go over the network — which is also why a replaced file needs a new URL.
 
 **A device has to be online once** to see an update. A phone that never returns to a network never updates.
 

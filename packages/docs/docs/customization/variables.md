@@ -6,7 +6,7 @@ Every variable declared in [`engraft.template.yml`](https://github.com/smartcomp
 npx engraft apply --template engraft.template.yml --values customization/my-museum/engraft.variables.yml
 ```
 
-**A variable you leave out is not reset.** Most variables have no default: leaving one out leaves the file it targets as it is — on a fresh checkout, that is the *Animals* demo's value. The few with a default are marked below.
+**What happens to a variable you leave out depends on whether it has a default.** Most have none: leaving one out leaves the file it targets as it is — on a fresh checkout, that is the *Animals* demo's value. The three with a default — `offline_support`, `messaging_support` and `primary_color_contrast` — are written on every apply, so leaving one out sets it back to its default.
 
 ## Identity
 
@@ -83,6 +83,16 @@ Mind the two kinds of path. A values file at `customization/my-museum/engraft.va
 
 Sizes and the generated icon set: [Logos and icons](./logos-and-icons.md).
 
+## Fonts
+
+| Variable | Relative to | What it does |
+| --- | --- | --- |
+| `font_stylesheet` | the values file | Replaces `src/global/_fonts.scss` — your `@font-face` rules, or a font service's `@import` |
+| `font_dir` | the repository root | `FONT_DIR` in `stencil.config.ts`: a folder of font files, copied into the build as `assets/fonts/` |
+| `font_family` | — | `$font-family` in `src/global/app.scss`, which becomes Ionic's `--ion-font-family` |
+
+All three are optional; without them the app uses Ionic's default system font. See [Fonts](./fonts.md).
+
 ## A complete values file
 
 ```yaml title="customization/my-museum/engraft.variables.yml"
@@ -103,15 +113,22 @@ primary_color_contrast: "#ffffff"
 logo: assets/logo.png
 logo_dark: assets/logo-dark.png
 icon_source: customization/my-museum/assets/app-icon-512.png
+
+font_stylesheet: fonts.scss
+font_dir: customization/my-museum/fonts
+font_family: "'Source Sans 3', sans-serif"
 ```
 
 ```
 customization/my-museum/
 ├─ engraft.variables.yml
+├─ fonts.scss
 ├─ assets/
 │  ├─ logo.png
 │  ├─ logo-dark.png
 │  └─ app-icon-512.png
+├─ fonts/
+│  └─ SourceSans3-Regular.woff2
 └─ data/
    ├─ data.json
    └─ assets/
@@ -126,7 +143,7 @@ npx engraft apply --template engraft.template.yml --values customization/my-muse
 git diff --stat
 ```
 
-You should see changes in `stencil.config.ts`, `src/index.html`, `src/manifest.json`, `src/global/app.scss`, `scripts/generate-icons.mjs` and the two logo files. If a file you expected is untouched, check the variable's spelling — engraft does not warn about values the template does not declare.
+You should see changes in `stencil.config.ts`, `src/index.html`, `src/manifest.json`, `src/global/app.scss`, `scripts/generate-icons.mjs`, the two logo files and, with a font stylesheet, `src/global/_fonts.scss`. If a file you expected is untouched, check the variable's spelling — engraft does not warn about values the template does not declare.
 
 ## Adding a variable
 

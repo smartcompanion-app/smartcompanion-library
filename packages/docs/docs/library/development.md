@@ -35,19 +35,30 @@ Package boundaries — `ui` does not import `services`, nothing under `packages/
 | `npm run build` | Build all three packages |
 | `npm test` | Run the tests of all three packages |
 | `npm run coverage` | Tests with coverage; reports in `packages/*/coverage` |
-| `npm run lint` | ESLint, with zero warnings allowed |
+| `npm run lint` | ESLint. CI fails only on errors; keep warnings at zero too |
 | `npm run format:check` | Prettier check |
 | `npm run depcruise` | Package boundaries |
 | `npm run check:publish` | publint and attw against each package's tarball |
 | `npm run storybook -w packages/ui` | Storybook at <http://localhost:6006> |
 | `npm run docs:start` | This documentation, with live reload |
 | `npm run docs:build` | This documentation, built; fails on a broken link |
+| `npm run docs:typecheck` | Type-checks the site's configuration |
 
 Run a single package's scripts with `-w packages/<name>`, e.g. `npm test -w packages/ui`.
 
 ## Tests
 
-Vitest throughout. The `ui` tests run in a real Chromium through Playwright, against the built components — so `ui` is built before its tests run.
+Vitest throughout. `ui` runs its tests through `stencil-test`, which builds the components in development mode first and then runs five Vitest projects against that build:
+
+| Project | Files | Runs in |
+| --- | --- | --- |
+| `unit` | `*.test.ts` | Node |
+| `snapshot` | `*.snapshot.tsx` | Stencil's mock DOM |
+| `spec` | `*.spec.tsx` | Stencil with jsdom |
+| `browser` | `*.browser.tsx` | Chromium, through Playwright |
+| `browser-ionic` | `*.ionic.browser.tsx` | Chromium, with a real Ionic loaded |
+
+`npm run coverage` measures the `ui` build through its source maps, so it reports against `src`.
 
 ## Storybook
 

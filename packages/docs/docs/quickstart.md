@@ -38,7 +38,7 @@ npm install
 npm start
 ```
 
-`npm start` serves the app at <http://localhost:3333> and rebuilds on every save. What you see is the *Animals* demo: three stations in German, English and Spanish, loaded from a [data file](https://smartcompanion-app.github.io/data-format/v1.1/animals/data.json) hosted elsewhere.
+`npm start` serves the app at <http://localhost:3333> and rebuilds on every save. What you see is the *Animals* demo: three stations in German, English and Spanish, loaded from a [data file](https://smartcompanion-app.github.io/data-format/animals/data.json) hosted elsewhere.
 
 :::info[Fork, or download a copy?]
 
@@ -118,8 +118,10 @@ customization/my-museum/
    └─ assets/              # your media
       ├─ station-1.mp3
       ├─ station-1.jpg
+      ├─ station-1-card.jpg
       ├─ station-2.mp3
-      └─ station-2.jpg
+      ├─ station-2.jpg
+      └─ station-2-card.jpg
 ```
 
 Because `data_url` is a path inside the repository, the `data/` folder is copied into the build and served from `data/` next to the app — one deployment, no second host. That is why the asset URLs below start with `data/`, whatever the folder is called in the repository. [Media](./content/media.md#bundling-the-content-with-the-app) explains the alternative of hosting the content somewhere else.
@@ -133,12 +135,14 @@ A minimal file with two stations in one language:
   "assets": [
     { "id": "audio-1", "language": "en", "filename": "station-1.mp3", "externalUrl": "data/assets/station-1.mp3" },
     { "id": "image-1", "filename": "station-1.jpg", "externalUrl": "data/assets/station-1.jpg" },
+    { "id": "card-1", "filename": "station-1-card.jpg", "externalUrl": "data/assets/station-1-card.jpg" },
     { "id": "audio-2", "language": "en", "filename": "station-2.mp3", "externalUrl": "data/assets/station-2.mp3" },
-    { "id": "image-2", "filename": "station-2.jpg", "externalUrl": "data/assets/station-2.jpg" }
+    { "id": "image-2", "filename": "station-2.jpg", "externalUrl": "data/assets/station-2.jpg" },
+    { "id": "card-2", "filename": "station-2-card.jpg", "externalUrl": "data/assets/station-2-card.jpg" }
   ],
   "stations": [
-    { "id": "s1", "language": "en", "number": "1", "title": "The Great Hall", "subtitle": "Where it all begins", "images": ["image-1"], "audios": ["audio-1"] },
-    { "id": "s2", "language": "en", "number": "2", "title": "The Library", "images": ["image-2"], "audios": ["audio-2"] }
+    { "id": "s1", "language": "en", "number": "1", "title": "The Great Hall", "subtitle": "Where it all begins", "images": ["image-1", "card-1"], "audios": ["audio-1"] },
+    { "id": "s2", "language": "en", "number": "2", "title": "The Library", "images": ["image-2", "card-2"], "audios": ["audio-2"] }
   ],
   "texts": [
     { "language": "en", "key": "menu-overview", "value": "Overview" },
@@ -155,7 +159,7 @@ Four things worth understanding before you scale this to thirty stations:
 - **Assets are referenced, not inlined.** Every audio file and image is an entry in `assets` with a unique `id`, and stations point at those ids. Audio carries a `language`; images do not, because one photo serves every language.
 - **A station is repeated once per language.** Three languages means three entries sharing the same `id` and `number`, each with its own `language`, `title` and `audios`. See [Languages](./content/languages.md).
 - **`number` is what the visitor types.** It is the number on your signage, matched exactly on the keypad. The `id` is internal.
-- **`images` is required, `audios` is not.** Every station needs at least one image; a station without audio is a valid intro or title card.
+- **Two images and one audio per station.** The data format requires only one image and no audio, but the app's main screen shows the first image large and the second on the station's card in the list, and plays the station's position in the list as its track. A station with one image breaks that screen; one without audio, or with several, puts every later station on the wrong track. See [Stations](./content/stations.md#what-the-default-app-expects).
 
 :::warning[Change the `checksum` on every edit]
 
@@ -195,7 +199,7 @@ From now on every push to your `main` branch builds and deploys the guide. Netli
 Before you print the QR codes, on an actual phone, on mobile data:
 
 - [ ] Every station plays, in every language you offer
-- [ ] Images load and the slideshow swipes
+- [ ] Images load, and the station cards swipe
 - [ ] The keypad finds every station by its `number`
 - [ ] Light and dark mode both look right
 - [ ] The icon and name look right when the guide is added to the home screen

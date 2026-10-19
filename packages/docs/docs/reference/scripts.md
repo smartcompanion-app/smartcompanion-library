@@ -8,8 +8,9 @@ Every npm script of the app.
 | `npm run build` | Production build into `www/` |
 | `npm run build:offline` | Production build **with** the service worker |
 | `npm run icons` | Generate the icon set from the icon source — runs before every build and start |
-| `npm test` | Build, then run the end-to-end suite without the offline specs |
+| `npm test` | Build, then run the end-to-end suite without the offline and font specs |
 | `npm run test:offline` | Offline build, then run only the offline specs |
+| `npm run test:fonts` | Build the font fixture in a copy, then run only the font specs |
 | `npm run test:dev` | Run the suite against an already running dev server |
 | `npm run lint` | ESLint over `src` and `test` |
 | `npm run format` | Prettier, write mode |
@@ -41,20 +42,25 @@ Generates the icon set from the image named in `scripts/generate-icons.mjs` into
 
 The suite is WebdriverIO with Mocha, driving Chrome through `puppeteer-core`. Configuration in `wdio.conf.ts`, specs in `test/specs`, page objects in `test/pageobjects`.
 
-**Two modes, which do not overlap:**
+**Three modes, which do not overlap:**
 
-| Command | Specs | Server port | Build |
+| Command | Specs | Server port | Serves |
 | --- | --- | --- | --- |
-| `npm test` | `test/specs/**` except `offline/` | `:4567` | `npm run build` |
-| `npm run test:offline` | `test/specs/offline/**` only | `:4568` | `npm run build:offline` |
+| `npm test` | `test/specs/**` except `offline/` and `fonts/` | `:4567` | `www/`, from `npm run build` |
+| `npm run test:offline` | `test/specs/offline/**` only | `:4568` | `www/`, from `npm run build:offline` |
+| `npm run test:fonts` | `test/specs/fonts/**` only | `:4569` | `.variants/fonts/www/` |
 
-`TEST_OFFLINE=true` switches `wdio.conf.ts` between them. CI runs both, so run both before pushing:
+`TEST_OFFLINE=true` and `TEST_FONTS=true` switch `wdio.conf.ts` between them. CI runs all three, so run all three before pushing:
 
 ```bash
-npm test && npm run test:offline
+npm test && npm run test:offline && npm run test:fonts
 ```
 
-The regular run passes `--disable-web-security` to Chrome; the offline run deliberately does not — the service worker needs a normal origin to register against.
+The regular run passes `--disable-web-security` to Chrome; the offline and font runs deliberately do not — the service worker needs a normal origin to register against.
+
+### `npm run test:fonts`
+
+Fonts only show in a customized build, so this run does not test your working tree. `scripts/build-variant.mjs` copies the repository to `.variants/fonts/`, applies the values file in `test/fixtures/fonts/` there and builds it with offline support; the specs then run against that copy. Your own working tree stays as it is. See [Variants](../customization/variants.md#applies-are-not-additive).
 
 ### `npm run test:dev`
 

@@ -25,7 +25,7 @@ npm run build
 
 ## Applies are not additive
 
-Each `engraft apply` rewrites the same files. Applying variant B after variant A does **not** reset anything: B's values overwrite A's where B names them, and anything B leaves out keeps A's value rather than returning to the default.
+Each `engraft apply` rewrites the same files. Applying variant B after variant A does **not** start from a clean tree: B's values overwrite A's where B names them, and a variable B leaves out keeps A's value — unless it has a default. `offline_support`, `messaging_support` and `primary_color_contrast` do: those three go back to their default whenever B does not name them. Everything else, the colours, logos and fonts included, stays as A left it.
 
 That is a real trap when building several variants in one job. Two ways to stay honest:
 
@@ -38,6 +38,15 @@ npm run build
 ```
 
 **Or set every variable in every values file.** More verbose, and a new upstream variable then needs adding to each file, but it removes the ordering question.
+
+**Or build in a copy.** The app's `scripts/build-variant.mjs` copies the repository to `.variants/<name>/`, applies a values file there and builds it with offline support, leaving your own working tree untouched:
+
+```bash
+node scripts/build-variant.mjs customization/my-museum
+# the build is in .variants/my-museum/www
+```
+
+It takes the folder holding the `engraft.variables.yml`. The app's own font tests use it.
 
 ## Building several in one run
 
@@ -91,7 +100,7 @@ The repository holds only `customization/`. CI applies the values file and build
 Apply once, commit the result, and treat your fork as an already-branded app.
 
 - Anyone can clone and `npm run build` with no extra step
-- Every upstream merge can conflict in `stencil.config.ts`, `src/index.html`, `src/manifest.json`, `src/global/app.scss` and `scripts/generate-icons.mjs`, and you resolve them by hand
+- Every upstream merge can conflict in `stencil.config.ts`, `src/index.html`, `src/manifest.json`, `src/global/app.scss`, `src/global/_fonts.scss` and `scripts/generate-icons.mjs`, and you resolve them by hand
 
 Keep the values file committed either way — it is the record of *why* those files look the way they do.
 

@@ -44,6 +44,8 @@ iframe.contentWindow.postMessage(
 
 The payload is a flat object of property name to value. Only string values are applied. Every `--sc-*` property can be set — the list is in [Colors](../customization/colors.md#the-variables-that-reach-the-browser).
 
+The values are set as inline styles on `<html>`, so they win over both palettes: a colour set this way stays the same in light and dark mode. A preview that offers a dark-mode toggle sends the dark values along with the switch.
+
 :::warning[Runtime overrides are not derived]
 
 At build time, naming `background_color` derives the card colour, the menu border, the dark palette and the rest. Setting `--sc-background-color` over `postMessage` sets **exactly that one property**; nothing else follows.

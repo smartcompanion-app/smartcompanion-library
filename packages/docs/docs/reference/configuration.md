@@ -4,13 +4,14 @@ All build-time configuration of the app lives in [`stencil.config.ts`](https://g
 
 In practice you do not edit it by hand: [engraft](../customization/index.md) writes your values file into it. Edit it directly only to try something quickly.
 
-## The four settings
+## The five settings
 
 ```ts title="stencil.config.ts"
 const TITLE = "Animals";
 const DATA_URL = "https://smartcompanion-app.github.io/data-format/animals/data.json";
 const OFFLINE_SUPPORT = process.env.OFFLINE_SUPPORT === 'true' || false;
 const MESSAGING_SUPPORT = true;
+const FONT_DIR = "";
 ```
 
 ### `TITLE`
@@ -54,9 +55,13 @@ Two ways in: the environment variable, which `npm run build:offline` sets, or th
 
 Installs the `postMessage` listener that lets a host page restyle the app inside an iframe. On in the *Animals* demo, off after an apply unless the values file asks for it. See [Embedding](../features/embedding.md).
 
+### `FONT_DIR`
+
+A repository-relative folder of font files, copied into the build as `assets/fonts/`. Empty, the default, copies nothing. It has the same guard as a bundled `DATA_URL`: inside the repository, forward slashes only. engraft writes it from `font_dir`; see [Fonts](../customization/fonts.md).
+
 ## The `env` block
 
-The four become runtime values, available as `Env.*`:
+Four of them become runtime values, available as `Env.*` — `FONT_DIR` is only used by the build:
 
 ```ts
 env: {
@@ -75,14 +80,18 @@ The switches become the strings `"enabled"` and `"disabled"`, which is what the 
 outputTargets: [
   {
     type: 'www',
-    copy: [{ src: '../.pwa-assets', dest: 'assets/icon' }, ...(LOCAL_DATA_DIR ? [{ src: `../${LOCAL_DATA_DIR}`, dest: 'data' }] : [])],
+    copy: [
+      { src: '../.pwa-assets', dest: 'assets/icon' },
+      ...(LOCAL_DATA_DIR ? [{ src: `../${LOCAL_DATA_DIR}`, dest: 'data' }] : []),
+      ...(FONT_DIR ? [{ src: `../${FONT_DIR}`, dest: 'assets/fonts' }] : []),
+    ],
     serviceWorker: OFFLINE_SUPPORT ? { swSrc: 'src/sw.js', globPatterns: [ … ] } : null,
     baseUrl: '/',
   },
 ],
 ```
 
-`copy` brings in the generated icon set and, for bundled content, your data folder.
+`copy` brings in the generated icon set and, when set, your data folder and your font folder.
 
 `baseUrl: '/'` is why a subdirectory deployment needs the two path fixes in [Deployment](../deployment/index.md#deploying-to-a-subdirectory).
 
@@ -92,7 +101,7 @@ With offline support, Workbox precaches by pattern:
 
 ```ts
 globPatterns: [
-  '**/*.{js,css,json,html,ico,png}',
+  '**/*.{js,css,json,html,ico,png,woff2,woff,ttf,otf}',
   '**/list.svg',
   '**/keypad.svg',
   '**/chatbubbles.svg',
@@ -108,7 +117,7 @@ globPatterns: [
 ]
 ```
 
-The broad pattern covers the app, the icons and a bundled `data.json`. The SVGs are the Ionic icons the menu, the player and the keypad use — listed one by one, because Ionic ships thousands of icons and precaching them all would bloat the download.
+The broad pattern covers the app, the icons, self-hosted fonts and a bundled `data.json` — and any PNG in the build, bundled content images included. The SVGs are the Ionic icons the menu, the player and the keypad use — listed one by one, because Ionic ships thousands of icons and precaching them all would bloat the download.
 
 **If you add a menu item with a new icon, add its SVG here.** Otherwise it is missing offline, with no error and an empty button.
 

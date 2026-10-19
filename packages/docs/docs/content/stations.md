@@ -15,9 +15,18 @@ A station is one stop on the tour: a number on a sign, a title, some pictures, a
 }
 ```
 
-`audios` is optional — see [Stations without audio](#stations-without-audio). `images` is not; every station needs at least one.
+The data format makes `audios` optional and asks for at least one image. The default app asks for more — see below.
 
 The complete field list is in [Data format](./data-format.md#stations). This page is about using the fields well.
+
+## What the default app expects
+
+The default app's main screen, `sc-page-stations`, shows the active station's picture large, its player below, and every station as a swipeable card. That screen relies on two things the schema does not enforce:
+
+- **Two images per station.** The first is the large picture, the second the picture on the station's card. A station with a single image breaks the screen.
+- **Exactly one audio per station.** The player holds one track per audio asset and plays a station's position in the list as its track. A station with no audio, or with two, moves every station after it onto the wrong recording.
+
+Both hold for every language. The other station pages are more forgiving; see [Screens](../features/screens.md).
 
 ## Numbering
 
@@ -41,10 +50,17 @@ The player's next and previous controls follow the same order, so the numbering 
 
 ## Images
 
-`images` is an array of asset ids, and it drives the slideshow at the top of the station. Several images become a swipeable gallery; a single image is shown on its own.
+`images` is an array of asset ids. What each position is used for depends on the page:
+
+| Page | Uses |
+| --- | --- |
+| `sc-page-stations` (the default main screen) | The first image large, the second on the station's card |
+| `sc-page-station` (a single station) | The first image |
+| `sc-page-station-image-list` | The first image, as the list thumbnail |
+| `sc-page-multi-audio-station` | All of them, as a swipeable slideshow |
 
 ```json
-"images": ["hall-wide", "hall-ceiling", "hall-detail"]
+"images": ["hall-wide", "hall-card"]
 ```
 
 Images are normally **shared between languages** — the same asset ids in the German and the English variant of a station. An image asset has no `language`, and there is no reason to duplicate a photograph per language.
@@ -66,15 +82,13 @@ The audio asset carries its own `language`, and it should match the station vari
 
 ### More than one track
 
-A station can list several audio assets — a narration and an eyewitness account, a short and a long version. The library has a page for this, `sc-page-multi-audio-station`, which lets the visitor choose. The default app routes to the single-track station page; using the multi-track one is a change in your fork, see [Screens](../features/screens.md#pages-the-default-app-does-not-use).
+A station can list several audio assets — a narration and an eyewitness account, a short and a long version. The library has a page for this, `sc-page-multi-audio-station`, which lets the visitor choose. The default app does not use it, and its main screen expects one track per station; using the multi-track page is a change in your fork, see [Screens](../features/screens.md#pages-the-default-app-does-not-use).
 
 ### Stations without audio
 
-Leave `audios` out, or set it to `[]`. You get a station with images, a title and a description, and no player. Useful for:
+The schema allows a station without `audios` — a welcome panel, a purely visual exhibit, a recording that is not ready yet. The default app does not: its main screen and its station page play a station's position in the list as its track, so a station without audio shifts every station after it onto the wrong recording.
 
-- A welcome or orientation panel
-- A station whose recording is not ready yet
-- A purely visual exhibit
+Until the recording exists, give the station a placeholder track — a few seconds of silence, or a short spoken note. A guide built on other pages, such as the station lists, can leave it out.
 
 ## Text
 
@@ -82,7 +96,7 @@ Leave `audios` out, or set it to `[]`. You get a station with images, a title an
 | --- | --- | --- |
 | `title` | Station list, station header | The name on the sign |
 | `subtitle` | Under the title | A Latin name, a date, an artist, a room |
-| `description` | With the station | A transcript, or context the audio does not cover |
+| `description` | On the single-station page, in the image list, and in the multi-track page's info popover — not on the default main screen | A transcript, or context the audio does not cover |
 
 `description` is plain text, not Markdown or HTML.
 
@@ -142,6 +156,6 @@ The station variant references an audio asset recorded in another language. Chec
 <details>
 <summary>A station shows no images</summary>
 
-`images` must have at least one entry, and every id in it must exist in `assets`. A typo in an id gives an empty slideshow rather than an error.
+Every id in `images` must exist in `assets`. A typo in an id does not leave a gap: the page fails to render. The same happens on the main screen when a station has only one image — see [What the default app expects](#what-the-default-app-expects).
 
 </details>

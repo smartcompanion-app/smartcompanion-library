@@ -41,7 +41,7 @@ Using the audio player or the load service before registering one throws an erro
 
 ### Texts
 
-`__(key)` returns the text for `key` in the current language. Before a language is chosen it returns the key; for a key missing from the content, the key lower-cased with its first hyphen as a space.
+`__(key)` returns the text for `key` in the current language, trying the key with `-` and `_` swapped if it is not there as written. Before a language is chosen it returns the key unchanged; for a key missing from the content, the key lower-cased with its first hyphen and its first underscore each turned into a space.
 
 ### The route guard
 

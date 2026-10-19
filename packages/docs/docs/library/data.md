@@ -16,6 +16,7 @@ Most apps never construct these classes themselves: [`ServiceFacade`](./services
 | Domain services | `StationService`, `TourService`, `AssetService`, `LanguageService`, `TextService`, `PinService`, `ServerService`, `ShareService` |
 | Storage | The `Storage` interface, with `BrowserStorage` and `MemoryStorage` |
 | Loading | `LoadService`, with `OnlineLoadService` and `OfflineLoadService` |
+| Files | `FileUpdater` and `FileMatcher`, which the offline service uses to download what is missing and remove what is no longer listed |
 | Updating | `DataUpdater`, and an updater per part of the data |
 
 ## Storage
@@ -69,7 +70,7 @@ new OnlineLoadService(downloadData, dataUpdater, languageService, pinService);
 new OfflineLoadService(downloadData, downloadFile, remove, save, list, dataUpdater, storage, languageService, pinService, assetService);
 ```
 
-After the content, it downloads the media of the current language — audio in that language and every asset without one — and reports progress. It is driven by five callbacks, because storing a file differs per platform:
+After the content, it downloads the media of the current language — every asset tagged with that language, and every asset without one — and reports progress. It compares the files `list()` reports with the assets it needs: what is missing is downloaded, what is no longer needed is removed. It is driven by five callbacks, because storing a file differs per platform:
 
 | Callback | Responsibility |
 | --- | --- |
@@ -79,7 +80,7 @@ After the content, it downloads the media of the current language — audio in t
 | `save(filename, data)` | Store a downloaded file |
 | `list()` | List the stored files |
 
-In a web app a service worker does the storing, so `downloadFile` just fetches and the other three do nothing — see the [app's wiring](../reference/architecture.md#data-loading). A native app writes to the device's file system instead.
+In a web app a service worker does the storing, so `downloadFile` just fetches and the other three do nothing — see the [app's wiring](../reference/architecture.md#data-loading). Since `list()` then reports no files, every asset is requested again on every load, and the service worker answers from its cache. A native app writes to the device's file system instead.
 
 When loading fails — the device is offline, say — the offline service still reports `home` if everything was loaded before, so the guide keeps working.
 

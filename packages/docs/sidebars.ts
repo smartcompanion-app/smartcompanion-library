@@ -16,7 +16,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Customization',
       link: { type: 'doc', id: 'customization/index' },
-      items: ['customization/variables', 'customization/colors', 'customization/logos-and-icons', 'customization/variants'],
+      items: ['customization/variables', 'customization/colors', 'customization/logos-and-icons', 'customization/fonts', 'customization/variants'],
     },
     {
       type: 'category',

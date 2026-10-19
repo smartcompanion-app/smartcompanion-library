@@ -83,13 +83,12 @@ Every downloadable file — audio, images — is declared once here and referenc
 | `externalUrl` | string | **yes** | The URL the file is downloaded from — absolute, or relative to the app for [bundled content](./media.md#bundling-the-content-with-the-app). |
 | `language` | string | no | Two- or three-letter code, e.g. `de`. Set it on audio; leave it off images. |
 | `title` | string | no | Display title, e.g. an audio track name |
-| `duration` | number | no | Length in seconds, so the player can show it before the file has loaded |
+| `duration` | number | no | Length in seconds. Allowed, but the app does not read it: the player takes the length from the file. |
 
 **Conventions worth following**
 
 - Keep `filename` unique across the whole file. It becomes the name on disk in offline mode.
 - Set `language` on audio, leave it off images. Images are normally shared between the language variants of a station.
-- Fill in `duration` if you can — the player's progress display is then right from the start.
 
 ---
 
@@ -118,14 +117,14 @@ A station is a point of interest. **One entry per language**: the same `id` and 
 | `language` | string | **yes** | Which language this variant is in. Pattern `^[a-z]{2,3}$`. |
 | `number` | string | **yes** | What the visitor types on the keypad and reads on the sign. A **string**. |
 | `title` | string | **yes** | Station name in this language |
-| `images` | array of string | **yes** | Asset ids for the slideshow. At least one. |
+| `images` | array of string | **yes** | Asset ids of the station's pictures. At least one; the default app needs two. |
 | `subtitle` | string | no | Secondary line under the title |
 | `description` | string | no | Longer text shown with the station |
-| `audios` | array of string | no | Asset ids of the audio for this station in this language |
+| `audios` | array of string | no | Asset ids of the audio for this station in this language. The default app needs exactly one. |
 | `latitude` | number | no | −90 to 90. Only needed for a map. |
 | `longitude` | number | no | −180 to 180 |
 
-[Stations](./stations.md) covers the practical side — numbering, ordering, stations without audio.
+[Stations](./stations.md) covers the practical side — numbering, ordering, and [what the default app expects](./stations.md#what-the-default-app-expects) beyond the schema.
 
 ---
 
@@ -161,7 +160,7 @@ Interface strings, as flat `(language, key, value)` triples.
 | `key` | string | **yes** | Identifier the app looks up |
 | `value` | string | **yes** | Translated text |
 
-Provide every key for every language you list. A missing key does not fail; the app shows the key itself instead, which a visitor will notice. [UI texts](./ui-texts.md) lists every key.
+Provide every key for every language you list. A missing key does not fail; the app shows a stand-in made from the key — lower-cased, with its first `-` and its first `_` turned into spaces, so `menu-overview` reads `menu overview` — which a visitor will notice. [UI texts](./ui-texts.md) lists every key.
 
 ---
 

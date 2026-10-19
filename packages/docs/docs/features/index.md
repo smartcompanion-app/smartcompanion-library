@@ -16,7 +16,7 @@ What the app does, from the visitor's side and from yours.
 | --- | --- | --- |
 | Station playback | Your `data.json` | on |
 | Several languages | `languages` in your data | one language, screen skipped |
-| Image slideshows | `images` per station | on |
+| Station pictures | `images` per station — the default app needs two | on |
 | Number keypad | Always available | on |
 | Listening progress | Always on | on |
 | PIN gate | `pins` in your data | off |

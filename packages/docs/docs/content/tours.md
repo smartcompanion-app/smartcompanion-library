@@ -78,7 +78,11 @@ Every language needs its own copy of every tour, and the `stations` array should
 
 ## Showing tours
 
-The library's `sc-page-tour-list` shows the tours with their cover images and descriptions, and the list pages take a `tourId` to show one tour's stations. Adding a tour chooser to the default app means adding routes in your fork's `app-root.tsx`:
+The library's `sc-page-tour-list` shows the tours with their cover images and descriptions, and the list pages take a `tourId` to show one tour's stations.
+
+The tour list also has a slot for a tour's length, next to a clock icon, which it fills from a `duration` string on the tour. The schema does not allow that field — a tour object takes no keys beyond those listed above — so a file that uses it fails validation, and one that follows the schema leaves the slot empty. Put the length in `description` instead.
+
+Adding a tour chooser to the default app means adding routes in your fork's `app-root.tsx`:
 
 ```tsx title="src/components/app-root/app-root.tsx"
 <ion-route url="/tours" component="sc-page-tour-list" componentProps={{ facade: serviceFacade }} beforeEnter={() => serviceFacade.canLoadRoute()} />

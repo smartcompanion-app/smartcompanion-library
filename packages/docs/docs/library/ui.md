@@ -40,11 +40,16 @@ Each page is a full screen with its own header. Properties every list page share
 | `sc-page-selection` | The number keypad | `maxLength` (2), `tourId` |
 | `sc-page-station-list` | A plain list of stations | `tourId` |
 | `sc-page-station-image-list` | Stations as a list of images | `tourId` |
-| `sc-page-tabbed-station-list` | A station list split into tabs | `tourId` |
+| `sc-page-tabbed-station-list` | `sc-page-station-image-list` and `sc-page-station-list` as two tabs | `tourId` |
 | `sc-page-tour-list` | The tours, with cover images and descriptions | — |
 | `sc-page-map` | Stations on a map | `mapBounds`, `mapStyleUrl` or `tileUrlTemplate`, `mapAttribution`, `tourId`, `enableBackButton`, `defaultBackButtonHref` |
 
 Station lists are sorted by `number`. The list pages and `sc-page-stations` sort a tour's stations the same way; `sc-page-station` and `sc-page-map` keep the tour's order.
+
+`sc-page-stations` and `sc-page-station` make two assumptions about the content:
+
+- **Each station has exactly one audio track.** The player's playlist has one item per audio asset, and the pages pass a station's position in the list as the playlist index. A station with no audio, or with several, shifts every station after it onto the wrong track. Stations with several tracks belong on `sc-page-multi-audio-station`.
+- **`sc-page-stations` needs two images per station.** It shows the active station's first image large, and each station's second image on its card in the list; a station with a single image fails to render. `sc-page-station` shows the first image only. The image slideshow is on `sc-page-multi-audio-station`.
 
 ### Facade slices
 
@@ -57,7 +62,7 @@ The pages are made of five smaller components, which an app can use on its own:
 | Component | What it is | Properties | Events |
 | --- | --- | --- | --- |
 | `sc-player-controls` | Play/pause, previous, next and a seek bar | `playing`, `position`, `duration`, `disabled` | `playPause`, `prev`, `next`, `startPositionChange`, `positionChange`, `endPositionChange` |
-| `sc-station-icon` | A station number with its listening-progress ring | `collected`, `collectedPercent`, `size` | — |
+| `sc-station-icon` | A station number with its listening-progress ring | `collected`, `collectedPercent`, `size`, `lowerLimitPercent`, `upperLimitPercent` | — |
 | `sc-numpad` | A numeric keypad | `full` | `number`, `delete`, `confirm` |
 | `sc-image-slideshow` | A swipeable image gallery | `images` | — |
 | `sc-marquee` | Text that scrolls when it does not fit | `active` | — |
@@ -90,5 +95,7 @@ MapLibre draws in a web worker loaded from a file of its own, and that file cann
 
 - **Do not filter the component's assets out** of the build — without the worker every map logs "Worker failed to load".
 - **Precache the worker for offline use.** An app with a service worker adds `build/assets/maplibre-gl-worker.mjs` to its precache patterns, or the map fails offline.
+
+`sc-page-map` points MapLibre at the shipped worker only if no worker URL is set yet, so an app that serves the worker itself and calls `setWorkerUrl()` first keeps its own.
 
 `maplibre-gl` is pinned to an exact version in the library, so the map code and the shipped worker always match.

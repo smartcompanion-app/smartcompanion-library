@@ -53,7 +53,8 @@ src/
 ├─ global/
 │  ├─ app.ts               # dark mode, theme-color sync
 │  ├─ app.scss             # palette: light on :root, dark on :root.ion-palette-dark
-│  └─ _color-helpers.scss  # the colour derivation functions
+│  ├─ _color-helpers.scss  # the colour derivation functions
+│  └─ _fonts.scss          # font declarations, replaced by font_stylesheet
 ├─ services/index.ts       # ServiceFacade construction and registration
 ├─ assets/                 # logo and logo-dark — everything here is published
 ├─ icon.png                # the source image of the icon set
@@ -62,6 +63,7 @@ src/
 ├─ manifest.json           # PWA manifest
 └─ sw.js                   # Workbox service worker
 scripts/generate-icons.mjs # derives the icon set, run before every build
+scripts/build-variant.mjs  # builds a values file in a copy under .variants/
 stencil.config.ts          # build configuration and runtime values
 engraft.template.yml       # the customization surface
 customization/             # values files, branding and content, one folder per variant

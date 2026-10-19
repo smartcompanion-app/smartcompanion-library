@@ -80,6 +80,10 @@ Apps render pages into `ion-router-outlet`. Ionic 9 removed `ion-router` driving
 
 maplibre-gl (from 6.11) loads its worker from a file next to its own module. Bundled into a Stencil chunk that file is missing, and every map logs *"Worker failed to load"*. `sc-page-map` therefore ships the worker as a component asset (`assetsDirs`), which Stencil copies into a consuming app's `build/assets/`, and points `setWorkerUrl()` at it. The file never enters `src/`: a `copy` task on the `dist` output target in `stencil.config.ts` copies it from the installed maplibre-gl into `dist/collection/pages/page-map/assets/` (and the lazy build's `assets/`), and Storybook serves maplibre-gl's `dist` as a static dir. `assetsDirs: ['assets']` still has to be declared on the component even though `src` has no such folder — it is what makes a consuming app copy the folder from the collection. maplibre-gl is pinned to an **exact** version so the app bundles the same map code the shipped worker was copied from — keep it exact when bumping.
 
+### Accessibility
+
+`src/a11y.ionic.browser.tsx` runs axe-core over every component and page in a real Ionic (without it an `ion-fab-button` is no button, and axe has nothing to judge) and snapshots the violations each has today. A new violation fails the test; a fixed one fails it too, until the snapshot is updated with `-u` — the snapshot is the list of known issues, and a fix's diff shows what it removed. Contrast is judged against Ionic's default palette only; apps set their own colours.
+
 ## Code Style
 
 - Prettier: single quotes, 2-space indent, print width 180, trailing commas

@@ -97,9 +97,9 @@
     "@smartcompanion/services": "^2.0.0",
     "@stencil/core": "^4.45.2",
     "@stencil/storybook-plugin": "^0.7.1",
-    "@stencil/vitest": "^1.11.3",
+    "@stencil/vitest": "^1.16.1",
     "@types/node": "^26.6.5",
-    "@vitest/browser-playwright": "^4.1.4",
+    "@vitest/browser-playwright": "^5.0.5",
     "storybook": "^10.6.1"
   }
 }

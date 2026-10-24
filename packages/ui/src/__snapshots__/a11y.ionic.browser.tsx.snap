@@ -1,0 +1,299 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`accessibility > sc-image-slideshow has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      "sc-image-slideshow,.swiper-slide-active > img",
+      "sc-image-slideshow,.swiper-slide-next > img",
+    ],
+    "rule": "image-alt (critical): Images must have alternative text",
+  },
+  {
+    "nodes": [
+      "sc-image-slideshow,ion-icon[name="chevron-back-outline"]",
+      "sc-image-slideshow,ion-icon[name="chevron-forward-outline"]",
+    ],
+    "rule": "role-img-alt (serious): [role="img"] and [role="image"] elements must have alternative text",
+  },
+]
+`;
+
+exports[`accessibility > sc-marquee has only its known violations 1`] = `[]`;
+
+exports[`accessibility > sc-numpad has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      "sc-numpad,ion-fab-button[data-testid="numpad-button-delete"],button",
+      "sc-numpad,ion-fab-button[data-testid="numpad-button-confirm"],button",
+    ],
+    "rule": "button-name (critical): Buttons must have discernible text",
+  },
+  {
+    "nodes": [
+      "sc-numpad,ion-icon[name="backspace-outline"]",
+      "sc-numpad,ion-icon[name="send-outline"]",
+    ],
+    "rule": "role-img-alt (serious): [role="img"] and [role="image"] elements must have alternative text",
+  },
+]
+`;
+
+exports[`accessibility > sc-page-error has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      "sc-page-error,ion-icon[name="radio-outline"]",
+      "sc-page-error,ion-icon[slot="start"]",
+    ],
+    "rule": "role-img-alt (serious): [role="img"] and [role="image"] elements must have alternative text",
+  },
+]
+`;
+
+exports[`accessibility > sc-page-language has only its known violations 1`] = `[]`;
+
+exports[`accessibility > sc-page-loading has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      "ion-spinner",
+    ],
+    "rule": "aria-progressbar-name (serious): ARIA progressbar nodes must have an accessible name",
+  },
+  {
+    "nodes": [
+      "img",
+    ],
+    "rule": "image-alt (critical): Images must have alternative text",
+  },
+  {
+    "nodes": [
+      "ion-content,.inner-scroll",
+    ],
+    "rule": "scrollable-region-focusable (serious): Scrollable region must have keyboard access",
+  },
+]
+`;
+
+exports[`accessibility > sc-page-map has only its known violations 1`] = `[]`;
+
+exports[`accessibility > sc-page-multi-audio-station has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      "#click-trigger,button",
+      "#player,ion-fab-button[data-testid="player-prev-button"],button",
+      "#player,#player-controls-play,button",
+      "#player,ion-fab-button[data-testid="player-next-button"],button",
+    ],
+    "rule": "button-name (critical): Buttons must have discernible text",
+  },
+  {
+    "nodes": [
+      "sc-image-slideshow,.swiper-slide-active > img",
+      "sc-image-slideshow,.swiper-slide-next > img",
+    ],
+    "rule": "image-alt (critical): Images must have alternative text",
+  },
+  {
+    "nodes": [
+      "ion-icon[name="ellipsis-vertical"]",
+      "sc-image-slideshow,ion-icon[name="chevron-back-outline"]",
+      "sc-image-slideshow,ion-icon[name="chevron-forward-outline"]",
+      "#player,ion-icon[name="play-skip-back"]",
+      "#player,ion-icon[name="play"]",
+      "#player,ion-icon[name="play-skip-forward"]",
+      ".active > ion-icon[name="play"][slot="start"]",
+      "ion-item[data-testid="audio-item-1"] > ion-icon[name="play"][slot="start"]",
+      "ion-item[data-testid="audio-item-2"] > ion-icon[name="play"][slot="start"]",
+    ],
+    "rule": "role-img-alt (serious): [role="img"] and [role="image"] elements must have alternative text",
+  },
+]
+`;
+
+exports[`accessibility > sc-page-pin has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      "sc-numpad,ion-fab-button[data-testid="numpad-button-delete"],button",
+    ],
+    "rule": "button-name (critical): Buttons must have discernible text",
+  },
+  {
+    "nodes": [
+      "sc-numpad,ion-icon[name="backspace-outline"]",
+    ],
+    "rule": "role-img-alt (serious): [role="img"] and [role="image"] elements must have alternative text",
+  },
+]
+`;
+
+exports[`accessibility > sc-page-selection has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      "sc-numpad,ion-fab-button[data-testid="numpad-button-delete"],button",
+      "sc-numpad,ion-fab-button[data-testid="numpad-button-confirm"],button",
+    ],
+    "rule": "button-name (critical): Buttons must have discernible text",
+  },
+  {
+    "nodes": [
+      "sc-numpad,ion-icon[name="backspace-outline"]",
+      "sc-numpad,ion-icon[name="send-outline"]",
+    ],
+    "rule": "role-img-alt (serious): [role="img"] and [role="image"] elements must have alternative text",
+  },
+]
+`;
+
+exports[`accessibility > sc-page-station has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      "#player,ion-fab-button[data-testid="player-prev-button"],button",
+      "#player,#player-controls-play,button",
+      "#player,ion-fab-button[data-testid="player-next-button"],button",
+    ],
+    "rule": "button-name (critical): Buttons must have discernible text",
+  },
+  {
+    "nodes": [
+      "ion-img,img",
+    ],
+    "rule": "image-alt (critical): Images must have alternative text",
+  },
+  {
+    "nodes": [
+      "#player,ion-icon[name="play-skip-back"]",
+      "#player,ion-icon[name="play"]",
+      "#player,ion-icon[name="play-skip-forward"]",
+    ],
+    "rule": "role-img-alt (serious): [role="img"] and [role="image"] elements must have alternative text",
+  },
+]
+`;
+
+exports[`accessibility > sc-page-station-image-list has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      "ion-list",
+    ],
+    "rule": "aria-required-children (critical): Certain ARIA roles must contain particular children",
+  },
+  {
+    "nodes": [
+      "img[src$="crocodile.jpg"]",
+      "img[src$="elephant.jpg"]",
+      "img[src$="leopard.jpg"]",
+    ],
+    "rule": "image-alt (critical): Images must have alternative text",
+  },
+]
+`;
+
+exports[`accessibility > sc-page-station-list has only its known violations 1`] = `[]`;
+
+exports[`accessibility > sc-page-stations has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      ".ion-color-light,.button-native",
+      "sc-player-controls,ion-fab-button[data-testid="player-prev-button"],.button-native",
+      "sc-player-controls,#player-controls-play,.button-native",
+      "sc-player-controls,ion-fab-button[data-testid="player-next-button"],.button-native",
+    ],
+    "rule": "button-name (critical): Buttons must have discernible text",
+  },
+  {
+    "nodes": [
+      "#player-image > img[src$="crocodile.jpg"]",
+      ".card-content > img[src$="crocodile.jpg"]",
+      "img[src$="elephant.jpg"]",
+      "img[src$="leopard.jpg"]",
+    ],
+    "rule": "image-alt (critical): Images must have alternative text",
+  },
+  {
+    "nodes": [
+      ".ion-color-primary",
+      "sc-player-controls,ion-icon[name="play-skip-back"]",
+      "sc-player-controls,ion-icon[name="play"]",
+      "sc-player-controls,ion-icon[name="play-skip-forward"]",
+    ],
+    "rule": "role-img-alt (serious): [role="img"] and [role="image"] elements must have alternative text",
+  },
+]
+`;
+
+exports[`accessibility > sc-page-tabbed-station-list has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      ".station-image-list > ion-list",
+    ],
+    "rule": "aria-required-children (critical): Certain ARIA roles must contain particular children",
+  },
+  {
+    "nodes": [
+      "#tab-button-tab-images,a",
+      "#tab-button-tab-list,a",
+    ],
+    "rule": "aria-tab-name (serious): ARIA tab nodes must have an accessible name",
+  },
+  {
+    "nodes": [
+      "img[src$="crocodile.jpg"]",
+      "img[src$="elephant.jpg"]",
+      "img[src$="leopard.jpg"]",
+    ],
+    "rule": "image-alt (critical): Images must have alternative text",
+  },
+  {
+    "nodes": [
+      "ion-icon[name="images"]",
+      "ion-icon[name="list"]",
+    ],
+    "rule": "role-img-alt (serious): [role="img"] and [role="image"] elements must have alternative text",
+  },
+]
+`;
+
+exports[`accessibility > sc-page-tour-list has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      ".tour-card:nth-child(1) > .tour-details > .tour-actions > div:nth-child(1) > .info > ion-icon[name="time-outline"]",
+      ".tour-card:nth-child(2) > .tour-details > .tour-actions > div:nth-child(1) > .info > ion-icon[name="time-outline"]",
+    ],
+    "rule": "role-img-alt (serious): [role="img"] and [role="image"] elements must have alternative text",
+  },
+]
+`;
+
+exports[`accessibility > sc-player-controls has only its known violations 1`] = `
+[
+  {
+    "nodes": [
+      "#player,ion-fab-button[data-testid="player-prev-button"],button",
+      "#player,#player-controls-play,button",
+      "#player,ion-fab-button[data-testid="player-next-button"],button",
+    ],
+    "rule": "button-name (critical): Buttons must have discernible text",
+  },
+  {
+    "nodes": [
+      "#player,ion-icon[name="play-skip-back"]",
+      "#player,ion-icon[name="play"]",
+      "#player,ion-icon[name="play-skip-forward"]",
+    ],
+    "rule": "role-img-alt (serious): [role="img"] and [role="image"] elements must have alternative text",
+  },
+]
+`;
+
+exports[`accessibility > sc-station-icon has only its known violations 1`] = `[]`;

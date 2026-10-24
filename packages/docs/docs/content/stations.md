@@ -26,7 +26,7 @@ The default app's main screen, `sc-page-stations`, shows the active station's pi
 - **Two images per station.** The first is the large picture, the second the picture on the station's card. A station with a single image breaks the screen.
 - **Exactly one audio per station.** The player holds one track per audio asset and plays a station's position in the list as its track. A station with no audio, or with two, moves every station after it onto the wrong recording.
 
-Both hold for every language. The other station pages are more forgiving; see [Screens](../features/screens.md).
+Both hold for every language. The other station pages are more forgiving; see [Screens](../features/screens.md). Lifting both limits is tracked in [library issue #138](https://github.com/smartcompanion-app/smartcompanion-library/issues/138).
 
 ## Numbering
 

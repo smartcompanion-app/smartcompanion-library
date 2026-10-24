@@ -135,17 +135,18 @@ export class AudioPlayerService {
 
   /**
    * Convert stations to player items, each item is identified by their audio id
-   * A station with multiple audios will be split into multiple items
+   * A station with multiple audios will be split into multiple items,
+   * a station without audios has no item
    */
   getPlayerItems(stations: Station[]): AudioPlayerServiceItem[] {
     return stations
       .map(station =>
-        (station.audios as Asset[]).map(audio => ({
+        ((station.audios ?? []) as Asset[]).map(audio => ({
           id: audio.id,
           title: audio?.title ? audio?.title : station.title,
           subtitle: this.subtitle,
           audioUri: audio.internalFileUrl,
-          imageUri: (station.images as Asset[])[0].internalFileUrl,
+          imageUri: (station.images as Asset[])[0]?.internalFileUrl,
           stationId: station.id,
           collectedPercentage: station.collectedPercentage || 0,
         })),

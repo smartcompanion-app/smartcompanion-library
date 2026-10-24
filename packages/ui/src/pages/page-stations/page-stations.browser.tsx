@@ -1,7 +1,7 @@
 import { render, h, describe, it, expect } from '@stencil/vitest';
 import { Menu, PageStationFacade, StationSource } from '../../contracts';
 import { AudioPlayerService, AudioPlayerUpdate, CollectibleAudioPlayerService } from '@smartcompanion/services';
-import { Station } from '@smartcompanion/data';
+import { Asset, Station } from '@smartcompanion/data';
 import type { Swiper } from 'swiper';
 import { stations as fixtureStations } from '../../../test/fixtures';
 
@@ -42,6 +42,7 @@ const scrollingStations: Station[] = Array.from({ length: 12 }, (_, index) => {
 // page's own listener actually receiving an update -- the 'skip' emitted by the
 // initial select() -- which proves the whole chain end to end.
 let pageReceivedUpdate = false;
+let lastUpdate: AudioPlayerUpdate | null = null;
 
 const audioPlayerService: AudioPlayerService = new CollectibleAudioPlayerService('');
 const registerUpdateListener = audioPlayerService.registerUpdateListener.bind(audioPlayerService);
@@ -49,6 +50,7 @@ audioPlayerService.registerUpdateListener = (callback: (update: AudioPlayerUpdat
   registerUpdateListener((update: AudioPlayerUpdate) => {
     callback(update);
     pageReceivedUpdate = true;
+    lastUpdate = update;
   });
 
 const createFacade = (availableStations: Station[]) =>
@@ -82,6 +84,7 @@ const getPlayerButton = (root: HTMLElement, testId: string) => {
 // render's initialization.
 const renderPage = async (pageFacade: PageStationFacade = facade): Promise<HTMLElement> => {
   pageReceivedUpdate = false;
+  lastUpdate = null;
   const { root, waitForChanges } = await render(<sc-page-stations stationId="default" enableSwitchAudioOutput={false} facade={pageFacade}></sc-page-stations>);
   await waitForChanges();
   await expect.poll(() => pageReceivedUpdate).toBe(true);
@@ -123,6 +126,103 @@ describe('sc-page-stations', () => {
     await expect.poll(() => item(root, last).classList.contains('active')).toBe(true);
     expect(swiperOf(root).translate).toBeLessThan(0);
     expect(item(root, 0).classList.contains('swiper-slide-active')).toBe(false);
+  });
+
+  // #138: the list index of a station is not its index in the playlist once a
+  // station has several audios or none, and a station may have a single image.
+  // Station a has two audios, b one, c none and a single image, d one.
+  describe('stations with one image, without audio or with several audios', () => {
+    const [crocodile, elephant, leopard] = stations;
+    const audioOf = (station: Station) => station.audios[0] as Asset;
+    const leopardImage = leopard.images[0] as Asset;
+    const mixedStations: Station[] = [
+      { ...crocodile, id: 'a', number: '1', audios: [audioOf(crocodile), { ...audioOf(elephant), id: 'a2' }] },
+      { ...elephant, id: 'b', number: '2' },
+      { ...leopard, id: 'c', number: '3', audios: [], images: [leopardImage] },
+      { ...crocodile, id: 'd', number: '4', audios: [{ ...audioOf(leopard), id: 'd1' }] },
+    ];
+
+    const isActive = (root: HTMLElement, index: number) => item(root, index).classList.contains('active');
+    const select = (root: HTMLElement, index: number) => (item(root, index).querySelector('ion-card') as HTMLElement).click();
+    // @ionic/core is not loaded into the browser project, so `disabled` lands on these as an attribute
+    const isDisabled = (root: HTMLElement, testId: string) => getPlayerButton(root, testId).hasAttribute('disabled');
+
+    it('should show the only image of a station in the list', async () => {
+      const root = await renderPage(createFacade(mixedStations));
+
+      expect(item(root, 2).querySelector('img').getAttribute('src')).toBe(leopardImage.internalWebUrl);
+    });
+
+    it('should keep the station active while the player goes through its audios', async () => {
+      const root = await renderPage(createFacade(mixedStations));
+
+      getPlayerButton(root, 'player-next-button').click();
+      await expect.poll(() => lastUpdate?.id).toBe('a2');
+      expect(isActive(root, 0)).toBe(true);
+      expect(isActive(root, 1)).toBe(false);
+
+      getPlayerButton(root, 'player-next-button').click();
+      await expect.poll(() => isActive(root, 1)).toBe(true);
+    });
+
+    it('should play the audio of the station selected in the list', async () => {
+      const root = await renderPage(createFacade(mixedStations));
+
+      select(root, 3);
+      await expect.poll(() => lastUpdate?.id).toBe('d1');
+      expect(isActive(root, 3)).toBe(true);
+    });
+
+    it('should disable the player on a station without audio', async () => {
+      const root = await renderPage(createFacade(mixedStations));
+      expect(isDisabled(root, 'player-play-button')).toBe(false);
+
+      select(root, 2);
+      await expect.poll(() => isActive(root, 2)).toBe(true);
+      expect(isDisabled(root, 'player-play-button')).toBe(true);
+      expect(isDisabled(root, 'player-range-slider')).toBe(true);
+    });
+
+    it('should skip a station without audio when going on', async () => {
+      const root = await renderPage(createFacade(mixedStations));
+
+      select(root, 1);
+      await expect.poll(() => isActive(root, 1)).toBe(true);
+      getPlayerButton(root, 'player-next-button').click();
+      await expect.poll(() => isActive(root, 3)).toBe(true);
+    });
+
+    it('should go on from a station without audio to the next one with audio', async () => {
+      const root = await renderPage(createFacade(mixedStations));
+
+      select(root, 2);
+      await expect.poll(() => isActive(root, 2)).toBe(true);
+      getPlayerButton(root, 'player-next-button').click();
+      await expect.poll(() => isActive(root, 3)).toBe(true);
+      expect(isDisabled(root, 'player-play-button')).toBe(false);
+
+      select(root, 2);
+      await expect.poll(() => isActive(root, 2)).toBe(true);
+      getPlayerButton(root, 'player-prev-button').click();
+      await expect.poll(() => isActive(root, 1)).toBe(true);
+    });
+
+    it('should open on a station without audio', async () => {
+      const { root, waitForChanges } = await render(<sc-page-stations stationId="c" facade={createFacade(mixedStations)}></sc-page-stations>);
+      await waitForChanges();
+
+      expect(isActive(root, 2)).toBe(true);
+      expect(isDisabled(root, 'player-play-button')).toBe(true);
+    });
+
+    it('should render stations without any audio', async () => {
+      const silentStations = mixedStations.map(station => ({ ...station, audios: [] }));
+      const { root, waitForChanges } = await render(<sc-page-stations stationId="default" facade={createFacade(silentStations)}></sc-page-stations>);
+      await waitForChanges();
+
+      expect(isActive(root, 0)).toBe(true);
+      expect(isDisabled(root, 'player-play-button')).toBe(true);
+    });
   });
 
   it('should activate last item when clicking prev from first item', async () => {

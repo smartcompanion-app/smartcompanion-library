@@ -2,7 +2,7 @@ import { Component, h, State, Prop, Host } from '@stencil/core';
 import { Swiper } from 'swiper';
 import { Asset, Station } from '@smartcompanion/data';
 import { AudioPlayerUpdate, PageStationFacade } from '../../contracts';
-import { getSortedStations, ReactiveAudioPlayer } from '../../utils';
+import { getSortedStations, ReactiveAudioPlayer, StationPlaylist } from '../../utils';
 
 @Component({
   tag: 'sc-page-stations',
@@ -12,11 +12,13 @@ export class PageStations {
   protected playerList: Swiper;
   protected reactiveAudioPlayer: ReactiveAudioPlayer;
   protected restartPlaying = false;
+  protected playlist: StationPlaylist;
 
   @State() stations: Array<Station> = [];
   @State() playing: boolean = false;
   @State() position = 0;
   @State() duration = 0;
+  /** Index of the active station in the list, see StationPlaylist for its index in the player */
   @State() activeIndex = 0;
   @State() earpiece = false;
 
@@ -45,6 +47,14 @@ export class PageStations {
   async componentWillLoad() {
     this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
 
+    // The player reports the index of its audio, the page shows the station of it
+    this.reactiveAudioPlayer.setOnActiveIndexUpdateListener((audioIndex: number) => {
+      const stationIndex = this.playlist?.getStationIndex(audioIndex) ?? -1;
+      if (stationIndex >= 0) {
+        this.activeIndex = stationIndex;
+      }
+    });
+
     this.reactiveAudioPlayer.setOnCompletedListener(async (_: AudioPlayerUpdate) => {
       await this.reactiveAudioPlayer.next();
     });
@@ -57,7 +67,9 @@ export class PageStations {
 
     this.facade.getMenuService().enable();
     this.stations = await getSortedStations(this.facade, this.tourId);
-    this.reactiveAudioPlayer.updateActiveIndexByStationId(this.stationId, this.stations);
+    this.playlist = new StationPlaylist(this.stations, this.facade.getAudioPlayerService().getPlayerItems(this.stations));
+    this.activeIndex = this.playlist.getStationIndexById(this.stationId);
+    this.reactiveAudioPlayer.updateActiveIndex(this.playlist.getAudioIndex(this.activeIndex));
   }
 
   async componentDidLoad() {
@@ -76,9 +88,33 @@ export class PageStations {
     this.reactiveAudioPlayer = null;
   }
 
+  /**
+   * A station with a single image shows it in both places
+   */
   private getImageUri(index: number, imageIndex: number = 0) {
-    const station = this.stations[index];
-    return (station.images[imageIndex] as Asset).internalWebUrl;
+    const images = this.stations[index].images as Asset[];
+    return (images[imageIndex] ?? images[0])?.internalWebUrl;
+  }
+
+  /**
+   * Selects the audio at the given index in the player, which then reports its station as active
+   */
+  private async selectAudio(audioIndex: number) {
+    if (audioIndex >= 0) {
+      await this.reactiveAudioPlayer.select(audioIndex);
+    }
+  }
+
+  /**
+   * A station without audio has no item in the player to select, so the page
+   * activates it itself, and pauses the audio of the station it leaves
+   */
+  private async selectStationWithoutAudio(index: number) {
+    this.activeIndex = index;
+    this.playerList?.slideTo(index);
+    if (this.playing) {
+      await this.reactiveAudioPlayer.pause();
+    }
   }
 
   private openMenu = () => {
@@ -90,11 +126,19 @@ export class PageStations {
   };
 
   private handleNext = () => {
-    this.reactiveAudioPlayer.next();
+    if (this.playlist.hasAudio(this.activeIndex)) {
+      this.reactiveAudioPlayer.next();
+    } else {
+      this.selectAudio(this.playlist.getNextAudioIndex(this.activeIndex));
+    }
   };
 
   private handlePrev = () => {
-    this.reactiveAudioPlayer.prev();
+    if (this.playlist.hasAudio(this.activeIndex)) {
+      this.reactiveAudioPlayer.prev();
+    } else {
+      this.selectAudio(this.playlist.getPrevAudioIndex(this.activeIndex));
+    }
   };
 
   private handlePlayPause = () => {
@@ -111,10 +155,16 @@ export class PageStations {
 
   private handleSelect = (e: Event) => {
     const index = parseInt((e.currentTarget as HTMLElement).dataset.index);
-    this.reactiveAudioPlayer.select(index);
+    if (this.playlist.hasAudio(index)) {
+      this.selectAudio(this.playlist.getAudioIndex(index));
+    } else {
+      this.selectStationWithoutAudio(index);
+    }
   };
 
   render() {
+    const hasAudio = this.playlist.hasAudio(this.activeIndex);
+
     return (
       <Host>
         <ion-header class="ion-no-border">
@@ -141,8 +191,9 @@ export class PageStations {
             <div id="player">
               <sc-player-controls
                 playing={this.playing}
-                position={this.position}
-                duration={this.duration}
+                position={hasAudio ? this.position : 0}
+                duration={hasAudio ? this.duration : 0}
+                disabled={!hasAudio}
                 onNext={this.handleNext}
                 onPrev={this.handlePrev}
                 onPlayPause={this.handlePlayPause}

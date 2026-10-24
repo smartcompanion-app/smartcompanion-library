@@ -37,9 +37,9 @@ Shown on first launch when you offer more than one language, and reachable later
 
 The main screen. `sc-page-stations` is the station picture, the player and the station list in one. From the top: the active station's first image, large; the player controls; then every station as a card in a swipeable list, sorted by number. Swiping the list or tapping a card changes the active station.
 
-Each card shows the station's second image, its number, title and a progress ring that fills as the audio is listened to, so a visitor can see at a glance what they have already heard.
+Each card shows the station's second image (its first, if it has only one), its number, title and a progress ring that fills as the audio is listened to, so a visitor can see at a glance what they have already heard.
 
-The screen needs two images and exactly one audio per station — see [Stations](../content/stations.md#what-the-default-app-expects).
+A station with several tracks plays them one after the other; a station without audio stays in the list with the play button disabled — see [Stations](../content/stations.md#what-the-default-app-expects).
 
 `/stations/default` is the entry the menu uses: all stations, starting at the first.
 

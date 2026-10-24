@@ -1,5 +1,11 @@
 # @smartcompanion/services
 
+## 2.0.1
+
+### Patch Changes
+
+- [#133](https://github.com/smartcompanion-app/smartcompanion-library/pull/133) [`c010bde`](https://github.com/smartcompanion-app/smartcompanion-library/commit/c010bde3436ea17eff9178c41f2bbebf12308332) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Require `@smartcompanion/native-audio-player` 1.0.2 or later. On the web, its `stop()` rejected with "Cannot read properties of undefined (reading 'id')" when it found an audio element but had no current item, which a page left while its player was starting could surface as an unhandled rejection.
+
 ## 2.0.0
 
 ### Major Changes

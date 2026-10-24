@@ -108,6 +108,40 @@ describe('offline load service', () => {
     expect(result).toEqual('home');
   });
 
+  test('should wait for the data update before selecting a language', async () => {
+    const { offlineLoadService, assetService } = createOfflineLoadService();
+    downloadDataFn.mockResolvedValue({ example: 'data' });
+    listFn.mockResolvedValue([]);
+    vi.spyOn(assetService, 'getUnresolvedAssets').mockReturnValue([]);
+    dataUpdater.update.mockImplementation(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
+      memoryStorage.set('languages', [{ language: 'en', title: 'English' }]);
+    });
+    const result = await offlineLoadService.load();
+    expect(result).toBe('home');
+    expect(memoryStorage.get('language')).toBe('en');
+    expect(memoryStorage.get('files-loaded')).toBe('en');
+  });
+
+  test('should result in "error" when the data update fails and memory is empty', async () => {
+    const { offlineLoadService } = createOfflineLoadService();
+    downloadDataFn.mockResolvedValue({ example: 'data' });
+    dataUpdater.update.mockRejectedValue(new Error('Malformed data'));
+    const result = await offlineLoadService.load();
+    expect(result).toEqual('error');
+  });
+
+  test('should result in "home" when the data update fails and data/files for language exists', async () => {
+    memoryStorage.set('files-loaded', 'de');
+    memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
+    memoryStorage.set('language', 'de');
+    const { offlineLoadService } = createOfflineLoadService();
+    downloadDataFn.mockResolvedValue({ example: 'data' });
+    dataUpdater.update.mockRejectedValue(new Error('Malformed data'));
+    const result = await offlineLoadService.load();
+    expect(result).toEqual('home');
+  });
+
   test('should result in "pin" when language is set, pin is required and pin is invalid', async () => {
     memoryStorage.set('languages', [{ title: "Deutsch", language: "de" }]);
     memoryStorage.set('language', 'de');

@@ -58,7 +58,7 @@ export class OfflineLoadService implements LoadService {
   async load(): Promise<string> {
     try {
       const data = await this.downloadData();
-      this.dataUpdater.update(data);
+      await this.dataUpdater.update(data);
       autoSelectLanguage(this.languageService);
 
       if (!this.languageService.hasLanguage()) {

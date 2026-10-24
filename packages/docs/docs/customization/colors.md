@@ -107,7 +107,7 @@ Override sparingly. Every explicit value is one more thing that can drift out of
 
 ## Checking the result
 
-**Contrast.** Text on your primary needs a WCAG AA ratio of 4.5:1 for body text, 3:1 for large text. A brand colour that looks fine in a brochure often fails on a phone in sunlight.
+**Contrast.** Text on your primary needs a WCAG AA ratio of 4.5:1 for body text, 3:1 for large text. A brand colour that looks fine in a brochure often fails on a phone in sunlight. The library's accessibility tests check contrast against Ionic's default colours, not yours, so this check is yours to make — in both palettes.
 
 **Both palettes, on a real device.** Emulated dark mode in a desktop browser is not an OLED phone at night.
 

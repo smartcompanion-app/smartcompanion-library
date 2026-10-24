@@ -74,6 +74,21 @@ The labels are the texts with those keys, refreshed on every route change, so a 
 
 On tablets and desktops the menu becomes a permanent side pane, from Ionic's `md` breakpoint up.
 
+## Accessibility
+
+The library checks every page with [axe-core](https://github.com/dequelabs/axe-core), against WCAG 2.2 AA, and records the issues each page has today. For the screens of the default app, the gaps a screen-reader user meets are:
+
+- **Pictures are announced without a description.** The data format has no field for alternative text, so station images and the logo have none.
+- **The icon buttons have no names** — previous, play/pause and next on the stations screen, delete and confirm on the keypad, and the menu button. A screen reader announces them as unnamed buttons.
+- **The loading spinner** has no name.
+
+The language screen has no known issues. The full list, per page, is in [UI components](../library/ui.md#accessibility).
+
+Two things are up to you:
+
+- **Contrast.** The library checks contrast against Ionic's default colours only. Check yours — see [Colors](../customization/colors.md#checking-the-result).
+- **Station descriptions.** A `description` that transcribes the audio serves visitors who cannot listen; see [Stations](../content/stations.md#text).
+
 ## Pages the default app does not use
 
 `@smartcompanion/ui` has thirteen pages; the default app routes to six. The others are there for an app that needs them:

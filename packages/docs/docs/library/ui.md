@@ -83,6 +83,17 @@ Pages look up their interface texts through the facade's `__()`, which reads the
 
 The list is exported as the `TranslationKey` type. Keys an app uses in its own components — the default app's menu, for instance — are not restricted by it. A missing key shows as the key itself; see [UI texts](../content/ui-texts.md#when-a-text-is-missing).
 
+## Accessibility
+
+Every component and page is checked with axe-core in the library's tests, and the issues each has today are recorded — see [Development](./development.md#accessibility). The known ones, in short:
+
+- **Images have no alternative text** — station pictures, the slideshow, the loading page's logo.
+- **Icon-only buttons have no accessible name** — the player's previous, play/pause and next, the numpad's delete and confirm, the menu button, and the multi-track page's info button. Their icons are not hidden from screen readers either.
+- **The tabbed station list's tabs** have no accessible names, and the image list's list structure is incomplete.
+- **The loading spinner** has no accessible name.
+
+`sc-page-language`, `sc-page-station-list`, `sc-page-map`, `sc-marquee` and `sc-station-icon` have no known violations. Contrast is checked against Ionic's default palette only — an app with its own colours checks its own.
+
 ## Theming
 
 The components read the app's palette from CSS custom properties: the `--sc-*` properties described in [Colors](../customization/colors.md#the-variables-that-reach-the-browser), and Ionic's `--ion-color-*` that those map onto. Define them in the app's global stylesheet — the audioguide app's [`app.scss`](https://github.com/smartcompanion-app/audioguide-app/blob/main/src/global/app.scss) is a complete example, for light and dark mode.

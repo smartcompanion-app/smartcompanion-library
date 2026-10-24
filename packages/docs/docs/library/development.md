@@ -60,6 +60,22 @@ Vitest throughout. `ui` runs its tests through `stencil-test`, which builds the 
 
 `npm run coverage` measures the `ui` build through its source maps, so it reports against `src`.
 
+### Accessibility
+
+`packages/ui/src/a11y.ionic.browser.tsx` renders every component and page in a real Ionic and checks it with [axe-core](https://github.com/dequelabs/axe-core) against WCAG 2.2 A and AA plus axe's best practices. It runs in the `browser-ionic` project because without Ionic the `ion-*` elements stay undefined: an `ion-fab-button` would not be a button, and axe would have nothing to judge. The rules about the document as a whole — landmarks, a single `h1` — are switched off, since a page is one element inside an app's shell.
+
+Each case snapshots the violations it has today, so the [snapshot](https://github.com/smartcompanion-app/smartcompanion-library/blob/main/packages/ui/src/__snapshots__/a11y.ionic.browser.tsx.snap) is the list of known issues:
+
+- **A new violation fails the test.** Fix it rather than updating the snapshot.
+- **A fixed violation fails it too**, until the snapshot is updated — the diff of the fix then shows what it removed:
+
+  ```bash
+  cd packages/ui
+  npx stencil-test --project browser-ionic -u a11y
+  ```
+
+Colour contrast is judged against Ionic's default palette only. Apps set their own colours, so contrast has to be checked again in the app.
+
 ## Storybook
 
 Every component has stories in `packages/ui`. `npm run storybook -w packages/ui` serves them while you work; the published [Storybook](pathname:///storybook/) follows `main`.

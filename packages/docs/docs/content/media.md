@@ -198,7 +198,7 @@ Two to four minutes per station works. Under a minute feels like it was not wort
 
 **Format.** JPEG for photographs, PNG for diagrams, logos and anything with flat colour or transparency. WebP works in every supported browser and is 25–35 % smaller.
 
-**Which image goes where.** On the default main screen a station's first image is the large picture at the top and its second is the picture on its card in the list — see [Stations](./stations.md#images). The slideshow exists only on the multi-track station page.
+**Which image goes where.** On the default main screen a station's first image is the large picture at the top and its second is the picture on its card in the list, or the first again if there is only one — see [Stations](./stations.md#images). The slideshow exists only on the multi-track station page.
 
 **Size.** Every picture is at most phone-width. Beyond about 1600 px on the long edge you pay for pixels nobody sees:
 
@@ -222,7 +222,7 @@ ffmpeg -i input.jpg -vf "scale='min(1600,iw)':-1" -q:v 4 station-01.jpg
 
 **Orientation.** Landscape reads better. Portrait images work but leave large margins on a phone held upright.
 
-**Two images per station** is what the default app uses. On the multi-track page, which shows them all, two to four is a good ceiling: a visitor swiping through twelve photographs is not listening.
+**Two images per station** is what the default app uses; with one, the card repeats it. On the multi-track page, which shows them all, two to four is a good ceiling: a visitor swiping through twelve photographs is not listening.
 
 ## Naming files
 

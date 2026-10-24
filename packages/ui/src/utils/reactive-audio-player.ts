@@ -173,9 +173,15 @@ export class ReactiveAudioPlayer {
 
   /**
    * Initialize eaudio player with given stations
-   * Should be called in componentDidLoad() lifecycle method
+   * Should be called in componentDidLoad() lifecycle method.
+   * Without any audio there is nothing to play, and the player is not started.
+   * An activeIndex of -1 starts the player without selecting an item.
    */
   async initAudioPlayer(stations: Array<Station>) {
+    if (!stations.some(station => station.audios?.length > 0)) {
+      return;
+    }
+
     owner = this.ownerToken;
     await this.facade.getAudioPlayerService().start(stations);
 
@@ -223,7 +229,9 @@ export class ReactiveAudioPlayer {
       }
     });
 
-    await this.facade.getAudioPlayerService().select(this.activeIndex);
+    if (this.activeIndex >= 0) {
+      await this.facade.getAudioPlayerService().select(this.activeIndex);
+    }
     await this.resetAudioPlayer();
   }
 

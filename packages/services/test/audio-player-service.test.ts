@@ -167,3 +167,11 @@ test('test setting multiple stations', () => {
     }
   ]);
 });
+
+test('test setting stations without audios', () => {
+  const withoutAudios = { ...stations[1], audios: [] };
+  const missingAudios = { ...stations[1], id: "test3", audios: undefined } as unknown as Station;
+  const items = audioPlayerService.getPlayerItems([withoutAudios, stations[0], missingAudios]);
+
+  expect(items.map(item => item.id)).toStrictEqual(["test1-audio1"]);
+});

@@ -13,8 +13,8 @@ npm install @smartcompanion/services
 Requires Node 20 or newer, and these peers:
 
 ```
-@smartcompanion/data                ^1.0.0
-@smartcompanion/native-audio-player ^1.0.0
+@smartcompanion/data                ^2.0.0
+@smartcompanion/native-audio-player ^1.0.2
 @capacitor/core                     ^8.3.1
 @ionic/core                         ^9.0.0
 ```

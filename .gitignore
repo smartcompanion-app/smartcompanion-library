@@ -4,3 +4,5 @@ node_modules/
 .claude/worktrees/
 .claude/plans/
 coverage/
+packages/docs/build/
+packages/docs/.docusaurus/

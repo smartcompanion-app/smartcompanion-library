@@ -1,0 +1,29 @@
+{
+  "name": "smartcompanion-docs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The SmartCompanion documentation site, published to https://docs.smartcompanion.app.",
+  "license": "BSD-2-Clause",
+  "scripts": {
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "serve": "docusaurus serve",
+    "clear": "docusaurus clear",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@docusaurus/core": "^3.10.2",
+    "@docusaurus/preset-classic": "^3.10.2",
+    "@docusaurus/theme-mermaid": "^3.10.2",
+    "@mdx-js/react": "^3.1.1",
+    "@mermaid-js/layout-elk": "^0.1.9",
+    "clsx": "^2.1.1",
+    "prism-react-renderer": "^2.4.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@docusaurus/tsconfig": "^3.10.2",
+    "@docusaurus/types": "^3.10.2"
+  }
+}

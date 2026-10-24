@@ -1,7 +1,11 @@
 name: pages
 
-# Storybook tracks main rather than releases: a component change is visible on
-# the published Storybook as soon as it merges, without waiting for a publish.
+# The site tracks main rather than releases: a docs fix or a component change is
+# visible as soon as it merges, without waiting for a publish.
+#
+# One Pages site per repository, so the documentation is the site and Storybook
+# is copied into it under /storybook/. The custom domain comes from
+# packages/docs/static/CNAME, which Docusaurus copies into the build.
 on:
   push:
     branches:
@@ -22,7 +26,7 @@ env:
 
 jobs:
   deploy:
-    name: Deploy Storybook
+    name: Deploy docs and Storybook
     runs-on: ubuntu-24.04
     environment:
       name: github-pages
@@ -46,10 +50,18 @@ jobs:
       - name: Build Storybook
         run: npm run build-storybook -w packages/ui
 
+      - name: Build the documentation site
+        run: npm run docs:build
+
+      # Storybook's build references its assets relatively, so it works from a
+      # subdirectory as is.
+      - name: Add Storybook to the site
+        run: cp -r packages/ui/storybook-static packages/docs/build/storybook
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
-          path: packages/ui/storybook-static
+          path: packages/docs/build
 
       - name: Deploy to GitHub Pages
         id: deployment

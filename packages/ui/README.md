@@ -4,7 +4,7 @@ The web components behind the SmartCompanion audio-guide apps — built with [St
 
 Part of the [SmartCompanion Library](https://github.com/smartcompanion-app/smartcompanion-library) monorepo.
 
-**[Browse the components in Storybook →](https://smartcompanion-app.github.io/smartcompanion-library/)**
+**[Browse the components in Storybook →](https://docs.smartcompanion.app/storybook/)**
 
 ## Install
 
@@ -12,7 +12,7 @@ Part of the [SmartCompanion Library](https://github.com/smartcompanion-app/smart
 npm install @smartcompanion/ui
 ```
 
-Requires Node 20 or newer, [`@smartcompanion/data`](https://www.npmjs.com/package/@smartcompanion/data) `^1.0.0` as a peer, and Ionic 9 in the app. Pages are driven by a `ServiceFacade` from [`@smartcompanion/services`](https://www.npmjs.com/package/@smartcompanion/services).
+Requires Node 20 or newer, [`@smartcompanion/data`](https://www.npmjs.com/package/@smartcompanion/data) `^2.0.0` as a peer, and Ionic 9 in the app. Pages are driven by a `ServiceFacade` from [`@smartcompanion/services`](https://www.npmjs.com/package/@smartcompanion/services).
 
 ## Usage
 
@@ -40,7 +40,7 @@ Pages:
 
 `sc-page-error` · `sc-page-language` · `sc-page-loading` · `sc-page-map` · `sc-page-multi-audio-station` · `sc-page-pin` · `sc-page-selection` · `sc-page-station` · `sc-page-station-image-list` · `sc-page-station-list` · `sc-page-stations` · `sc-page-tabbed-station-list` · `sc-page-tour-list`
 
-Props and events for each are documented in [Storybook](https://smartcompanion-app.github.io/smartcompanion-library/).
+Props and events for each are documented in [Storybook](https://docs.smartcompanion.app/storybook/).
 
 ## Texts
 

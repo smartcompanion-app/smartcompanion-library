@@ -1,0 +1,120 @@
+/*
+ * SmartCompanion brand, after www.smartcompanion.app: Titillium Web, the
+ * #5bb7de brand blue and the #f0f8fc tint used for panels. The fonts are the
+ * same woff2 files the website ships, self-hosted under static/fonts/, so the
+ * site makes no third-party requests.
+ *
+ * The brand blue is too light for link text on white, so light mode uses a
+ * darker shade of it (#217ea5) as the primary colour. Dark mode uses a lighter
+ * one, which keeps contrast on the dark background.
+ */
+
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/titillium-web-400-latin.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/titillium-web-400-latin-ext.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* The website ships 400 and 600 only. Claiming 600-700 here means bold text
+   resolves to the real 600 face instead of a synthesised one. */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url('/fonts/titillium-web-600-latin.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url('/fonts/titillium-web-600-latin-ext.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+  --sc-blue: #5bb7de;
+  --sc-tint: #f0f8fc;
+  --sc-ink: #333333;
+  --sc-slate: #2b3b42;
+
+  --ifm-color-primary: #217ea5;
+  --ifm-color-primary-dark: #1e7195;
+  --ifm-color-primary-darker: #1c6b8c;
+  --ifm-color-primary-darkest: #175873;
+  --ifm-color-primary-light: #248bb5;
+  --ifm-color-primary-lighter: #2591be;
+  --ifm-color-primary-lightest: #2ba2d4;
+
+  --ifm-font-family-base: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --ifm-font-family-monospace: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  --ifm-heading-font-weight: 600;
+  --ifm-font-color-base: var(--sc-ink);
+  --ifm-code-font-size: 92%;
+  --ifm-code-background: var(--sc-tint);
+  --ifm-global-radius: 8px;
+  --ifm-footer-background-color: var(--sc-slate);
+  --ifm-navbar-shadow: 0 1px 8px rgb(0 0 0 / 8%);
+
+  --docusaurus-highlighted-code-line-bg: rgb(91 183 222 / 15%);
+}
+
+html[data-theme='dark'] {
+  --ifm-color-primary: #8fd0ec;
+  --ifm-color-primary-dark: #72c4e7;
+  --ifm-color-primary-darker: #63bee5;
+  --ifm-color-primary-darkest: #36aadc;
+  --ifm-color-primary-light: #acdcf1;
+  --ifm-color-primary-lighter: #bbe2f3;
+  --ifm-color-primary-lightest: #e8f5fb;
+
+  --ifm-font-color-base: #e3e3e3;
+  --ifm-code-background: rgb(91 183 222 / 10%);
+  --ifm-footer-background-color: #1d282d;
+
+  --docusaurus-highlighted-code-line-bg: rgb(91 183 222 / 20%);
+}
+
+.navbar__title {
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+
+.footer--dark {
+  --ifm-footer-link-hover-color: var(--sc-blue);
+}
+
+/* Screenshots of the demo apps, shown side by side on the introduction page. */
+.sc-screenshots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: var(--ifm-leading);
+}
+
+.sc-screenshots img {
+  width: 160px;
+  border-radius: 15px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 12%);
+}

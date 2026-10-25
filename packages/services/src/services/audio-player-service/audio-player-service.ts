@@ -106,14 +106,51 @@ export class AudioPlayerService {
       return 0;
     }
 
+    // fallback to first item
+    return Math.max(this.findIndexByStationId(stationId, items), 0);
+  }
+
+  /**
+   * Get the index of the first item of the given station, -1 if the station has no audio
+   */
+  findIndexByStationId(stationId: string, items: Array<{ stationId: string }> = this.items): number {
     for (let i = 0; i < items.length; i++) {
       if (items[i].stationId == stationId) {
         return i;
       }
     }
+    return -1;
+  }
 
-    // fallback to first item
-    return 0;
+  /**
+   * Get the index of the first item of a station after the given one, for going on from a
+   * station without audio, which has no item to go on from. Wraps around to the first item
+   * like the player does, -1 if there are no items at all
+   */
+  getNextIndexByStationId(stationId: string, stations: Station[]): number {
+    const position = stations.findIndex(station => station.id == stationId);
+    for (const station of stations.slice(position + 1)) {
+      const index = this.findIndexByStationId(station.id);
+      if (index >= 0) {
+        return index;
+      }
+    }
+    return this.items.length > 0 ? 0 : -1;
+  }
+
+  /**
+   * Get the index of the last item of a station before the given one, see getNextIndexByStationId().
+   * Wraps around to the last item like the player does, -1 if there are no items at all
+   */
+  getPrevIndexByStationId(stationId: string, stations: Station[]): number {
+    const position = stations.findIndex(station => station.id == stationId);
+    const before = new Set(stations.slice(0, Math.max(position, 0)).map(station => station.id));
+    for (let i = this.items.length - 1; i >= 0; i--) {
+      if (before.has(this.items[i].stationId)) {
+        return i;
+      }
+    }
+    return this.items.length - 1;
   }
 
   /**

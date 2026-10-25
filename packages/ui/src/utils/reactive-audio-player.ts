@@ -309,11 +309,12 @@ export class ReactiveAudioPlayer {
   }
 
   /**
-   * Update activeIndex based on given station id, this works even if audioplayer is not yet initialized
+   * Update activeIndex to the first audio of the given station, -1 if it has no audio.
+   * This works even if audioplayer is not yet initialized
    */
   updateActiveIndexByStationId(id: string, stations: Array<Station>) {
     const items = this.facade.getAudioPlayerService().getPlayerItems(stations);
-    this.updateActiveIndex(this.facade.getAudioPlayerService().getIndexByStationId(id, items));
+    this.updateActiveIndex(this.facade.getAudioPlayerService().findIndexByStationId(id, items));
   }
 
   async toggleOutput() {

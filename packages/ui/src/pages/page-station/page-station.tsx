@@ -1,6 +1,6 @@
 import { Component, State, Prop, Host, h } from '@stencil/core';
 import { Station } from '@smartcompanion/data';
-import { getMenuButton, getStations, ReactiveAudioPlayer, StationPlaylist } from '../../utils';
+import { getMenuButton, getStations, ReactiveAudioPlayer } from '../../utils';
 import { PageStationFacade } from '../../contracts';
 
 @Component({
@@ -9,13 +9,12 @@ import { PageStationFacade } from '../../contracts';
 })
 export class PageStation {
   protected reactiveAudioPlayer: ReactiveAudioPlayer;
-  protected playlist: StationPlaylist;
 
   @State() stations: Array<Station> = [];
   @State() playing: boolean = false;
   @State() position = 0;
   @State() duration = 0;
-  /** Index of the active station, see StationPlaylist for its index in the player */
+  /** Index of the active station, which is not its index in the player */
   @State() activeIndex = 0;
   @State() earpiece = false;
 
@@ -56,19 +55,25 @@ export class PageStation {
   async componentWillLoad() {
     this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
 
-    // The player reports the index of its audio, the page shows the station of it
+    await this.facade.getMenuService().enable();
+    this.stations = await getStations(this.facade, this.tourId);
+
+    // The player's index counts audios: a station with several has several, one without audio
+    // none. The page's activeIndex counts stations, so it is set here and from now on mapped
+    // through the station id of what the player reports
+    const activeIndex = Math.max(
+      this.stations.findIndex(station => station.id == this.stationId),
+      0,
+    );
+    this.reactiveAudioPlayer.updateActiveIndexByStationId(this.stations[activeIndex]?.id, this.stations);
+    this.activeIndex = activeIndex;
     this.reactiveAudioPlayer.setOnActiveIndexUpdateListener((audioIndex: number) => {
-      const stationIndex = this.playlist?.getStationIndex(audioIndex) ?? -1;
+      const stationId = this.facade.getAudioPlayerService().getStationId(audioIndex);
+      const stationIndex = this.stations.findIndex(station => station.id == stationId);
       if (stationIndex >= 0) {
         this.activeIndex = stationIndex;
       }
     });
-
-    await this.facade.getMenuService().enable();
-    this.stations = await getStations(this.facade, this.tourId);
-    this.playlist = new StationPlaylist(this.stations, this.facade.getAudioPlayerService().getPlayerItems(this.stations));
-    this.activeIndex = this.playlist.getStationIndexById(this.stationId);
-    this.reactiveAudioPlayer.updateActiveIndex(this.playlist.getAudioIndex(this.activeIndex));
   }
 
   async componentDidLoad() {
@@ -84,20 +89,33 @@ export class PageStation {
     this.reactiveAudioPlayer.toggleOutput();
   };
 
+  private hasAudio(index: number) {
+    return this.stations[index]?.audios?.length > 0;
+  }
+
+  /**
+   * Selects the audio at the given index in the player, which then reports its station as active
+   */
+  private async selectAudio(audioIndex: number) {
+    if (audioIndex >= 0) {
+      await this.reactiveAudioPlayer.select(audioIndex);
+    }
+  }
+
   // A station without audio has no item in the player to go on from
   private handleNext = () => {
-    if (this.playlist.hasAudio(this.activeIndex)) {
+    if (this.hasAudio(this.activeIndex)) {
       this.reactiveAudioPlayer.next();
-    } else if (this.playlist.getNextAudioIndex(this.activeIndex) >= 0) {
-      this.reactiveAudioPlayer.select(this.playlist.getNextAudioIndex(this.activeIndex));
+    } else {
+      this.selectAudio(this.facade.getAudioPlayerService().getNextIndexByStationId(this.stations[this.activeIndex].id, this.stations));
     }
   };
 
   private handlePrev = () => {
-    if (this.playlist.hasAudio(this.activeIndex)) {
+    if (this.hasAudio(this.activeIndex)) {
       this.reactiveAudioPlayer.prev();
-    } else if (this.playlist.getPrevAudioIndex(this.activeIndex) >= 0) {
-      this.reactiveAudioPlayer.select(this.playlist.getPrevAudioIndex(this.activeIndex));
+    } else {
+      this.selectAudio(this.facade.getAudioPlayerService().getPrevIndexByStationId(this.stations[this.activeIndex].id, this.stations));
     }
   };
 
@@ -118,7 +136,7 @@ export class PageStation {
   };
 
   render() {
-    const hasAudio = this.playlist.hasAudio(this.activeIndex);
+    const hasAudio = this.hasAudio(this.activeIndex);
 
     return (
       <Host id="station">

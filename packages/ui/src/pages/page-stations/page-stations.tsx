@@ -2,7 +2,7 @@ import { Component, h, State, Prop, Host } from '@stencil/core';
 import { Swiper } from 'swiper';
 import { Asset, Station } from '@smartcompanion/data';
 import { AudioPlayerUpdate, PageStationFacade } from '../../contracts';
-import { getSortedStations, ReactiveAudioPlayer, StationPlaylist } from '../../utils';
+import { getSortedStations, ReactiveAudioPlayer } from '../../utils';
 
 @Component({
   tag: 'sc-page-stations',
@@ -12,13 +12,12 @@ export class PageStations {
   protected playerList: Swiper;
   protected reactiveAudioPlayer: ReactiveAudioPlayer;
   protected restartPlaying = false;
-  protected playlist: StationPlaylist;
 
   @State() stations: Array<Station> = [];
   @State() playing: boolean = false;
   @State() position = 0;
   @State() duration = 0;
-  /** Index of the active station in the list, see StationPlaylist for its index in the player */
+  /** Index of the active station in the list, which is not its index in the player */
   @State() activeIndex = 0;
   @State() earpiece = false;
 
@@ -47,14 +46,6 @@ export class PageStations {
   async componentWillLoad() {
     this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
 
-    // The player reports the index of its audio, the page shows the station of it
-    this.reactiveAudioPlayer.setOnActiveIndexUpdateListener((audioIndex: number) => {
-      const stationIndex = this.playlist?.getStationIndex(audioIndex) ?? -1;
-      if (stationIndex >= 0) {
-        this.activeIndex = stationIndex;
-      }
-    });
-
     this.reactiveAudioPlayer.setOnCompletedListener(async (_: AudioPlayerUpdate) => {
       await this.reactiveAudioPlayer.next();
     });
@@ -67,9 +58,23 @@ export class PageStations {
 
     this.facade.getMenuService().enable();
     this.stations = await getSortedStations(this.facade, this.tourId);
-    this.playlist = new StationPlaylist(this.stations, this.facade.getAudioPlayerService().getPlayerItems(this.stations));
-    this.activeIndex = this.playlist.getStationIndexById(this.stationId);
-    this.reactiveAudioPlayer.updateActiveIndex(this.playlist.getAudioIndex(this.activeIndex));
+
+    // The player's index counts audios: a station with several has several, one without audio
+    // none. The page's activeIndex counts stations, so it is set here and from now on mapped
+    // through the station id of what the player reports
+    const activeIndex = Math.max(
+      this.stations.findIndex(station => station.id == this.stationId),
+      0,
+    );
+    this.reactiveAudioPlayer.updateActiveIndexByStationId(this.stations[activeIndex]?.id, this.stations);
+    this.activeIndex = activeIndex;
+    this.reactiveAudioPlayer.setOnActiveIndexUpdateListener((audioIndex: number) => {
+      const stationId = this.facade.getAudioPlayerService().getStationId(audioIndex);
+      const stationIndex = this.stations.findIndex(station => station.id == stationId);
+      if (stationIndex >= 0) {
+        this.activeIndex = stationIndex;
+      }
+    });
   }
 
   async componentDidLoad() {
@@ -94,6 +99,10 @@ export class PageStations {
   private getImageUri(index: number, imageIndex: number = 0) {
     const images = this.stations[index].images as Asset[];
     return (images[imageIndex] ?? images[0])?.internalWebUrl;
+  }
+
+  private hasAudio(index: number) {
+    return this.stations[index]?.audios?.length > 0;
   }
 
   /**
@@ -126,18 +135,18 @@ export class PageStations {
   };
 
   private handleNext = () => {
-    if (this.playlist.hasAudio(this.activeIndex)) {
+    if (this.hasAudio(this.activeIndex)) {
       this.reactiveAudioPlayer.next();
     } else {
-      this.selectAudio(this.playlist.getNextAudioIndex(this.activeIndex));
+      this.selectAudio(this.facade.getAudioPlayerService().getNextIndexByStationId(this.stations[this.activeIndex].id, this.stations));
     }
   };
 
   private handlePrev = () => {
-    if (this.playlist.hasAudio(this.activeIndex)) {
+    if (this.hasAudio(this.activeIndex)) {
       this.reactiveAudioPlayer.prev();
     } else {
-      this.selectAudio(this.playlist.getPrevAudioIndex(this.activeIndex));
+      this.selectAudio(this.facade.getAudioPlayerService().getPrevIndexByStationId(this.stations[this.activeIndex].id, this.stations));
     }
   };
 
@@ -155,15 +164,15 @@ export class PageStations {
 
   private handleSelect = (e: Event) => {
     const index = parseInt((e.currentTarget as HTMLElement).dataset.index);
-    if (this.playlist.hasAudio(index)) {
-      this.selectAudio(this.playlist.getAudioIndex(index));
+    if (this.hasAudio(index)) {
+      this.selectAudio(this.facade.getAudioPlayerService().findIndexByStationId(this.stations[index].id));
     } else {
       this.selectStationWithoutAudio(index);
     }
   };
 
   render() {
-    const hasAudio = this.playlist.hasAudio(this.activeIndex);
+    const hasAudio = this.hasAudio(this.activeIndex);
 
     return (
       <Host>

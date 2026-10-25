@@ -34,5 +34,8 @@ export interface AudioPlayer {
   getPosition(): Promise<number>;
   getStationId(index: number): string;
   getIndexByStationId(stationId: string, items?: Array<{ stationId: string }>): number;
+  findIndexByStationId(stationId: string, items?: Array<{ stationId: string }>): number;
+  getNextIndexByStationId(stationId: string, stations: Station[]): number;
+  getPrevIndexByStationId(stationId: string, stations: Station[]): number;
   getPlayerItems(stations: Station[]): AudioPlayerItem[];
 }

@@ -1,5 +1,11 @@
 # @smartcompanion/data
 
+## 2.0.1
+
+### Patch Changes
+
+- [#141](https://github.com/smartcompanion-app/smartcompanion-library/pull/141) [`3b6bca6`](https://github.com/smartcompanion-app/smartcompanion-library/commit/3b6bca6c57e5bcbc380c0c1747eafa3a7e354976) Thanks [@stefanhuber](https://github.com/stefanhuber)! - `OnlineLoadService` and `OfflineLoadService` now await the data update before selecting a language. A failing update no longer escapes `load()` as an unhandled rejection: it returns `'error'`, or `'home'` from the offline service when content is already loaded.
+
 ## 2.0.0
 
 No changes in this release.

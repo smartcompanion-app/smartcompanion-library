@@ -76,6 +76,24 @@ describe('online load service', () => {
   });
 
 
+  test('should wait for the data update before selecting a language', async () => {
+    downloadDataFn.mockResolvedValue({ example: 'data' });
+    dataUpdater.update.mockImplementation(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
+      storage.set('languages', [{ language: 'en', title: 'English' }]);
+    });
+    const result = await loadService.load();
+    expect(result).toBe('home');
+    expect(storage.get('language')).toBe('en');
+  });
+
+  test('should return "error" when the data update fails', async () => {
+    downloadDataFn.mockResolvedValue({ example: 'data' });
+    dataUpdater.update.mockRejectedValue(new Error('Malformed data'));
+    const result = await loadService.load();
+    expect(result).toBe('error');
+  });
+
   test('should return "error" when error is thrown from download', async () => {
     downloadDataFn.mockRejectedValue(new Error('Network error'));
     const result = await loadService.load();

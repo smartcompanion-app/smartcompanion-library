@@ -55,7 +55,7 @@ const tourListFacade = {
   __: translate,
 } as unknown as PageTourListFacade;
 
-// One instance, not one per call: ReactiveAudioPlayer.initAudioPlayer() calls
+// One instance, not one per call: the audio pages' initAudioPlayer() calls
 // start() and then select() through separate getAudioPlayerService() calls, and
 // a fresh instance for the second has no items -- select() then rejects with
 // "Item with id  doesn't exist" outside the page's own promise chain.

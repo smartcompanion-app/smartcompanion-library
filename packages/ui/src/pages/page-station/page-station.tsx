@@ -1,22 +1,15 @@
-import { Component, State, Prop, Host, h } from '@stencil/core';
+import { Component, State, Prop, Host, h, Mixin } from '@stencil/core';
 import { Station } from '@smartcompanion/data';
-import { getMenuButton, getStations, ReactiveAudioPlayer } from '../../utils';
+import { getMenuButton, getStations } from '../../utils';
+import { audioPlayerComponent } from '../../utils/audio-player-component';
 import { PageStationFacade } from '../../contracts';
 
 @Component({
   tag: 'sc-page-station',
   styleUrl: 'page-station.scss',
 })
-export class PageStation {
-  protected reactiveAudioPlayer: ReactiveAudioPlayer;
-
+export class PageStation extends Mixin(audioPlayerComponent) {
   @State() stations: Array<Station> = [];
-  @State() playing: boolean = false;
-  @State() position = 0;
-  @State() duration = 0;
-  /** Index of the active station, which is not its index in the player */
-  @State() activeIndex = 0;
-  @State() earpiece = false;
 
   /**
    * Enable Back Button instead of Menu Button
@@ -53,8 +46,6 @@ export class PageStation {
   @Prop() facade: PageStationFacade;
 
   async componentWillLoad() {
-    this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
-
     await this.facade.getMenuService().enable();
     this.stations = await getStations(this.facade, this.tourId);
 
@@ -65,28 +56,33 @@ export class PageStation {
       this.stations.findIndex(station => station.id == this.stationId),
       0,
     );
-    this.reactiveAudioPlayer.updateActiveIndexByStationId(this.stations[activeIndex]?.id, this.stations);
+    this.setAudioIndexByStationId(this.stations[activeIndex]?.id, this.stations);
     this.activeIndex = activeIndex;
-    this.reactiveAudioPlayer.setOnActiveIndexUpdateListener((audioIndex: number) => {
-      const stationId = this.facade.getAudioPlayerService().getStationId(audioIndex);
-      const stationIndex = this.stations.findIndex(station => station.id == stationId);
-      if (stationIndex >= 0) {
-        this.activeIndex = stationIndex;
-      }
-    });
   }
 
   async componentDidLoad() {
-    await this.reactiveAudioPlayer.initAudioPlayer(this.stations);
+    await this.initAudioPlayer(this.stations);
   }
 
   async disconnectedCallback() {
-    this.reactiveAudioPlayer?.destroyAudioPlayer();
-    this.reactiveAudioPlayer = null;
+    this.destroyAudioPlayer();
+  }
+
+  /**
+   * The page's activeIndex is the index of the active station, which is not
+   * its index in the player
+   */
+  // eslint-disable-next-line stencil/own-methods-must-be-private -- overrides the public method of audioPlayerComponent
+  onAudioIndexChange(audioIndex: number) {
+    const stationId = this.facade.getAudioPlayerService().getStationId(audioIndex);
+    const stationIndex = this.stations.findIndex(station => station.id == stationId);
+    if (stationIndex >= 0) {
+      this.activeIndex = stationIndex;
+    }
   }
 
   private handleToggleOutput = () => {
-    this.reactiveAudioPlayer.toggleOutput();
+    this.toggleOutput();
   };
 
   private hasAudio(index: number) {
@@ -98,14 +94,14 @@ export class PageStation {
    */
   private async selectAudio(audioIndex: number) {
     if (audioIndex >= 0) {
-      await this.reactiveAudioPlayer.select(audioIndex);
+      await this.select(audioIndex);
     }
   }
 
   // A station without audio has no item in the player to go on from
   private handleNext = () => {
     if (this.hasAudio(this.activeIndex)) {
-      this.reactiveAudioPlayer.next();
+      this.next();
     } else {
       this.selectAudio(this.facade.getAudioPlayerService().getNextIndexByStationId(this.stations[this.activeIndex].id, this.stations));
     }
@@ -113,22 +109,22 @@ export class PageStation {
 
   private handlePrev = () => {
     if (this.hasAudio(this.activeIndex)) {
-      this.reactiveAudioPlayer.prev();
+      this.prev();
     } else {
       this.selectAudio(this.facade.getAudioPlayerService().getPrevIndexByStationId(this.stations[this.activeIndex].id, this.stations));
     }
   };
 
   private handlePlayPause = () => {
-    this.reactiveAudioPlayer.playPause();
+    this.playPause();
   };
 
   private handleStartPositionChange = () => {
-    this.reactiveAudioPlayer.startPositionChange();
+    this.startPositionChange();
   };
 
   private handleEndPositionChange = (e: CustomEvent<number>) => {
-    this.reactiveAudioPlayer.changePosition(e.detail);
+    this.changePosition(e.detail);
   };
 
   private handleBack = () => {

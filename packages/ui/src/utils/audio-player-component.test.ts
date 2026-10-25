@@ -1,7 +1,10 @@
 import { test, expect, vi, beforeEach } from 'vitest';
 import { Station } from '@smartcompanion/data';
-import { AudioPlayerFacade } from '../contracts';
-import { ReactiveAudioPlayer } from './reactive-audio-player';
+import { AudioPlayerFacade, AudioPlayerUpdate } from '../contracts';
+import { audioPlayerComponent, readEarpiece } from './audio-player-component';
+
+// The Stencil compiler removes the decorators; at runtime @stencil/core has none
+vi.mock('@stencil/core', () => ({ State: () => () => {} }));
 
 const store: Record<string, string> = {};
 globalThis.localStorage = {
@@ -21,6 +24,8 @@ globalThis.localStorage = {
   key: (index: number) => Object.keys(store)[index] ?? null,
 };
 
+const AudioPlayerPage = audioPlayerComponent(class {});
+
 function createMocks() {
   const mockAudioPlayerService = {
     pause: vi.fn().mockResolvedValue(undefined),
@@ -34,133 +39,65 @@ function createMocks() {
     getAudioPlayerService: () => mockAudioPlayerService,
   } as unknown as AudioPlayerFacade;
 
-  const page = {
-    facade,
-    earpiece: false,
-    playing: false,
-    position: 0,
-    duration: 0,
-    activeIndex: 0,
-  };
+  const createPage = () => Object.assign(new AudioPlayerPage(), { facade });
 
-  return { facade, mockAudioPlayerService, page };
+  return { facade, mockAudioPlayerService, createPage };
 }
 
 beforeEach(() => {
   Object.keys(store).forEach(k => delete store[k]);
 });
 
-test('updatePlaying calls registered listener', () => {
-  const { page } = createMocks();
-  const player = new ReactiveAudioPlayer(page);
-  const listener = vi.fn();
-  player.setOnPlayingUpdateListener(listener);
+test('updateAudioIndex makes the audio index the active index by default', () => {
+  const { createPage } = createMocks();
+  const page = createPage();
 
-  player.updatePlaying(true);
+  page.updateAudioIndex(2);
 
-  expect(listener).toHaveBeenCalledWith(true);
+  expect(page.audioIndex).toBe(2);
+  expect(page.activeIndex).toBe(2);
 });
 
-test('updatePosition calls registered listener', () => {
-  const { page } = createMocks();
-  const player = new ReactiveAudioPlayer(page);
-  const listener = vi.fn();
-  player.setOnPositionUpdateListener(listener);
+test('updateAudioIndex leaves the active index to a page overriding onAudioIndexChange', () => {
+  const StationPage = class extends AudioPlayerPage {
+    onAudioIndexChange(audioIndex: number) {
+      this.activeIndex = audioIndex * 10;
+    }
+  };
+  const page = new StationPage();
 
-  player.updatePosition(42);
+  page.updateAudioIndex(2);
 
-  expect(listener).toHaveBeenCalledWith(42);
-});
-
-test('updateDuration calls registered listener', () => {
-  const { page } = createMocks();
-  const player = new ReactiveAudioPlayer(page);
-  const listener = vi.fn();
-  player.setOnDurationUpdateListener(listener);
-
-  player.updateDuration(180);
-
-  expect(listener).toHaveBeenCalledWith(180);
-});
-
-test('updateActiveIndex calls registered listener', () => {
-  const { page } = createMocks();
-  const player = new ReactiveAudioPlayer(page);
-  const listener = vi.fn();
-  player.setOnActiveIndexUpdateListener(listener);
-
-  player.updateActiveIndex(2);
-
-  expect(listener).toHaveBeenCalledWith(2);
-});
-
-test('updateEarpiece calls registered listener', () => {
-  const { page } = createMocks();
-  const player = new ReactiveAudioPlayer(page);
-  const listener = vi.fn();
-  player.setOnEarpieceUpdateListener(listener);
-
-  player.updateEarpiece(true);
-
-  expect(listener).toHaveBeenCalledWith(true);
-});
-
-test('removeAllListeners prevents future listener calls', () => {
-  const { page } = createMocks();
-  const player = new ReactiveAudioPlayer(page);
-  const listener = vi.fn();
-  player.setOnPlayingUpdateListener(listener);
-
-  player.removeAllListeners();
-  player.updatePlaying(true);
-
-  expect(listener).not.toHaveBeenCalled();
-});
-
-test('setDefaultUpdateListeners syncs state back to page object', () => {
-  const { page } = createMocks();
-  const player = new ReactiveAudioPlayer(page);
-
-  player.updatePlaying(true);
-  player.updatePosition(10);
-  player.updateDuration(120);
-  player.updateActiveIndex(3);
-  player.updateEarpiece(true);
-
-  expect(page.playing).toBe(true);
-  expect(page.position).toBe(10);
-  expect(page.duration).toBe(120);
-  expect(page.activeIndex).toBe(3);
-  expect(page.earpiece).toBe(true);
+  expect(page.audioIndex).toBe(2);
+  expect(page.activeIndex).toBe(20);
 });
 
 test('playPause calls play when not playing', async () => {
-  const { page, mockAudioPlayerService } = createMocks();
-  const player = new ReactiveAudioPlayer(page);
+  const { createPage, mockAudioPlayerService } = createMocks();
+  const page = createPage();
 
-  await player.playPause();
+  await page.playPause();
 
   expect(mockAudioPlayerService.play).toHaveBeenCalled();
   expect(mockAudioPlayerService.pause).not.toHaveBeenCalled();
 });
 
 test('playPause calls pause when playing', async () => {
-  const { page, mockAudioPlayerService } = createMocks();
+  const { createPage, mockAudioPlayerService } = createMocks();
+  const page = createPage();
   page.playing = true;
-  const player = new ReactiveAudioPlayer(page);
-  player.updatePlaying(true);
 
-  await player.playPause();
+  await page.playPause();
 
   expect(mockAudioPlayerService.pause).toHaveBeenCalled();
   expect(mockAudioPlayerService.play).not.toHaveBeenCalled();
 });
 
 test('toggleOutput switches from speaker to earpiece', async () => {
-  const { page, mockAudioPlayerService } = createMocks();
-  const player = new ReactiveAudioPlayer(page);
+  const { createPage, mockAudioPlayerService } = createMocks();
+  const page = createPage();
 
-  await player.toggleOutput();
+  await page.toggleOutput();
 
   expect(mockAudioPlayerService.setEarpiece).toHaveBeenCalled();
   expect(page.earpiece).toBe(true);
@@ -168,12 +105,11 @@ test('toggleOutput switches from speaker to earpiece', async () => {
 });
 
 test('toggleOutput switches from earpiece to speaker', async () => {
-  const { page, mockAudioPlayerService } = createMocks();
+  const { createPage, mockAudioPlayerService } = createMocks();
+  const page = createPage();
   page.earpiece = true;
-  const player = new ReactiveAudioPlayer(page);
-  player.updateEarpiece(true);
 
-  await player.toggleOutput();
+  await page.toggleOutput();
 
   expect(mockAudioPlayerService.setSpeaker).toHaveBeenCalled();
   expect(page.earpiece).toBe(false);
@@ -182,33 +118,37 @@ test('toggleOutput switches from earpiece to speaker', async () => {
 
 test('readEarpiece returns true when localStorage has yes', () => {
   store['audio-earpiece'] = 'yes';
-  const { page } = createMocks();
-  const player = new ReactiveAudioPlayer(page);
 
-  expect(player.readEarpiece()).toBe(true);
+  expect(readEarpiece()).toBe(true);
 });
 
 test('readEarpiece returns false when localStorage has no value', () => {
-  const { page } = createMocks();
-  const player = new ReactiveAudioPlayer(page);
-
-  expect(player.readEarpiece()).toBe(false);
+  expect(readEarpiece()).toBe(false);
 });
 
 test('readEarpiece returns false when localStorage has other value', () => {
   store['audio-earpiece'] = 'no';
-  const { page } = createMocks();
-  const player = new ReactiveAudioPlayer(page);
 
-  expect(player.readEarpiece()).toBe(false);
+  expect(readEarpiece()).toBe(false);
 });
 
-test('constructor initializes earpiece from localStorage', () => {
+test('a page initializes earpiece from localStorage', () => {
   store['audio-earpiece'] = 'yes';
-  const { page } = createMocks();
-  new ReactiveAudioPlayer(page);
+  const { createPage } = createMocks();
 
-  expect(page.earpiece).toBe(true);
+  expect(createPage().earpiece).toBe(true);
+});
+
+test('onCompleted rewinds the audio by default', async () => {
+  const { createPage, mockAudioPlayerService } = createMocks();
+  const page = createPage();
+  page.position = 42;
+
+  await page.onCompleted({ state: 'completed', index: 0, id: '1-audio' });
+
+  expect(mockAudioPlayerService.pause).toHaveBeenCalled();
+  expect(mockAudioPlayerService.seek).toHaveBeenCalledWith(0);
+  expect(page.position).toBe(0);
 });
 
 // A page left right after opening it is destroyed while initAudioPlayer() still
@@ -217,7 +157,7 @@ test('constructor initializes earpiece from localStorage', () => {
 const stations = [{ id: '1', audios: ['1-audio'] }] as unknown as Station[];
 
 function createPlayerMocks() {
-  const { page, mockAudioPlayerService } = createMocks();
+  const { createPage, mockAudioPlayerService } = createMocks();
   let started: () => void = () => {};
   const service = Object.assign(mockAudioPlayerService, {
     start: vi.fn(() => new Promise<void>(resolve => (started = resolve))),
@@ -227,15 +167,15 @@ function createPlayerMocks() {
     unregisterUpdateListener: vi.fn(),
     getDuration: vi.fn().mockResolvedValue(0),
   });
-  return { page, service, started: () => started() };
+  return { createPage, service, started: () => started() };
 }
 
 test('initAudioPlayer stops instead of selecting when the page is destroyed while starting', async () => {
-  const { page, service, started } = createPlayerMocks();
-  const player = new ReactiveAudioPlayer(page);
+  const { createPage, service, started } = createPlayerMocks();
+  const page = createPage();
 
-  const init = player.initAudioPlayer(stations);
-  await player.destroyAudioPlayer();
+  const init = page.initAudioPlayer(stations);
+  await page.destroyAudioPlayer();
   started();
   await init;
 
@@ -246,10 +186,10 @@ test('initAudioPlayer stops instead of selecting when the page is destroyed whil
 });
 
 test('initAudioPlayer selects the active audio when the page stays', async () => {
-  const { page, service, started } = createPlayerMocks();
-  const player = new ReactiveAudioPlayer(page);
+  const { createPage, service, started } = createPlayerMocks();
+  const page = createPage();
 
-  const init = player.initAudioPlayer(stations);
+  const init = page.initAudioPlayer(stations);
   started();
   await init;
 
@@ -259,10 +199,11 @@ test('initAudioPlayer selects the active audio when the page stays', async () =>
 });
 
 test('initAudioPlayer starts without selecting when no audio is active', async () => {
-  const { page, service, started } = createPlayerMocks();
-  const player = new ReactiveAudioPlayer({ ...page, activeIndex: -1 });
+  const { createPage, service, started } = createPlayerMocks();
+  const page = createPage();
+  page.audioIndex = -1;
 
-  const init = player.initAudioPlayer(stations);
+  const init = page.initAudioPlayer(stations);
   started();
   await init;
 
@@ -273,10 +214,10 @@ test('initAudioPlayer starts without selecting when no audio is active', async (
 
 // The player cannot start on an empty playlist: the web player loads its first item
 test('initAudioPlayer does not start the player when no station has audio', async () => {
-  const { page, service } = createPlayerMocks();
-  const player = new ReactiveAudioPlayer(page);
+  const { createPage, service } = createPlayerMocks();
+  const page = createPage();
 
-  await player.initAudioPlayer([{ id: '1', audios: [] }, { id: '2' }] as unknown as Station[]);
+  await page.initAudioPlayer([{ id: '1', audios: [] }, { id: '2' }] as unknown as Station[]);
 
   expect(service.start).not.toHaveBeenCalled();
   expect(service.registerUpdateListener).not.toHaveBeenCalled();
@@ -287,7 +228,7 @@ test('initAudioPlayer does not start the player when no station has audio', asyn
 // page it replaces is removed. The removed page's stop() then stopped the new
 // page's player, whose select() failed in turn.
 test('destroyAudioPlayer leaves the player to a page that started after it', async () => {
-  const { page, mockAudioPlayerService } = createMocks();
+  const { createPage, mockAudioPlayerService } = createMocks();
   const starts: Array<() => void> = [];
   const service = Object.assign(mockAudioPlayerService, {
     start: vi.fn(() => new Promise<void>(resolve => starts.push(resolve))),
@@ -297,8 +238,8 @@ test('destroyAudioPlayer leaves the player to a page that started after it', asy
     unregisterUpdateListener: vi.fn(),
     getDuration: vi.fn().mockResolvedValue(0),
   });
-  const leaving = new ReactiveAudioPlayer({ ...page });
-  const entering = new ReactiveAudioPlayer({ ...page });
+  const leaving = createPage();
+  const entering = createPage();
 
   const leavingInit = leaving.initAudioPlayer(stations);
   const enteringInit = entering.initAudioPlayer(stations);
@@ -318,16 +259,35 @@ test('destroyAudioPlayer leaves the player to a page that started after it', asy
 });
 
 test('initAudioPlayer does not reject when stopping a player left half-started fails', async () => {
-  const { page, service, started } = createPlayerMocks();
+  const { createPage, service, started } = createPlayerMocks();
   service.stop.mockResolvedValueOnce(undefined).mockRejectedValueOnce(new TypeError("Cannot read properties of undefined (reading 'id')"));
   const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
-  const player = new ReactiveAudioPlayer(page);
+  const page = createPage();
 
-  const init = player.initAudioPlayer(stations);
-  await player.destroyAudioPlayer();
+  const init = page.initAudioPlayer(stations);
+  await page.destroyAudioPlayer();
   started();
 
   await expect(init).resolves.toBeUndefined();
   expect(warn).toHaveBeenCalledTimes(1);
   warn.mockRestore();
+});
+
+// An update the player sends while the page is being left must not reach it
+test('a destroyed page ignores updates from the player', async () => {
+  const { createPage, service, started } = createPlayerMocks();
+  const page = createPage();
+  const onSkip = vi.spyOn(page, 'onSkip');
+
+  const init = page.initAudioPlayer(stations);
+  started();
+  await init;
+  const listener: (update: AudioPlayerUpdate) => Promise<void> = service.registerUpdateListener.mock.calls[0][0];
+  await page.destroyAudioPlayer();
+  await listener({ state: 'skip', index: 1, id: '2-audio' });
+  await listener({ state: 'playing', index: 1, id: '2-audio' });
+
+  expect(onSkip).not.toHaveBeenCalled();
+  expect(page.audioIndex).toBe(0);
+  expect(page.playing).toBe(false);
 });

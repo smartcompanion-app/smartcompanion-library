@@ -24,6 +24,8 @@ Pages take the [service facade](./services.md) as their `facade` property — th
 
 The package's entry points are the root, `@smartcompanion/ui/loader` (`defineCustomElements`, for apps that register the elements themselves) and `@smartcompanion/ui/dist/collection/*`. A Stencil app builds the components from that collection together with its own, rather than loading the prebuilt bundle.
 
+Such an app needs Stencil 4.44 or later. `sc-page-stations`, `sc-page-station` and `sc-page-multi-audio-station` share their audio player through a Stencil mixin, and an older compiler drops a mixin's properties from a library's collection without an error: the app builds, and those pages render blank.
+
 ## Pages
 
 Each page is a full screen with its own header. Properties every list page shares: `headerBackgroundColor` (`'primary'` or `'secondary'`) and `tourId` — show only that tour's stations; `'default'` means the [default tour](../content/tours.md#the-default-tour).

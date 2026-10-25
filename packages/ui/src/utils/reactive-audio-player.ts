@@ -314,7 +314,7 @@ export class ReactiveAudioPlayer {
    */
   updateActiveIndexByStationId(id: string, stations: Array<Station>) {
     const items = this.facade.getAudioPlayerService().getPlayerItems(stations);
-    this.updateActiveIndex(this.facade.getAudioPlayerService().findIndexByStationId(id, items));
+    this.updateActiveIndex(this.facade.getAudioPlayerService().getIndexByStationId(id, items));
   }
 
   async toggleOutput() {

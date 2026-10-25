@@ -91,14 +91,15 @@ test('test get index of id, stations with one audio', () => {
   expect(audioPlayerService.getIndex("test2-audio1")).toEqual(1);
 });
 
-test('test get index of "default" station id as 0', () => {
+test('test get index of station id', () => {
   audioPlayerService.stations = stations;
-  expect(audioPlayerService.getIndexByStationId("default")).toEqual(0);
+  expect(audioPlayerService.getIndexByStationId("test2")).toEqual(1);
 });
 
-test('test get index of unkown station id, fallback to 0', () => {
+test('test get index of unknown station id as -1', () => {
   audioPlayerService.stations = stations;
-  expect(audioPlayerService.getIndexByStationId("xyz-unknown")).toEqual(0);
+  expect(audioPlayerService.getIndexByStationId("xyz-unknown")).toEqual(-1);
+  expect(audioPlayerService.getIndexByStationId("default")).toEqual(-1);
 });
 
 test('test get id of index, station of audios', () => {
@@ -184,9 +185,9 @@ const mixedStations = [
   { ...stations[0], id: "d", audios: [] },
 ] as Station[];
 
-test('test find index of a station, -1 without audio', () => {
+test('test get index of station id, -1 without audio', () => {
   audioPlayerService.stations = mixedStations;
-  expect(["a", "b", "c", "d", "unknown"].map(id => audioPlayerService.findIndexByStationId(id))).toEqual([0, -1, 1, -1, -1]);
+  expect(["a", "b", "c", "d"].map(id => audioPlayerService.getIndexByStationId(id))).toEqual([0, -1, 1, -1]);
 });
 
 test('test get next index by station id, skipping stations without audio and wrapping around', () => {

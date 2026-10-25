@@ -165,7 +165,7 @@ export class PageStations {
   private handleSelect = (e: Event) => {
     const index = parseInt((e.currentTarget as HTMLElement).dataset.index);
     if (this.hasAudio(index)) {
-      this.selectAudio(this.facade.getAudioPlayerService().findIndexByStationId(this.stations[index].id));
+      this.selectAudio(this.facade.getAudioPlayerService().getIndexByStationId(this.stations[index].id));
     } else {
       this.selectStationWithoutAudio(index);
     }

@@ -99,21 +99,9 @@ export class AudioPlayerService {
   }
 
   /**
-   * Get the index of the first item identified by the given station id
-   */
-  getIndexByStationId(stationId: string, items: Array<{ stationId: string }> = this.items): number {
-    if (stationId == 'default') {
-      return 0;
-    }
-
-    // fallback to first item
-    return Math.max(this.findIndexByStationId(stationId, items), 0);
-  }
-
-  /**
    * Get the index of the first item of the given station, -1 if the station has no audio
    */
-  findIndexByStationId(stationId: string, items: Array<{ stationId: string }> = this.items): number {
+  getIndexByStationId(stationId: string, items: Array<{ stationId: string }> = this.items): number {
     for (let i = 0; i < items.length; i++) {
       if (items[i].stationId == stationId) {
         return i;
@@ -130,7 +118,7 @@ export class AudioPlayerService {
   getNextIndexByStationId(stationId: string, stations: Station[]): number {
     const position = stations.findIndex(station => station.id == stationId);
     for (const station of stations.slice(position + 1)) {
-      const index = this.findIndexByStationId(station.id);
+      const index = this.getIndexByStationId(station.id);
       if (index >= 0) {
         return index;
       }

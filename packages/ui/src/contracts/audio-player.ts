@@ -14,7 +14,7 @@ export interface AudioPlayerItem {
 }
 
 /**
- * Audio playback as needed by pages and the ReactiveAudioPlayer,
+ * Audio playback as needed by pages and the audioPlayerComponent mixin,
  * structurally satisfied by the AudioPlayerService of @smartcompanion/services.
  */
 export interface AudioPlayer {

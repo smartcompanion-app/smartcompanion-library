@@ -62,7 +62,7 @@ export type StationListFacade = Translator & {
   getStationService(): StationSource;
 };
 
-/** Facade slice needed by the ReactiveAudioPlayer */
+/** Facade slice needed by the audioPlayerComponent mixin */
 export type AudioPlayerFacade = {
   getAudioPlayerService(): AudioPlayer;
   getStationService(): StationSource;

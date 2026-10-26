@@ -91,14 +91,15 @@ test('test get index of id, stations with one audio', () => {
   expect(audioPlayerService.getIndex("test2-audio1")).toEqual(1);
 });
 
-test('test get index of "default" station id as 0', () => {
+test('test get index of station id', () => {
   audioPlayerService.stations = stations;
-  expect(audioPlayerService.getIndexByStationId("default")).toEqual(0);
+  expect(audioPlayerService.getIndexByStationId("test2")).toEqual(1);
 });
 
-test('test get index of unkown station id, fallback to 0', () => {
+test('test get index of unknown station id as -1', () => {
   audioPlayerService.stations = stations;
-  expect(audioPlayerService.getIndexByStationId("xyz-unknown")).toEqual(0);
+  expect(audioPlayerService.getIndexByStationId("xyz-unknown")).toEqual(-1);
+  expect(audioPlayerService.getIndexByStationId("default")).toEqual(-1);
 });
 
 test('test get id of index, station of audios', () => {
@@ -166,4 +167,45 @@ test('test setting multiple stations', () => {
       collectedPercentage: 0
     }
   ]);
+});
+
+test('test setting stations without audios', () => {
+  const withoutAudios = { ...stations[1], audios: [] };
+  const missingAudios = { ...stations[1], id: "test3", audios: undefined } as unknown as Station;
+  const items = audioPlayerService.getPlayerItems([withoutAudios, stations[0], missingAudios]);
+
+  expect(items.map(item => item.id)).toStrictEqual(["test1-audio1"]);
+});
+
+// station a: one audio, b: none, c: two audios, d: none
+const mixedStations = [
+  { ...stations[0], id: "a" },
+  { ...stations[0], id: "b", audios: [] },
+  { ...station, id: "c" },
+  { ...stations[0], id: "d", audios: [] },
+] as Station[];
+
+test('test get index of station id, -1 without audio', () => {
+  audioPlayerService.stations = mixedStations;
+  expect(["a", "b", "c", "d"].map(id => audioPlayerService.getIndexByStationId(id))).toEqual([0, -1, 1, -1]);
+});
+
+test('test get next index by station id, skipping stations without audio and wrapping around', () => {
+  audioPlayerService.stations = mixedStations;
+  expect(audioPlayerService.getNextIndexByStationId("b", mixedStations)).toEqual(1);
+  expect(audioPlayerService.getNextIndexByStationId("d", mixedStations)).toEqual(0);
+});
+
+test('test get prev index by station id, to the last audio of an earlier station and wrapping around', () => {
+  audioPlayerService.stations = mixedStations;
+  expect(audioPlayerService.getPrevIndexByStationId("d", mixedStations)).toEqual(2);
+  expect(audioPlayerService.getPrevIndexByStationId("b", mixedStations)).toEqual(0);
+  expect(audioPlayerService.getPrevIndexByStationId("a", mixedStations)).toEqual(2);
+});
+
+test('test get next and prev index by station id without any audio', () => {
+  const silentStations = mixedStations.map(s => ({ ...s, audios: [] }));
+  audioPlayerService.stations = silentStations;
+  expect(audioPlayerService.getNextIndexByStationId("a", silentStations)).toEqual(-1);
+  expect(audioPlayerService.getPrevIndexByStationId("a", silentStations)).toEqual(-1);
 });

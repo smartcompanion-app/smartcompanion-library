@@ -85,7 +85,6 @@ Then:
 <summary>Images do not load</summary>
 
 - An id in `stations.images` does not exist in `assets` — the page then fails to render, with an error in the console
-- On the main screen, a station has only one image; it needs two, see [Stations](../content/stations.md#what-the-default-app-expects)
 - The `externalUrl` returns 404. Open it directly.
 - CORS, or mixed content
 

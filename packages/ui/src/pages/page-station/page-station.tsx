@@ -14,6 +14,7 @@ export class PageStation {
   @State() playing: boolean = false;
   @State() position = 0;
   @State() duration = 0;
+  /** Index of the active station, which is not its index in the player */
   @State() activeIndex = 0;
   @State() earpiece = false;
 
@@ -53,9 +54,26 @@ export class PageStation {
 
   async componentWillLoad() {
     this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
+
     await this.facade.getMenuService().enable();
     this.stations = await getStations(this.facade, this.tourId);
-    this.reactiveAudioPlayer.updateActiveIndexByStationId(this.stationId, this.stations);
+
+    // The player's index counts audios: a station with several has several, one without audio
+    // none. The page's activeIndex counts stations, so it is set here and from now on mapped
+    // through the station id of what the player reports
+    const activeIndex = Math.max(
+      this.stations.findIndex(station => station.id == this.stationId),
+      0,
+    );
+    this.reactiveAudioPlayer.updateActiveIndexByStationId(this.stations[activeIndex]?.id, this.stations);
+    this.activeIndex = activeIndex;
+    this.reactiveAudioPlayer.setOnActiveIndexUpdateListener((audioIndex: number) => {
+      const stationId = this.facade.getAudioPlayerService().getStationId(audioIndex);
+      const stationIndex = this.stations.findIndex(station => station.id == stationId);
+      if (stationIndex >= 0) {
+        this.activeIndex = stationIndex;
+      }
+    });
   }
 
   async componentDidLoad() {
@@ -71,12 +89,34 @@ export class PageStation {
     this.reactiveAudioPlayer.toggleOutput();
   };
 
+  private hasAudio(index: number) {
+    return this.stations[index]?.audios?.length > 0;
+  }
+
+  /**
+   * Selects the audio at the given index in the player, which then reports its station as active
+   */
+  private async selectAudio(audioIndex: number) {
+    if (audioIndex >= 0) {
+      await this.reactiveAudioPlayer.select(audioIndex);
+    }
+  }
+
+  // A station without audio has no item in the player to go on from
   private handleNext = () => {
-    this.reactiveAudioPlayer.next();
+    if (this.hasAudio(this.activeIndex)) {
+      this.reactiveAudioPlayer.next();
+    } else {
+      this.selectAudio(this.facade.getAudioPlayerService().getNextIndexByStationId(this.stations[this.activeIndex].id, this.stations));
+    }
   };
 
   private handlePrev = () => {
-    this.reactiveAudioPlayer.prev();
+    if (this.hasAudio(this.activeIndex)) {
+      this.reactiveAudioPlayer.prev();
+    } else {
+      this.selectAudio(this.facade.getAudioPlayerService().getPrevIndexByStationId(this.stations[this.activeIndex].id, this.stations));
+    }
   };
 
   private handlePlayPause = () => {
@@ -96,6 +136,8 @@ export class PageStation {
   };
 
   render() {
+    const hasAudio = this.hasAudio(this.activeIndex);
+
     return (
       <Host id="station">
         <ion-header class="ion-no-border">
@@ -116,8 +158,9 @@ export class PageStation {
           <div class="station-player">
             <sc-player-controls
               playing={this.playing}
-              position={this.position}
-              duration={this.duration}
+              position={hasAudio ? this.position : 0}
+              duration={hasAudio ? this.duration : 0}
+              disabled={!hasAudio}
               onNext={this.handleNext}
               onPrev={this.handlePrev}
               onPlayPause={this.handlePlayPause}

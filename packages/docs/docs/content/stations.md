@@ -15,18 +15,18 @@ A station is one stop on the tour: a number on a sign, a title, some pictures, a
 }
 ```
 
-The data format makes `audios` optional and asks for at least one image. The default app asks for more — see below.
+The data format makes `audios` optional and asks for at least one image. How the default app uses them is below.
 
 The complete field list is in [Data format](./data-format.md#stations). This page is about using the fields well.
 
 ## What the default app expects
 
-The default app's main screen, `sc-page-stations`, shows the active station's picture large, its player below, and every station as a swipeable card. That screen relies on two things the schema does not enforce:
+The default app's main screen, `sc-page-stations`, shows the active station's picture large, its player below, and every station as a swipeable card. How it uses a station's assets:
 
-- **Two images per station.** The first is the large picture, the second the picture on the station's card. A station with a single image breaks the screen.
-- **Exactly one audio per station.** The player holds one track per audio asset and plays a station's position in the list as its track. A station with no audio, or with two, moves every station after it onto the wrong recording.
+- **Images.** The first is the large picture, the second the picture on the station's card. A station with a single image shows it in both places.
+- **Audio.** The player holds one track per audio asset, in the order of the list. A station with several tracks plays them one after the other and stays active meanwhile. A station without audio stays in the list, the player skips it, and its play button is disabled while it is active.
 
-Both hold for every language. The other station pages are more forgiving; see [Screens](../features/screens.md). Lifting both limits is tracked in [library issue #138](https://github.com/smartcompanion-app/smartcompanion-library/issues/138).
+Library releases up to 2.0.0 needed exactly two images and one audio per station: a station with a single image broke the screen, and one with no audio, or with several, moved every station after it onto the wrong recording.
 
 ## Numbering
 
@@ -82,13 +82,11 @@ The audio asset carries its own `language`, and it should match the station vari
 
 ### More than one track
 
-A station can list several audio assets — a narration and an eyewitness account, a short and a long version. The library has a page for this, `sc-page-multi-audio-station`, which lets the visitor choose. The default app does not use it, and its main screen expects one track per station; using the multi-track page is a change in your fork, see [Screens](../features/screens.md#pages-the-default-app-does-not-use).
+A station can list several audio assets — a narration and an eyewitness account, a short and a long version. The library has a page for this, `sc-page-multi-audio-station`, which lets the visitor choose. The default app does not use it: its main screen plays a station's tracks one after the other, without a choice. Using the multi-track page is a change in your fork, see [Screens](../features/screens.md#pages-the-default-app-does-not-use).
 
 ### Stations without audio
 
-The schema allows a station without `audios` — a welcome panel, a purely visual exhibit, a recording that is not ready yet. The default app does not: its main screen and its station page play a station's position in the list as its track, so a station without audio shifts every station after it onto the wrong recording.
-
-Until the recording exists, give the station a placeholder track — a few seconds of silence, or a short spoken note. A guide built on other pages, such as the station lists, can leave it out.
+The schema allows a station without `audios` — a welcome panel, a purely visual exhibit, a recording that is not ready yet. The main screen and the station page keep it in the list and show its pictures and text, with the play button disabled. Next and previous, and the player moving on at the end of a track, skip it.
 
 ## Text
 
@@ -156,6 +154,6 @@ The station variant references an audio asset recorded in another language. Chec
 <details>
 <summary>A station shows no images</summary>
 
-Every id in `images` must exist in `assets`. A typo in an id does not leave a gap: the page fails to render. The same happens on the main screen when a station has only one image — see [What the default app expects](#what-the-default-app-expects).
+Every id in `images` must exist in `assets`. A typo in an id does not leave a gap: the page fails to render.
 
 </details>

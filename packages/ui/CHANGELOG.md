@@ -1,5 +1,13 @@
 # @smartcompanion/ui
 
+## 2.0.1
+
+### Patch Changes
+
+- [#144](https://github.com/smartcompanion-app/smartcompanion-library/pull/144) [`a616e56`](https://github.com/smartcompanion-app/smartcompanion-library/commit/a616e562682624132d5bcfae773f50f80548f239) Thanks [@stefanhuber](https://github.com/stefanhuber)! - `sc-page-stations`, `sc-page-station` and `sc-page-multi-audio-station` share their audio player through a Stencil mixin again, in place of the `ReactiveAudioPlayer` helper. Their behaviour does not change. A Stencil app building these pages from the collection needs Stencil 4.44 or later: an older compiler drops the mixin's properties from a library's collection without an error, and the pages render blank. `@stencil/core >=4.44.0` is an optional peer dependency of `@smartcompanion/ui` for that reason.
+
+- [#142](https://github.com/smartcompanion-app/smartcompanion-library/pull/142) [`d115aa2`](https://github.com/smartcompanion-app/smartcompanion-library/commit/d115aa2b8d58e554c53c1a9974b25cecddd0cba9) Thanks [@stefanhuber](https://github.com/stefanhuber)! - `sc-page-stations` and `sc-page-station` support stations with a single image, without audio, or with several audios. A station with one image shows it on its card too. A station without audio stays in the list with the play button and seek bar disabled, and the player skips it. The pages map a station's position in the list to the playlist through its id, so a station with several audios no longer moves every later station onto the wrong track. `AudioPlayerService` answers the lookups this needs. `getIndexByStationId()` returns -1 for a station without audio, an unknown station or `'default'`, where it fell back to 0 before. The new `getNextIndexByStationId()` and `getPrevIndexByStationId()` find the nearest track after or before a station. `getPlayerItems()` no longer throws for a station without `audios`. The `AudioPlayer` contract in `@smartcompanion/ui` requires the two new methods.
+
 ## 2.0.0
 
 ### Major Changes

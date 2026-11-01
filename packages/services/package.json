@@ -1,7 +1,7 @@
 {
   "name": "@smartcompanion/services",
   "description": "Service layer for SmartCompanion apps — ServiceFacade over the data layer, plus audio playback, menu and routing.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "keywords": [
     "smartcompanion",
     "audioguide",
@@ -63,7 +63,7 @@
   "devDependencies": {
     "@capacitor/core": "^8.5.3",
     "@ionic/core": "^9.0.7",
-    "@smartcompanion/data": "^2.0.0",
+    "@smartcompanion/data": "^2.0.1",
     "@smartcompanion/native-audio-player": "^1.0.2",
     "@types/react": "^19.3.0"
   }

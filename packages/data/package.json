@@ -48,8 +48,8 @@
     "test": "vitest run",
     "coverage": "vitest run --coverage",
     "lint": "oxlint src",
-    "format": "prettier --write src",
-    "format:check": "prettier --check src",
+    "format": "oxfmt src",
+    "format:check": "oxfmt --check src",
     "check:publish": "publint . && attw --pack . --ignore-rules cjs-resolves-to-esm"
   },
   "license": "BSD-2-Clause",

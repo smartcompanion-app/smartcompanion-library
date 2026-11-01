@@ -14,7 +14,7 @@ TypeScript monorepo with npm workspaces containing reusable packages for SmartCo
 
 - Main branch: `main`
 - Follows [Conventional Commits](https://www.conventionalcommits.org/) (e.g. `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`)
-- `npm install` installs a husky pre-commit hook that runs Prettier over staged files under `packages/*/src`
+- `npm install` installs a husky pre-commit hook that runs oxfmt over staged files under `packages/*/src`
 
 ## Releasing
 
@@ -95,6 +95,10 @@ oxlint, one `.oxlintrc.json` at the root; each package's `lint` runs `oxlint src
 - `react/jsx-no-bind` became `react-perf/jsx-no-new-function-as-prop`, which has no `ignoreRefs`; the one `ref` callback carries a disable comment.
 - `eslint` is still installed, as a peer `eslint-plugin-storybook` requires. Nothing runs it.
 
+### Formatting
+
+oxfmt, one `.oxfmtrc.json` at the root, migrated from the old Prettier config and producing the same output. Ignores live in its `ignorePatterns`, not a `.prettierignore`: that is what keeps the Stencil-generated `components.d.ts` and `custom-elements.json` out, whichever package the scripts run in. The pre-commit hook passes `--no-error-on-unmatched-pattern` because oxfmt, unlike Prettier, fails when every file it is given is ignored — which happens whenever a build has restaged `components.d.ts` on its own. `prettier` is still in `node_modules`, pulled in by Storybook.
+
 ## Documentation site
 
 `packages/docs` is Docusaurus, published at https://docs.smartcompanion.app. It covers more than this repo: setting up and running the [audioguide app](https://github.com/smartcompanion-app/audioguide-app) (content, customization, deployment) as well as the library. Contributing, security and the code of conduct stay in the repo's own files and are only linked.
@@ -108,7 +112,7 @@ oxlint, one `.oxlintrc.json` at the root; each package's `lint` runs `oxlint src
 
 ## Code Style
 
-- Prettier: single quotes, 2-space indent, print width 180, trailing commas
+- oxfmt (Prettier-compatible, `.oxfmtrc.json`): single quotes, 2-space indent, print width 180, trailing commas
 - EditorConfig: LF line endings, UTF-8, 2-space indent
 - TypeScript: strict mode (`noImplicitAny`), ES modules
 - File names: kebab-case; Classes/Interfaces: PascalCase
@@ -118,7 +122,7 @@ oxlint, one `.oxlintrc.json` at the root; each package's `lint` runs `oxlint src
 Every change must pass these before committing:
 ```bash
 npm run lint           # Lint all packages (must pass with 0 errors, 0 warnings)
-npm run format:check   # Prettier check across all packages
+npm run format:check   # oxfmt check across all packages
 npm run depcruise      # Package boundaries (see .dependency-cruiser.json)
 npm test               # Run tests for all packages
 npm run check:publish  # publint + attw against each package's tarball

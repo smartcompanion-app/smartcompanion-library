@@ -1,5 +1,13 @@
 # @smartcompanion/services
 
+## 2.0.1
+
+### Patch Changes
+
+- [#133](https://github.com/smartcompanion-app/smartcompanion-library/pull/133) [`c010bde`](https://github.com/smartcompanion-app/smartcompanion-library/commit/c010bde3436ea17eff9178c41f2bbebf12308332) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Require `@smartcompanion/native-audio-player` 1.0.2 or later. On the web, its `stop()` rejected with "Cannot read properties of undefined (reading 'id')" when it found an audio element but had no current item, which a page left while its player was starting could surface as an unhandled rejection.
+
+- [#142](https://github.com/smartcompanion-app/smartcompanion-library/pull/142) [`d115aa2`](https://github.com/smartcompanion-app/smartcompanion-library/commit/d115aa2b8d58e554c53c1a9974b25cecddd0cba9) Thanks [@stefanhuber](https://github.com/stefanhuber)! - `sc-page-stations` and `sc-page-station` support stations with a single image, without audio, or with several audios. A station with one image shows it on its card too. A station without audio stays in the list with the play button and seek bar disabled, and the player skips it. The pages map a station's position in the list to the playlist through its id, so a station with several audios no longer moves every later station onto the wrong track. `AudioPlayerService` answers the lookups this needs. `getIndexByStationId()` returns -1 for a station without audio, an unknown station or `'default'`, where it fell back to 0 before. The new `getNextIndexByStationId()` and `getPrevIndexByStationId()` find the nearest track after or before a station. `getPlayerItems()` no longer throws for a station without `audios`. The `AudioPlayer` contract in `@smartcompanion/ui` requires the two new methods.
+
 ## 2.0.0
 
 ### Major Changes

@@ -76,7 +76,7 @@ npm test           # Run tests for all packages
 npm run build -w packages/data    # Compile TypeScript to dist/
 npm run test -w packages/data     # Run Vitest tests
 npm run lint -w packages/data     # Lint source files
-npm run format -w packages/data   # Format source files with Prettier
+npm run format -w packages/data   # Format source files with oxfmt
 ```
 
 ### @smartcompanion/services
@@ -85,7 +85,7 @@ npm run format -w packages/data   # Format source files with Prettier
 npm run build -w packages/services    # Compile TypeScript to dist/
 npm run test -w packages/services     # Run Vitest tests
 npm run lint -w packages/services     # Lint source files
-npm run format -w packages/services   # Format source files with Prettier
+npm run format -w packages/services   # Format source files with oxfmt
 ```
 
 ### @smartcompanion/ui

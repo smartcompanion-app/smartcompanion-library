@@ -21,7 +21,7 @@ Taking part in this project — issues, discussions, pull requests — means fol
     npx playwright install chromium
     ```
 
-`npm install` also sets up a [husky](https://typicode.github.io/husky/) pre-commit hook that runs Prettier over staged files under `packages/*/src`, so formatting is fixed before it can reach CI.
+`npm install` also sets up a [husky](https://typicode.github.io/husky/) pre-commit hook that runs oxfmt over staged files under `packages/*/src`, so formatting is fixed before it can reach CI.
 
 ### Scripts
 
@@ -37,7 +37,7 @@ Runs Vitest across all packages. See [Testing](#testing) for what that covers in
 
 #### `npm run lint` / `npm run format` / `npm run format:check`
 
-ESLint over `src`, and Prettier in write or check mode. CI runs `lint` and `format:check`; `format` is the one that rewrites files.
+oxlint over `src` (config in [`.oxlintrc.json`](.oxlintrc.json)), and oxfmt (config in [`.oxfmtrc.json`](.oxfmtrc.json)) in write or check mode. CI runs `lint` and `format:check`; `format` is the one that rewrites files.
 
 #### `npm run depcruise`
 

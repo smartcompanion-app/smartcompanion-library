@@ -37,7 +37,7 @@ Runs Vitest across all packages. See [Testing](#testing) for what that covers in
 
 #### `npm run lint` / `npm run format` / `npm run format:check`
 
-ESLint over `src`, and Prettier in write or check mode. CI runs `lint` and `format:check`; `format` is the one that rewrites files.
+oxlint over `src` (config in [`.oxlintrc.json`](.oxlintrc.json)), and Prettier in write or check mode. CI runs `lint` and `format:check`; `format` is the one that rewrites files.
 
 #### `npm run depcruise`
 

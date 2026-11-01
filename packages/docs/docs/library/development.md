@@ -35,7 +35,7 @@ Package boundaries — `ui` does not import `services`, nothing under `packages/
 | `npm run build` | Build all three packages |
 | `npm test` | Run the tests of all three packages |
 | `npm run coverage` | Tests with coverage; reports in `packages/*/coverage` |
-| `npm run lint` | ESLint. CI fails only on errors; keep warnings at zero too |
+| `npm run lint` | oxlint. CI fails only on errors; keep warnings at zero too |
 | `npm run format:check` | Prettier check |
 | `npm run depcruise` | Package boundaries |
 | `npm run check:publish` | publint and attw against each package's tarball |

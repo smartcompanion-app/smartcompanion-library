@@ -47,7 +47,7 @@
     "build": "npm run clean && tsc",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
-    "lint": "eslint src",
+    "lint": "oxlint src",
     "format": "prettier --write src",
     "format:check": "prettier --check src",
     "check:publish": "publint . && attw --pack . --ignore-rules cjs-resolves-to-esm"

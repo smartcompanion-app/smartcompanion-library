@@ -1,4 +1,5 @@
 import { test, expect, vi, beforeEach } from 'vitest';
+import { Station } from '@smartcompanion/data';
 import { AudioPlayerFacade } from '../contracts';
 import { ReactiveAudioPlayer } from './reactive-audio-player';
 
@@ -213,6 +214,8 @@ test('constructor initializes earpiece from localStorage', () => {
 // A page left right after opening it is destroyed while initAudioPlayer() still
 // awaits start(). The page's stop() clears the player's items, so the select()
 // that init went on to make rejected with "Item with id ... doesn't exist".
+const stations = [{ id: '1', audios: ['1-audio'] }] as unknown as Station[];
+
 function createPlayerMocks() {
   const { page, mockAudioPlayerService } = createMocks();
   let started: () => void = () => {};
@@ -231,7 +234,7 @@ test('initAudioPlayer stops instead of selecting when the page is destroyed whil
   const { page, service, started } = createPlayerMocks();
   const player = new ReactiveAudioPlayer(page);
 
-  const init = player.initAudioPlayer([]);
+  const init = player.initAudioPlayer(stations);
   await player.destroyAudioPlayer();
   started();
   await init;
@@ -246,13 +249,38 @@ test('initAudioPlayer selects the active audio when the page stays', async () =>
   const { page, service, started } = createPlayerMocks();
   const player = new ReactiveAudioPlayer(page);
 
-  const init = player.initAudioPlayer([]);
+  const init = player.initAudioPlayer(stations);
   started();
   await init;
 
   expect(service.registerUpdateListener).toHaveBeenCalledTimes(1);
   expect(service.select).toHaveBeenCalledWith(0);
   expect(service.stop).not.toHaveBeenCalled();
+});
+
+test('initAudioPlayer starts without selecting when no audio is active', async () => {
+  const { page, service, started } = createPlayerMocks();
+  const player = new ReactiveAudioPlayer({ ...page, activeIndex: -1 });
+
+  const init = player.initAudioPlayer(stations);
+  started();
+  await init;
+
+  expect(service.start).toHaveBeenCalledTimes(1);
+  expect(service.registerUpdateListener).toHaveBeenCalledTimes(1);
+  expect(service.select).not.toHaveBeenCalled();
+});
+
+// The player cannot start on an empty playlist: the web player loads its first item
+test('initAudioPlayer does not start the player when no station has audio', async () => {
+  const { page, service } = createPlayerMocks();
+  const player = new ReactiveAudioPlayer(page);
+
+  await player.initAudioPlayer([{ id: '1', audios: [] }, { id: '2' }] as unknown as Station[]);
+
+  expect(service.start).not.toHaveBeenCalled();
+  expect(service.registerUpdateListener).not.toHaveBeenCalled();
+  expect(service.select).not.toHaveBeenCalled();
 });
 
 // With ion-router-outlet the next page starts the shared player before the
@@ -272,8 +300,8 @@ test('destroyAudioPlayer leaves the player to a page that started after it', asy
   const leaving = new ReactiveAudioPlayer({ ...page });
   const entering = new ReactiveAudioPlayer({ ...page });
 
-  const leavingInit = leaving.initAudioPlayer([]);
-  const enteringInit = entering.initAudioPlayer([]);
+  const leavingInit = leaving.initAudioPlayer(stations);
+  const enteringInit = entering.initAudioPlayer(stations);
   await leaving.destroyAudioPlayer();
   starts.forEach(started => started());
   await Promise.all([leavingInit, enteringInit]);
@@ -295,7 +323,7 @@ test('initAudioPlayer does not reject when stopping a player left half-started f
   const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
   const player = new ReactiveAudioPlayer(page);
 
-  const init = player.initAudioPlayer([]);
+  const init = player.initAudioPlayer(stations);
   await player.destroyAudioPlayer();
   started();
 

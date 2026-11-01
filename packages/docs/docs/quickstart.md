@@ -159,7 +159,7 @@ Four things worth understanding before you scale this to thirty stations:
 - **Assets are referenced, not inlined.** Every audio file and image is an entry in `assets` with a unique `id`, and stations point at those ids. Audio carries a `language`; images do not, because one photo serves every language.
 - **A station is repeated once per language.** Three languages means three entries sharing the same `id` and `number`, each with its own `language`, `title` and `audios`. See [Languages](./content/languages.md).
 - **`number` is what the visitor types.** It is the number on your signage, matched exactly on the keypad. The `id` is internal.
-- **Two images and one audio per station.** The data format requires only one image and no audio, but the app's main screen shows the first image large and the second on the station's card in the list, and plays the station's position in the list as its track. A station with one image breaks that screen; one without audio, or with several, puts every later station on the wrong track. See [Stations](./content/stations.md#what-the-default-app-expects).
+- **One image is enough, audio is optional.** The app's main screen shows a station's first image large and its second on the station's card in the list, or the first again if there is no second. A station without audio stays in the list with its player disabled. See [Stations](./content/stations.md#what-the-default-app-expects).
 
 :::warning[Change the `checksum` on every edit]
 

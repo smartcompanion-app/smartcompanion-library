@@ -55,13 +55,13 @@ In a native app, `sc-page-stations`, `sc-page-station` and `sc-page-multi-audio-
 
 ## Several tracks per station
 
-`audios` is an array. Several assets on one station are the data side of alternative narrations — a short and a long version, an expert commentary, a children's track. The library's `sc-page-multi-audio-station` lets the visitor choose between them. The default app does not use it, and its main screen expects exactly one track per station, so using several means adding that page's route in your fork. See [Screens](./screens.md#pages-the-default-app-does-not-use).
+`audios` is an array. Several assets on one station are the data side of alternative narrations — a short and a long version, an expert commentary, a children's track. The library's `sc-page-multi-audio-station` lets the visitor choose between them. The default app does not use it: its main screen plays a station's tracks one after the other, so offering the choice means adding that page's route in your fork. See [Screens](./screens.md#pages-the-default-app-does-not-use).
 
 Give each asset a `title`; that is what the chooser shows.
 
 ## Stations without audio
 
-The schema allows them, the default app does not. Its main screen plays a station's position in the list as its track, so a station without audio shifts every later station onto the wrong recording. Give such a station a short placeholder track instead — see [Stations](../content/stations.md#stations-without-audio).
+The schema allows them, and so does the default app. Its main screen keeps such a station in the list with the play button disabled, and the player skips it when moving on — see [Stations](../content/stations.md#stations-without-audio).
 
 ## Preparing the files
 

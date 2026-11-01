@@ -17,6 +17,7 @@ export class PageStations {
   @State() playing: boolean = false;
   @State() position = 0;
   @State() duration = 0;
+  /** Index of the active station in the list, which is not its index in the player */
   @State() activeIndex = 0;
   @State() earpiece = false;
 
@@ -57,7 +58,23 @@ export class PageStations {
 
     this.facade.getMenuService().enable();
     this.stations = await getSortedStations(this.facade, this.tourId);
-    this.reactiveAudioPlayer.updateActiveIndexByStationId(this.stationId, this.stations);
+
+    // The player's index counts audios: a station with several has several, one without audio
+    // none. The page's activeIndex counts stations, so it is set here and from now on mapped
+    // through the station id of what the player reports
+    const activeIndex = Math.max(
+      this.stations.findIndex(station => station.id == this.stationId),
+      0,
+    );
+    this.reactiveAudioPlayer.updateActiveIndexByStationId(this.stations[activeIndex]?.id, this.stations);
+    this.activeIndex = activeIndex;
+    this.reactiveAudioPlayer.setOnActiveIndexUpdateListener((audioIndex: number) => {
+      const stationId = this.facade.getAudioPlayerService().getStationId(audioIndex);
+      const stationIndex = this.stations.findIndex(station => station.id == stationId);
+      if (stationIndex >= 0) {
+        this.activeIndex = stationIndex;
+      }
+    });
   }
 
   async componentDidLoad() {
@@ -76,9 +93,37 @@ export class PageStations {
     this.reactiveAudioPlayer = null;
   }
 
+  /**
+   * A station with a single image shows it in both places
+   */
   private getImageUri(index: number, imageIndex: number = 0) {
-    const station = this.stations[index];
-    return (station.images[imageIndex] as Asset).internalWebUrl;
+    const images = this.stations[index].images as Asset[];
+    return (images[imageIndex] ?? images[0])?.internalWebUrl;
+  }
+
+  private hasAudio(index: number) {
+    return this.stations[index]?.audios?.length > 0;
+  }
+
+  /**
+   * Selects the audio at the given index in the player, which then reports its station as active
+   */
+  private async selectAudio(audioIndex: number) {
+    if (audioIndex >= 0) {
+      await this.reactiveAudioPlayer.select(audioIndex);
+    }
+  }
+
+  /**
+   * A station without audio has no item in the player to select, so the page
+   * activates it itself, and pauses the audio of the station it leaves
+   */
+  private async selectStationWithoutAudio(index: number) {
+    this.activeIndex = index;
+    this.playerList?.slideTo(index);
+    if (this.playing) {
+      await this.reactiveAudioPlayer.pause();
+    }
   }
 
   private openMenu = () => {
@@ -90,11 +135,19 @@ export class PageStations {
   };
 
   private handleNext = () => {
-    this.reactiveAudioPlayer.next();
+    if (this.hasAudio(this.activeIndex)) {
+      this.reactiveAudioPlayer.next();
+    } else {
+      this.selectAudio(this.facade.getAudioPlayerService().getNextIndexByStationId(this.stations[this.activeIndex].id, this.stations));
+    }
   };
 
   private handlePrev = () => {
-    this.reactiveAudioPlayer.prev();
+    if (this.hasAudio(this.activeIndex)) {
+      this.reactiveAudioPlayer.prev();
+    } else {
+      this.selectAudio(this.facade.getAudioPlayerService().getPrevIndexByStationId(this.stations[this.activeIndex].id, this.stations));
+    }
   };
 
   private handlePlayPause = () => {
@@ -111,10 +164,16 @@ export class PageStations {
 
   private handleSelect = (e: Event) => {
     const index = parseInt((e.currentTarget as HTMLElement).dataset.index);
-    this.reactiveAudioPlayer.select(index);
+    if (this.hasAudio(index)) {
+      this.selectAudio(this.facade.getAudioPlayerService().getIndexByStationId(this.stations[index].id));
+    } else {
+      this.selectStationWithoutAudio(index);
+    }
   };
 
   render() {
+    const hasAudio = this.hasAudio(this.activeIndex);
+
     return (
       <Host>
         <ion-header class="ion-no-border">
@@ -141,8 +200,9 @@ export class PageStations {
             <div id="player">
               <sc-player-controls
                 playing={this.playing}
-                position={this.position}
-                duration={this.duration}
+                position={hasAudio ? this.position : 0}
+                duration={hasAudio ? this.duration : 0}
+                disabled={!hasAudio}
                 onNext={this.handleNext}
                 onPrev={this.handlePrev}
                 onPlayPause={this.handlePlayPause}

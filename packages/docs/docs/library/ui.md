@@ -46,10 +46,12 @@ Each page is a full screen with its own header. Properties every list page share
 
 Station lists are sorted by `number`. The list pages and `sc-page-stations` sort a tour's stations the same way; `sc-page-station` and `sc-page-map` keep the tour's order.
 
-`sc-page-stations` and `sc-page-station` make two assumptions about the content:
+The player's playlist has one item per audio asset, so in `sc-page-stations` and `sc-page-station` a station's position in the list is not its position in the playlist. The pages map between the two through the station id:
 
-- **Each station has exactly one audio track.** The player's playlist has one item per audio asset, and the pages pass a station's position in the list as the playlist index. A station with no audio, or with several, shifts every station after it onto the wrong track. Stations with several tracks belong on `sc-page-multi-audio-station`.
-- **`sc-page-stations` needs two images per station.** It shows the active station's first image large, and each station's second image on its card in the list; a station with a single image fails to render. `sc-page-station` shows the first image only. The image slideshow is on `sc-page-multi-audio-station`.
+- **A station with several audios** has several items. The player goes through them in turn and the station stays active. A choice between them is `sc-page-multi-audio-station`.
+- **A station without audio** has none. It stays in the list; while it is active the play button and the seek bar are disabled, and next and previous go to the nearest station with audio.
+
+`sc-page-stations` shows the active station's first image large, and each station's second image on its card in the list, or its first if it has only one. `sc-page-station` shows the first image only. The image slideshow is on `sc-page-multi-audio-station`.
 
 ### Facade slices
 

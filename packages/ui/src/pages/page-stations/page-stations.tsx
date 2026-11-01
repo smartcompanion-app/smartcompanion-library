@@ -1,25 +1,19 @@
-import { Component, h, State, Prop, Host } from '@stencil/core';
+import { Component, h, State, Prop, Host, Mixin } from '@stencil/core';
 import { Swiper } from 'swiper';
 import { Asset, Station } from '@smartcompanion/data';
 import { AudioPlayerUpdate, PageStationFacade } from '../../contracts';
-import { getSortedStations, ReactiveAudioPlayer } from '../../utils';
+import { getSortedStations } from '../../utils';
+import { audioPlayerComponent } from '../../utils/audio-player-component';
 
 @Component({
   tag: 'sc-page-stations',
   styleUrl: 'page-stations.scss',
 })
-export class PageStations {
+export class PageStations extends Mixin(audioPlayerComponent) {
   protected playerList: Swiper;
-  protected reactiveAudioPlayer: ReactiveAudioPlayer;
   protected restartPlaying = false;
 
   @State() stations: Array<Station> = [];
-  @State() playing: boolean = false;
-  @State() position = 0;
-  @State() duration = 0;
-  /** Index of the active station in the list, which is not its index in the player */
-  @State() activeIndex = 0;
-  @State() earpiece = false;
 
   /**
    * If tour id is given, stations are retrieved from specific tour.
@@ -44,18 +38,6 @@ export class PageStations {
   @Prop() facade: PageStationFacade;
 
   async componentWillLoad() {
-    this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
-
-    this.reactiveAudioPlayer.setOnCompletedListener(async (_: AudioPlayerUpdate) => {
-      await this.reactiveAudioPlayer.next();
-    });
-    this.reactiveAudioPlayer.setOnCollectedListener(async (_: AudioPlayerUpdate, updatedStation: Station) => {
-      this.stations = this.stations.map(s => (s.id === updatedStation.id ? updatedStation : s));
-    });
-    this.reactiveAudioPlayer.setOnSkipListener(async (_: AudioPlayerUpdate) => {
-      this.playerList?.slideTo(this.activeIndex);
-    });
-
     this.facade.getMenuService().enable();
     this.stations = await getSortedStations(this.facade, this.tourId);
 
@@ -66,15 +48,8 @@ export class PageStations {
       this.stations.findIndex(station => station.id == this.stationId),
       0,
     );
-    this.reactiveAudioPlayer.updateActiveIndexByStationId(this.stations[activeIndex]?.id, this.stations);
+    this.setAudioIndexByStationId(this.stations[activeIndex]?.id, this.stations);
     this.activeIndex = activeIndex;
-    this.reactiveAudioPlayer.setOnActiveIndexUpdateListener((audioIndex: number) => {
-      const stationId = this.facade.getAudioPlayerService().getStationId(audioIndex);
-      const stationIndex = this.stations.findIndex(station => station.id == stationId);
-      if (stationIndex >= 0) {
-        this.activeIndex = stationIndex;
-      }
-    });
   }
 
   async componentDidLoad() {
@@ -84,13 +59,40 @@ export class PageStations {
       allowTouchMove: true,
     });
 
-    await this.reactiveAudioPlayer.initAudioPlayer(this.stations);
+    await this.initAudioPlayer(this.stations);
     this.playerList.slideTo(this.activeIndex);
   }
 
   async disconnectedCallback() {
-    this.reactiveAudioPlayer?.destroyAudioPlayer();
-    this.reactiveAudioPlayer = null;
+    this.destroyAudioPlayer();
+  }
+
+  /**
+   * The page's activeIndex is the index of the active station in the list,
+   * which is not its index in the player
+   */
+  // eslint-disable-next-line stencil/own-methods-must-be-private -- overrides the public method of audioPlayerComponent
+  onAudioIndexChange(audioIndex: number) {
+    const stationId = this.facade.getAudioPlayerService().getStationId(audioIndex);
+    const stationIndex = this.stations.findIndex(station => station.id == stationId);
+    if (stationIndex >= 0) {
+      this.activeIndex = stationIndex;
+    }
+  }
+
+  // eslint-disable-next-line stencil/own-methods-must-be-private -- overrides the public method of audioPlayerComponent
+  async onSkip(_update: AudioPlayerUpdate) {
+    this.playerList?.slideTo(this.activeIndex);
+  }
+
+  // eslint-disable-next-line stencil/own-methods-must-be-private -- overrides the public method of audioPlayerComponent
+  async onCompleted(_update: AudioPlayerUpdate) {
+    await this.next();
+  }
+
+  // eslint-disable-next-line stencil/own-methods-must-be-private -- overrides the public method of audioPlayerComponent
+  async onCollected(_update: AudioPlayerUpdate, updatedStation: Station) {
+    this.stations = this.stations.map(s => (s.id === updatedStation.id ? updatedStation : s));
   }
 
   /**
@@ -110,7 +112,7 @@ export class PageStations {
    */
   private async selectAudio(audioIndex: number) {
     if (audioIndex >= 0) {
-      await this.reactiveAudioPlayer.select(audioIndex);
+      await this.select(audioIndex);
     }
   }
 
@@ -122,7 +124,7 @@ export class PageStations {
     this.activeIndex = index;
     this.playerList?.slideTo(index);
     if (this.playing) {
-      await this.reactiveAudioPlayer.pause();
+      await this.pause();
     }
   }
 
@@ -131,12 +133,12 @@ export class PageStations {
   };
 
   private handleToggleOutput = () => {
-    this.reactiveAudioPlayer.toggleOutput();
+    this.toggleOutput();
   };
 
   private handleNext = () => {
     if (this.hasAudio(this.activeIndex)) {
-      this.reactiveAudioPlayer.next();
+      this.next();
     } else {
       this.selectAudio(this.facade.getAudioPlayerService().getNextIndexByStationId(this.stations[this.activeIndex].id, this.stations));
     }
@@ -144,22 +146,22 @@ export class PageStations {
 
   private handlePrev = () => {
     if (this.hasAudio(this.activeIndex)) {
-      this.reactiveAudioPlayer.prev();
+      this.prev();
     } else {
       this.selectAudio(this.facade.getAudioPlayerService().getPrevIndexByStationId(this.stations[this.activeIndex].id, this.stations));
     }
   };
 
   private handlePlayPause = () => {
-    this.reactiveAudioPlayer.playPause();
+    this.playPause();
   };
 
   private handleStartPositionChange = () => {
-    this.reactiveAudioPlayer.startPositionChange();
+    this.startPositionChange();
   };
 
   private handleEndPositionChange = (e: CustomEvent<number>) => {
-    this.reactiveAudioPlayer.changePosition(e.detail);
+    this.changePosition(e.detail);
   };
 
   private handleSelect = (e: Event) => {

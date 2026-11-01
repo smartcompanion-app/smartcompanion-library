@@ -79,6 +79,16 @@ Apps render pages into `ion-router-outlet`. Ionic 9 removed `ion-router` driving
 
 `src/pages/routing.ionic.browser.tsx` tests this against a real Ionic, loaded by `vitest.setup.ionic.ts` for `*.ionic.browser.tsx` specs only. **Nothing under `packages/ui/src` may import `@ionic/core`, tests included**: Stencil compiles every file there and treats an imported component collection as part of this library, which bundles all of Ionic into the `ui` build. The `ui-src-no-ionic` rule in `.dependency-cruiser.json` enforces this.
 
+### Audio pages mixin
+
+`sc-page-stations`, `sc-page-station` and `sc-page-multi-audio-station` share their player state and logic through the Stencil mixin `audioPlayerComponent` (`src/utils/audio-player-component.ts`): `extends Mixin(audioPlayerComponent)`, and the page overrides `onAudioIndexChange`/`onSkip`/`onCompleted`/`onCollected`. Several details there look wrong and are not:
+
+- A consuming Stencil app needs **Stencil 4.44 or later**, and so does the build of this library. From 4.44 a collection lists its mixins in `collection-manifest.json`; without that list, 4.39 and later compile the pages without the mixin's `@State`s and the app's `facade` prop, silently — the app builds and the pages render blank. That is why `@stencil/core >=4.44.0` is an optional peer of `ui`. 4.38 and older failed differently (stenciljs/core#6410).
+- Pages import the mixin from its own file, never through `utils/index.ts`: an app compiling the collection from `node_modules` resolves a mixin only through the module that defines it.
+- The factory is typed `<B extends MixedInCtor>(Base: B) => …`. Annotated as `MixinFactory`, its members vanish from the page's type.
+- Every mixin member is public: TS cannot emit declarations for an exported class expression with private or protected members (TS4094). The page's overrides are public too, each with an `eslint-disable-next-line stencil/own-methods-must-be-private`.
+- The mixin declares no `facade`: each page declares `@Prop() facade` with its own facade type, which a field in the mixin would overwrite (TS2612), so the mixin reads it through `audioPlayerFacade`.
+
 ### Map worker
 
 maplibre-gl (from 6.11) loads its worker from a file next to its own module. Bundled into a Stencil chunk that file is missing, and every map logs *"Worker failed to load"*. `sc-page-map` therefore ships the worker as a component asset (`assetsDirs`), which Stencil copies into a consuming app's `build/assets/`, and points `setWorkerUrl()` at it. The file never enters `src/`: a `copy` task on the `dist` output target in `stencil.config.ts` copies it from the installed maplibre-gl into `dist/collection/pages/page-map/assets/` (and the lazy build's `assets/`), and Storybook serves maplibre-gl's `dist` as a static dir. `assetsDirs: ['assets']` still has to be declared on the component even though `src` has no such folder — it is what makes a consuming app copy the folder from the collection. maplibre-gl is pinned to an **exact** version so the app bundles the same map code the shipped worker was copied from — keep it exact when bumping.

@@ -1,21 +1,15 @@
-import { Component, State, Prop, Host, h } from '@stencil/core';
+import { Component, State, Prop, Host, h, Mixin } from '@stencil/core';
 import { Station } from '@smartcompanion/data';
-import { formatSeconds, getMenuButton, ReactiveAudioPlayer } from '../../utils';
+import { formatSeconds, getMenuButton } from '../../utils';
+import { audioPlayerComponent } from '../../utils/audio-player-component';
 import { PageMultiAudioStationFacade } from '../../contracts';
 
 @Component({
   tag: 'sc-page-multi-audio-station',
   styleUrl: 'page-multi-audio-station.scss',
 })
-export class PageMultiAudioStation {
-  protected reactiveAudioPlayer: ReactiveAudioPlayer;
-
+export class PageMultiAudioStation extends Mixin(audioPlayerComponent) {
   @State() station: Station;
-  @State() playing: boolean = false;
-  @State() position = 0;
-  @State() duration = 0;
-  @State() activeIndex = 0;
-  @State() earpiece = false;
 
   /**
    * Where the back button goes when there is no previous page to return to,
@@ -46,47 +40,45 @@ export class PageMultiAudioStation {
   @Prop() facade: PageMultiAudioStationFacade;
 
   async componentWillLoad() {
-    this.reactiveAudioPlayer = new ReactiveAudioPlayer(this);
     await this.facade.getMenuService().enable();
     this.station = await this.facade.getStationService().getStation(this.stationId);
   }
 
   async componentDidLoad() {
-    await this.reactiveAudioPlayer.initAudioPlayer([this.station]);
+    await this.initAudioPlayer([this.station]);
   }
 
   async disconnectedCallback() {
-    await this.reactiveAudioPlayer?.destroyAudioPlayer();
-    this.reactiveAudioPlayer = null;
+    await this.destroyAudioPlayer();
   }
 
   private handleToggleOutput = () => {
-    this.reactiveAudioPlayer.toggleOutput();
+    this.toggleOutput();
   };
 
   private handleNext = () => {
-    this.reactiveAudioPlayer.next();
+    this.next();
   };
 
   private handlePrev = () => {
-    this.reactiveAudioPlayer.prev();
+    this.prev();
   };
 
   private handlePlayPause = () => {
-    this.reactiveAudioPlayer.playPause();
+    this.playPause();
   };
 
   private handleStartPositionChange = () => {
-    this.reactiveAudioPlayer.startPositionChange();
+    this.startPositionChange();
   };
 
   private handleEndPositionChange = (e: CustomEvent<number>) => {
-    this.reactiveAudioPlayer.changePosition(e.detail);
+    this.changePosition(e.detail);
   };
 
   private handleSelectAudio = (e: Event) => {
     const audioIndex = parseInt((e.currentTarget as HTMLElement).dataset.audioIndex);
-    this.reactiveAudioPlayer.select(audioIndex);
+    this.select(audioIndex);
   };
 
   private handleBack = () => {

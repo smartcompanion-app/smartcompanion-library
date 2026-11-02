@@ -14,7 +14,7 @@ npm install @smartcompanion/ui @smartcompanion/services @smartcompanion/data \
 | Node | 20 or newer |
 | Ionic | 9 (`@ionic/core`) |
 | Capacitor | 8 (`@capacitor/core`) |
-| Audio | `@smartcompanion/native-audio-player` 1.0.2 or newer |
+| Audio | `@smartcompanion/native-audio-player` 2 |
 
 `services` declares `data`, `native-audio-player`, `@capacitor/core` and `@ionic/core` as peer dependencies, and `ui` declares `data` — the app installs them once, and every package uses the same copy.
 

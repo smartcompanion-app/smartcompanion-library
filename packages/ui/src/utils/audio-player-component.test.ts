@@ -139,18 +139,6 @@ test('a page initializes earpiece from localStorage', () => {
   expect(createPage().earpiece).toBe(true);
 });
 
-test('onCompleted rewinds the audio by default', async () => {
-  const { createPage, mockAudioPlayerService } = createMocks();
-  const page = createPage();
-  page.position = 42;
-
-  await page.onCompleted({ state: 'completed', index: 0, id: '1-audio' });
-
-  expect(mockAudioPlayerService.pause).toHaveBeenCalled();
-  expect(mockAudioPlayerService.seek).toHaveBeenCalledWith(0);
-  expect(page.position).toBe(0);
-});
-
 // A page left right after opening it is destroyed while initAudioPlayer() still
 // awaits start(). The page's stop() clears the player's items, so the select()
 // that init went on to make rejected with "Item with id ... doesn't exist".
@@ -284,10 +272,56 @@ test('a destroyed page ignores updates from the player', async () => {
   await init;
   const listener: (update: AudioPlayerUpdate) => Promise<void> = service.registerUpdateListener.mock.calls[0][0];
   await page.destroyAudioPlayer();
-  await listener({ state: 'skip', index: 1, id: '2-audio' });
+  await listener({ state: 'skipped', index: 1, id: '2-audio' });
   await listener({ state: 'playing', index: 1, id: '2-audio' });
 
   expect(onSkip).not.toHaveBeenCalled();
   expect(page.audioIndex).toBe(0);
   expect(page.playing).toBe(false);
+});
+
+// Starts a page that stays, and returns the listener the player reports to
+async function startPage() {
+  const { createPage, service, started } = createPlayerMocks();
+  const page = createPage();
+  const init = page.initAudioPlayer(stations);
+  started();
+  await init;
+  const listener: (update: AudioPlayerUpdate) => Promise<void> = service.registerUpdateListener.mock.calls[0][0];
+  return { page, service, listener };
+}
+
+test('the playhead follows the progress the player reports', async () => {
+  const { page, listener } = await startPage();
+
+  await listener({ state: 'playing', index: 0, id: '1-audio' });
+  await listener({ state: 'progress', index: 0, id: '1-audio', position: 12.5, duration: 94 });
+
+  expect(page.playing).toBe(true);
+  expect(page.position).toBe(12.5);
+  expect(page.duration).toBe(94);
+});
+
+test('a stopped player is not playing', async () => {
+  const { page, listener } = await startPage();
+
+  await listener({ state: 'playing', index: 0, id: '1-audio' });
+  await listener({ state: 'stopped', index: 0, id: '1-audio' });
+
+  expect(page.playing).toBe(false);
+});
+
+// The player stops at the end of an audio and rewinds it, reporting only
+// 'completed'. Seeking resumes, so rewinding it again started it over.
+test('a completed audio stays rewound by default', async () => {
+  const { page, service, listener } = await startPage();
+
+  await listener({ state: 'playing', index: 0, id: '1-audio' });
+  await listener({ state: 'progress', index: 0, id: '1-audio', position: 94, duration: 94 });
+  await listener({ state: 'completed', index: 0, id: '1-audio' });
+
+  expect(page.playing).toBe(false);
+  expect(page.position).toBe(0);
+  expect(service.seek).not.toHaveBeenCalled();
+  expect(service.play).not.toHaveBeenCalled();
 });

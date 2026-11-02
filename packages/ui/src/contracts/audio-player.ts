@@ -1,11 +1,17 @@
 import { Station } from '@smartcompanion/data';
 
 export interface AudioPlayerUpdate {
-  state: string;
+  /**
+   * A state of @smartcompanion/native-audio-player, 'progress' for the playhead
+   * while playing, or 'collected' for how much of an audio was listened to
+   */
+  state: 'playing' | 'paused' | 'stopped' | 'skipped' | 'completed' | 'progress' | 'collected';
   index: number;
   id: string;
 
   percentage?: number; // optional, only for "collected" event/state
+  position?: number; // optional, only for "progress" event/state
+  duration?: number; // optional, only for "progress" event/state
 }
 
 export interface AudioPlayerItem {
@@ -31,7 +37,6 @@ export interface AudioPlayer {
   setEarpiece(): Promise<void>;
   setSpeaker(): Promise<void>;
   getDuration(): Promise<number>;
-  getPosition(): Promise<number>;
   getStationId(index: number): string;
   getIndexByStationId(stationId: string, items?: Array<{ stationId: string }>): number;
   getNextIndexByStationId(stationId: string, stations: Station[]): number;

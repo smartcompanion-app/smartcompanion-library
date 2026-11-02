@@ -69,6 +69,21 @@ export class CollectibleAudioPlayerService extends AudioPlayerService {
     super.registerUpdateListener(async (update: AudioPlayerUpdate) => {
       // pass-through default events from AudioPlayerService
       await callback(update);
+
+      // the playhead, reported while playing
+      if (update.state == 'progress') {
+        await this.updatePosition(update.position);
+        return;
+      }
+
+      // nothing is loaded any more, and a following start begins anew
+      if (update.state == 'stopped') {
+        this.state = 'init';
+        this.positions = [];
+        this.id = '';
+        return;
+      }
+
       this.initCollection(update.id);
 
       if (update.state == 'playing') {
@@ -77,7 +92,7 @@ export class CollectibleAudioPlayerService extends AudioPlayerService {
       } else if (update.state == 'paused' && this.id == update.id) {
         this.state = 'paused';
         this.positions = [];
-      } else if (update.state == 'skip') {
+      } else if (update.state == 'skipped') {
         this.state = 'init';
         this.positions = [];
         this.id = update.id; // next id
@@ -88,12 +103,6 @@ export class CollectibleAudioPlayerService extends AudioPlayerService {
   async unregisterUpdateListener() {
     this.registeredCallback = null;
     super.unregisterUpdateListener();
-  }
-
-  async getPosition(): Promise<number> {
-    const position = await super.getPosition();
-    this.updatePosition(position); // update position value continously
-    return position;
   }
 
   getPlayerItems(stations: Station[]): AudioPlayerServiceItem[] {

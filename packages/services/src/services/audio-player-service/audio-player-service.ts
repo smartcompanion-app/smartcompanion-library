@@ -11,6 +11,7 @@ export interface AudioPlayerServiceItem extends Item {
 export class AudioPlayerService {
   protected items: AudioPlayerServiceItem[] = [];
   protected updateListenerHandle: PluginListenerHandle;
+  protected progressListenerHandle: PluginListenerHandle;
 
   set stations(stations: Station[]) {
     this.items = this.getPlayerItems(stations);
@@ -51,6 +52,10 @@ export class AudioPlayerService {
     await NativeAudioPlayer.previous();
   }
 
+  /**
+   * Registers the callback for the player's state changes, and for its playhead while it
+   * plays, which arrives as a 'progress' update with position and duration
+   */
   async registerUpdateListener(callback: (update: AudioPlayerUpdate) => void) {
     this.updateListenerHandle = await NativeAudioPlayer.addListener('audioPlayerChange', async result => {
       callback({
@@ -59,11 +64,23 @@ export class AudioPlayerService {
         index: this.getIndex(result.id),
       });
     });
+    this.progressListenerHandle = await NativeAudioPlayer.addListener('progress', async result => {
+      callback({
+        state: 'progress',
+        id: result.id,
+        index: this.getIndex(result.id),
+        position: result.position,
+        duration: result.duration,
+      });
+    });
   }
 
   async unregisterUpdateListener() {
     if (this.updateListenerHandle) {
       await this.updateListenerHandle.remove();
+    }
+    if (this.progressListenerHandle) {
+      await this.progressListenerHandle.remove();
     }
   }
 

@@ -17,13 +17,13 @@ const createStation = (): Station => {
 // flight when waitForChanges() resolves: it awaits start() and setSpeaker(),
 // fires registerUpdateListener() *without* awaiting it, then awaits select(). A
 // prev/next click landing before that listener is wired notifies nobody -- the
-// 'skip' update is dropped, activeIndex never moves, and the polls below can
+// 'skipped' update is dropped, activeIndex never moves, and the polls below can
 // never succeed no matter how long they wait. That is how this suite failed on
 // a cold CI runner while passing locally.
 //
 // Neither registration completing nor select() resolving is a trustworthy gate
 // on its own, since initAudioPlayer() does not await the former. So gate on the
-// page's own listener actually receiving an update -- the 'skip' emitted by the
+// page's own listener actually receiving an update -- the 'skipped' emitted by the
 // initial select() -- which proves the whole chain end to end.
 let pageReceivedUpdate = false;
 

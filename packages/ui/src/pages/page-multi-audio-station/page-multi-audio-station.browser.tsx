@@ -139,7 +139,8 @@ describe('sc-page-multi-audio-station', () => {
 describe('sc-page-multi-audio-station without durations', () => {
   it('shows no duration for an audio that has none', async () => {
     // duration is optional on an asset
-    const station = createStation();
+    // a copy: createStation() returns the shared fixture itself
+    const station = { ...createStation() };
     station.audios = station.audios.map(audio => ({ ...audio, duration: undefined }));
     const facadeWithoutDurations = {
       ...facade,

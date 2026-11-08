@@ -96,6 +96,10 @@ export class CollectibleAudioPlayerService extends AudioPlayerService {
         this.state = 'init';
         this.positions = [];
         this.id = update.id; // next id
+      } else if (update.state == 'completed' && this.id == update.id) {
+        // the player stopped at the end and rewound, reporting no pause
+        this.state = 'paused';
+        this.positions = [];
       }
     });
   }

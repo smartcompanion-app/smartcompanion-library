@@ -1,18 +1,38 @@
 import { Station } from '@smartcompanion/data';
 
-export interface AudioPlayerUpdate {
-  /**
-   * A state of @smartcompanion/native-audio-player, 'progress' for the playhead
-   * while playing, or 'collected' for how much of an audio was listened to
-   */
-  state: 'playing' | 'paused' | 'stopped' | 'skipped' | 'completed' | 'progress' | 'collected';
+interface AudioPlayerUpdateBase {
   index: number;
   id: string;
-
-  percentage?: number; // optional, only for "collected" event/state
-  position?: number; // optional, only for "progress" event/state
-  duration?: number; // optional, only for "progress" event/state
 }
+
+/**
+ * A state change of @smartcompanion/native-audio-player
+ */
+export interface AudioPlayerStateUpdate extends AudioPlayerUpdateBase {
+  state: 'playing' | 'paused' | 'stopped' | 'skipped' | 'completed';
+}
+
+/**
+ * The playhead, reported while the player plays
+ */
+export interface AudioPlayerProgressUpdate extends AudioPlayerUpdateBase {
+  state: 'progress';
+  position: number;
+  duration: number;
+}
+
+/**
+ * How much of an audio was listened to
+ */
+export interface AudioPlayerCollectedUpdate extends AudioPlayerUpdateBase {
+  state: 'collected';
+  percentage: number;
+}
+
+/**
+ * Narrow on `state` to reach the fields of a 'progress' or 'collected' update
+ */
+export type AudioPlayerUpdate = AudioPlayerStateUpdate | AudioPlayerProgressUpdate | AudioPlayerCollectedUpdate;
 
 export interface AudioPlayerItem {
   id: string;

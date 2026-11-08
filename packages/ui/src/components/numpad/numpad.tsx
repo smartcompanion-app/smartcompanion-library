@@ -20,7 +20,7 @@ export class Numpad {
 
   private handleNumber = (e: Event) => {
     const raw = (e.currentTarget as HTMLElement).dataset.value;
-    const value = parseInt(raw, 10);
+    const value = parseInt(raw ?? '', 10);
     if (!isNaN(value)) {
       this.number.emit(value);
     }

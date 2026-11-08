@@ -1,6 +1,6 @@
 import { test, expect, vi } from 'vitest';
-import { getStations, getSortedStations, StationDataFacade } from './data-utils';
-import { Station } from '@smartcompanion/data';
+import { getImageUrl, getImageUrls, getStations, getSortedStations, StationDataFacade } from './data-utils';
+import { Asset, Station } from '@smartcompanion/data';
 
 const stationA = { id: '1', number: '3' };
 const stationB = { id: '2', number: '1' };
@@ -84,4 +84,24 @@ test('getSortedStations handles non-numeric station numbers as 0', async () => {
   const result = await getSortedStations(facade, null);
 
   expect(result.map(s => s.number)).toEqual(['abc', '2', '5']);
+});
+
+const asset = (id: string): Asset => ({ id, filename: `${id}.jpg`, externalUrl: '', internalWebUrl: `web/${id}.jpg` });
+
+test('getImageUrl returns the web url of the requested image', () => {
+  expect(getImageUrl({ images: [asset('a'), asset('b')] }, 1)).toBe('web/b.jpg');
+});
+
+test('getImageUrl falls back to the first image when the requested one is missing', () => {
+  expect(getImageUrl({ images: [asset('a')] }, 1)).toBe('web/a.jpg');
+});
+
+test('getImageUrl is undefined for a station or tour without images, or none at all', () => {
+  expect(getImageUrl({ images: [] })).toBeUndefined();
+  expect(getImageUrl(undefined)).toBeUndefined();
+});
+
+test('getImageUrls lists the web urls, leaving out images without one', () => {
+  expect(getImageUrls({ images: [asset('a'), { ...asset('b'), internalWebUrl: undefined }, asset('c')] })).toEqual(['web/a.jpg', 'web/c.jpg']);
+  expect(getImageUrls({ images: [] })).toEqual([]);
 });

@@ -27,3 +27,15 @@ test('render page tour list', async () => {
   const { root } = await render(<sc-page-tour-list facade={facade}></sc-page-tour-list>);
   expect(root).toMatchSnapshot();
 });
+
+test('render page tour list for tours without images', async () => {
+  const withoutImages = tours.map(tour => ({ ...tour, images: [] }));
+  const facadeWithoutImages = {
+    ...facade,
+    getTourService: () => ({ getTours: () => Promise.resolve(withoutImages) }) as Partial<TourSource>,
+  } as unknown as PageTourListFacade;
+
+  const { root } = await render(<sc-page-tour-list facade={facadeWithoutImages}></sc-page-tour-list>);
+
+  expect(root.querySelectorAll('.tour-card').length).toBe(tours.length);
+});

@@ -33,7 +33,7 @@ export const Example: Story = {
           getStations: () => {
             return Promise.resolve([]);
           },
-        }) as StationSource,
+        }) as unknown as StationSource,
       __: (key: TranslationKey) => {
         switch (key) {
           case 'menu-selection':

@@ -1,6 +1,7 @@
 import { Component, Prop, State, Host, h } from '@stencil/core';
 import { PageTourListFacade } from '../../contracts';
-import { Tour, Asset } from '@smartcompanion/data';
+import { Tour } from '@smartcompanion/data';
+import { getImageUrl } from '../../utils';
 
 @Component({
   tag: 'sc-page-tour-list',
@@ -22,10 +23,10 @@ export class PageTourList {
     await this.facade.getMenuService().enable();
   }
 
+  /** A tour without an image shows the card's background colour */
   private getTourStyle(tour: Tour) {
-    return {
-      'background-image': "url('" + (tour.images[0] as Asset).internalWebUrl + "')",
-    };
+    const imageUrl = getImageUrl(tour);
+    return imageUrl === undefined ? {} : { 'background-image': "url('" + imageUrl + "')" };
   }
 
   private startTour(tourId: string) {
@@ -34,7 +35,9 @@ export class PageTourList {
 
   private handleStartTour = (e: Event) => {
     const tourId = (e.currentTarget as HTMLElement).dataset.tourId;
-    this.startTour(tourId);
+    if (tourId !== undefined) {
+      this.startTour(tourId);
+    }
   };
 
   render() {

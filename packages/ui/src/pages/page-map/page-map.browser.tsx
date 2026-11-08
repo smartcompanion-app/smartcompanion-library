@@ -64,7 +64,7 @@ describe('sc-page-map', () => {
 
     const placed = markers(root);
     expect(placed).toHaveLength(2);
-    expect(placed.map(marker => marker.textContent.trim())).toEqual(['1', '2']);
+    expect(placed.map(marker => marker.textContent?.trim())).toEqual(['1', '2']);
   });
 
   it('opens the station a marker belongs to when it is clicked', async () => {

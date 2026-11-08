@@ -31,3 +31,15 @@ test('render page tabbed station list', async () => {
   const { root } = await render(<sc-page-tabbed-station-list facade={facade}></sc-page-tabbed-station-list>);
   expect(root).toMatchSnapshot();
 });
+
+test('render page tabbed station list for stations without images', async () => {
+  const withoutImages = stations.map(station => ({ ...station, images: [] }));
+  const facadeWithoutImages = {
+    ...facade,
+    getStationService: () => ({ getStations: () => Promise.resolve(withoutImages) }) as Partial<StationSource>,
+  } as unknown as StationListFacade;
+
+  const { root } = await render(<sc-page-tabbed-station-list facade={facadeWithoutImages}></sc-page-tabbed-station-list>);
+
+  expect(root.querySelectorAll('sc-page-station-image-list .station-image-list-description').length).toBe(stations.length);
+});

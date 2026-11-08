@@ -83,7 +83,7 @@ Every downloadable file — audio, images — is declared once here and referenc
 | `externalUrl` | string | **yes** | The URL the file is downloaded from — absolute, or relative to the app for [bundled content](./media.md#bundling-the-content-with-the-app). |
 | `language` | string | no | Two- or three-letter code, e.g. `de`. Set it on audio; leave it off images. |
 | `title` | string | no | Display title, e.g. an audio track name |
-| `duration` | number | no | Length in seconds. Allowed, but the app does not read it: the player takes the length from the file. |
+| `duration` | number | no | Length in seconds, shown next to the track in the track list of `sc-page-multi-audio-station`. Without it the list shows no length. Nothing else reads it: playback, the seek bar and listening time take the length from the file. |
 
 **Conventions worth following**
 

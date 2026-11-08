@@ -21,12 +21,12 @@ type Story = StoryObj<ImageSlideshow>;
 
 export const MultiImageExample: Story = {
   args: {
-    images: [(stations[0].images[0] as Asset).internalWebUrl, (stations[1].images[0] as Asset).internalWebUrl, (stations[2].images[0] as Asset).internalWebUrl],
+    images: [(stations[0].images[0] as Asset).internalWebUrl!, (stations[1].images[0] as Asset).internalWebUrl!, (stations[2].images[0] as Asset).internalWebUrl!],
   },
 };
 
 export const SingleImageExample: Story = {
   args: {
-    images: [(stations[0].images[0] as Asset).internalWebUrl],
+    images: [(stations[0].images[0] as Asset).internalWebUrl!],
   },
 };

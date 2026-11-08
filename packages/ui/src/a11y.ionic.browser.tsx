@@ -3,7 +3,7 @@ import axe from 'axe-core';
 import { AudioPlayerService, CollectibleAudioPlayerService } from '@smartcompanion/services';
 import { Asset, Station } from '@smartcompanion/data';
 import { PageLanguageFacade, PageLoadingFacade, PageMultiAudioStationFacade, PagePinFacade, PageStationFacade, PageTourListFacade, StationListFacade } from './contracts';
-import { stations as fixtureStations, tours } from '../test/fixtures';
+import { ResolvedStation, stations as fixtureStations, tours } from '../test/fixtures';
 
 // Accessibility baseline: every component and page, rendered in a real Ionic and
 // checked with axe-core. Without Ionic the ion-* elements stay undefined, so an
@@ -20,7 +20,7 @@ import { stations as fixtureStations, tours } from '../test/fixtures';
 
 const SILENT_AUDIO = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
 
-const stations: Station[] = fixtureStations.map(station => ({
+const stations: ResolvedStation[] = fixtureStations.map(station => ({
   ...station,
   audios: station.audios.map(audio => ({ ...audio, internalFileUrl: SILENT_AUDIO, internalWebUrl: SILENT_AUDIO })),
 }));
@@ -102,7 +102,7 @@ const cases: Array<[string, () => ReturnType<typeof render>]> = [
         </sc-station-icon>,
       ),
   ],
-  ['sc-image-slideshow', () => render(<sc-image-slideshow images={stations[0].images.map(image => image.internalWebUrl)} />)],
+  ['sc-image-slideshow', () => render(<sc-image-slideshow images={stations[0].images.map(image => image.internalWebUrl ?? '')} />)],
   ['sc-marquee', () => render(<sc-marquee active={true}>A title that may well be too long to fit</sc-marquee>)],
   ['sc-page-loading', () => render(<sc-page-loading image="assets/loading.png" facade={facade()} />)],
   ['sc-page-language', () => render(<sc-page-language facade={facade()} />)],

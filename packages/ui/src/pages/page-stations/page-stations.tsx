@@ -1,8 +1,8 @@
 import { Component, h, State, Prop, Host, Mixin } from '@stencil/core';
 import { Swiper } from 'swiper';
-import { Asset, Station } from '@smartcompanion/data';
+import { Station } from '@smartcompanion/data';
 import { AudioPlayerUpdate, PageStationFacade } from '../../contracts';
-import { getSortedStations } from '../../utils';
+import { getImageUrl, getSortedStations } from '../../utils';
 import { audioPlayerComponent } from '../../utils/audio-player-component';
 
 @Component({
@@ -19,12 +19,12 @@ export class PageStations extends Mixin(audioPlayerComponent) {
    * If tour id is given, stations are retrieved from specific tour.
    * Tour id 'default' is a placeholder for the default tour id.
    */
-  @Prop() tourId: string = null;
+  @Prop() tourId: string | null = null;
 
   /**
    * The ID of the initial active station to display, if set to null, the first station will be displayed
    */
-  @Prop() stationId: string = null;
+  @Prop() stationId: string | null = null;
 
   /**
    * This prop displays a button for switching audio output between speaker and earpiece.
@@ -95,14 +95,6 @@ export class PageStations extends Mixin(audioPlayerComponent) {
     this.stations = this.stations.map(s => (s.id === updatedStation.id ? updatedStation : s));
   }
 
-  /**
-   * A station with a single image shows it in both places
-   */
-  private getImageUri(index: number, imageIndex: number = 0) {
-    const images = this.stations[index].images as Asset[];
-    return (images[imageIndex] ?? images[0])?.internalWebUrl;
-  }
-
   private hasAudio(index: number) {
     return this.stations[index]?.audios?.length > 0;
   }
@@ -165,7 +157,7 @@ export class PageStations extends Mixin(audioPlayerComponent) {
   };
 
   private handleSelect = (e: Event) => {
-    const index = parseInt((e.currentTarget as HTMLElement).dataset.index);
+    const index = parseInt((e.currentTarget as HTMLElement).dataset.index ?? '');
     if (this.hasAudio(index)) {
       this.selectAudio(this.facade.getAudioPlayerService().getIndexByStationId(this.stations[index].id));
     } else {
@@ -197,7 +189,7 @@ export class PageStations extends Mixin(audioPlayerComponent) {
         <ion-content id="home" fullscreen={true}>
           <div id="player-main">
             <div id="player-image">
-              <img src={this.getImageUri(this.activeIndex)} />
+              <img src={getImageUrl(this.stations[this.activeIndex])} />
             </div>
             <div id="player">
               <sc-player-controls
@@ -218,9 +210,10 @@ export class PageStations extends Mixin(audioPlayerComponent) {
                   <div data-testid={`player-list-item-${index}`} class={this.activeIndex == index ? 'swiper-slide active' : 'swiper-slide'}>
                     <ion-card button data-index={index} onClick={this.handleSelect}>
                       <div class="card-content">
-                        <img src={this.getImageUri(index, 1)} />
+                        {/* the second image, or the first for a station that has one */}
+                        <img src={getImageUrl(station, 1)} />
                         <div class="card-content-text">
-                          <sc-station-icon collectedPercent={station.collectedPercentage * 100}>{station.number}</sc-station-icon>
+                          <sc-station-icon collectedPercent={(station.collectedPercentage ?? 0) * 100}>{station.number}</sc-station-icon>
                           {station.subtitle && <p class="subtitle">{station.subtitle}</p>}
                           <p class="title">{station.title}</p>
                         </div>

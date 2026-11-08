@@ -107,7 +107,7 @@ const light = (root: HTMLElement) => root.querySelector('ion-content') as HTMLEl
 // sc-page-error and sc-page-language are `shadow: true`, so their stylesheet is
 // scoped for them and its selector needs no host tag -- and their ion-content is
 // reachable only through the shadow root.
-const shadow = (root: HTMLElement) => root.shadowRoot.querySelector('ion-content') as HTMLElement | null;
+const shadow = (root: HTMLElement) => root.shadowRoot!.querySelector('ion-content') as HTMLElement | null;
 
 const pages: PageUnderTest[] = [
   { name: 'sc-page-station-list', renderPage: renderer(() => <sc-page-station-list facade={stationListFacade}></sc-page-station-list>), content: light },

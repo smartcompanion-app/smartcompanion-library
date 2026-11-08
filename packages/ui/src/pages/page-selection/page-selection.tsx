@@ -20,7 +20,7 @@ export class PageSelection {
    * If tour id is given, stations only for the tour are queried.
    * Tour id 'default' is a placeholder for the default tour id.
    */
-  @Prop() tourId: string = null;
+  @Prop() tourId: string | null = null;
 
   /**
    * Maximum length of the input field, default to 2

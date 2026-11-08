@@ -1,6 +1,6 @@
 import { Component, State, Prop, Host, h, Mixin } from '@stencil/core';
-import { Station } from '@smartcompanion/data';
-import { formatSeconds, getMenuButton } from '../../utils';
+import { Asset, Station } from '@smartcompanion/data';
+import { formatSeconds, getImageUrls, getMenuButton } from '../../utils';
 import { audioPlayerComponent } from '../../utils/audio-player-component';
 import { PageMultiAudioStationFacade } from '../../contracts';
 
@@ -15,13 +15,13 @@ export class PageMultiAudioStation extends Mixin(audioPlayerComponent) {
    * Where the back button goes when there is no previous page to return to,
    * e.g. after opening a deep link. Defaults to `/`
    */
-  @Prop() defaultBackButtonHref: string = null;
+  @Prop() defaultBackButtonHref: string | null = null;
 
   /**
    * If tour id is given, stations are retrieved from specific tour.
    * Tour id 'default' is a placeholder for the default tour id.
    */
-  @Prop() tourId: string = null;
+  @Prop() tourId: string | null = null;
 
   /**
    * The ID of the active station to display
@@ -77,7 +77,7 @@ export class PageMultiAudioStation extends Mixin(audioPlayerComponent) {
   };
 
   private handleSelectAudio = (e: Event) => {
-    const audioIndex = parseInt((e.currentTarget as HTMLElement).dataset.audioIndex);
+    const audioIndex = parseInt((e.currentTarget as HTMLElement).dataset.audioIndex ?? '');
     this.select(audioIndex);
   };
 
@@ -120,7 +120,7 @@ export class PageMultiAudioStation extends Mixin(audioPlayerComponent) {
             </ion-fab>
           )}
           <section id="station">
-            <sc-image-slideshow images={this.station.images.map(image => image.internalWebUrl)}></sc-image-slideshow>
+            <sc-image-slideshow images={getImageUrls(this.station)}></sc-image-slideshow>
 
             <div id="station-player-controls">
               <sc-player-controls
@@ -138,7 +138,7 @@ export class PageMultiAudioStation extends Mixin(audioPlayerComponent) {
             <div class="station-audios">
               <ion-card>
                 <ion-list>
-                  {this.station.audios.map((audio, audioIndex) => (
+                  {(this.station.audios as Asset[]).map((audio, audioIndex) => (
                     <ion-item
                       data-testid={`audio-item-${audioIndex}`}
                       data-audio-index={audioIndex}
@@ -150,7 +150,7 @@ export class PageMultiAudioStation extends Mixin(audioPlayerComponent) {
                       <ion-label>
                         <sc-marquee active={this.playing && this.activeIndex == audioIndex}>{audio.title}</sc-marquee>
                       </ion-label>
-                      <p slot="end">{formatSeconds(audio.duration)}</p>
+                      {audio.duration !== undefined && <p slot="end">{formatSeconds(audio.duration)}</p>}
                     </ion-item>
                   ))}
                 </ion-list>

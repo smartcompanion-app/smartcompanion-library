@@ -5,9 +5,9 @@ import { render, h, describe, it, expect } from '@stencil/vitest';
 // own CSS, so the sources only have to be distinguishable -- they never load.
 const images = ['a.png', 'b.png', 'c.png'];
 
-const slideshow = (root: HTMLElement) => root.shadowRoot.querySelector('#slideshow');
-const activeImage = (root: HTMLElement) => root.shadowRoot.querySelector('.swiper-slide-active img')?.getAttribute('src');
-const click = (root: HTMLElement, id: string) => (root.shadowRoot.querySelector(id) as HTMLElement).click();
+const slideshow = (root: HTMLElement) => root.shadowRoot!.querySelector('#slideshow')!;
+const activeImage = (root: HTMLElement) => root.shadowRoot!.querySelector('.swiper-slide-active img')?.getAttribute('src');
+const click = (root: HTMLElement, id: string) => (root.shadowRoot!.querySelector(id) as HTMLElement).click();
 
 describe('sc-image-slideshow', () => {
   const renderSlideshow = async () => {

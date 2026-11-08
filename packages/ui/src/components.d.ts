@@ -125,7 +125,7 @@ export namespace Components {
           * Where the back button goes when there is no previous page to return to, e.g. after opening a deep link. Defaults to `/`
           * @default null
          */
-        "defaultBackButtonHref": string;
+        "defaultBackButtonHref": string | null;
         /**
           * This prop displays a button for switching audio output between speaker and earpiece. This feature is only available on hybrid apps
           * @default false
@@ -143,7 +143,7 @@ export namespace Components {
           * If tour id is given, stations are retrieved from specific tour. Tour id 'default' is a placeholder for the default tour id.
           * @default null
          */
-        "tourId": string;
+        "tourId": string | null;
     }
     interface ScPagePin {
         /**
@@ -175,14 +175,14 @@ export namespace Components {
           * If tour id is given, stations only for the tour are queried. Tour id 'default' is a placeholder for the default tour id.
           * @default null
          */
-        "tourId": string;
+        "tourId": string | null;
     }
     interface ScPageStation {
         /**
           * Where the back button goes when there is no previous page to return to, e.g. after opening a deep link. Defaults to `/`. Only used if enableBackButton is true
           * @default null
          */
-        "defaultBackButtonHref": string;
+        "defaultBackButtonHref": string | null;
         /**
           * Enable Back Button instead of Menu Button
           * @default false
@@ -205,7 +205,7 @@ export namespace Components {
           * If tour id is given, stations are retrieved from specific tour. Tour id 'default' is a placeholder for the default tour id.
           * @default null
          */
-        "tourId": string;
+        "tourId": string | null;
     }
     interface ScPageStationImageList {
         /**
@@ -221,7 +221,7 @@ export namespace Components {
           * The ID of the tour to display stations for, or null if all stations should be displayed
           * @default null
          */
-        "tourId": string;
+        "tourId": string | null;
     }
     interface ScPageStationList {
         /**
@@ -237,7 +237,7 @@ export namespace Components {
           * The ID of the tour to display stations for, or null if all stations should be displayed
           * @default null
          */
-        "tourId": string;
+        "tourId": string | null;
     }
     interface ScPageStations {
         /**
@@ -253,12 +253,12 @@ export namespace Components {
           * The ID of the initial active station to display, if set to null, the first station will be displayed
           * @default null
          */
-        "stationId": string;
+        "stationId": string | null;
         /**
           * If tour id is given, stations are retrieved from specific tour. Tour id 'default' is a placeholder for the default tour id.
           * @default null
          */
-        "tourId": string;
+        "tourId": string | null;
     }
     interface ScPageTabbedStationList {
         /**
@@ -274,7 +274,7 @@ export namespace Components {
           * The ID of the tour to display stations for, or null if all stations should be displayed
           * @default null
          */
-        "tourId": string;
+        "tourId": string | null;
     }
     interface ScPageTourList {
         /**
@@ -634,7 +634,7 @@ declare namespace LocalJSX {
           * Where the back button goes when there is no previous page to return to, e.g. after opening a deep link. Defaults to `/`
           * @default null
          */
-        "defaultBackButtonHref"?: string;
+        "defaultBackButtonHref"?: string | null;
         /**
           * This prop displays a button for switching audio output between speaker and earpiece. This feature is only available on hybrid apps
           * @default false
@@ -652,7 +652,7 @@ declare namespace LocalJSX {
           * If tour id is given, stations are retrieved from specific tour. Tour id 'default' is a placeholder for the default tour id.
           * @default null
          */
-        "tourId"?: string;
+        "tourId"?: string | null;
     }
     interface ScPagePin {
         /**
@@ -684,14 +684,14 @@ declare namespace LocalJSX {
           * If tour id is given, stations only for the tour are queried. Tour id 'default' is a placeholder for the default tour id.
           * @default null
          */
-        "tourId"?: string;
+        "tourId"?: string | null;
     }
     interface ScPageStation {
         /**
           * Where the back button goes when there is no previous page to return to, e.g. after opening a deep link. Defaults to `/`. Only used if enableBackButton is true
           * @default null
          */
-        "defaultBackButtonHref"?: string;
+        "defaultBackButtonHref"?: string | null;
         /**
           * Enable Back Button instead of Menu Button
           * @default false
@@ -714,7 +714,7 @@ declare namespace LocalJSX {
           * If tour id is given, stations are retrieved from specific tour. Tour id 'default' is a placeholder for the default tour id.
           * @default null
          */
-        "tourId"?: string;
+        "tourId"?: string | null;
     }
     interface ScPageStationImageList {
         /**
@@ -730,7 +730,7 @@ declare namespace LocalJSX {
           * The ID of the tour to display stations for, or null if all stations should be displayed
           * @default null
          */
-        "tourId"?: string;
+        "tourId"?: string | null;
     }
     interface ScPageStationList {
         /**
@@ -746,7 +746,7 @@ declare namespace LocalJSX {
           * The ID of the tour to display stations for, or null if all stations should be displayed
           * @default null
          */
-        "tourId"?: string;
+        "tourId"?: string | null;
     }
     interface ScPageStations {
         /**
@@ -762,12 +762,12 @@ declare namespace LocalJSX {
           * The ID of the initial active station to display, if set to null, the first station will be displayed
           * @default null
          */
-        "stationId"?: string;
+        "stationId"?: string | null;
         /**
           * If tour id is given, stations are retrieved from specific tour. Tour id 'default' is a placeholder for the default tour id.
           * @default null
          */
-        "tourId"?: string;
+        "tourId"?: string | null;
     }
     interface ScPageTabbedStationList {
         /**
@@ -783,7 +783,7 @@ declare namespace LocalJSX {
           * The ID of the tour to display stations for, or null if all stations should be displayed
           * @default null
          */
-        "tourId"?: string;
+        "tourId"?: string | null;
     }
     interface ScPageTourList {
         /**
@@ -894,8 +894,8 @@ declare namespace LocalJSX {
         "mapAttribution": string;
     }
     interface ScPageMultiAudioStationAttributes {
-        "defaultBackButtonHref": string;
-        "tourId": string;
+        "defaultBackButtonHref": string | null;
+        "tourId": string | null;
         "stationId": string;
         "enableSwitchAudioOutput": boolean;
     }
@@ -904,32 +904,32 @@ declare namespace LocalJSX {
     }
     interface ScPageSelectionAttributes {
         "headerBackgroundColor": 'primary' | 'secondary';
-        "tourId": string;
+        "tourId": string | null;
         "maxLength": number;
     }
     interface ScPageStationAttributes {
         "enableBackButton": boolean;
-        "defaultBackButtonHref": string;
-        "tourId": string;
+        "defaultBackButtonHref": string | null;
+        "tourId": string | null;
         "stationId": string;
         "enableSwitchAudioOutput": boolean;
     }
     interface ScPageStationImageListAttributes {
         "headerBackgroundColor": 'primary' | 'secondary';
-        "tourId": string;
+        "tourId": string | null;
     }
     interface ScPageStationListAttributes {
         "headerBackgroundColor": 'primary' | 'secondary';
-        "tourId": string;
+        "tourId": string | null;
     }
     interface ScPageStationsAttributes {
-        "tourId": string;
-        "stationId": string;
+        "tourId": string | null;
+        "stationId": string | null;
         "enableSwitchAudioOutput": boolean;
     }
     interface ScPageTabbedStationListAttributes {
         "headerBackgroundColor": 'primary' | 'secondary';
-        "tourId": string;
+        "tourId": string | null;
     }
     interface ScPageTourListAttributes {
         "headerBackgroundColor": 'primary' | 'secondary';

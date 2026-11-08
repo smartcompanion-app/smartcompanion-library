@@ -1,6 +1,6 @@
 import { Component, State, Prop, Host, h, Mixin } from '@stencil/core';
 import { Station } from '@smartcompanion/data';
-import { getMenuButton, getStations } from '../../utils';
+import { getImageUrl, getMenuButton, getStations } from '../../utils';
 import { audioPlayerComponent } from '../../utils/audio-player-component';
 import { PageStationFacade } from '../../contracts';
 
@@ -21,13 +21,13 @@ export class PageStation extends Mixin(audioPlayerComponent) {
    * e.g. after opening a deep link. Defaults to `/`. Only used if
    * enableBackButton is true
    */
-  @Prop() defaultBackButtonHref: string = null;
+  @Prop() defaultBackButtonHref: string | null = null;
 
   /**
    * If tour id is given, stations are retrieved from specific tour.
    * Tour id 'default' is a placeholder for the default tour id.
    */
-  @Prop() tourId: string = null;
+  @Prop() tourId: string | null = null;
 
   /**
    * The ID of the active station to display
@@ -149,7 +149,7 @@ export class PageStation extends Mixin(audioPlayerComponent) {
           </ion-toolbar>
         </ion-header>
         <ion-content fullscreen={true}>
-          <ion-img class="station-image" src={this.stations[this.activeIndex].images[0]['internalWebUrl']}></ion-img>
+          <ion-img class="station-image" src={getImageUrl(this.stations[this.activeIndex])}></ion-img>
 
           <div class="station-player">
             <sc-player-controls

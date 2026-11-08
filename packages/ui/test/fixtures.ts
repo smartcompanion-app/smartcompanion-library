@@ -1,6 +1,9 @@
-import { Station, Tour } from "@smartcompanion/data";
+import { Asset, Station, Tour } from "@smartcompanion/data";
 
-export const stations: Station[] = [
+/** A station as getStation() and getStations() return it: images and audios loaded as assets */
+export type ResolvedStation = Station & { images: Asset[]; audios: Asset[] };
+
+export const stations: ResolvedStation[] = [
   {
     id: '1',
     number: '1',
@@ -78,12 +81,12 @@ export const tours: Tour[] = [
   }
 ];
 
-export const getMultiAudioStation = (): Station => {
-  const station: Station = stations[0];
+export const getMultiAudioStation = (): ResolvedStation => {
+  const station: ResolvedStation = stations[0];
   station.audios = [
-    ...(stations[0].audios as string[]),
-    ...(stations[1].audios as string[]),
-    ...(stations[2].audios as string[])
+    ...stations[0].audios,
+    ...stations[1].audios,
+    ...stations[2].audios
   ];
   return station;
 };

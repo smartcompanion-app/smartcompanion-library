@@ -1,13 +1,12 @@
 import { render, h, describe, it, expect } from '@stencil/vitest';
 import { Menu, PageMultiAudioStationFacade, Router, StationSource } from '../../contracts';
 import { AudioPlayerService, AudioPlayerUpdate } from '@smartcompanion/services';
-import { Station } from '@smartcompanion/data';
-import { getMultiAudioStation } from '../../../test/fixtures';
+import { getMultiAudioStation, ResolvedStation } from '../../../test/fixtures';
 
 // Use silent audio data URI so loadAudio resolves without needing real files
 const SILENT_AUDIO = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
 
-const createStation = (): Station => {
+const createStation = (): ResolvedStation => {
   const station = getMultiAudioStation();
   station.audios = station.audios.map(audio => ({ ...audio, internalFileUrl: SILENT_AUDIO, internalWebUrl: SILENT_AUDIO }));
   return station;
@@ -49,7 +48,7 @@ const facade = {
 } as PageMultiAudioStationFacade;
 
 const getPlayerButton = (root: HTMLElement, testId: string) => {
-  return root.querySelector('sc-player-controls').shadowRoot.querySelector(`[data-testid="${testId}"]`) as HTMLElement;
+  return root.querySelector('sc-player-controls')!.shadowRoot!.querySelector(`[data-testid="${testId}"]`) as HTMLElement;
 };
 
 // Renders the page and waits until its audio player has finished initializing.
@@ -134,5 +133,24 @@ describe('sc-page-multi-audio-station', () => {
     it('should not reserve space where there is no inset', async () => {
       expect(await contentPaddingBottom()).toBe('0px');
     });
+  });
+});
+
+describe('sc-page-multi-audio-station without durations', () => {
+  it('shows no duration for an audio that has none', async () => {
+    // duration is optional on an asset
+    // a copy: createStation() returns the shared fixture itself
+    const station = { ...createStation() };
+    station.audios = station.audios.map(audio => ({ ...audio, duration: undefined }));
+    const facadeWithoutDurations = {
+      ...facade,
+      getStationService: () => ({ getStation: () => Promise.resolve(station) }) as unknown as StationSource,
+    } as PageMultiAudioStationFacade;
+
+    const { root, waitForChanges } = await render(<sc-page-multi-audio-station stationId="123" facade={facadeWithoutDurations}></sc-page-multi-audio-station>);
+    await waitForChanges();
+
+    expect(root.querySelectorAll('[data-testid^="audio-item-"]').length).toBeGreaterThan(0);
+    expect(root.querySelector('.station-audios')?.textContent).not.toContain('NaN');
   });
 });

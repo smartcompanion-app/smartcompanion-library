@@ -1,7 +1,7 @@
 import { Component, Prop, State, Host, h } from '@stencil/core';
 import { StationListFacade } from '../../contracts';
-import { Station, Asset } from '@smartcompanion/data';
-import { getMenuButton, getSortedStations, openStation } from '../../utils';
+import { Station } from '@smartcompanion/data';
+import { getImageUrl, getMenuButton, getSortedStations, openStation } from '../../utils';
 
 @Component({
   tag: 'sc-page-station-image-list',
@@ -18,7 +18,7 @@ export class PageStationImageList {
   /**
    * The ID of the tour to display stations for, or null if all stations should be displayed
    */
-  @Prop() tourId: string = null;
+  @Prop() tourId: string | null = null;
 
   /** The service facade instance */
   @Prop() facade: StationListFacade;
@@ -34,7 +34,9 @@ export class PageStationImageList {
 
   private handleOpenStation = (e: Event) => {
     const stationId = (e.currentTarget as HTMLElement).dataset.stationId;
-    this.openStation(stationId);
+    if (stationId !== undefined) {
+      this.openStation(stationId);
+    }
   };
 
   private handleBack = () => {
@@ -63,7 +65,7 @@ export class PageStationImageList {
                     <p>{station.subtitle}</p>
                   </ion-label>
                 </ion-item>
-                <img class="station-image-list-image" src={(station.images[0] as Asset).internalWebUrl} />
+                <img class="station-image-list-image" src={getImageUrl(station)} />
                 <ion-card-content>
                   <p class="station-image-list-description">{station.description}</p>
                   <ion-button data-station-id={station.id} onClick={this.handleOpenStation}>

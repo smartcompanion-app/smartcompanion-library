@@ -82,7 +82,7 @@ The audio asset carries its own `language`, and it should match the station vari
 
 ### More than one track
 
-A station can list several audio assets — a narration and an eyewitness account, a short and a long version. The library has a page for this, `sc-page-multi-audio-station`, which lets the visitor choose. The default app does not use it: its main screen plays a station's tracks one after the other, without a choice. Using the multi-track page is a change in your fork, see [Screens](../features/screens.md#pages-the-default-app-does-not-use).
+A station can list several audio assets — a narration and an eyewitness account, a short and a long version. The library has a page for this, `sc-page-multi-audio-station`, which lets the visitor choose. It lists each track with its asset's `title`, and its `duration` if the asset has one. The default app does not use it: its main screen plays a station's tracks one after the other, without a choice. Using the multi-track page is a change in your fork, see [Screens](../features/screens.md#pages-the-default-app-does-not-use).
 
 ### Stations without audio
 

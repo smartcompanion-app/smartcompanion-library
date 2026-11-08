@@ -112,14 +112,19 @@ export const audioPlayerComponent = <B extends MixedInCtor>(Base: B) => {
         }
         if (update.state == 'playing') {
           this.playing = true;
-          this.triggerPositionUpdate();
-        } else if (update.state == 'paused') {
+        } else if (update.state == 'paused' || update.state == 'stopped') {
           this.playing = false;
-        } else if (update.state == 'skip') {
+        } else if (update.state == 'progress') {
+          this.position = update.position;
+          this.duration = update.duration;
+        } else if (update.state == 'skipped') {
           this.updateAudioIndex(update.index);
           await this.onSkip(update);
           await this.resetAudioPlayer();
         } else if (update.state == 'completed') {
+          // The player stopped at the end and rewound the audio, reporting no pause
+          this.playing = false;
+          this.position = 0;
           await this.onCompleted(update);
         } else if (update.state == 'collected') {
           try {
@@ -246,28 +251,12 @@ export const audioPlayerComponent = <B extends MixedInCtor>(Base: B) => {
     async onSkip(_update: AudioPlayerUpdate) {}
 
     /**
-     * By default the player rewinds the audio it completed
+     * The player completed an audio and rewound it. By default it stays there:
+     * seeking would start it again.
      */
-    async onCompleted(_update: AudioPlayerUpdate) {
-      await this.audioPlayerFacade.getAudioPlayerService().pause();
-      await this.audioPlayerFacade.getAudioPlayerService().seek(0);
-      this.position = 0;
-    }
+    async onCompleted(_update: AudioPlayerUpdate) {}
 
     async onCollected(_update: AudioPlayerUpdate, _station: Station) {}
-
-    async triggerPositionUpdate() {
-      this.position = await this.audioPlayerFacade.getAudioPlayerService().getPosition();
-      this.duration = await this.audioPlayerFacade.getAudioPlayerService().getDuration();
-
-      if (this.duration > 0 && this.position < this.duration) {
-        setTimeout(() => {
-          if (this.playing) {
-            this.triggerPositionUpdate();
-          }
-        }, 800);
-      }
-    }
   }
   return AudioPlayerComponent;
 };

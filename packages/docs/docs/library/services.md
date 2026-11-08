@@ -6,7 +6,7 @@
 npm install @smartcompanion/services
 ```
 
-Peer dependencies: `@smartcompanion/data` 2, `@smartcompanion/native-audio-player` 1.0.2 or newer, `@capacitor/core` 8, `@ionic/core` 9.
+Peer dependencies: `@smartcompanion/data` 2, `@smartcompanion/native-audio-player` 2, `@capacitor/core` 8, `@ionic/core` 9.
 
 ## The facade
 
@@ -53,10 +53,10 @@ Using the audio player or the load service before registering one throws an erro
 
 - `start(stations)` loads the stations as the playlist — one item per audio asset, titled with the asset's or the station's title, with the station's first image as artwork and the registered subtitle underneath.
 - `select(index)`, `play()`, `pause()`, `seek(position)`, `next()`, `prev()`, `stop()` control it.
-- `registerUpdateListener(callback)` reports `playing`, `paused`, `skip` and `completed`.
+- `registerUpdateListener(callback)` reports the player's states — `playing`, `paused`, `stopped`, `skipped` and `completed` — and, while it plays, a `progress` update with the position and duration of the audio.
 - `setEarpiece()` and `setSpeaker()` switch the output in a native app.
 
-**The collectible player**, `CollectibleAudioPlayerService`, additionally tracks how much of each station has been listened to. It reports a `collected` update with the percentage, which the pages store through `StationService` and show as the progress ring.
+**The collectible player**, `CollectibleAudioPlayerService`, additionally tracks how much of each station has been listened to. It measures the listening time from the `progress` updates and reports a `collected` update with the percentage, which the pages store through `StationService` and show as the progress ring.
 
 The pages drive the player themselves; an app only registers it.
 

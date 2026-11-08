@@ -10,7 +10,12 @@ export interface AudioPlayerServiceItem extends Item {
 
 export class AudioPlayerService {
   protected items: AudioPlayerServiceItem[] = [];
-  protected updateListenerHandle: PluginListenerHandle;
+  /**
+   * The plugin's listeners of the current registration, kept as the promises
+   * addListener() returns, so an unregister that comes before they resolve still
+   * removes them
+   */
+  protected listenerHandles: Promise<PluginListenerHandle>[] = [];
 
   set stations(stations: Station[]) {
     this.items = this.getPlayerItems(stations);
@@ -51,20 +56,44 @@ export class AudioPlayerService {
     await NativeAudioPlayer.previous();
   }
 
+  /**
+   * Registers the callback for the player's state changes, and for its playhead while it
+   * plays, which arrives as a 'progress' update with position and duration.
+   *
+   * Replaces the listeners of an earlier registration: a page that handed the player
+   * to the next one never unregisters, and its listeners would otherwise keep running.
+   */
   async registerUpdateListener(callback: (update: AudioPlayerUpdate) => void) {
-    this.updateListenerHandle = await NativeAudioPlayer.addListener('audioPlayerChange', async result => {
-      callback({
-        state: result.state,
-        id: result.id,
-        index: this.getIndex(result.id),
-      });
-    });
+    const previous = this.listenerHandles;
+    this.listenerHandles = [
+      NativeAudioPlayer.addListener('audioPlayerChange', async result => {
+        callback({
+          state: result.state,
+          id: result.id,
+          index: this.getIndex(result.id),
+        });
+      }),
+      NativeAudioPlayer.addListener('progress', async result => {
+        callback({
+          state: 'progress',
+          id: result.id,
+          index: this.getIndex(result.id),
+          position: result.position,
+          duration: result.duration,
+        });
+      }),
+    ];
+    await Promise.all([this.removeListeners(previous), ...this.listenerHandles]);
   }
 
   async unregisterUpdateListener() {
-    if (this.updateListenerHandle) {
-      await this.updateListenerHandle.remove();
-    }
+    const handles = this.listenerHandles;
+    this.listenerHandles = [];
+    await this.removeListeners(handles);
+  }
+
+  protected async removeListeners(handles: Promise<PluginListenerHandle>[]) {
+    await Promise.all(handles.map(async handle => (await handle).remove()));
   }
 
   setEarpiece() {

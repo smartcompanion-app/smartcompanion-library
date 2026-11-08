@@ -33,13 +33,13 @@ const scrollingStations: Station[] = Array.from({ length: 12 }, (_, index) => {
 // flight when waitForChanges() resolves: it awaits start() and setSpeaker(),
 // fires registerUpdateListener() *without* awaiting it, then awaits select(). A
 // prev/next click landing before that listener is wired notifies nobody -- the
-// 'skip' update is dropped, activeIndex never moves, and the polls below can
+// 'skipped' update is dropped, activeIndex never moves, and the polls below can
 // never succeed no matter how long they wait.
 //
 // Neither registration completing nor select() resolving is a trustworthy gate
 // on its own: initAudioPlayer() does not await the former, and
 // CollectibleAudioPlayerService in turn does not await super. So gate on the
-// page's own listener actually receiving an update -- the 'skip' emitted by the
+// page's own listener actually receiving an update -- the 'skipped' emitted by the
 // initial select() -- which proves the whole chain end to end.
 let pageReceivedUpdate = false;
 let lastUpdate: AudioPlayerUpdate | null = null;

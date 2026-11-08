@@ -1,7 +1,7 @@
 import { Component, Prop, State, Host, h } from '@stencil/core';
 import { StationListFacade } from '../../contracts';
-import { Station, Asset } from '@smartcompanion/data';
-import { getMenuButton, getSortedStations, openStation } from '../../utils';
+import { Station } from '@smartcompanion/data';
+import { getImageUrl, getMenuButton, getSortedStations, openStation } from '../../utils';
 
 @Component({
   tag: 'sc-page-station-image-list',
@@ -65,7 +65,7 @@ export class PageStationImageList {
                     <p>{station.subtitle}</p>
                   </ion-label>
                 </ion-item>
-                <img class="station-image-list-image" src={(station.images[0] as Asset).internalWebUrl} />
+                <img class="station-image-list-image" src={getImageUrl(station)} />
                 <ion-card-content>
                   <p class="station-image-list-description">{station.description}</p>
                   <ion-button data-station-id={station.id} onClick={this.handleOpenStation}>

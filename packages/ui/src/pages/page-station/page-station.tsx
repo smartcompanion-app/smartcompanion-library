@@ -1,6 +1,6 @@
 import { Component, State, Prop, Host, h, Mixin } from '@stencil/core';
-import { Asset, Station } from '@smartcompanion/data';
-import { getMenuButton, getStations } from '../../utils';
+import { Station } from '@smartcompanion/data';
+import { getImageUrl, getMenuButton, getStations } from '../../utils';
 import { audioPlayerComponent } from '../../utils/audio-player-component';
 import { PageStationFacade } from '../../contracts';
 
@@ -131,12 +131,6 @@ export class PageStation extends Mixin(audioPlayerComponent) {
     this.facade.getRoutingService().back(this.defaultBackButtonHref || undefined);
   };
 
-  /** A station may have no image, and the page none to show */
-  private getImageUri() {
-    const images = (this.stations[this.activeIndex]?.images ?? []) as Asset[];
-    return images[0]?.internalWebUrl;
-  }
-
   render() {
     const hasAudio = this.hasAudio(this.activeIndex);
 
@@ -155,7 +149,7 @@ export class PageStation extends Mixin(audioPlayerComponent) {
           </ion-toolbar>
         </ion-header>
         <ion-content fullscreen={true}>
-          <ion-img class="station-image" src={this.getImageUri()}></ion-img>
+          <ion-img class="station-image" src={getImageUrl(this.stations[this.activeIndex])}></ion-img>
 
           <div class="station-player">
             <sc-player-controls

@@ -1,8 +1,8 @@
 import { Component, h, State, Prop, Host, Mixin } from '@stencil/core';
 import { Swiper } from 'swiper';
-import { Asset, Station } from '@smartcompanion/data';
+import { Station } from '@smartcompanion/data';
 import { AudioPlayerUpdate, PageStationFacade } from '../../contracts';
-import { getSortedStations } from '../../utils';
+import { getImageUrl, getSortedStations } from '../../utils';
 import { audioPlayerComponent } from '../../utils/audio-player-component';
 
 @Component({
@@ -93,14 +93,6 @@ export class PageStations extends Mixin(audioPlayerComponent) {
   // eslint-disable-next-line stencil/own-methods-must-be-private -- overrides the public method of audioPlayerComponent
   async onCollected(_update: AudioPlayerUpdate, updatedStation: Station) {
     this.stations = this.stations.map(s => (s.id === updatedStation.id ? updatedStation : s));
-  }
-
-  /**
-   * A station with a single image shows it in both places
-   */
-  private getImageUri(index: number, imageIndex: number = 0) {
-    const images = this.stations[index].images as Asset[];
-    return (images[imageIndex] ?? images[0])?.internalWebUrl;
   }
 
   private hasAudio(index: number) {
@@ -197,7 +189,7 @@ export class PageStations extends Mixin(audioPlayerComponent) {
         <ion-content id="home" fullscreen={true}>
           <div id="player-main">
             <div id="player-image">
-              <img src={this.getImageUri(this.activeIndex)} />
+              <img src={getImageUrl(this.stations[this.activeIndex])} />
             </div>
             <div id="player">
               <sc-player-controls
@@ -218,7 +210,8 @@ export class PageStations extends Mixin(audioPlayerComponent) {
                   <div data-testid={`player-list-item-${index}`} class={this.activeIndex == index ? 'swiper-slide active' : 'swiper-slide'}>
                     <ion-card button data-index={index} onClick={this.handleSelect}>
                       <div class="card-content">
-                        <img src={this.getImageUri(index, 1)} />
+                        {/* the second image, or the first for a station that has one */}
+                        <img src={getImageUrl(station, 1)} />
                         <div class="card-content-text">
                           <sc-station-icon collectedPercent={(station.collectedPercentage ?? 0) * 100}>{station.number}</sc-station-icon>
                           {station.subtitle && <p class="subtitle">{station.subtitle}</p>}

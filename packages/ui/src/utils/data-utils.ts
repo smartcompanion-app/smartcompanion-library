@@ -1,4 +1,4 @@
-import { Station } from '@smartcompanion/data';
+import { Asset, Station } from '@smartcompanion/data';
 import { StationSource, TourSource } from '../contracts';
 
 export type StationDataFacade = {
@@ -28,4 +28,23 @@ export async function getSortedStations(facade: StationDataFacade, tourId: strin
     const v2 = parseInt(b.number ?? '') || 0;
     return v1 - v2;
   });
+}
+
+/** Anything with images: a station or a tour, as getStation(), getStations() and getTours() return it */
+type WithImages = { images: Asset[] | string[] };
+
+/**
+ * The web url of image `index` of a station or tour, falling back to its first image.
+ * Undefined when it has no image at all.
+ */
+export function getImageUrl(item: WithImages | undefined, index: number = 0): string | undefined {
+  const images = (item?.images ?? []) as Asset[];
+  return (images[index] ?? images[0])?.internalWebUrl;
+}
+
+/**
+ * The web urls of all images of a station or tour, leaving out any without one
+ */
+export function getImageUrls(item: WithImages | undefined): string[] {
+  return ((item?.images ?? []) as Asset[]).map(image => image.internalWebUrl).filter((url): url is string => url !== undefined);
 }

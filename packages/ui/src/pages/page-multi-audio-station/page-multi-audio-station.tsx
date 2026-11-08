@@ -1,6 +1,6 @@
 import { Component, State, Prop, Host, h, Mixin } from '@stencil/core';
 import { Asset, Station } from '@smartcompanion/data';
-import { formatSeconds, getMenuButton } from '../../utils';
+import { formatSeconds, getImageUrls, getMenuButton } from '../../utils';
 import { audioPlayerComponent } from '../../utils/audio-player-component';
 import { PageMultiAudioStationFacade } from '../../contracts';
 
@@ -120,7 +120,7 @@ export class PageMultiAudioStation extends Mixin(audioPlayerComponent) {
             </ion-fab>
           )}
           <section id="station">
-            <sc-image-slideshow images={(this.station.images as Asset[]).map(image => image.internalWebUrl).filter((url): url is string => url !== undefined)}></sc-image-slideshow>
+            <sc-image-slideshow images={getImageUrls(this.station)}></sc-image-slideshow>
 
             <div id="station-player-controls">
               <sc-player-controls

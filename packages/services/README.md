@@ -14,7 +14,7 @@ Requires Node 20 or newer, and these peers:
 
 ```
 @smartcompanion/data                ^2.0.0
-@smartcompanion/native-audio-player ^1.0.2
+@smartcompanion/native-audio-player ^2.0.0
 @capacitor/core                     ^8.3.1
 @ionic/core                         ^9.0.0
 ```

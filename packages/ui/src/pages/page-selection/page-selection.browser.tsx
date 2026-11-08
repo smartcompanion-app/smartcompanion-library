@@ -9,7 +9,7 @@ const facade = {
   getStationService: () =>
     ({
       getStations: () => Promise.resolve([]),
-    }) as StationSource,
+    }) as unknown as StationSource,
   __: (key: TranslationKey) => {
     switch (key) {
       case 'menu-selection':
@@ -21,11 +21,11 @@ const facade = {
 } as StationListFacade;
 
 const getNumpadButton = (root: HTMLElement, testId: string) => {
-  return root.querySelector('sc-numpad').shadowRoot.querySelector(`[data-testid="${testId}"]`) as HTMLElement;
+  return root.querySelector('sc-numpad')!.shadowRoot!.querySelector(`[data-testid="${testId}"]`) as HTMLElement;
 };
 
 const getInput = (root: HTMLElement) => {
-  return root.querySelector('[data-testid="numpad-input"]');
+  return root.querySelector('[data-testid="numpad-input"]')!;
 };
 
 describe('sc-page-selection', () => {

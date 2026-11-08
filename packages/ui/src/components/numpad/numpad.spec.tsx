@@ -6,7 +6,7 @@ describe('sc-numpad', () => {
       const { root, spyOnEvent, waitForChanges } = await render(<sc-numpad></sc-numpad>);
       const numberSpy = spyOnEvent('number');
 
-      const button = root.shadowRoot.querySelector('[data-testid="numpad-button-3"]') as HTMLElement;
+      const button = root.shadowRoot!.querySelector('[data-testid="numpad-button-3"]') as HTMLElement;
       button.click();
       await waitForChanges();
 
@@ -18,7 +18,7 @@ describe('sc-numpad', () => {
       const { root, spyOnEvent, waitForChanges } = await render(<sc-numpad></sc-numpad>);
       const numberSpy = spyOnEvent('number');
 
-      const button = root.shadowRoot.querySelector('[data-testid="numpad-button-0"]') as HTMLElement;
+      const button = root.shadowRoot!.querySelector('[data-testid="numpad-button-0"]') as HTMLElement;
       button.click();
       await waitForChanges();
 
@@ -32,7 +32,7 @@ describe('sc-numpad', () => {
       const { root, spyOnEvent, waitForChanges } = await render(<sc-numpad></sc-numpad>);
       const deleteSpy = spyOnEvent('delete');
 
-      const button = root.shadowRoot.querySelector('[data-testid="numpad-button-delete"]') as HTMLElement;
+      const button = root.shadowRoot!.querySelector('[data-testid="numpad-button-delete"]') as HTMLElement;
       button.click();
       await waitForChanges();
 
@@ -45,7 +45,7 @@ describe('sc-numpad', () => {
       const { root, spyOnEvent, waitForChanges } = await render(<sc-numpad full={true}></sc-numpad>);
       const confirmSpy = spyOnEvent('confirm');
 
-      const button = root.shadowRoot.querySelector('[data-testid="numpad-button-confirm"]') as HTMLElement;
+      const button = root.shadowRoot!.querySelector('[data-testid="numpad-button-confirm"]') as HTMLElement;
       button.click();
       await waitForChanges();
 
@@ -55,7 +55,7 @@ describe('sc-numpad', () => {
     it('should not render confirm button when full is false', async () => {
       const { root } = await render(<sc-numpad></sc-numpad>);
 
-      const button = root.shadowRoot.querySelector('[data-testid="numpad-button-confirm"]');
+      const button = root.shadowRoot!.querySelector('[data-testid="numpad-button-confirm"]');
       expect(button).toBeNull();
     });
   });

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-12T07:55:41",
+  "timestamp": "2026-11-08T16:26:10",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.45.2",
@@ -335,10 +335,10 @@
       "props": [
         {
           "name": "facade",
-          "type": "{ getMenuService(): Menu; getRoutingService(): Router; getLoadService(): Loader; getPendingRoute(): string; }",
+          "type": "{ getMenuService(): Menu; getRoutingService(): Router; getLoadService(): Loader; getPendingRoute(): string | null; }",
           "complexType": {
             "original": "PageLoadingFacade",
-            "resolved": "{ getMenuService(): Menu; getRoutingService(): Router; getLoadService(): Loader; getPendingRoute(): string; }",
+            "resolved": "{ getMenuService(): Menu; getRoutingService(): Router; getLoadService(): Loader; getPendingRoute(): string | null; }",
             "references": {
               "PageLoadingFacade": {
                 "location": "import",
@@ -354,7 +354,10 @@
           "docsTags": [],
           "values": [
             {
-              "type": "{ getMenuService(): Menu; getRoutingService(): Router; getLoadService(): Loader; getPendingRoute(): string; }"
+              "type": "{ getMenuService(): Menu; getRoutingService(): Router; getLoadService(): Loader; getPendingRoute(): string"
+            },
+            {
+              "type": "null; }"
             }
           ],
           "optional": false,
@@ -416,10 +419,10 @@
         },
         {
           "name": "imageDark",
-          "type": "string",
+          "type": "string | undefined",
           "complexType": {
             "original": "string",
-            "resolved": "string",
+            "resolved": "string | undefined",
             "references": {}
           },
           "mutable": false,
@@ -430,6 +433,9 @@
           "values": [
             {
               "type": "string"
+            },
+            {
+              "type": "undefined"
             }
           ],
           "optional": true,
@@ -561,10 +567,10 @@
       "props": [
         {
           "name": "defaultBackButtonHref",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
             "original": "string | null",
-            "resolved": "string",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -579,6 +585,9 @@
           ],
           "default": "null",
           "values": [
+            {
+              "type": "null"
+            },
             {
               "type": "string"
             }
@@ -738,10 +747,10 @@
         },
         {
           "name": "mapStyleUrl",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
             "original": "string | null",
-            "resolved": "string",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -757,6 +766,9 @@
           "default": "null",
           "values": [
             {
+              "type": "null"
+            },
+            {
               "type": "string"
             }
           ],
@@ -767,10 +779,10 @@
         },
         {
           "name": "tileUrlTemplate",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
             "original": "string | null",
-            "resolved": "string",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -786,6 +798,9 @@
           "default": "null",
           "values": [
             {
+              "type": "null"
+            },
+            {
               "type": "string"
             }
           ],
@@ -796,10 +811,10 @@
         },
         {
           "name": "tourId",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
             "original": "string | null",
-            "resolved": "string",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -814,6 +829,9 @@
           ],
           "default": "null",
           "values": [
+            {
+              "type": "null"
+            },
             {
               "type": "string"
             }
@@ -845,10 +863,10 @@
       "props": [
         {
           "name": "defaultBackButtonHref",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
-            "original": "string",
-            "resolved": "string",
+            "original": "string | null",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -863,6 +881,9 @@
           ],
           "default": "null",
           "values": [
+            {
+              "type": "null"
+            },
             {
               "type": "string"
             }
@@ -955,10 +976,10 @@
         },
         {
           "name": "tourId",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
-            "original": "string",
-            "resolved": "string",
+            "original": "string | null",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -973,6 +994,9 @@
           ],
           "default": "null",
           "values": [
+            {
+              "type": "null"
+            },
             {
               "type": "string"
             }
@@ -1192,10 +1216,10 @@
         },
         {
           "name": "tourId",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
-            "original": "string",
-            "resolved": "string",
+            "original": "string | null",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -1210,6 +1234,9 @@
           ],
           "default": "null",
           "values": [
+            {
+              "type": "null"
+            },
             {
               "type": "string"
             }
@@ -1247,10 +1274,10 @@
       "props": [
         {
           "name": "defaultBackButtonHref",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
-            "original": "string",
-            "resolved": "string",
+            "original": "string | null",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -1265,6 +1292,9 @@
           ],
           "default": "null",
           "values": [
+            {
+              "type": "null"
+            },
             {
               "type": "string"
             }
@@ -1386,10 +1416,10 @@
         },
         {
           "name": "tourId",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
-            "original": "string",
-            "resolved": "string",
+            "original": "string | null",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -1404,6 +1434,9 @@
           ],
           "default": "null",
           "values": [
+            {
+              "type": "null"
+            },
             {
               "type": "string"
             }
@@ -1506,10 +1539,10 @@
         },
         {
           "name": "tourId",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
-            "original": "string",
-            "resolved": "string",
+            "original": "string | null",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -1524,6 +1557,9 @@
           ],
           "default": "null",
           "values": [
+            {
+              "type": "null"
+            },
             {
               "type": "string"
             }
@@ -1629,10 +1665,10 @@
         },
         {
           "name": "tourId",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
-            "original": "string",
-            "resolved": "string",
+            "original": "string | null",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -1647,6 +1683,9 @@
           ],
           "default": "null",
           "values": [
+            {
+              "type": "null"
+            },
             {
               "type": "string"
             }
@@ -1747,10 +1786,10 @@
         },
         {
           "name": "stationId",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
-            "original": "string",
-            "resolved": "string",
+            "original": "string | null",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -1766,6 +1805,9 @@
           "default": "null",
           "values": [
             {
+              "type": "null"
+            },
+            {
               "type": "string"
             }
           ],
@@ -1776,10 +1818,10 @@
         },
         {
           "name": "tourId",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
-            "original": "string",
-            "resolved": "string",
+            "original": "string | null",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -1794,6 +1836,9 @@
           ],
           "default": "null",
           "values": [
+            {
+              "type": "null"
+            },
             {
               "type": "string"
             }
@@ -1896,10 +1941,10 @@
         },
         {
           "name": "tourId",
-          "type": "string",
+          "type": "null | string",
           "complexType": {
-            "original": "string",
-            "resolved": "string",
+            "original": "string | null",
+            "resolved": "null | string",
             "references": {}
           },
           "mutable": false,
@@ -1914,6 +1959,9 @@
           ],
           "default": "null",
           "values": [
+            {
+              "type": "null"
+            },
             {
               "type": "string"
             }

@@ -3,7 +3,7 @@ import { h } from '@stencil/core';
 import { Marquee } from './marquee';
 
 const createRender = (text: string) => {
-  return args => (
+  return (args: Partial<Marquee>) => (
     <div style={{ width: '100vw' }}>
       <sc-marquee {...args}>{text}</sc-marquee>
     </div>

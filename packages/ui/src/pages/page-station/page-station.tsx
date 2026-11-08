@@ -1,5 +1,5 @@
 import { Component, State, Prop, Host, h, Mixin } from '@stencil/core';
-import { Station } from '@smartcompanion/data';
+import { Asset, Station } from '@smartcompanion/data';
 import { getMenuButton, getStations } from '../../utils';
 import { audioPlayerComponent } from '../../utils/audio-player-component';
 import { PageStationFacade } from '../../contracts';
@@ -21,13 +21,13 @@ export class PageStation extends Mixin(audioPlayerComponent) {
    * e.g. after opening a deep link. Defaults to `/`. Only used if
    * enableBackButton is true
    */
-  @Prop() defaultBackButtonHref: string = null;
+  @Prop() defaultBackButtonHref: string | null = null;
 
   /**
    * If tour id is given, stations are retrieved from specific tour.
    * Tour id 'default' is a placeholder for the default tour id.
    */
-  @Prop() tourId: string = null;
+  @Prop() tourId: string | null = null;
 
   /**
    * The ID of the active station to display
@@ -131,6 +131,12 @@ export class PageStation extends Mixin(audioPlayerComponent) {
     this.facade.getRoutingService().back(this.defaultBackButtonHref || undefined);
   };
 
+  /** A station may have no image, and the page none to show */
+  private getImageUri() {
+    const images = (this.stations[this.activeIndex]?.images ?? []) as Asset[];
+    return images[0]?.internalWebUrl;
+  }
+
   render() {
     const hasAudio = this.hasAudio(this.activeIndex);
 
@@ -149,7 +155,7 @@ export class PageStation extends Mixin(audioPlayerComponent) {
           </ion-toolbar>
         </ion-header>
         <ion-content fullscreen={true}>
-          <ion-img class="station-image" src={this.stations[this.activeIndex].images[0]['internalWebUrl']}></ion-img>
+          <ion-img class="station-image" src={this.getImageUri()}></ion-img>
 
           <div class="station-player">
             <sc-player-controls

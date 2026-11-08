@@ -18,7 +18,7 @@ export class PageStationList {
   /**
    * The ID of the tour to display stations for, or null if all stations should be displayed
    */
-  @Prop() tourId: string = null;
+  @Prop() tourId: string | null = null;
 
   /** The service facade instance */
   @Prop() facade: StationListFacade;
@@ -34,7 +34,9 @@ export class PageStationList {
 
   private handleOpenStation = (e: Event) => {
     const stationId = (e.currentTarget as HTMLElement).dataset.stationId;
-    this.openStation(stationId);
+    if (stationId !== undefined) {
+      this.openStation(stationId);
+    }
   };
 
   private handleBack = () => {

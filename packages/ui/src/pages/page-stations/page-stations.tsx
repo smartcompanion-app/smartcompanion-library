@@ -19,12 +19,12 @@ export class PageStations extends Mixin(audioPlayerComponent) {
    * If tour id is given, stations are retrieved from specific tour.
    * Tour id 'default' is a placeholder for the default tour id.
    */
-  @Prop() tourId: string = null;
+  @Prop() tourId: string | null = null;
 
   /**
    * The ID of the initial active station to display, if set to null, the first station will be displayed
    */
-  @Prop() stationId: string = null;
+  @Prop() stationId: string | null = null;
 
   /**
    * This prop displays a button for switching audio output between speaker and earpiece.
@@ -165,7 +165,7 @@ export class PageStations extends Mixin(audioPlayerComponent) {
   };
 
   private handleSelect = (e: Event) => {
-    const index = parseInt((e.currentTarget as HTMLElement).dataset.index);
+    const index = parseInt((e.currentTarget as HTMLElement).dataset.index ?? '');
     if (this.hasAudio(index)) {
       this.selectAudio(this.facade.getAudioPlayerService().getIndexByStationId(this.stations[index].id));
     } else {
@@ -220,7 +220,7 @@ export class PageStations extends Mixin(audioPlayerComponent) {
                       <div class="card-content">
                         <img src={this.getImageUri(index, 1)} />
                         <div class="card-content-text">
-                          <sc-station-icon collectedPercent={station.collectedPercentage * 100}>{station.number}</sc-station-icon>
+                          <sc-station-icon collectedPercent={(station.collectedPercentage ?? 0) * 100}>{station.number}</sc-station-icon>
                           {station.subtitle && <p class="subtitle">{station.subtitle}</p>}
                           <p class="title">{station.title}</p>
                         </div>

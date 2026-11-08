@@ -3,12 +3,12 @@ import { Menu, PageStationFacade, StationSource } from '../../contracts';
 import { AudioPlayerService, AudioPlayerUpdate, CollectibleAudioPlayerService } from '@smartcompanion/services';
 import { Asset, Station } from '@smartcompanion/data';
 import type { Swiper } from 'swiper';
-import { stations as fixtureStations } from '../../../test/fixtures';
+import { stations as fixtureStations, ResolvedStation } from '../../../test/fixtures';
 
 // Use silent audio data URI so loadAudio resolves without needing real files
 const SILENT_AUDIO = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
 
-const stations: Station[] = fixtureStations.map(station => ({
+const stations: ResolvedStation[] = fixtureStations.map(station => ({
   ...station,
   audios: station.audios.map(audio => ({ ...audio, internalFileUrl: SILENT_AUDIO, internalWebUrl: SILENT_AUDIO })),
 }));
@@ -75,7 +75,7 @@ const createFacade = (availableStations: Station[]) =>
 const facade = createFacade(stations);
 
 const getPlayerButton = (root: HTMLElement, testId: string) => {
-  return root.querySelector('sc-player-controls').shadowRoot.querySelector(`[data-testid="${testId}"]`) as HTMLElement;
+  return root.querySelector('sc-player-controls')!.shadowRoot!.querySelector(`[data-testid="${testId}"]`) as HTMLElement;
 };
 
 // Renders the page and waits until its audio player has finished initializing.
@@ -92,12 +92,12 @@ const renderPage = async (pageFacade: PageStationFacade = facade): Promise<HTMLE
 };
 
 describe('sc-page-stations', () => {
-  const item = (root: HTMLElement, index: number) => root.querySelector(`[data-testid="player-list-item-${index}"]`);
+  const item = (root: HTMLElement, index: number) => root.querySelector(`[data-testid="player-list-item-${index}"]`)!;
 
   // Swiper only initializes against a real DOM, so its own state is asserted here
   // rather than in the mock-doc snapshot.
   const list = (root: HTMLElement) => root.querySelector('#player-list') as HTMLElement & { swiper?: Swiper };
-  const swiperOf = (root: HTMLElement) => list(root).swiper;
+  const swiperOf = (root: HTMLElement) => list(root).swiper!;
   const isInitialized = (root: HTMLElement) => list(root).classList.contains('swiper-initialized');
 
   it('should initialize a vertical swiper over the station list', async () => {
@@ -150,7 +150,7 @@ describe('sc-page-stations', () => {
     it('should show the only image of a station in the list', async () => {
       const root = await renderPage(createFacade(mixedStations));
 
-      expect(item(root, 2).querySelector('img').getAttribute('src')).toBe(leopardImage.internalWebUrl);
+      expect(item(root, 2).querySelector('img')!.getAttribute('src')).toBe(leopardImage.internalWebUrl);
     });
 
     it('should keep the station active while the player goes through its audios', async () => {

@@ -18,12 +18,12 @@ export class ImageSlideshow {
   @Prop() images: string[] = [];
 
   componentDidLoad() {
-    this.imagesList = new Swiper(this.el.shadowRoot.querySelector('#slideshow') as HTMLElement, {
+    this.imagesList = new Swiper(this.el.shadowRoot?.querySelector('#slideshow') as HTMLElement, {
       modules: [Navigation],
       loop: true,
       navigation: {
-        nextEl: this.el.shadowRoot.querySelector('#slideshow-next') as HTMLElement,
-        prevEl: this.el.shadowRoot.querySelector('#slideshow-prev') as HTMLElement,
+        nextEl: this.el.shadowRoot?.querySelector('#slideshow-next') as HTMLElement,
+        prevEl: this.el.shadowRoot?.querySelector('#slideshow-prev') as HTMLElement,
       },
     });
   }

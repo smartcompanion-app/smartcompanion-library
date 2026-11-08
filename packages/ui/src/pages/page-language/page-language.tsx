@@ -21,7 +21,9 @@ export class PageLanguage {
 
   private handleChangeLanguage = (e: Event) => {
     const languageCode = (e.currentTarget as HTMLElement).dataset.language;
-    this.changeLanguage(languageCode);
+    if (languageCode !== undefined) {
+      this.changeLanguage(languageCode);
+    }
   };
 
   render() {

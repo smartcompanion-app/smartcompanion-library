@@ -34,7 +34,9 @@ export class PageTourList {
 
   private handleStartTour = (e: Event) => {
     const tourId = (e.currentTarget as HTMLElement).dataset.tourId;
-    this.startTour(tourId);
+    if (tourId !== undefined) {
+      this.startTour(tourId);
+    }
   };
 
   render() {

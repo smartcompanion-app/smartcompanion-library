@@ -19,13 +19,13 @@ export class Marquee {
   @Element() element: HTMLScMarqueeElement;
 
   componentWillLoad() {
-    this.originalText = this.element.textContent;
+    this.originalText = this.element.textContent ?? '';
     this.marqueeText = this.originalText + '   ';
   }
 
   componentDidRender() {
-    const innerElement = this.element.shadowRoot.querySelector('div');
-    if (this.active && innerElement.scrollWidth > innerElement.clientWidth) {
+    const innerElement = this.element.shadowRoot?.querySelector('div');
+    if (this.active && innerElement && innerElement.scrollWidth > innerElement.clientWidth) {
       setTimeout(() => {
         this.marqueeText = this.marqueeText.slice(1, this.marqueeText.length) + this.marqueeText.slice(0, 1);
       }, 300);

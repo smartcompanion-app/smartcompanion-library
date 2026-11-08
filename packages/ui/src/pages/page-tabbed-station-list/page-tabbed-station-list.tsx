@@ -16,7 +16,7 @@ export class PageTabbedStationList {
   /**
    * The ID of the tour to display stations for, or null if all stations should be displayed
    */
-  @Prop() tourId: string = null;
+  @Prop() tourId: string | null = null;
 
   /** The service facade instance */
   @Prop() facade: StationListFacade;

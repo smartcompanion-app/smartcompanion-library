@@ -1,5 +1,23 @@
 # @smartcompanion/services
 
+## 2.1.0
+
+### Minor Changes
+
+- [#148](https://github.com/smartcompanion-app/smartcompanion-library/pull/148) [`105fd03`](https://github.com/smartcompanion-app/smartcompanion-library/commit/105fd030faddf1d9f395b8f0a8a13b74d264fc7b) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Require `@smartcompanion/native-audio-player` 2. It renames the `skip` state to `skipped` and reports `stop()` as `stopped` instead of `paused`. `AudioPlayerService` follows the new names, and types `AudioPlayerUpdate.state` as the player's states, so a renamed state no longer goes unnoticed.
+  
+  The player's `progress` event replaces polling the position. `registerUpdateListener()` reports it as a `progress` update with `position` and `duration`. The audio pages take their slider from it instead of asking every 800 ms, and `CollectibleAudioPlayerService` measures listening time from it instead of from `getPosition()`. A stop no longer carries listening time over into the next start.
+  
+  A completed audio stays rewound on `sc-page-station` and `sc-page-multi-audio-station`. Their default rewound it again with a seek, which resumes playback, so the audio started over.
+  
+  `registerUpdateListener()` replaces the listeners of an earlier registration, so a page that handed the player to the next one no longer leaves its listeners running, and `CollectibleAudioPlayerService` no longer counts the jump back to the start of a completed audio as listening time.
+
+### Patch Changes
+
+- [#150](https://github.com/smartcompanion-app/smartcompanion-library/pull/150) [`3a9f7dc`](https://github.com/smartcompanion-app/smartcompanion-library/commit/3a9f7dccb861f09333cfa342fb162c25ca9dbafc) Thanks [@stefanhuber](https://github.com/stefanhuber)! - `AudioPlayerService` passes an empty `audioUri`/`imageUri` for an audio or station without a file, instead of leaving it out. The Android player reads every uri as required, so a station without an image dropped its audios and every audio after it from the player.
+  
+  `CollectibleAudioPlayerService` no longer throws when a progress arrives after `unregisterUpdateListener()`. `RoutingService` reports a missing `ion-router` by name.
+
 ## 2.0.1
 
 ### Patch Changes

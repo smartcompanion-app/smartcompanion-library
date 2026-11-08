@@ -181,3 +181,14 @@ test('a page that took over the player collects each progress once', async () =>
 
   expect(collected).toEqual([{ state: 'collected', id: 'a1', index: 0, percentage: 0.2 }]);
 });
+
+test('a progress that arrives after unregistering collects without anyone to tell', async () => {
+  const { service } = await startCollecting();
+  await change('playing', 'a1');
+  await settle();
+  await progress(1);
+
+  await service.unregisterUpdateListener();
+
+  await expect(service.updatePosition(3)).resolves.toBeUndefined();
+});

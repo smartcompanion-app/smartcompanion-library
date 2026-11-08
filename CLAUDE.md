@@ -112,7 +112,7 @@ maplibre-gl (from 6.11) loads its worker from a file next to its own module. Bun
 
 - Prettier: single quotes, 2-space indent, print width 180, trailing commas
 - EditorConfig: LF line endings, UTF-8, 2-space indent
-- TypeScript: `strict` in every package, ES modules. `ui` turns off `strictPropertyInitialization`: Stencil assigns `@Prop()`, `@State()` and `@Element()` fields after construction, so the check flags every one of them
+- TypeScript: `strict` in `data`, `services` and `ui`, ES modules. `ui` turns off `strictPropertyInitialization`: Stencil assigns `@Prop()`, `@State()` and `@Element()` fields after construction, so the check flags every such field declared without an initializer
 - File names: kebab-case; Classes/Interfaces: PascalCase
 
 ## Quality Gates

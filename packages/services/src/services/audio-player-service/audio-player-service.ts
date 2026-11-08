@@ -199,8 +199,9 @@ export class AudioPlayerService {
           id: audio.id,
           title: audio?.title ? audio?.title : station.title,
           subtitle: this.subtitle,
-          audioUri: audio.internalFileUrl,
-          imageUri: (station.images as Asset[])[0]?.internalFileUrl,
+          // the plugin reads an empty uri as missing, and an undefined one drops out of the JSON
+          audioUri: audio.internalFileUrl ?? '',
+          imageUri: (station.images as Asset[])[0]?.internalFileUrl ?? '',
           stationId: station.id,
           collectedPercentage: station.collectedPercentage || 0,
         })),

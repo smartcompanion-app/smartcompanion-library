@@ -209,3 +209,14 @@ test('test get next and prev index by station id without any audio', () => {
   expect(audioPlayerService.getNextIndexByStationId("a", silentStations)).toEqual(-1);
   expect(audioPlayerService.getPrevIndexByStationId("a", silentStations)).toEqual(-1);
 });
+
+test('test an audio or station without a file url gets empty uris, which the player reads as missing', () => {
+  // Android's plugin reads every uri with getString(), which throws for a key that
+  // undefined left out of the JSON, and drops that item and all after it
+  const withoutFiles = { id: 'test3', title: 'test3', images: [], audios: [{ id: 'test3-audio1', title: 'test3-audio1' }] } as unknown as Station;
+
+  const items = audioPlayerService.getPlayerItems([withoutFiles]);
+
+  expect(items[0].audioUri).toBe('');
+  expect(items[0].imageUri).toBe('');
+});

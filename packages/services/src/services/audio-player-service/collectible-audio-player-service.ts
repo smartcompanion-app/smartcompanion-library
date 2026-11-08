@@ -6,7 +6,7 @@ export class CollectibleAudioPlayerService extends AudioPlayerService {
   protected positions: number[] = [];
   protected id: string = '';
   protected state = 'init';
-  protected registeredCallback: (update: AudioPlayerUpdate) => void = null;
+  protected registeredCallback: ((update: AudioPlayerUpdate) => void) | null = null;
 
   constructor(
     subtitle: string,
@@ -25,10 +25,10 @@ export class CollectibleAudioPlayerService extends AudioPlayerService {
       const collectedPercentage = this.calculateCollectedPercentage(collectedTime, duration);
       this.collection[this.id].collectedTime += collectedTime;
       this.collection[this.id].collectedPercentage += collectedPercentage;
-      this.positions = [this.positions.pop()]; // leave last position as new reference point
+      this.positions = this.positions.slice(-1); // leave last position as new reference point
 
       // publish "collected" state/event
-      await this?.registeredCallback({
+      await this.registeredCallback?.({
         state: 'collected',
         id: this.id,
         index: this.getIndex(this.id),

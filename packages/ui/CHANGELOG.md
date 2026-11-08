@@ -1,5 +1,23 @@
 # @smartcompanion/ui
 
+## 2.1.0
+
+### Minor Changes
+
+- [#148](https://github.com/smartcompanion-app/smartcompanion-library/pull/148) [`105fd03`](https://github.com/smartcompanion-app/smartcompanion-library/commit/105fd030faddf1d9f395b8f0a8a13b74d264fc7b) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Require `@smartcompanion/native-audio-player` 2. It renames the `skip` state to `skipped` and reports `stop()` as `stopped` instead of `paused`. `AudioPlayerService` follows the new names, and types `AudioPlayerUpdate.state` as the player's states, so a renamed state no longer goes unnoticed.
+  
+  The player's `progress` event replaces polling the position. `registerUpdateListener()` reports it as a `progress` update with `position` and `duration`. The audio pages take their slider from it instead of asking every 800 ms, and `CollectibleAudioPlayerService` measures listening time from it instead of from `getPosition()`. A stop no longer carries listening time over into the next start.
+  
+  A completed audio stays rewound on `sc-page-station` and `sc-page-multi-audio-station`. Their default rewound it again with a seek, which resumes playback, so the audio started over.
+  
+  `registerUpdateListener()` replaces the listeners of an earlier registration, so a page that handed the player to the next one no longer leaves its listeners running, and `CollectibleAudioPlayerService` no longer counts the jump back to the start of a completed audio as listening time.
+
+### Patch Changes
+
+- [#151](https://github.com/smartcompanion-app/smartcompanion-library/pull/151) [`2194e2b`](https://github.com/smartcompanion-app/smartcompanion-library/commit/2194e2b362f78edb3dd8590fc82b5c7b47a05203) Thanks [@stefanhuber](https://github.com/stefanhuber)! - `sc-page-station`, `sc-page-station-image-list` (and with it `sc-page-tabbed-station-list`) and `sc-page-tour-list` render a station or tour without images instead of failing on it, and `sc-page-multi-audio-station` leaves out the duration of an audio that has none instead of showing `0NaN:0NaN`.
+  
+  The props that default to `null` (`tourId`, `defaultBackButtonHref`, and `stationId` on `sc-page-stations`) are typed `string | null`.
+
 ## 2.0.1
 
 ### Patch Changes

@@ -136,8 +136,12 @@ export class RoutingService {
     return restore;
   }
 
-  private getRouter() {
-    return document.querySelector('ion-router');
+  private getRouter(): HTMLIonRouterElement {
+    const router = document.querySelector('ion-router');
+    if (!router) {
+      throw new Error('RoutingService needs an ion-router in the document');
+    }
+    return router;
   }
 
   private listen() {

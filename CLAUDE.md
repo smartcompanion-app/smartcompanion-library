@@ -112,7 +112,7 @@ maplibre-gl (from 6.11) loads its worker from a file next to its own module. Bun
 
 - Prettier: single quotes, 2-space indent, print width 180, trailing commas
 - EditorConfig: LF line endings, UTF-8, 2-space indent
-- TypeScript: strict mode (`noImplicitAny`), ES modules
+- TypeScript: `strict` in `data` and `services`, only `noImplicitAny` in `ui` so far; ES modules
 - File names: kebab-case; Classes/Interfaces: PascalCase
 
 ## Quality Gates

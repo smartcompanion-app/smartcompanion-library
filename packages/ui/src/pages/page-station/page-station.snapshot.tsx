@@ -11,8 +11,16 @@ const stations: Station[] = fixtureStations.map(station => ({
   audios: station.audios.map(audio => ({ ...audio, internalFileUrl: SILENT_AUDIO, internalWebUrl: SILENT_AUDIO })),
 }));
 
+// mock-doc's audio element has no pause(), which the player's stop() calls when a page is
+// replaced by the next test's
+const createAudioPlayerService = () => {
+  const audioPlayerService = new AudioPlayerService('');
+  audioPlayerService.stop = () => Promise.resolve();
+  return audioPlayerService;
+};
+
 const facade = {
-  getAudioPlayerService: () => new AudioPlayerService(''),
+  getAudioPlayerService: createAudioPlayerService,
   getTourService: () =>
     ({
       getStations: () => Promise.resolve(stations),
@@ -30,4 +38,16 @@ const facade = {
 test('render page station', async () => {
   const { root } = await render(<sc-page-station stationId="1" facade={facade}></sc-page-station>);
   expect(root).toMatchSnapshot();
+});
+
+test('render page station for a station without images', async () => {
+  const withoutImages = stations.map(station => ({ ...station, images: [] }));
+  const facadeWithoutImages = {
+    ...facade,
+    getStationService: () => ({ getStations: () => Promise.resolve(withoutImages) }) as Partial<StationSource>,
+  } as unknown as PageStationFacade;
+
+  const { root } = await render(<sc-page-station stationId="1" facade={facadeWithoutImages}></sc-page-station>);
+
+  expect(root.querySelector('sc-player-controls')).not.toBeNull();
 });

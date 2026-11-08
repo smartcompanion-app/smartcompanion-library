@@ -1,7 +1,7 @@
 import { render, h, describe, it, expect } from '@stencil/vitest';
 import { Menu, PageMultiAudioStationFacade, Router, StationSource } from '../../contracts';
 import { AudioPlayerService, AudioPlayerUpdate } from '@smartcompanion/services';
-import { Station } from '@smartcompanion/data';
+import { Asset, Station } from '@smartcompanion/data';
 import { getMultiAudioStation } from '../../../test/fixtures';
 
 // Use silent audio data URI so loadAudio resolves without needing real files
@@ -134,5 +134,23 @@ describe('sc-page-multi-audio-station', () => {
     it('should not reserve space where there is no inset', async () => {
       expect(await contentPaddingBottom()).toBe('0px');
     });
+  });
+});
+
+describe('sc-page-multi-audio-station without durations', () => {
+  it('shows no duration for an audio that has none', async () => {
+    // duration is optional on an asset
+    const station = createStation();
+    station.audios = (station.audios as Asset[]).map(audio => ({ ...audio, duration: undefined }));
+    const facadeWithoutDurations = {
+      ...facade,
+      getStationService: () => ({ getStation: () => Promise.resolve(station) }) as unknown as StationSource,
+    } as PageMultiAudioStationFacade;
+
+    const { root, waitForChanges } = await render(<sc-page-multi-audio-station stationId="123" facade={facadeWithoutDurations}></sc-page-multi-audio-station>);
+    await waitForChanges();
+
+    expect(root.querySelectorAll('[data-testid^="audio-item-"]').length).toBeGreaterThan(0);
+    expect(root.querySelector('.station-audios')?.textContent).not.toContain('NaN');
   });
 });

@@ -12,7 +12,7 @@ npm run build
 npm test
 ```
 
-Node 22 is what CI uses. `npm install` also sets up a pre-commit hook that runs Prettier over staged source files.
+Node 22 is what CI uses. `npm install` also sets up a pre-commit hook that runs oxfmt over staged source files.
 
 ## The repository
 
@@ -35,8 +35,8 @@ Package boundaries — `ui` does not import `services`, nothing under `packages/
 | `npm run build` | Build all three packages |
 | `npm test` | Run the tests of all three packages |
 | `npm run coverage` | Tests with coverage; reports in `packages/*/coverage` |
-| `npm run lint` | ESLint. CI fails only on errors; keep warnings at zero too |
-| `npm run format:check` | Prettier check |
+| `npm run lint` | oxlint. CI fails only on errors; keep warnings at zero too |
+| `npm run format:check` | oxfmt check |
 | `npm run depcruise` | Package boundaries |
 | `npm run check:publish` | publint and attw against each package's tarball |
 | `npm run storybook -w packages/ui` | Storybook at <http://localhost:6006> |

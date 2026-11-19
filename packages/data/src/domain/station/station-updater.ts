@@ -1,5 +1,6 @@
 import { Storage } from '../../storage/index.js';
 import { Updater } from '../../update/updater.js';
+import { replaceLanguageLists } from '../../update/language-lists.js';
 import { Station } from './station.js';
 
 export class StationUpdater implements Updater {
@@ -9,21 +10,12 @@ export class StationUpdater implements Updater {
     this.storage = storage;
   }
 
+  /**
+   * Stores the stations per language; stations no longer in the data are removed.
+   */
   async update(data: unknown) {
-    const languageFilteredStations: Record<string, Station[]> = {};
-
     if (Array.isArray(data)) {
-      for (const station of data as Station[]) {
-        if (!languageFilteredStations[station.language]) {
-          languageFilteredStations[station.language] = [];
-        }
-        languageFilteredStations[station.language].push(station);
-        this.storage.set(`station-${station.language}-${station.id}`, station);
-      }
-
-      for (const language in languageFilteredStations) {
-        this.storage.set(`stations-${language}`, languageFilteredStations[language]);
-      }
+      replaceLanguageLists(this.storage, data as Station[], 'station', 'stations');
     }
   }
 }

@@ -31,6 +31,29 @@ describe('test tour updater', () => {
     expect(memoryStorage.get(`tours-en`)).toEqual([tours[2], tours[3]]);
   });
 
+  test('tours no longer in the data are removed with their default', async () => {
+    const defaultTour = getTour('de', true);
+    const otherTour = getTour('de');
+
+    await dataUpdater.update([defaultTour, otherTour]);
+    await dataUpdater.update([otherTour]);
+
+    expect(memoryStorage.get('tours-de')).toEqual([otherTour]);
+    expect(memoryStorage.has(`tour-de-${defaultTour.id}`)).toBe(false);
+    expect(memoryStorage.has('tour-de-default-id')).toBe(false);
+  });
+
+  test('all tours removed', async () => {
+    const tour = getTour('en', true);
+
+    await dataUpdater.update([tour]);
+    await dataUpdater.update([]);
+
+    expect(memoryStorage.has('tours-en')).toBe(false);
+    expect(memoryStorage.has(`tour-en-${tour.id}`)).toBe(false);
+    expect(memoryStorage.has('tour-en-default-id')).toBe(false);
+  });
+
   test('adding empty or null data', async () => {
     await dataUpdater.update(null);
     await dataUpdater.update([]);

@@ -69,11 +69,38 @@ describe('test data updater', () => {
 
     await dataUpdater.update(data);
 
-    expect(mockTourUpdater.update).not.toHaveBeenCalled();
+    expect(mockTourUpdater.update).toHaveBeenCalledWith([]);
     expect(mockStationUpdater.update).toHaveBeenCalled();
     expect(mockAssetUpdater.update).toHaveBeenCalled();
     expect(mockLanguageUpdater.update).toHaveBeenCalled();
     expect(mockTextUpdater.update).toHaveBeenCalled();
+  });
+
+  test('stations and tours deleted on the server are removed from the storage', async () => {
+    const station = { id: 's1', title: 'Station', language: 'de', images: [], audios: [] };
+    const tour = { id: 't1', title: 'Tour', language: 'de', default: true, images: [], stations: ['s1'] };
+    const languages = [{ language: 'de', title: 'Deutsch' }];
+
+    await dataUpdater.update({ checksum: '1', assets: [], stations: [station], tours: [tour], languages, texts: [] });
+    await dataUpdater.update({ checksum: '2', assets: [], stations: [], languages, texts: [] });
+
+    expect(memoryStorage.has('stations-de')).toBe(false);
+    expect(memoryStorage.has('station-de-s1')).toBe(false);
+    expect(memoryStorage.has('tours-de')).toBe(false);
+    expect(memoryStorage.has('tour-de-t1')).toBe(false);
+    expect(memoryStorage.has('tour-de-default-id')).toBe(false);
+  });
+
+  test('stations of a removed language are removed', async () => {
+    const stationDe = { id: 's1', title: 'Station', language: 'de', images: [], audios: [] };
+    const stationEn = { id: 's1', title: 'Station', language: 'en', images: [], audios: [] };
+
+    await dataUpdater.update({ checksum: '1', assets: [], stations: [stationDe, stationEn], languages: [{ language: 'de', title: 'Deutsch' }, { language: 'en', title: 'English' }], texts: [] });
+    await dataUpdater.update({ checksum: '2', assets: [], stations: [stationEn], languages: [{ language: 'en', title: 'English' }], texts: [] });
+
+    expect(memoryStorage.has('stations-de')).toBe(false);
+    expect(memoryStorage.has('station-de-s1')).toBe(false);
+    expect(memoryStorage.get('stations-en')).toEqual([stationEn]);
   });
 
   test('update should handle invalid data gracefully', async () => {

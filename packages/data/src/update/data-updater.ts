@@ -44,9 +44,15 @@ export class DataUpdater implements Updater {
   async update(data: unknown) {
     if (this.isValidDataObject(data) && this.requiresUpdate(data)) {
       const updates: Promise<void>[] = [];
-      for (const updaterKey in data) {
+      // tours are optional: data without them has none, so the stored ones are removed
+      const updaterKeys = Object.keys(data).concat('tours' in data ? [] : ['tours']);
+
+      // languages last: the station and tour updaters read the previous languages
+      updaterKeys.sort((a, b) => Number(a === 'languages') - Number(b === 'languages'));
+
+      for (const updaterKey of updaterKeys) {
         if (updaterKey in this.updaters) {
-          updates.push(this.updaters[updaterKey].update(data[updaterKey]));
+          updates.push(this.updaters[updaterKey].update(updaterKey in data ? data[updaterKey] : []));
         }
       }
       await Promise.all(updates);

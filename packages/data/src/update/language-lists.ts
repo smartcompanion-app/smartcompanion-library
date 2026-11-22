@@ -10,8 +10,10 @@ import { Storage } from '../storage/index.js';
  *
  * The languages written are remembered under `<listPrefix>-languages`. The `languages` of
  * the storage are checked as well, for data written before this key existed.
+ *
+ * Returns every language processed: those in the data and those that were removed.
  */
-export function replaceLanguageLists<T extends { id: string; language: string }>(storage: Storage, items: T[], itemPrefix: string, listPrefix: string): void {
+export function replaceLanguageLists<T extends { id: string; language: string }>(storage: Storage, items: T[], itemPrefix: string, listPrefix: string): string[] {
   const itemsByLanguage: Record<string, T[]> = {};
 
   for (const item of items) {

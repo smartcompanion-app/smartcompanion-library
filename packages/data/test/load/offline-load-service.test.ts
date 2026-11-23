@@ -198,4 +198,69 @@ describe('offline load service', () => {
     vi.spyOn(pinService, 'isValid').mockReturnValue(false);
     expect(offlineLoadService.isLoaded()).toBeFalsy();
   });
+
+  describe('when the data no longer offers the chosen language', () => {
+    beforeEach(() => {
+      memoryStorage.set('languages', [{ title: "English", language: "en" }, { title: "Deutsch", language: "de" }]);
+      memoryStorage.set('language', 'en');
+      memoryStorage.set('files-loaded', 'en');
+      memoryStorage.set('assets', [
+        { id: 'a-en', language: 'en', filename: 'en.mp3', externalUrl: 'https://example.org/en.mp3' },
+        { id: 'a-de', language: 'de', filename: 'de.mp3', externalUrl: 'https://example.org/de.mp3' },
+      ]);
+      downloadDataFn.mockResolvedValue({ example: 'data' });
+      downloadFileFn.mockResolvedValue('content');
+      listFn.mockResolvedValue(['en.mp3']);
+    });
+
+    const updateLanguages = (...languages: string[]) =>
+      dataUpdater.update.mockImplementation(async () => memoryStorage.set('languages', languages.map(language => ({ language, title: language }))));
+
+    test('should change to the only remaining language and download its files', async () => {
+      updateLanguages('de');
+      const { offlineLoadService, languageService } = createOfflineLoadService();
+
+      expect(await offlineLoadService.load()).toBe('home');
+      expect(languageService.getCurrentLanguage()).toBe('de');
+      expect(downloadFileFn.mock.calls).toEqual([['https://example.org/de.mp3']]);
+      expect(removeFn.mock.calls).toEqual([['en.mp3']]);
+      expect(memoryStorage.get('files-loaded')).toBe('de');
+      expect(offlineLoadService.isLoaded()).toBeTruthy();
+    });
+
+    test('should return "language" and leave the files alone when several remain', async () => {
+      updateLanguages('de', 'fr');
+      const { offlineLoadService } = createOfflineLoadService();
+
+      expect(await offlineLoadService.load()).toBe('language');
+      expect(downloadFileFn).not.toHaveBeenCalled();
+      expect(removeFn).not.toHaveBeenCalled();
+      expect(offlineLoadService.isLoaded()).toBeFalsy();
+    });
+
+    test('should return "error" when the files of the remaining language cannot be downloaded', async () => {
+      updateLanguages('de');
+      downloadFileFn.mockRejectedValue(new Error('Network error'));
+      const { offlineLoadService } = createOfflineLoadService();
+
+      expect(await offlineLoadService.load()).toBe('error');
+    });
+
+    test('should keep the chosen language when it is still offered', async () => {
+      updateLanguages('en', 'fr');
+      const { offlineLoadService, languageService } = createOfflineLoadService();
+
+      expect(await offlineLoadService.load()).toBe('home');
+      expect(languageService.getCurrentLanguage()).toBe('en');
+    });
+
+    test('should keep the chosen language when the data cannot be downloaded', async () => {
+      downloadDataFn.mockRejectedValue(new Error('Network error'));
+      const { offlineLoadService, languageService } = createOfflineLoadService();
+
+      expect(await offlineLoadService.load()).toBe('home');
+      expect(languageService.getCurrentLanguage()).toBe('en');
+      expect(memoryStorage.get('language')).toBe('en');
+    });
+  });
 });

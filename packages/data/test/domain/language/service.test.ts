@@ -62,4 +62,52 @@ describe('test data language', () => {
         expect(service.hasLanguage()).toBeFalsy();
         expect(memoryStorage.has('language')).toBeFalsy();
     });
+
+    describe('unsetUnavailableLanguage', () => {
+        const en = { title: "English", language: "en" };
+        const de = { title: "Deutsch", language: "de" };
+
+        test('should unset a language that is no longer available', () => {
+            memoryStorage.set('languages', [en, de]);
+            service.changeLanguage('en');
+            memoryStorage.set('languages', [de]);
+
+            service.unsetUnavailableLanguage();
+
+            expect(service.hasLanguage()).toBeFalsy();
+            expect(service.getCurrentLanguage()).toEqual('');
+            expect(memoryStorage.has('language')).toBeFalsy();
+        });
+
+        test('should keep a language that is still available', () => {
+            memoryStorage.set('languages', [en, de]);
+            service.changeLanguage('en');
+            memoryStorage.set('languages', [en]);
+
+            service.unsetUnavailableLanguage();
+
+            expect(service.getCurrentLanguage()).toEqual('en');
+            expect(memoryStorage.get('language')).toEqual('en');
+        });
+
+        test('should unset a stored language the service did not accept when it was created', () => {
+            memoryStorage.set('languages', [de]);
+            memoryStorage.set('language', 'en');
+            service = new LanguageService(memoryStorage);
+            expect(service.hasLanguage()).toBeFalsy();
+
+            service.unsetUnavailableLanguage();
+
+            expect(memoryStorage.has('language')).toBeFalsy();
+        });
+
+        test('should do nothing when no language is set', () => {
+            memoryStorage.set('languages', [en, de]);
+
+            service.unsetUnavailableLanguage();
+
+            expect(service.hasLanguage()).toBeFalsy();
+            expect(memoryStorage.has('language')).toBeFalsy();
+        });
+    });
 });

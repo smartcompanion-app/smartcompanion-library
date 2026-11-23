@@ -156,6 +156,7 @@ export class PageMap {
           </ion-toolbar>
         </ion-header>
         <ion-content>
+          {/* oxlint-disable-next-line react-perf/jsx-no-new-function-as-prop -- a ref callback, which react/jsx-no-bind exempted */}
           <div class="map" slot="fixed" ref={el => (this.mapContainer = el!)}></div>
         </ion-content>
       </Host>

@@ -20,6 +20,17 @@ export class LanguageService {
     }
   }
 
+  /**
+   * Unsets the chosen language when it is not among the available ones, which can
+   * change after the language was chosen.
+   */
+  unsetUnavailableLanguage() {
+    if (this.storage.has('language') && !this.getLanguages().some(item => item.language == this.storage.get('language'))) {
+      this.storage.unset('language');
+      this.language = '';
+    }
+  }
+
   hasLanguage(): boolean {
     return this.language != '';
   }

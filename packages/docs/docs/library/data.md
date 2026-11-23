@@ -71,7 +71,7 @@ A load service brings the content in and decides where the app goes next. `load(
 | `home` | Ready | the pending route, or `homeRoute` |
 | `error` | The content could not be loaded | `/error` |
 
-Before deciding, both services choose a language if they can: from a `?language=` query parameter naming an offered language, or the only language when there is one.
+Before deciding, both services choose a language if they can: from a `?language=` query parameter naming an offered language, or the only language when there is one. A language chosen earlier that the content no longer offers is dropped first.
 
 ### Online
 

@@ -124,4 +124,41 @@ describe('online load service', () => {
     vi.spyOn(pinService, 'isValid').mockReturnValue(false);
     expect(loadService.isLoaded()).toBeFalsy();
   });
+
+  describe('when the data no longer offers the chosen language', () => {
+    beforeEach(() => {
+      storage.set('languages', [{ language: 'en', title: 'English' }, { language: 'de', title: 'Deutsch' }]);
+      languageService.changeLanguage('en');
+      downloadDataFn.mockResolvedValue({ example: 'data' });
+    });
+
+    const updateLanguages = (...languages: string[]) =>
+      dataUpdater.update.mockImplementation(async () => storage.set('languages', languages.map(language => ({ language, title: language }))));
+
+    test('should change to the only remaining language', async () => {
+      updateLanguages('de');
+      expect(await loadService.load()).toBe('home');
+      expect(languageService.getCurrentLanguage()).toBe('de');
+      expect(storage.get('language')).toBe('de');
+    });
+
+    test('should return "language" when several remain', async () => {
+      updateLanguages('de', 'fr');
+      expect(await loadService.load()).toBe('language');
+      expect(loadService.isLoaded()).toBeFalsy();
+    });
+
+    test('should keep the chosen language when it is still offered', async () => {
+      updateLanguages('en', 'fr');
+      expect(await loadService.load()).toBe('home');
+      expect(languageService.getCurrentLanguage()).toBe('en');
+    });
+
+    test('should keep the chosen language when the data cannot be downloaded', async () => {
+      downloadDataFn.mockRejectedValue(new Error('Network error'));
+      expect(await loadService.load()).toBe('error');
+      expect(languageService.getCurrentLanguage()).toBe('en');
+      expect(storage.get('language')).toBe('en');
+    });
+  });
 });

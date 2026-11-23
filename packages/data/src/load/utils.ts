@@ -1,11 +1,15 @@
 import { LanguageService } from '../domain/index.js';
 
 /**
+ * A language the data no longer offers is unset: it has no stations, tours or texts.
+ *
  * If no language is set, try to auto-select one:
  * 1. From the URL query parameter `?language=de`
  * 2. If only one language is available, select it automatically
  */
 export const autoSelectLanguage = (languageService: LanguageService) => {
+  languageService.unsetUnavailableLanguage();
+
   if (languageService.hasLanguage()) return;
 
   const languages = languageService.getLanguages();

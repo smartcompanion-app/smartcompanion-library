@@ -83,4 +83,44 @@ describe('autoSelectLanguage', () => {
 
     expect(service.getCurrentLanguage()).toBe('en');
   });
+
+  describe('when the set language is no longer available', () => {
+    beforeEach(() => {
+      setLanguages([{ title: 'English', language: 'en' }]);
+      service.changeLanguage('en');
+    });
+
+    test('should select the only remaining language', () => {
+      setLanguages([{ title: 'Deutsch', language: 'de' }]);
+
+      autoSelectLanguage(service);
+
+      expect(service.getCurrentLanguage()).toBe('de');
+      expect(memoryStorage.get('language')).toBe('de');
+    });
+
+    test('should select the language from the URL parameter', () => {
+      setUrlSearch('?language=fr');
+      setLanguages([
+        { title: 'Deutsch', language: 'de' },
+        { title: 'Français', language: 'fr' },
+      ]);
+
+      autoSelectLanguage(service);
+
+      expect(service.getCurrentLanguage()).toBe('fr');
+    });
+
+    test('should have no language when several remain', () => {
+      setLanguages([
+        { title: 'Deutsch', language: 'de' },
+        { title: 'Français', language: 'fr' },
+      ]);
+
+      autoSelectLanguage(service);
+
+      expect(service.hasLanguage()).toBeFalsy();
+      expect(memoryStorage.has('language')).toBeFalsy();
+    });
+  });
 });

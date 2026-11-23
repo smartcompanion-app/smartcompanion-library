@@ -10,7 +10,7 @@ Part of the [SmartCompanion Library](https://github.com/smartcompanion-app/smart
 npm install @smartcompanion/services
 ```
 
-Requires Node 20 or newer, and these peers:
+Requires Node 22 or newer, and these peers:
 
 ```
 @smartcompanion/data                ^2.0.0

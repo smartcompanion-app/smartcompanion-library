@@ -14,8 +14,9 @@ concurrency:
 permissions:
   contents: read
 
+# The version lint and docs run on; the tests run on every maintained LTS.
 env:
-  NODE_VERSION: 22
+  NODE_VERSION: 26
 
 jobs:
   # Static checks only — no Playwright download, so this reports back long
@@ -76,16 +77,21 @@ jobs:
         run: npm run docs:build
 
   test:
-    name: Build and test
+    name: Build and test (Node ${{ matrix.node }})
     runs-on: ubuntu-24.04
+    strategy:
+      # A failure on one version should not hide whether the others pass.
+      fail-fast: false
+      matrix:
+        node: [22, 24, 26]
     steps:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Set up Node.js ${{ env.NODE_VERSION }}
+      - name: Set up Node.js ${{ matrix.node }}
         uses: actions/setup-node@v7
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: ${{ matrix.node }}
           cache: npm
 
       - name: Install dependencies
@@ -107,13 +113,14 @@ jobs:
         run: npm run coverage
 
       # Report only, no thresholds: the table goes to the job summary and the
-      # HTML reports to an artifact.
+      # HTML reports to an artifact. Once is enough, and artifact names have to
+      # be unique within a run.
       - name: Summarize coverage
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && matrix.node == 26 }}
         run: node scripts/coverage-summary.mjs
 
       - name: Upload coverage reports
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && matrix.node == 26 }}
         uses: actions/upload-artifact@v7
         with:
           name: coverage

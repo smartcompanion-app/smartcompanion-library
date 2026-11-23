@@ -128,10 +128,10 @@ npm run check:publish  # publint + attw against each package's tarball
 
 ## CI/CD
 
-- `ci.yml` runs on PRs and pushes to `main` (Ubuntu 24.04, Node 22), in three parallel jobs:
+- `ci.yml` runs on PRs and pushes to `main` (Ubuntu 24.04), in three parallel jobs — `lint` and `docs` on Node 26, `test` on every maintained LTS (22, 24, 26):
   - `lint` — lint, format:check, depcruise
   - `docs` — type-checks the site config and builds the docs site
-  - `test` — build, test (Playwright/Chromium), check:publish
+  - `test` — build, check:publish, test (Playwright/Chromium); the coverage report comes from the Node 26 run
 - `release.yml` runs on pushes to `main` and drives the changesets flow described above
 - `pages.yml` deploys the docs site, with Storybook under `/storybook/`, to GitHub Pages on every push to `main`. The custom domain comes from `packages/docs/static/CNAME`.
 

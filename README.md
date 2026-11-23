@@ -53,7 +53,7 @@ facade.registerOnlineLoadService(() => fetch('/data.json').then(r => r.json()));
 
 Two constraints worth knowing before you start:
 
-- **Node 20 or newer**, and `@smartcompanion/services` expects `@capacitor/core`, `@ionic/core` and `@smartcompanion/native-audio-player` as peers alongside `@smartcompanion/data`.
+- **Node 22 or newer**, and `@smartcompanion/services` expects `@capacitor/core`, `@ionic/core` and `@smartcompanion/native-audio-player` as peers alongside `@smartcompanion/data`.
 - **`data` and `services` are ESM-only.** They declare `"type": "module"` and ship an `exports` map, so `import` works from Node and from bundlers, but `require()` is not supported. `ui` is unaffected — Stencil emits its own CommonJS, ESM and custom-elements builds.
 
 The [audioguide app](https://github.com/smartcompanion-app/audioguide-app) is a complete worked example.

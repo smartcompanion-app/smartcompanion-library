@@ -12,7 +12,7 @@ npm run build
 npm test
 ```
 
-Node 22 is what CI uses. `npm install` also sets up a pre-commit hook that runs Prettier over staged source files.
+CI tests on Node 22, 24 and 26; use 26 locally if you have no reason not to. `npm install` also sets up a pre-commit hook that runs Prettier over staged source files.
 
 ## The repository
 

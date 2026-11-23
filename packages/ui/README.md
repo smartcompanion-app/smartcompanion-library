@@ -12,7 +12,7 @@ Part of the [SmartCompanion Library](https://github.com/smartcompanion-app/smart
 npm install @smartcompanion/ui
 ```
 
-Requires Node 20 or newer, [`@smartcompanion/data`](https://www.npmjs.com/package/@smartcompanion/data) `^2.0.0` as a peer, and Ionic 9 in the app. Pages are driven by a `ServiceFacade` from [`@smartcompanion/services`](https://www.npmjs.com/package/@smartcompanion/services).
+Requires Node 22 or newer, [`@smartcompanion/data`](https://www.npmjs.com/package/@smartcompanion/data) `^2.0.0` as a peer, and Ionic 9 in the app. Pages are driven by a `ServiceFacade` from [`@smartcompanion/services`](https://www.npmjs.com/package/@smartcompanion/services).
 
 ## Usage
 

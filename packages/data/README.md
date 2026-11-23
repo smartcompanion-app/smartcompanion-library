@@ -10,7 +10,7 @@ Part of the [SmartCompanion Library](https://github.com/smartcompanion-app/smart
 npm install @smartcompanion/data
 ```
 
-Requires Node 20 or newer.
+Requires Node 22 or newer.
 
 > **ESM only.** This package declares `"type": "module"` and ships an `exports` map. `import` works from Node and from bundlers; `require()` is not supported.
 

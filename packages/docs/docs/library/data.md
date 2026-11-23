@@ -35,6 +35,23 @@ interface Storage {
 
 `BrowserStorage` — the default — keeps it in the browser's `localStorage`, so the content, the chosen language, listening progress and the PIN state survive a reload. `MemoryStorage` keeps it in memory, for tests.
 
+### Several apps on one origin
+
+`localStorage` belongs to the origin, not to the path. Apps served from `https://example.org/animals/` and `https://example.org/leon/` therefore share it, and overwrite each other's content, language and PIN state. Give each its own `namespace`:
+
+```ts
+const namespace = new URL(DATA_URL, document.baseURI).href;
+const facade = new ServiceFacade(new BrowserStorage({ namespace }));
+```
+
+Every key is then prefixed with a hash of the namespace, e.g. `sc-2be0142a:checksum`, and `unsetAll()` removes only those keys. Without a namespace the keys have no prefix, and `unsetAll()` clears the whole `localStorage`.
+
+- The namespace has to be the same on every start. When it changes — because `data.json` moved to another URL, or because an app starts to use one — the app starts with no stored data: visitors choose their language and enter the PIN again, and listening progress starts over.
+- Resolve a relative URL as above. Two apps that both pass `data/data.json` would share their data.
+- Two apps that load the same `data.json` share their data as well, including whether the PIN was entered.
+- The space the browser grants is still per origin, so the apps share it.
+- The choice between speaker and earpiece is kept outside the storage, and stays shared.
+
 ## Updating
 
 `DataUpdater` writes a content file into the storage, one updater per top-level key — `assets`, `stations`, `languages`, `texts`, `tours`, `pins`, `servers`, `share`.

@@ -18,19 +18,14 @@ concurrency:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 env:
   NODE_VERSION: 22
 
 jobs:
-  deploy:
-    name: Deploy docs and Storybook
+  build:
+    name: Build docs and Storybook
     runs-on: ubuntu-24.04
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -63,6 +58,22 @@ jobs:
         with:
           path: packages/docs/build
 
+  # A job of its own, not a last step of the build: right after the upload
+  # GitHub may not list the artifact yet, and the deploy fails with "No
+  # artifacts named github-pages" (actions/deploy-pages#451). It also makes a
+  # failed deploy repeatable -- re-running the build in the same run uploads a
+  # second artifact, which the deploy rejects.
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

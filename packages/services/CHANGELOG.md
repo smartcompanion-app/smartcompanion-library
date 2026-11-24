@@ -1,5 +1,11 @@
 # @smartcompanion/services
 
+## 2.2.0
+
+### Minor Changes
+
+- [#158](https://github.com/smartcompanion-app/smartcompanion-library/pull/158) [`bbf4b71`](https://github.com/smartcompanion-app/smartcompanion-library/commit/bbf4b7135550e4e3eb11f33f6976aa8dbbe9c506) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Require Node 22 or newer (`engines.node: >=22`). Node 20 reached its end of life in April 2026. The packages are tested on Node 22, 24 and 26.
+
 ## 2.1.1
 
 No changes in this release.

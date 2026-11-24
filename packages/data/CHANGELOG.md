@@ -1,5 +1,19 @@
 # @smartcompanion/data
 
+## 2.2.0
+
+### Minor Changes
+
+- [#155](https://github.com/smartcompanion-app/smartcompanion-library/pull/155) [`6cf17fe`](https://github.com/smartcompanion-app/smartcompanion-library/commit/6cf17fe01dd554c03b849a93429df994a51c2695) Thanks [@stefanhuber](https://github.com/stefanhuber)! - `BrowserStorage` takes an optional `namespace`, e.g. the absolute URL of the app's data, that keeps its data apart from that of other apps on the same origin. `localStorage` is shared by all of them, so apps served under different paths read and overwrote each other's content, language and PIN state. With a namespace every key is prefixed with its hash, and `unsetAll()` removes only those keys.
+  
+  Without a namespace nothing changes. An app that starts passing one does not see the data it stored before: visitors choose their language and enter the PIN again, and listening progress starts over. The previous keys stay in the `localStorage`.
+
+- [#156](https://github.com/smartcompanion-app/smartcompanion-library/pull/156) [`a687a7a`](https://github.com/smartcompanion-app/smartcompanion-library/commit/a687a7ab8c7174c7c2081129306b67cf159c7d9c) Thanks [@stefanhuber](https://github.com/stefanhuber)! - A chosen language that the data no longer offers is dropped when the data is loaded. Before, it stayed selected until the next start, so the app showed no stations and `TourService.getTours()` threw. Now the load services select the only remaining language, or return `language` when there are several.
+  
+  `LanguageService` has a new method `unsetUnavailableLanguage()`.
+
+- [#158](https://github.com/smartcompanion-app/smartcompanion-library/pull/158) [`bbf4b71`](https://github.com/smartcompanion-app/smartcompanion-library/commit/bbf4b7135550e4e3eb11f33f6976aa8dbbe9c506) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Require Node 22 or newer (`engines.node: >=22`). Node 20 reached its end of life in April 2026. The packages are tested on Node 22, 24 and 26.
+
 ## 2.1.1
 
 ### Patch Changes

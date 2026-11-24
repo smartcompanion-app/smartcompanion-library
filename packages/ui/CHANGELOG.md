@@ -1,5 +1,15 @@
 # @smartcompanion/ui
 
+## 2.2.0
+
+### Minor Changes
+
+- [#158](https://github.com/smartcompanion-app/smartcompanion-library/pull/158) [`bbf4b71`](https://github.com/smartcompanion-app/smartcompanion-library/commit/bbf4b7135550e4e3eb11f33f6976aa8dbbe9c506) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Require Node 22 or newer (`engines.node: >=22`). Node 20 reached its end of life in April 2026. The packages are tested on Node 22, 24 and 26.
+
+### Patch Changes
+
+- [#159](https://github.com/smartcompanion-app/smartcompanion-library/pull/159) [`d024c38`](https://github.com/smartcompanion-app/smartcompanion-library/commit/d024c38ba5a2ea8ce83f96b0c96824f89a419c0f) Thanks [@stefanhuber](https://github.com/stefanhuber)! - Update maplibre-gl to 6.19.0, with the matching worker shipped with `sc-page-map`, and swiper to 14.4.0. Among maplibre-gl's fixes are maps that stopped loading after iOS shut down their background workers, and a map shrinking to a single pixel when it resizes after a lost WebGL context.
+
 ## 2.1.1
 
 No changes in this release.
